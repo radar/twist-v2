@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web</title>
+    <%= favicon %>
+  </head>
+  <body>
+    <%= flash[:notice] %>
+    <%= flash[:alert] %>
+    <% if user_signed_in? %>
+      You are signed in as <%= current_user.email %>
+    <% end %>
+
+    <%= yield %>
+  </body>
+</html>

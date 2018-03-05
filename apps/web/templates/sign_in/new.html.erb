@@ -1,0 +1,28 @@
+<h2>Sign in</h2>
+
+<% unless params.valid? %>
+  <div class="errors">
+    <h3>There was a problem with your submission</h3>
+    <ul>
+      <% params.error_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%=
+  form_for :user, routes.sign_in_path do
+    p do
+      label :email
+      email_field :email, required: true
+    end
+
+    p do
+      label :password
+      password_field :password, required: true
+    end
+
+    submit 'Sign In'
+  end
+%>
