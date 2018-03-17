@@ -18,7 +18,7 @@ RSpec.feature "Signing in", type: :feature do
     click_button "Sign In"
 
     expect(page).to have_content("You have signed in successfully.")
-    expect(page).to have_content("You are signed in as test@example.com")
+    expect(page).to have_content("Signed in as test@example.com")
   end
 
   scenario "cannot sign in with the wrong email" do

@@ -1,5 +1,5 @@
 module Web::Views::SignIn
-  class Create
+  class Perform
     include Web::View
 
     template 'sign_in/new'

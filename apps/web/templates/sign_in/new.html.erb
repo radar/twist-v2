@@ -13,16 +13,17 @@
 
 <%=
   form_for :user, routes.sign_in_path do
-    p do
-      label :email
-      email_field :email, required: true
+
+    div class: "form-group row" do
+      label :email, class: "col-sm-2"
+      email_field :email, required: true, class: "form-control col-sm-3"
     end
 
-    p do
-      label :password
-      password_field :password, required: true
+    div class: "form-group row" do
+      label :password, class: "col-sm-2"
+      password_field :password, required: true, class: "form-control col-sm-3"
     end
 
-    submit 'Sign In'
+    submit 'Sign In', class: "btn btn-primary"
   end
 %>

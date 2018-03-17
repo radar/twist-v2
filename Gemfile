@@ -18,6 +18,7 @@ group :development do
 end
 
 group :test, :development do
+  gem 'sass'
   gem 'dotenv', '~> 2.0'
   gem 'pry'
 end

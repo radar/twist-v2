@@ -24,6 +24,10 @@ module Web
         warden.set_user(user)
       end
 
+      def sign_out
+        warden.logout
+      end
+
       def current_user
         warden.user
       end

@@ -1,0 +1,34 @@
+// @import "prism";
+
+@import "books";
+@import "chapters";
+@import "notes";
+@import "highlights";
+
+body {
+  margin: 1% 2.5% 1% 2.5%;
+  font: 15px "Titillium Web", 'Helvetica Neue';
+  color: #444;
+  background: #efefef;
+}
+
+hr {
+  border-top: 1px solid #ddd;
+}
+
+.main {
+  background: white;
+  border: 1px solid #dadada;
+  border-radius: 3px;
+  padding: 2.5rem 1.5rem;
+}
+
+// .flash_notice {
+//   @extend .alert;
+//   @extend .alert-success;
+// }
+
+// .flash_alert {
+//   @extend .alert;
+//   @extend .alert-danger;
+// }

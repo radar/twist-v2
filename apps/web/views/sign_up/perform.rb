@@ -1,5 +1,5 @@
 module Web::Views::SignUp
-  class Create
+  class Perform
     include Web::View
 
     template 'sign_up/new'

@@ -1,5 +1,5 @@
 module Web::Controllers::SignIn
-  class Create
+  class Perform
     include Web::Action
 
     def call(params)

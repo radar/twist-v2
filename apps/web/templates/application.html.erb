@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Web</title>
+    <title>Twist</title>
     <%= favicon %>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <%= stylesheet 'application' %>
   </head>
   <body>
+    <menu>
+      <%= link_to "Twist", "/" %> |
+
+      <% if user_signed_in? %>
+        Signed in as <%= current_user.email %>
+        <%= link_to "Sign out (#{current_user.email})", routes.sign_out_path, method: :delete %>
+      <% else %>
+        <%= link_to "Sign in", routes.sign_in_path %>
+      <% end %>
+    </menu>
     <%= flash[:notice] %>
     <%= flash[:alert] %>
-    <% if user_signed_in? %>
-      You are signed in as <%= current_user.email %>
-    <% end %>
 
-    <%= yield %>
+    <div class='main'>
+      <%= yield %>
+    </div>
   </body>
 </html>

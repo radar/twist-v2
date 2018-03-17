@@ -1,5 +1,5 @@
 module Web::Controllers::SignUp
-  class Create
+  class Perform
     include Web::Action
 
     params do
