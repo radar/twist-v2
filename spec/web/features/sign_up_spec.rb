@@ -12,7 +12,7 @@ RSpec.feature "Signing up", type: :feature do
     click_button "Sign Up"
 
     expect(page).to have_content("You have signed up successfully.")
-    expect(page).to have_content("You are signed in as test@example.com")
+    expect(page).to have_content("Signed in as test@example.com")
     expect(user_repo.find_by_email("test@example.com")).not_to be_nil
   end
 

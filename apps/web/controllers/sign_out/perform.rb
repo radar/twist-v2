@@ -3,9 +3,9 @@ module Web::Controllers::SignOut
     include Web::Action
 
     def call(params)
-      sign_out
+      sign_out if current_user
       flash[:notice] = "You have now signed out."
-      redirect_to root_path
+      redirect_to '/'
     end
   end
 end
