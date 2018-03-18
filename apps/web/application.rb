@@ -18,11 +18,11 @@ module Web
       #
       # When you add new directories, remember to add them here.
       #
-      load_paths << [
-        'controllers',
-        'transactions',
-        'views',
-        'workers'
+      load_paths << %w[
+        controllers
+        transactions
+        views
+        workers
       ]
 
       # Handle exceptions with HTTP statuses (true) or don't catch them (false).
@@ -90,9 +90,7 @@ module Web
       middleware.use Warden::Manager do |manager|
         manager.default_strategies :password
 
-        manager.serialize_into_session do |user|
-          user.id
-        end
+        manager.serialize_into_session(&:id)
 
         manager.serialize_from_session do |id|
           UserRepository.new.by_pk(id)
@@ -245,7 +243,7 @@ module Web
       #
       #  * https://developer.mozilla.org/en-US/docs/Web/Security/CSP/CSP_policy_directives
       #
-      security.content_security_policy %{
+      security.content_security_policy %(
         form-action 'self';
         frame-ancestors 'self';
         base-uri 'self';
@@ -260,7 +258,7 @@ module Web
         child-src 'self';
         frame-src 'self';
         media-src 'self'
-      }
+      )
 
       ##
       # FRAMEWORKS

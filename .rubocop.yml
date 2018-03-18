@@ -1,0 +1,33 @@
+AllCops:
+  TargetRubyVersion: 2.5
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Layout/SpaceAroundOperators:
+  Exclude:
+    - Rakefile
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 200
+
+Metrics/MethodLength:
+  Exclude:
+    - "apps/web/controllers/**/*"
+
+Metrics/BlockLength:
+  Exclude:
+    - "apps/web/application.rb"
+    - "spec/**/*"

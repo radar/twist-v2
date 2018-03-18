@@ -20,7 +20,7 @@ module Web::Controllers::SignUp
         required(:password).filled
         required(:password_confirmation).filled
 
-        rule(password: [:password, :password_confirmation]) do |password, password_confirmation|
+        rule(password: %i[password password_confirmation]) do |password, password_confirmation|
           password.eql?(password_confirmation)
         end
       end
@@ -36,7 +36,6 @@ module Web::Controllers::SignUp
       create_user = Web::Transactions::CreateUser.new
       create_user.call(params[:user]) do |result|
         result.success do |user|
-
           sign_in(user)
 
           flash[:notice] = "You have signed up successfully."
@@ -46,4 +45,3 @@ module Web::Controllers::SignUp
     end
   end
 end
-

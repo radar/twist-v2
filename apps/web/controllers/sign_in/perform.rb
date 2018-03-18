@@ -6,7 +6,6 @@ module Web::Controllers::SignIn
       transaction = Web::Transactions::Users::SignIn.new
       transaction.call(params[:user]) do |result|
         result.success do |user|
-
           sign_in(user)
 
           flash[:notice] = "You have signed in successfully."

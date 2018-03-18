@@ -41,7 +41,7 @@ Hanami.configure do
 
   environment :test do
     # See: http://hanamirb.org/guides/projects/logging
-    #logger level: :debug
+    # logger level: :debug
   end
 
   environment :production do

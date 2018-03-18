@@ -5,7 +5,7 @@ describe Web::Controllers::SignOut::Perform do
   let(:params) { Hash[] }
 
   it 'is successful' do
-    status, headers, _ = action.call(params)
+    status, headers, = action.call(params)
     expect(status).to eq(302)
     expect(headers["Location"]).to eq("/")
   end

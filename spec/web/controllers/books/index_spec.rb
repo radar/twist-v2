@@ -5,7 +5,7 @@ describe Web::Controllers::Books::Index do
   let(:params) { Hash[] }
 
   it 'is successful' do
-    status, _, _ = action.call(params)
+    status, = action.call(params)
     expect(status).to eq(200)
   end
 end

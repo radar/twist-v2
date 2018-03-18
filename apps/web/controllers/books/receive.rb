@@ -6,7 +6,7 @@ module Web::Controllers::Books
       book = find_book(params[:permalink])
       unless book
         self.status = 404
-        self.body = JSON.generate({error: "Book not found"})
+        self.body = JSON.generate(error: "Book not found")
         return
       end
 
@@ -24,7 +24,6 @@ module Web::Controllers::Books
       repo = BookRepository.new
       repo.find_by_permalink(permalink)
     end
-
 
     def find_or_create_branch(book_id, ref)
       branch = ref.split("/").last

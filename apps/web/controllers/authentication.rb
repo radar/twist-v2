@@ -1,7 +1,6 @@
 module Web
   module Controllers
     module Authentication
-
       class NullWarden
         def user
           nil
