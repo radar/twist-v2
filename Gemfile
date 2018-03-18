@@ -5,9 +5,13 @@ gem 'hanami',       '1.2.0.beta1'
 gem 'hanami-model', '1.2.0.beta1'
 
 gem 'pg'
+
 gem 'bcrypt'
 gem 'warden'
+
 gem 'dry-transaction'
+
+gem 'sidekiq'
 
 group :development do
   # Code reloading
@@ -15,6 +19,8 @@ group :development do
   gem 'shotgun'
 
   gem 'hanami-webconsole'
+
+  gem 'rubocop'
 end
 
 group :test, :development do

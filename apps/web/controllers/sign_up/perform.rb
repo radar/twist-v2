@@ -24,7 +24,7 @@ module Web::Controllers::SignUp
           password.eql?(password_confirmation)
         end
       end
-   end
+    end
 
     def call(params)
       unless params.valid?

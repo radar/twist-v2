@@ -8,3 +8,4 @@ delete '/users/sign_out', to: 'sign_out#perform', as: :sign_out
 
 get '/books', to: 'books#index'
 get '/sign_out', to: 'sign_out#perform'
+post '/books/:permalink/receive', to: 'books#receive'
