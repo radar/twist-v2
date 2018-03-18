@@ -11,7 +11,13 @@ module Web::Controllers::Books
       end
 
       branch = find_or_create_branch(book.id, params[:ref])
-      BookWorker.perform_async(book.permalink, branch.name)
+      worker = case book.format
+               when "markdown"
+                 MarkdownBookWorker
+               else
+                 raise "unknown format"
+               end
+      worker.perform_async(book.permalink, branch.name)
     end
 
     private

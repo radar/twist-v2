@@ -1,4 +1,4 @@
-class BookWorker
+class MarkdownBookWorker
   include Sidekiq::Worker
 
   def perform(permalink, branch)

@@ -9,13 +9,15 @@ describe Web::Controllers::Books::Receive do
   end
 
   context "when book exists" do
-    let(:book) { Book.new(permalink: "exploding-rails") }
-    before { allow(subject).to receive(:find_book) { book } }
+    context "and the book is a markdown book" do
+      let(:book) { Book.new(permalink: "exploding-rails", format: "markdown") }
+      before { allow(subject).to receive(:find_book) { book } }
 
-    it "triggers an update" do
-      expect(BookWorker).to receive(:perform_async).with("exploding-rails", "master")
-      status, = subject.call(params)
-      expect(status).to eq(200)
+      it "triggers an update" do
+        expect(MarkdownBookWorker).to receive(:perform_async).with("exploding-rails", "master")
+        status, = subject.call(params)
+        expect(status).to eq(200)
+      end
     end
   end
 
