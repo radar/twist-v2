@@ -13,6 +13,8 @@ gem 'dry-transaction'
 
 gem 'sidekiq'
 
+gem 'rugged'
+
 group :development do
   # Code reloading
   # See: http://hanamirb.org/guides/projects/code-reloading
