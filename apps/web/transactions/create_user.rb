@@ -17,7 +17,7 @@ module Web
         repo = UserRepository.new
         user = repo.create(
           email: input[:email],
-          encrypted_password: input[:password]
+          encrypted_password: input[:password],
         )
         Success(user)
       end

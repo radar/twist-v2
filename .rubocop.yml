@@ -20,6 +20,9 @@ Style/ClassAndModuleChildren:
 Style/StringLiterals:
   Enabled: false
 
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
 Metrics/LineLength:
   Max: 200
 

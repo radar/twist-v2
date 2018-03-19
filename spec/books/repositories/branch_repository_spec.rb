@@ -10,7 +10,6 @@ describe BranchRepository do
 
   let!(:book) { book_repo.create(name: "Exploding Rails") }
 
-
   context "#find_or_create_by_book_id_and_name" do
     context "when the branch does not exist" do
       it "creates a new branch" do

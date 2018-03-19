@@ -10,7 +10,7 @@ module Web::Controllers::SignUp
               errors: {
                 password: "did not match password confirmation"
               }
-            }
+            },
           )
         end
       end

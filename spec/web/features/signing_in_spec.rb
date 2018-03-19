@@ -7,7 +7,7 @@ RSpec.feature "Signing in", type: :feature do
     Web::Transactions::CreateUser.new.call(
       email: "test@example.com",
       password: "password",
-      password_confirmation: "password"
+      password_confirmation: "password",
     )
   end
 
