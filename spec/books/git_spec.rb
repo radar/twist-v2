@@ -30,7 +30,7 @@ describe Git do
     let(:head_branch) { subject.rugged_repo.head.name.split("/").last }
 
     it "locally sources the repo (sustainably)" do
-      path = File.expand_path(File.join(__dir__, "../fixtures/radar/markdown_book_test"))
+      path = File.expand_path(File.join(__dir__, "../fixtures/repos/radar/markdown_book_test"))
       expect(subject.rugged_repo.remotes.first.url).to eq(path)
     end
 
@@ -48,6 +48,46 @@ describe Git do
 
       it "checks out to the 2nd branch" do
         expect(head_branch).to eq("master")
+      end
+    end
+  end
+
+  context "update" do
+    let!(:source_repo) { Rugged::Repository.new(subject.source_path) }
+    before do
+      source_repo.reset("origin/master", :hard)
+
+      subject.clone
+
+      Dir.chdir(subject.source_path) do
+        `git commit --allow-empty -m "new commit"`
+      end
+    end
+
+    after do
+      source_repo.reset("origin/master", :hard)
+    end
+
+    let!(:latest) { source_repo.head.target_id }
+
+    it "updates local repository" do
+      subject.update
+      expect(subject.rugged_repo.head.target_id).to eq(latest)
+    end
+
+    context "when local changes have been made" do
+      before do
+        Dir.chdir(subject.local_path) do
+          `git rm Book.txt`
+        end
+      end
+
+      it "restores back to pristine state" do
+        subject.update
+
+        Dir.chdir(subject.local_path) do
+          expect(File).to exist("Book.txt")
+        end
       end
     end
   end

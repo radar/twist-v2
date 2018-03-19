@@ -1,3 +1,5 @@
 /db/*.sqlite
 /public/assets*
 /tmp
+repos/*
+spec/repos/*

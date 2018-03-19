@@ -25,6 +25,12 @@ class Git
     )
   end
 
+  def update
+    rugged_repo.reset("origin/#{branch}", :hard)
+    rugged_repo.fetch("origin")
+    rugged_repo.checkout("origin/#{branch}")
+  end
+
   def local_path
     (Pathname.new(target) + "#{username}/#{repo}").to_s
   end
@@ -33,17 +39,18 @@ class Git
     Rugged::Repository.new(local_path)
   end
 
+  def source_path
+    source + "#{username}/#{repo}"
+  end
+
   private
 
   def source
     if test
-      File.expand_path(File.join(__dir__, "../../spec/fixtures")) + "/"
+      File.expand_path(File.join(__dir__, "../../spec/fixtures/repos")) + "/"
     else
       "git@github.com:"
     end
   end
 
-  def source_path
-    source + "#{username}/#{repo}"
-  end
 end
