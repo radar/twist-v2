@@ -8,6 +8,7 @@ module Web::Controllers::Books
       required(:book).schema do
         required(:title).filled
         required(:source).filled
+        required(:format).filled
       end
     end
 
