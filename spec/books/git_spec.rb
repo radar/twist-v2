@@ -13,7 +13,6 @@ describe Git do
       username: "radar",
       repo: "markdown_book_test",
       branch: branch,
-      test: true,
       target: target,
     )
   end

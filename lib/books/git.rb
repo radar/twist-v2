@@ -66,6 +66,6 @@ class Git
   end
 
   def log_info(message)
-    logger.&info message
+    logger&.info message
   end
 end
