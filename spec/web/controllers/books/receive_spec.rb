@@ -25,8 +25,9 @@ describe Web::Controllers::Books::Receive do
             branch: "master",
             github_path: "radar/exploding_rails",
           )
-        status, = subject.call(params)
+        status, _, body = subject.call(params)
         expect(status).to eq(200)
+        expect(body.first).to eq("OK")
       end
     end
   end

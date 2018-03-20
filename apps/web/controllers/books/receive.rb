@@ -22,6 +22,9 @@ module Web::Controllers::Books
         branch: branch.name,
         github_path: params[:repository][:full_name],
       )
+
+      self.status = 200
+      self.body = "OK"
     end
 
     private
