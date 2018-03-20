@@ -4,3 +4,4 @@
 /tmp
 repos/*
 spec/repos/*
+capybara-*
