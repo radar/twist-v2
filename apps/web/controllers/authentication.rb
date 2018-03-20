@@ -30,6 +30,13 @@ module Web
       def current_user
         warden.user
       end
+
+      def require_authentication!
+        return if current_user
+
+        flash[:alert] = "You must be signed in to do that."
+        redirect_to routes.sign_in_path
+      end
     end
   end
 end

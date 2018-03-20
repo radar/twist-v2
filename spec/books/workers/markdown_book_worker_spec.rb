@@ -17,7 +17,7 @@ describe MarkdownBookWorker do
           github_path: "radar/markdown_book_test",
         )
 
-        chapters = chapter_repo.for_branch(branch.id)
+        chapters = chapter_repo.for_branch(branch.id).to_a
 
         expect(chapters.count).to eq(4)
 

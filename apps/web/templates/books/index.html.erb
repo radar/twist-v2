@@ -1,1 +1,5 @@
 Books index goes here.
+
+<% if user_signed_in? %>
+  <%= link_to 'Add Book', routes.new_book_path %>
+<% end %>

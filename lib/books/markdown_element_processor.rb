@@ -49,7 +49,6 @@ class MarkdownElementProcessor
     files = Dir[File.expand_path(File.join(book_path, "**", "*"))]
     unless files.include?(image_path)
       warning = "Missing image in #{chapter.title}: #{image_path}"
-      Hanami.logger.info(warning)
       Rollbar.warning(warning)
       # Ignore it
       return

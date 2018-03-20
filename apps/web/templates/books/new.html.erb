@@ -1,0 +1,15 @@
+<h2>New Book</h2>
+
+<%=
+  form_for :book, routes.books_path do
+    div class: 'form-group' do
+      label :title
+      text_field :title, class: 'form-control'
+    end
+
+    hidden_field :source, value: "GitHub"
+
+    submit 'Create'
+  end
+%>
+

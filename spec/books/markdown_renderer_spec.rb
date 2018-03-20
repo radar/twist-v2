@@ -33,7 +33,7 @@ T> authenticated user.
     output = render(tip)
     parsed_tip = output.css("div.tip")
     expect(parsed_tip.css("strong").text).to eq("The constraint request object")
-    expect(parsed_tip.css("p").count).to eq(2)
+    expect(parsed_tip.css("p").count).to eq(3)
   end
 
   it "can parse a warning" do

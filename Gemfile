@@ -22,6 +22,8 @@ gem 'shrine'
 
 gem 'rollbar'
 
+gem 'babosa'
+
 group :development do
   # Code reloading
   # See: http://hanamirb.org/guides/projects/code-reloading
@@ -42,6 +44,7 @@ group :test do
   gem 'rspec'
   gem 'capybara'
   gem 'database_cleaner'
+  gem 'launchy'
 end
 
 group :production do

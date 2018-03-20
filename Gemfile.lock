@@ -4,6 +4,7 @@ GEM
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     ast (2.4.0)
+    babosa (1.0.2)
     bcrypt (3.1.11)
     better_errors (2.4.0)
       coderay (>= 1.0.0)
@@ -127,6 +128,8 @@ GEM
       url_mount (~> 0.2.1)
     ice_nine (0.11.2)
     inflecto (0.0.2)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
     method_source (0.9.0)
@@ -234,6 +237,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  babosa
   bcrypt
   capybara
   database_cleaner
@@ -242,6 +246,7 @@ DEPENDENCIES
   hanami (= 1.2.0.beta1)
   hanami-model (= 1.2.0.beta1)
   hanami-webconsole
+  launchy
   nokogiri
   pg
   pry
