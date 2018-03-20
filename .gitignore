@@ -1,5 +1,6 @@
 /db/*.sqlite
 /public/assets*
+/public/uploads/*
 /tmp
 repos/*
 spec/repos/*

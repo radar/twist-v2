@@ -8,8 +8,8 @@ module Web::Controllers::SignUp
           default_messages.merge(
             en: {
               errors: {
-                password: "did not match password confirmation"
-              }
+                password: "did not match password confirmation",
+              },
             },
           )
         end

@@ -17,7 +17,11 @@ module Web::Controllers::Books
                else
                  raise "unknown format"
                end
-      worker.perform_async(book.permalink, branch.name)
+      worker.perform_async(
+        permalink: book.permalink,
+        branch: branch.name,
+        github_path: params[:repository][:full_name],
+      )
     end
 
     private

@@ -1,14 +1,18 @@
 require 'rugged'
 
 class Git
-  attr_reader :username, :repo, :branch, :test, :target
+  attr_reader :username, :repo, :branch, :test, :target, :logger
 
-  def initialize(username:, repo:, branch: "master", target: File.expand_path(File.join(__dir__, "../../repos")), test: false)
+  class << self
+    attr_accessor :test
+  end
+
+  def initialize(username:, repo:, branch: "master", target: File.expand_path(File.join(__dir__, "../../repos")), logger: nil)
     @username = username
     @repo = repo
     @branch = branch
-    @test = test
     @target = target
+    @logger = logger
 
     @creds = Rugged::Credentials::SshKey.new(
       username: 'git',
@@ -17,7 +21,13 @@ class Git
     )
   end
 
+  def fetch!
+    File.exist?(local_path) ? update : clone
+  end
+
   def clone
+    log_info "Cloning #{source_path} to #{local_path}"
+
     Rugged::Repository.clone_at(
       source_path,
       local_path,
@@ -26,8 +36,10 @@ class Git
   end
 
   def update
+    log_info "Updating #{local_path} with latest from #{source_path}: origin/#{branch}"
+
     rugged_repo.reset("origin/#{branch}", :hard)
-    rugged_repo.fetch("origin")
+    rugged_repo.fetch("origin", credentials: @creds)
     rugged_repo.checkout("origin/#{branch}")
   end
 
@@ -46,11 +58,14 @@ class Git
   private
 
   def source
-    if test
+    if self.class.test
       File.expand_path(File.join(__dir__, "../../spec/fixtures/repos")) + "/"
     else
       "git@github.com:"
     end
   end
 
+  def log_info(message)
+    logger.&info message
+  end
 end

@@ -1,5 +1,7 @@
 AllCops:
   TargetRubyVersion: 2.5
+  Exclude:
+    - "repos/**/*"
 
 Bundler/OrderedGems:
   Enabled: false
@@ -23,6 +25,12 @@ Style/StringLiterals:
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
 
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
 Metrics/LineLength:
   Max: 200
 
@@ -34,3 +42,6 @@ Metrics/BlockLength:
   Exclude:
     - "apps/web/application.rb"
     - "spec/**/*"
+
+Naming/VariableNumber:
+  Enabled: false

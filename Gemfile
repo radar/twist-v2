@@ -14,6 +14,13 @@ gem 'dry-transaction'
 gem 'sidekiq'
 
 gem 'rugged'
+gem 'redcarpet'
+gem 'pygments.rb'
+gem 'nokogiri'
+
+gem 'shrine'
+
+gem 'rollbar'
 
 group :development do
   # Code reloading
@@ -34,6 +41,7 @@ end
 group :test do
   gem 'rspec'
   gem 'capybara'
+  gem 'database_cleaner'
 end
 
 group :production do

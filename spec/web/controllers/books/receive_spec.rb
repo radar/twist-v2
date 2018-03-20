@@ -4,17 +4,27 @@ describe Web::Controllers::Books::Receive do
   let(:params) do
     {
       permalink: "exploding-rails",
-      ref: "refs/heads/master"
+      ref: "refs/heads/master",
+      repository: {
+        full_name: "radar/exploding_rails",
+      },
     }
   end
 
   context "when book exists" do
     context "and the book is a markdown book" do
       let(:book) { Book.new(permalink: "exploding-rails", format: "markdown") }
+      let(:branch) { Branch.new(name: "master") }
       before { allow(subject).to receive(:find_book) { book } }
+      before { allow(subject).to receive(:find_or_create_branch) { branch } }
 
       it "triggers an update" do
-        expect(MarkdownBookWorker).to receive(:perform_async).with("exploding-rails", "master")
+        expect(MarkdownBookWorker).to receive(:perform_async)
+          .with(
+            permalink: "exploding-rails",
+            branch: "master",
+            github_path: "radar/exploding_rails",
+          )
         status, = subject.call(params)
         expect(status).to eq(200)
       end

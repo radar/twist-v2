@@ -41,7 +41,7 @@ Hanami.configure do
 
   environment :test do
     # See: http://hanamirb.org/guides/projects/logging
-    # logger level: :debug
+    logger level: :debug if ENV['VERBOSE']
   end
 
   environment :production do
