@@ -4,9 +4,9 @@ class MarkdownBookWorker
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def perform(args)
-    permalink = args[:permalink]
-    branch_name = args[:branch]
-    username, repo = args[:github_path].split("/")
+    permalink = args["permalink"]
+    branch_name = args["branch"]
+    username, repo = args["github_path"].split("/")
     book = find_book(permalink)
 
     raise "Book (#{permalink}) not found" unless book

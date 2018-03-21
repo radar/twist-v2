@@ -12,9 +12,9 @@ describe MarkdownBookWorker do
 
       it "processes a test Markdown book" do
         subject.perform(
-          permalink: book.permalink,
-          branch: branch.name,
-          github_path: "radar/markdown_book_test",
+          "permalink" => book.permalink,
+          "branch" => branch.name,
+          "github_path" => "radar/markdown_book_test",
         )
 
         chapters = chapter_repo.for_branch(branch.id).to_a
@@ -57,9 +57,9 @@ describe MarkdownBookWorker do
 
     it "can process the book" do
       subject.perform(
-        permalink: book.permalink,
-        branch: branch.name,
-        github_path: "rubysherpas/saas_book",
+        "permalink" => book.permalink,
+        "branch" => branch.name,
+        "github_path" => "rubysherpas/saas_book",
       )
 
       chapters = chapter_repo.for_branch(branch.id)
