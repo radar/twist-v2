@@ -12,22 +12,22 @@
 <% end %>
 
 <%=
-  form_for :user, routes.sign_up_path do
-    p do
+  form_for :user, routes.sign_up_path, class: 'col-md-6' do
+    div class: 'form-group' do
       label :email
-      email_field :email, required: true
+      email_field :email, required: true, class: 'form-control'
     end
 
-    p do
+    div class: 'form-group' do
       label :password
-      password_field :password, required: true
+      password_field :password, required: true, class: 'form-control'
     end
 
-    p do
+    div class: 'form-group' do
       label :password_confirmation
-      password_field :password_confirmation, required: true
+      password_field :password_confirmation, required: true, class: 'form-control'
     end
 
-    submit 'Sign Up'
+    submit 'Sign Up', class: 'btn btn-primary'
   end
 %>
