@@ -23,6 +23,7 @@ class Git
 
   def fetch!
     File.exist?(local_path) ? update : clone
+    head
   end
 
   def clone
@@ -56,7 +57,7 @@ class Git
   end
 
   def head
-    rugged_repo.head.target_id
+    rugged_repo.head.target
   end
 
   private

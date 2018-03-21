@@ -4,6 +4,7 @@ describe MarkdownBookWorker do
   let(:book_repo) { BookRepository.new }
   let(:branch_repo) { BranchRepository.new }
   let(:chapter_repo) { ChapterRepository.new }
+  let(:commit_repo) { CommitRepository.new }
 
   context "perform" do
     context "with markdown_book_test" do
@@ -17,7 +18,8 @@ describe MarkdownBookWorker do
           "github_path" => "radar/markdown_book_test",
         )
 
-        chapters = chapter_repo.for_branch(branch.id).to_a
+        commit = commit_repo.latest_for_branch(branch.id)
+        chapters = chapter_repo.for_commit(commit.id).to_a
 
         expect(chapters.count).to eq(4)
 
@@ -62,7 +64,8 @@ describe MarkdownBookWorker do
         "github_path" => "rubysherpas/saas_book",
       )
 
-      chapters = chapter_repo.for_branch(branch.id)
+      commit = CommitRepository.new.latest_for_branch(branch.id)
+      chapters = chapter_repo.for_commit(commit.id)
 
       expect(chapters.count).to eq(7)
     end

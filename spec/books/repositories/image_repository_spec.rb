@@ -4,10 +4,12 @@ describe ImageRepository do
   let(:book_repo) { BookRepository.new }
   let(:chapter_repo) { ChapterRepository.new }
   let(:branch_repo) { BranchRepository.new }
+  let(:commit_repo) { CommitRepository.new }
 
   let(:book) { book_repo.create(permalink: "markdown_book_test") }
   let(:branch) { book_repo.add_branch(book, name: "master") }
-  let(:chapter) { chapter_repo.create(branch_id: branch.id, title: "Chapter 1") }
+  let(:commit) { commit_repo.create(branch_id: branch.id, sha: "abc123") }
+  let(:chapter) { chapter_repo.create(commit_id: commit.id, title: "Chapter 1") }
 
   let(:image_path) { "spec/fixtures/repos/radar/markdown_book_test/images/chapter_1/1.png" }
   let(:filename) { File.basename(image_path) }

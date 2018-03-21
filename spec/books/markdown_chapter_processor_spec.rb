@@ -4,9 +4,11 @@ describe MarkdownChapterProcessor do
   let(:book_repo) { BookRepository.new }
   let(:element_repo) { ElementRepository.new }
   let(:image_repo) { ImageRepository.new }
+  let(:commit_repo) { CommitRepository.new }
 
   let!(:book) { book_repo.create(permalink: "markdown_book_test") }
   let!(:branch) { book_repo.add_branch(book, name: "master") }
+  let!(:commit) { commit_repo.create(branch_id: branch.id, sha: "abc123") }
   let!(:git) do
     Git.new(
       username: "radar",
@@ -16,7 +18,7 @@ describe MarkdownChapterProcessor do
 
   subject do
     MarkdownChapterProcessor.new(
-      branch,
+      commit,
       git.local_path,
       "chapter_1/chapter_1.markdown",
       "mainmatter",

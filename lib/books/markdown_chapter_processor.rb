@@ -1,6 +1,6 @@
 class MarkdownChapterProcessor
-  def initialize(branch, path, file_name, part, position)
-    @branch = branch
+  def initialize(commit, path, file_name, part, position)
+    @commit = commit
     @path = path
     @part = part
     @file_name = file_name
@@ -23,12 +23,12 @@ class MarkdownChapterProcessor
 
   private
 
-  attr_reader :branch, :path, :part, :file_name, :position
+  attr_reader :commit, :path, :part, :file_name, :position
 
   def create_chapter(title)
     repo = ChapterRepository.new
     repo.create(
-      branch_id: branch.id,
+      commit_id: commit.id,
       title: title,
       part: part,
       position: position + 1,
