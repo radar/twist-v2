@@ -1,15 +1,16 @@
 <h2>New Book</h2>
 
 <%=
-  form_for :book, routes.books_path do
+  form_for :book, routes.books_path, class: 'col-md-6' do
     div class: 'form-group' do
       label :title
       text_field :title, class: 'form-control'
     end
 
     hidden_field :source, value: "GitHub"
+    hidden_field :format, value: "markdown"
 
-    submit 'Create'
+    submit 'Create', class: 'btn btn-primary'
   end
 %>
 
