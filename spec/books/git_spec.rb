@@ -90,4 +90,12 @@ describe Git do
       end
     end
   end
+
+  context "head" do
+    before { subject.clone }
+
+    it "returns a sha of the HEAD" do
+      expect(subject.head).to eq("97753aca66e66a54d496db7c743b93c231b54378")
+    end
+  end
 end

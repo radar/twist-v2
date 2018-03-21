@@ -55,6 +55,10 @@ class Git
     source + "#{username}/#{repo}"
   end
 
+  def head
+    rugged_repo.head.target_id
+  end
+
   private
 
   def source
