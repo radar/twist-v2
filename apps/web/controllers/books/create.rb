@@ -9,13 +9,19 @@ module Web::Controllers::Books
         required(:title).filled
         required(:source).filled
         required(:format).filled
+        required(:default_branch).filled
       end
     end
 
     def call(params)
       book_params = params[:book]
       permalink = Books::Permalinker.new(book_params[:title]).permalink
-      book = book_repo.create(book_params.merge(permalink: permalink))
+      book = book_repo.create_with_branches(book_params.merge(
+        permalink: permalink,
+        branches: [
+          name: book_params[:default_branch]
+        ]
+      ))
       flash[:notice] = "Book has been added."
       redirect_to routes.setup_webhook_book_path(id: book.permalink)
     end
@@ -24,6 +30,17 @@ module Web::Controllers::Books
 
     def book_repo
       BookRepository.new
+    end
+
+    def branch_repo
+      BranchRepository.new
+    end
+
+    def create_branch(book_id, branch)
+      branch_repo.create(
+        book_id: book_id,
+        name: book_params[:default_branch]
+      )
     end
   end
 end

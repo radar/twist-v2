@@ -7,6 +7,6 @@ describe Web::Controllers::SignOut::Perform do
   it 'is successful' do
     status, headers, = action.call(params)
     expect(status).to eq(302)
-    expect(headers["Location"]).to eq("/")
+    expect(headers["Location"]).to eq("/users/sign_in")
   end
 end

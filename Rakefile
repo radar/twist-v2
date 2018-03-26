@@ -1,6 +1,7 @@
 require 'rake'
 require 'hanami/rake_tasks'
 require 'rspec/core/rake_task'
+load 'lib/tasks/seed.rake'
 
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.rspec_opts = "--tag ~integration"

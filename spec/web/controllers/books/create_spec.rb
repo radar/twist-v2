@@ -11,6 +11,8 @@ describe Web::Controllers::Books::Create do
         book: {
           title: "Markdown Book Test",
           source: "GitHub",
+          format: "markdown",
+          default_branch: "master",
         },
       }
     end
@@ -20,10 +22,15 @@ describe Web::Controllers::Books::Create do
     it 'creates a book with a permalink' do
       book_repo = double(BookRepository)
       allow(subject).to receive(:book_repo) { book_repo }
-      expect(book_repo).to receive(:create).with(
+      expect(book_repo).to receive(:create_with_branches).with(
         title: "Markdown Book Test",
         source: "GitHub",
         permalink: "markdown-book-test",
+        format: "markdown",
+        default_branch: "master",
+        branches: [
+          name: "master",
+        ],
       ).and_return(double(Book, permalink: "markdown-book-test"))
 
       subject.call(params)
