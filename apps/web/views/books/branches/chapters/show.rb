@@ -7,7 +7,7 @@ module Web
             include Web::View
 
             def render_elements(chapter)
-              _raw(chapter.elements.map(&:content)).join("\n")
+              _raw(chapter.elements.map(&:content).join("\n"))
             end
           end
         end
