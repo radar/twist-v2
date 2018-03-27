@@ -1,33 +1,9 @@
-# Books
+# Twist (v2)
 
-Welcome to your new Hanami project!
+This is an attempt to rewrite my [Rails-based book review
+app](https://github.com/radar/twist) in Hanami.
 
-## Setup
+It is a work-in-progress.
 
-How to run tests:
-
-```
-% bundle exec rake
-```
-
-How to run the development console:
-
-```
-% bundle exec hanami console
-```
-
-How to run the development server:
-
-```
-% bundle exec hanami server
-```
-
-How to prepare (create and migrate) DB for `development` and `test` environments:
-
-```
-% bundle exec hanami db prepare
-
-% HANAMI_ENV=test bundle exec hanami db prepare
-```
-
-Explore Hanami [guides](http://hanamirb.org/guides/), [API docs](http://docs.hanamirb.org/1.2.0.beta1/), or jump in [chat](http://chat.hanamirb.org) for help. Enjoy! 🌸
+My goal is to have this fully developed enough so that I can use it for
+reviewing my [Leanpub books](https://leanpub.com/u/ryanbigg).
