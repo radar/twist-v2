@@ -13,7 +13,7 @@ describe Web::Controllers::Books::SetupWebhook do
     end
 
     it 'is successful' do
-      response = subject.call(params)
+      response = subject.(params)
       expect(response[0]).to eq(200)
     end
   end

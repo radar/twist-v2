@@ -5,7 +5,7 @@ describe Web::Controllers::SignIn::New do
   let(:params) { Hash[] }
 
   it 'is successful' do
-    status, = action.call(params)
+    status, = action.(params)
     expect(status).to eq(200)
   end
 end

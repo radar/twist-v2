@@ -9,7 +9,7 @@ describe Web::Controllers::Books::New do
     before { fake_sign_in(user) }
 
     it 'is successful' do
-      response = subject.call(params)
+      response = subject.(params)
       expect(response[0]).to eq(200)
     end
   end

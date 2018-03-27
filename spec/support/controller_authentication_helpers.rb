@@ -7,7 +7,7 @@ end
 RSpec.shared_examples "requires authentication" do
   context 'when not signed in' do
     it 'redirects to sign in page' do
-      status, headers, = subject.call(params)
+      status, headers, = subject.(params)
       expect(status).to eq(302)
       expect(headers["Location"]).to include("/users/sign_in")
     end

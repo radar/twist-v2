@@ -4,7 +4,7 @@ RSpec.feature "Signing in", type: :feature do
   before do
     UserRepository.new.clear
 
-    Web::Transactions::CreateUser.new.call(
+    Web::Transactions::CreateUser.new.(
       email: "test@example.com",
       password: "password",
       password_confirmation: "password",

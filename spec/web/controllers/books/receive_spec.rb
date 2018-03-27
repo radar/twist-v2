@@ -25,7 +25,7 @@ describe Web::Controllers::Books::Receive do
             branch: "master",
             github_path: "radar/exploding_rails",
           )
-        status, _, body = subject.call(params)
+        status, _, body = subject.(params)
         expect(status).to eq(200)
         expect(body.first).to eq("OK")
       end
@@ -36,7 +36,7 @@ describe Web::Controllers::Books::Receive do
     before { allow(subject).to receive(:find_book) { nil } }
 
     it "reports back the book cannot be found" do
-      status, _, body = subject.call(params)
+      status, _, body = subject.(params)
       expect(status).to eq(404)
       expect(JSON.parse(body.first)).to eq("error" => "Book not found")
     end

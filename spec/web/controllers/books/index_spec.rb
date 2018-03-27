@@ -9,7 +9,7 @@ describe Web::Controllers::Books::Index do
     before { fake_sign_in(user) }
 
     it 'is successful' do
-      status, = subject.call(params)
+      status, = subject.(params)
       expect(status).to eq(200)
     end
   end

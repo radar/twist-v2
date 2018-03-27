@@ -2,7 +2,7 @@
   <div class='col-md-8 main'>
     <h1>Books</h1>
     <% books.each do |book| %>
-      <h2><%= link_to book.title, routes.book_branch_path(book_id: book.permalink, id: default_branches[book.id].name) %></h2>
+      <h2><%= link_to book.title, routes.book_branch_path(book_id: book.permalink, id: default_branch(book)) %></h2>
       <span class='blurb'><%= book.blurb %></span>
     <% end %>
   </div>

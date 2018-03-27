@@ -12,8 +12,12 @@ resources :books, only: %i[index new create show] do
     get :setup_webhook
   end
 
-  resources :branches
+  resources :branches do
+    resources :chapters
+  end
 end
 
 get '/books', to: 'books#setup_webhook'
 get '/books/:id', to: 'books#show'
+get '/books/branches/:id', to: 'books/branches#show'
+get '/books/branches/chapters/:id', to: 'books/branches/chapters#show'

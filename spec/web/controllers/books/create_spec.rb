@@ -20,24 +20,12 @@ describe Web::Controllers::Books::Create do
     before { fake_sign_in(user) }
 
     it 'creates a book with a permalink' do
-      book_repo = double(BookRepository)
-      allow(subject).to receive(:book_repo) { book_repo }
-      expect(book_repo).to receive(:create_with_branches).with(
-        title: "Markdown Book Test",
-        source: "GitHub",
-        permalink: "markdown-book-test",
-        format: "markdown",
-        default_branch: "master",
-        branches: [
-          name: "master",
-        ],
-      ).and_return(double(Book, permalink: "markdown-book-test"))
-
-      subject.call(params)
+      _status, headers, = subject.(params)
+      expect(headers["Location"]).to eq("/books/markdown-book-test/setup_webhook")
     end
 
     it 'redirects to setup webhook' do
-      _status, headers, = subject.call(params)
+      _status, headers, = subject.(params)
 
       expect(headers["Location"]).to include("setup_webhook")
     end

@@ -14,4 +14,3 @@ RSpec.feature "Signing out" do
     end
   end
 end
-

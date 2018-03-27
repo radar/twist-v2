@@ -7,8 +7,8 @@ class BookRepository < Hanami::Repository
     assoc(:branches).create(data)
   end
 
-  def ordered_by_title
-    books.order { :title }
+  def ordered_by_title_with_branches
+    aggregate(:branches).map_to(Book).order { :title }.to_a
   end
 
   def find_by_permalink(permalink)

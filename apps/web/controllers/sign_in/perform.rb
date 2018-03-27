@@ -4,7 +4,7 @@ module Web::Controllers::SignIn
 
     def call(params)
       transaction = Web::Transactions::Users::SignIn.new
-      transaction.call(params[:user]) do |result|
+      transaction.(params[:user]) do |result|
         result.success do |user|
           sign_in(user)
 

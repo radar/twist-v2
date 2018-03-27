@@ -4,6 +4,6 @@ task add_book: :environment do
     title: "Exploding Rails",
     source: "GitHub",
     format: "markdown",
-    default_branch: "master"
+    default_branch: "master",
   )
 end
