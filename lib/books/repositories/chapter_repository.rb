@@ -58,7 +58,9 @@ class ChapterRepository < Hanami::Repository
   end
 
   def previous_part(part)
-    PARTS[PARTS.index(part) - 1]
+    current_index = PARTS.index(part)
+    return if current_index == 0
+    PARTS[current_index - 1]
   end
 
   def next_part(part)

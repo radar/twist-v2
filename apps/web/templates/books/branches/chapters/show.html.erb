@@ -15,12 +15,16 @@
 
   <div class='col-md-4'>
     <div id='sidebar' class='sticky'>
-      <strong id='previous_chapter'><%= link_to previous_chapter.title, routes.book_branch_chapter_path(book_id: book.permalink, branch_id: branch.name, id: previous_chapter.permalink) %></strong>
-      <hr>
+      <% if previous_chapter %>
+        <strong id='previous_chapter'>&laquo; <%= link_to previous_chapter.title, routes.book_branch_chapter_path(book_id: book.permalink, branch_id: branch.name, id: previous_chapter.permalink) %></strong>
+        <hr>
+      <% end %>
       <ul id='section_listing'>
       </ul>
       <hr>
-      <strong id='next_chapter'><%= link_to next_chapter.title, routes.book_branch_chapter_path(book_id: book.permalink, branch_id: branch.name, id: next_chapter.permalink) %></strong>
+      <% if next_chapter %>
+        <strong id='next_chapter'><%= link_to next_chapter.title, routes.book_branch_chapter_path(book_id: book.permalink, branch_id: branch.name, id: next_chapter.permalink) %> &raquo;</strong>
+      <% end %>
     </div>
   </div>
 </div>
