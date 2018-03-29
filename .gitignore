@@ -1,8 +1,8 @@
-/db/*.sqlite
-/public/assets*
-/public/uploads/*
-/tmp
-repos/*
-spec/repos/*
-capybara-*
-node_modules
+*/db/*.sqlite
+backend/public/assets*
+backend/public/uploads/*
+*/tmp
+backend/repos/*
+backend/spec/repos/*
+backend/capybara-*
+*/node_modules

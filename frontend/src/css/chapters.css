@@ -1,0 +1,50 @@
+#chapter {
+  margin-left: 5em;
+  padding: 2.5rem 1.5rem; }
+  #chapter p, #chapter ol, #chapter ul {
+    line-height: 1.75; }
+  #chapter .image {
+    margin: 3rem 0;
+    text-align: center; }
+    #chapter .image img {
+      border: 1px solid #eee;
+      width: 95%; }
+    #chapter .image .missing_image {
+      background: red;
+      color: white; }
+  #chapter .aside, #chapter .tip {
+    background: #D9F1FF;
+    padding: 1rem;
+    margin-bottom: 2rem; }
+  #chapter pre, #chapter code {
+    font: 12px 'Input Mono', Inconsolata, Menlo, monospace;
+    letter-spacing: -0.5px; }
+  #chapter pre {
+    line-height: 150%; }
+
+#section_listing {
+  list-style-type: none;
+  margin-left: -2rem;
+  font-size: 90%; }
+  #section_listing li {
+    margin-bottom: 1rem; }
+    #section_listing li.major {
+      font-weight: bold; }
+    #section_listing li.minor {
+      font-size: 90%;
+      line-height: 90%; }
+
+.note_button {
+  float: left;
+  position: absolute;
+  left: -7rem;
+  font-size: 90%; }
+
+.footnote_container {
+  margin: 20px 0;
+  color: #848484;
+  font-size: 90%; }
+  .footnote_container .number {
+    font-size: 75%;
+    float: left;
+    margin-right: 10px; }

@@ -1,0 +1,23 @@
+.note {
+  .state-new, .state-accepted, .state-reopened {
+    color: green;
+  }
+
+  .state-rejected {
+    color: #df0000;
+  }
+
+  .comment {
+    border: 1px solid #eee;
+    margin: 1rem;
+
+    .avatar {
+      height: 70px;
+      padding: 0px;
+
+      img {
+        height: 100%;
+      }
+    }
+  }
+}

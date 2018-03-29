@@ -1,0 +1,76 @@
+#chapter {
+  margin-left: 5em;
+  padding: 2.5rem 1.5rem;
+
+  p, ol, ul {
+    line-height: 1.75;
+  }
+
+  .image {
+    margin: 3rem 0;
+    text-align: center;
+
+    img {
+      border: 1px solid #eee;
+      width: 95%;
+    }
+
+    .missing_image {
+      background: red;
+      color: white;
+    }
+  }
+
+  .aside, .tip {
+    background: #D9F1FF;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  pre, code {
+    font: 12px 'Input Mono', Inconsolata, Menlo, monospace;
+    letter-spacing: -0.5px;
+  }
+
+  pre {
+    line-height: 150%;
+  }
+}
+
+#section_listing {
+  list-style-type: none;
+  margin-left: -2rem;
+  font-size: 90%;
+
+  li {
+    margin-bottom: 1rem;
+
+    &.major {
+      font-weight: bold;
+    }
+
+    &.minor {
+      font-size: 90%;
+      line-height: 90%;
+    }
+  }
+}
+
+.note_button {
+  float: left;
+  position: absolute;
+  left: -7rem;
+  font-size: 90%;
+}
+
+.footnote_container {
+  margin: 20px 0;
+  color: lighten(#444, 25);
+  font-size: 90%;
+
+  .number {
+    font-size: 75%;
+    float: left;
+    margin-right: 10px;
+  }
+}
