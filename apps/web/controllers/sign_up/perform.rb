@@ -34,7 +34,7 @@ module Web::Controllers::SignUp
       end
 
       create_user = Web::Transactions::CreateUser.new
-      create_user.(params[:user]) do |result|
+      create_user.with_step_args(persist: [UserRepository.new]).(params[:user]) do |result|
         result.success do |user|
           sign_in(user)
 

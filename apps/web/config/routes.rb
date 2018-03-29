@@ -21,3 +21,6 @@ get '/books', to: 'books#setup_webhook'
 get '/books/:id', to: 'books#show'
 get '/books/branches/:id', to: 'books/branches#show'
 get '/books/branches/chapters/:id', to: 'books/branches/chapters#show'
+
+options '/graphql', to: 'graphql#run'
+post '/graphql', to: 'graphql#run'

@@ -5,3 +5,4 @@
 repos/*
 spec/repos/*
 capybara-*
+node_modules

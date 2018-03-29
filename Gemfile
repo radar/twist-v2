@@ -24,6 +24,9 @@ gem 'rollbar'
 
 gem 'babosa'
 
+gem 'graphql'
+gem 'rack-graphiql'
+
 group :development do
   # Code reloading
   # See: http://hanamirb.org/guides/projects/code-reloading

@@ -13,9 +13,8 @@ module Web
         Success(input)
       end
 
-      def persist(input)
-        repo = UserRepository.new
-        user = repo.create(
+      def persist(input, user_repo)
+        user = user_repo.create(
           email: input[:email],
           encrypted_password: input[:password],
         )
