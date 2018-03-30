@@ -3,11 +3,12 @@ module Web::Controllers::Graphql
     include Web::Action
 
     def call(params)
+      variables = params[:variables] || {}
       result = Books::GraphQL::Schema.execute(
         params[:query],
         # Stringify the variable keys here, as that's what GraphQL-Ruby expects them to be
         # Time spent discovering this: ~ 1 hour.
-        variables: params[:variables].map { |k,v| [k.to_s, v] }.to_h,
+        variables: variables.map { |k,v| [k.to_s, v] }.to_h,
       )
 
       headers["Access-Control-Allow-Origin"] = '*'
