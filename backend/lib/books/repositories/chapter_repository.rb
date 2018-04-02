@@ -7,23 +7,12 @@ class ChapterRepository < Hanami::Repository
     chapters.where(commit_id: commit_id)
   end
 
-  def for_commit_and_permalink_with_elements(commit_id, permalink)
-    aggregate(:elements).where(
-      commit_id: commit_id,
-      permalink: permalink,
-    ).map_to(Chapter).limit(1).one
+  def for_commit_and_part(commit_id, part)
+    for_commit(commit_id).where(part: part)
   end
 
-  def frontmatter(commit_id)
-    for_commit(commit_id).where(part: 'frontmatter')
-  end
-
-  def mainmatter(commit_id)
-    for_commit(commit_id).where(part: 'mainmatter')
-  end
-
-  def backmatter(commit_id)
-    for_commit(commit_id).where(part: 'backmatter')
+  def for_commit_and_permalink(commit_id, permalink)
+    for_commit(commit_id).where(permalink: permalink).limit(1).one
   end
 
   def wipe(commit_id)

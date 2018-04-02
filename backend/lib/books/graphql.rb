@@ -3,10 +3,86 @@ module Books
     BookType = ::GraphQL::ObjectType.define do
       name "Book"
       description "A book"
-      field :id, !types.ID
+      field :id, types.ID
       field :title, !types.String
       field :blurb, !types.String
       field :permalink, !types.String
+      field :defaultBranch, BranchType do
+        resolve -> (book, _args, ctx) {
+          branch_repo = BranchRepository.new
+          branches = branch_repo.by_book(book.id).to_a
+          branches.detect(&:default)
+        }
+      end
+    end
+
+    PartType = ::GraphQL::EnumType.define do
+      name "Book Parts"
+      description "Parts of the book"
+      value "FRONTMATTER", "The front of the book, introductions, prefaces, etc."
+      value "MAINMATTER", "The main content of the book"
+      value "BACKMATTER", "The back of the book, appendixes, etc."
+    end
+
+
+    BranchType = ::GraphQL::ObjectType.define do
+      name "Branch"
+      description "A branch"
+
+      field :id, types.ID
+      field :name, !types.String
+      field :default, !types.Boolean
+      field :chapters, types[ChapterType] do
+        argument :part, !PartType
+
+        resolve -> (branch, args, ctx) {
+          commit_repo = CommitRepository.new
+          commit = commit_repo.latest_for_branch(branch.id)
+          return [] unless commit
+
+          chapter_repo = ChapterRepository.new
+          chapter_repo.for_commit_and_part(commit.id, args["part"].downcase)
+        }
+      end
+
+      field :chapter, ChapterType do
+        argument :permalink, !types.String
+
+        resolve -> (branch, args, ctx) {
+          commit_repo = CommitRepository.new
+          commit = commit_repo.latest_for_branch(branch.id)
+          return [] unless commit
+
+          chapter_repo = ChapterRepository.new
+          chapter_repo.for_commit_and_permalink(commit.id, args["permalink"])
+        }
+      end
+    end
+
+    ChapterType = ::GraphQL::ObjectType.define do
+      name "Chapter"
+      description "A chapter"
+
+      field :id, types.ID
+      field :title, !types.String
+      field :part, !types.String
+      field :position, !types.Int
+      field :permalink, !types.String
+
+      field :elements, types[ElementType] do
+        resolve -> (chapter, _args, _ctx) {
+          element_repo = ElementRepository.new
+          element_repo.by_chapter(chapter.id)
+        }
+      end
+    end
+
+    ElementType = ::GraphQL::ObjectType.define do
+      name "Element"
+      description "An element"
+
+      field :id, types.ID
+      field :content, !types.String
     end
 
     QueryType = ::GraphQL::ObjectType.define do
@@ -21,7 +97,7 @@ module Books
       end
 
       field :book do
-        argument :permalink, types.String
+        argument :permalink, !types.String
 
         type BookType
         resolve -> (obj, args, ctx) {

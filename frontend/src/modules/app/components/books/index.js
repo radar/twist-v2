@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import container from './container';
 import { compose } from 'react-apollo';
 import { Link } from 'react-router-dom';
-import Error from '../../../../error';
-import Loading from '../../../../loading';
+
+import Error from 'error';
+import Loading from 'loading';
 
 class BookItem extends Component {
   render() {
+    const {permalink, title, blurb} = this.props;
     return (
       <div>
-        <h2><Link to={`/books/${this.props.permalink}`}>{this.props.title}</Link></h2>
-        <span class='blurb'>{this.props.blurb}</span>
+        <h2><Link to={`/books/${permalink}`}>{title}</Link></h2>
+        <span className='blurb'>{blurb}</span>
       </div>
     )
   }
