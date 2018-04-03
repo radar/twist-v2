@@ -85,6 +85,14 @@ module Books
       field :content, types.String
     end
 
+    UserType = ::GraphQL::ObjectType.define do
+      name "User"
+      description "A user"
+
+      field :id, types.ID
+      field :email, types.String
+    end
+
     QueryType = ::GraphQL::ObjectType.define do
       name "Query"
       description "The query root of this schema"
@@ -103,6 +111,14 @@ module Books
         resolve -> (obj, args, ctx) {
           book_repo = BookRepository.new
           book_repo.find_by_permalink(args[:permalink])
+        }
+      end
+
+      field :currentUser do
+        type UserType
+
+        resolve -> (obj, args, ctx) {
+          ctx[:current_user]
         }
       end
     end

@@ -1,32 +1,37 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import { graphql, compose } from "react-apollo";
+import loadingWrapper from 'loading_wrapper';
 
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    this.isAuthenticated = false;
-    setTimeout(cb, 100);
-  }
-};
+import gql from 'graphql-tag';
 
-export default ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      fakeAuth.isAuthenticated ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{
-            pathname: "/login",
-            state: { from: props.location }
-          }}
-        />
-      )
+const currentUserQuery = gql`
+  query currentUser {
+    currentUser {
+      email
     }
-  />
-);
+  }
+`;
+
+
+function PrivateRoute({ component: Component, data: { currentUser }, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        currentUser ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: props.location }
+            }}
+          />
+        )
+      }
+    />
+  )
+}
+
+export default graphql(currentUserQuery)(loadingWrapper(PrivateRoute));
