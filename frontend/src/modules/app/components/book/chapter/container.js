@@ -8,6 +8,7 @@ const book = gql`
       id
       permalink
       defaultBranch {
+        id
         chapter(permalink: $chapterPermalink) {
           id
           title
