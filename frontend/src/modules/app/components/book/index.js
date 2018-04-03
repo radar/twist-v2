@@ -3,8 +3,8 @@ import { compose } from 'react-apollo';
 import { Link } from 'react-router-dom';
 
 import {bookWithData } from './container';
-import Loading from 'loading';
-import Error from 'error';
+import errorWrapper from 'error_wrapper';
+import loadingWrapper from 'loading_wrapper';
 
 class ChapterLink extends Component {
   render() {
@@ -33,10 +33,7 @@ class Book extends React.Component {
   }
 
   render () {
-    const {data: {loading, error, book}} = this.props;
-
-    if (error) return <Error error={error.message} />;
-    if (loading) return <Loading />;
+    const {data: {book}} = this.props;
 
     const {title, defaultBranch: {frontmatter, mainmatter, backmatter}} = book;
 
@@ -57,4 +54,4 @@ class Book extends React.Component {
   }
 };
 
-export default compose(bookWithData)(Book);
+export default compose(bookWithData)(errorWrapper(loadingWrapper(Book)));

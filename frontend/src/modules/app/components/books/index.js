@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import container from './container';
 import { compose } from 'react-apollo';
 import { Link } from 'react-router-dom';
-
-import Error from 'error';
-import Loading from 'loading';
+import errorWrapper from 'error_wrapper';
+import loadingWrapper from 'loading_wrapper';
 
 class BookItem extends Component {
   render() {
@@ -18,21 +17,22 @@ class BookItem extends Component {
   }
 }
 
-function Books({ data: { loading, error, books}}) {
-  if (error) return <Error error={error.message} />;
-  if (loading) return <Loading />;
+class Books extends Component {
+  render() {
+    const {data: {books}} = this.props;
 
-  return (
-    <div className="row">
-      <div className="main col-md-7">
-        <h1>Your Books</h1>
+    return (
+      <div className="row">
+        <div className="main col-md-7">
+          <h1>Your Books</h1>
 
-        {books.map(book => (
-          <BookItem {...book} key={book.id}></BookItem>
-        ))}
+          {books.map(book => (
+            <BookItem {...book} key={book.id}></BookItem>
+          ))}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
-export default compose(container)(Books);
+export default compose(container)(errorWrapper(loadingWrapper(Books)));

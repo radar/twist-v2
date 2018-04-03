@@ -3,8 +3,8 @@ import { compose } from 'react-apollo';
 import { Link } from 'react-router-dom';
 
 import {chapterWithData} from './container';
-import Loading from 'loading';
-import Error from 'error';
+import errorWrapper from 'error_wrapper';
+import loadingWrapper from 'loading_wrapper';
 
 class Element extends React.Component {
   createMarkup() {
@@ -23,10 +23,7 @@ class Element extends React.Component {
 
 class Chapter extends Component {
   render () {
-    const {data: {loading, error, book}} = this.props;
-
-    if (error) return <Error error={error.message} />;
-    if (loading) return <Loading />;
+    const {data: {book}} = this.props;
 
     const {bookPermalink, defaultBranch: {chapter: {title: chapterTitle, position, part, elements}}} = book;
 
@@ -44,4 +41,4 @@ class Chapter extends Component {
   }
 };
 
-export default compose(chapterWithData)(Chapter);
+export default compose(chapterWithData)(errorWrapper(loadingWrapper(Chapter)));
