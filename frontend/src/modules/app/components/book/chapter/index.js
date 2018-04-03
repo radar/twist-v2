@@ -2,23 +2,11 @@ import React, { Component } from 'react';
 import { compose } from 'react-apollo';
 import { Link } from 'react-router-dom';
 
-import {chapterWithData} from './container';
 import errorWrapper from 'error_wrapper';
 import loadingWrapper from 'loading_wrapper';
 
-class Element extends React.Component {
-  createMarkup() {
-    return {__html: this.props.content};
-  }
-
-  render() {
-    return (
-      <div>
-        <div className='element' dangerouslySetInnerHTML={this.createMarkup()} />
-      </div>
-    )
-  }
-}
+import Element from './element';
+import {chapterWithData} from './container';
 
 
 class Chapter extends Component {

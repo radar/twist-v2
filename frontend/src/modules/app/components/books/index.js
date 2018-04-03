@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import container from './container';
 import { compose } from 'react-apollo';
 import { Link } from 'react-router-dom';
 import errorWrapper from 'error_wrapper';
 import loadingWrapper from 'loading_wrapper';
+
+import container from './container';
 
 class BookItem extends Component {
   render() {
