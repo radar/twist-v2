@@ -82,7 +82,7 @@ module Books
       description "An element"
 
       field :id, types.ID
-      field :content, !types.String
+      field :content, types.String
     end
 
     QueryType = ::GraphQL::ObjectType.define do
