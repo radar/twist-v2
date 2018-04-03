@@ -16,11 +16,6 @@
     background: #D9F1FF;
     padding: 1rem;
     margin-bottom: 2rem; }
-  #chapter pre, #chapter code {
-    font: 12px 'Input Mono', Inconsolata, Menlo, monospace;
-    letter-spacing: -0.5px; }
-  #chapter pre {
-    line-height: 150%; }
 
 #section_listing {
   list-style-type: none;
