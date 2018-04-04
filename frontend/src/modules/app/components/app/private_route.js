@@ -15,7 +15,7 @@ const currentUserQuery = gql`
   }
 `
 
-function PrivateRoute ({ component: Component, data: { currentUser }, ...rest }) {
+function PrivateRoute({ component: Component, data: { currentUser }, ...rest }) {
   return (
     <Route
       {...rest}
@@ -37,9 +37,7 @@ function PrivateRoute ({ component: Component, data: { currentUser }, ...rest })
 
 PrivateRoute.propTypes = {
   component: PropTypes.func,
-  location: PropTypes.shape({
-
-  }),
+  location: PropTypes.shape({}),
   data: PropTypes.shape({
     currentUser: PropTypes.shape({
       email: PropTypes.string

@@ -27,7 +27,7 @@ const book = gql`
 `
 
 export const chapterWithData = graphql(book, {
-  options: (props) => ({
+  options: props => ({
     variables: {
       bookPermalink: props.match.params.bookPermalink,
       chapterPermalink: props.match.params.chapterPermalink

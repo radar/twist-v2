@@ -10,7 +10,7 @@ class Login extends Component {
     password: ''
   }
 
-  render () {
+  render() {
     return (
       <div className="row">
         <div className="main col-md-7">

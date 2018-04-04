@@ -7,11 +7,11 @@ import { ApolloProvider } from 'react-apollo'
 import './App.css'
 
 class Root extends Component {
-  render () {
+  render() {
     return (
-      <ApolloProvider client={ apolloClient }>
+      <ApolloProvider client={apolloClient}>
         <BrowserRouter>
-          <App></App>
+          <App />
         </BrowserRouter>
       </ApolloProvider>
     )

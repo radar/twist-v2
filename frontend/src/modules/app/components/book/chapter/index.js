@@ -7,27 +7,32 @@ import errorWrapper from 'error_wrapper'
 import loadingWrapper from 'loading_wrapper'
 
 import Element from './element'
-import {chapterWithData} from './container'
+import { chapterWithData } from './container'
 
 class Chapter extends Component {
-  render () {
-    const {data: {book}} = this.props
+  render() {
+    const { data: { book } } = this.props
 
-    const {bookPermalink, defaultBranch: {chapter: {title: chapterTitle, position, elements}}} = book
+    const {
+      bookPermalink,
+      defaultBranch: { chapter: { title: chapterTitle, position, elements } }
+    } = book
 
     return (
-      <div className='row'>
-        <div id='chapter' className='main col-md-7'>
-          <h1><Link to={`/books/${bookPermalink}`}>{book.title}</Link></h1>
-          <h2>{position}. {chapterTitle}</h2>
-          {elements.map(element => (
-            <Element {...element} key={element.id} />
-          ))}
+      <div className="row">
+        <div id="chapter" className="main col-md-7">
+          <h1>
+            <Link to={`/books/${bookPermalink}`}>{book.title}</Link>
+          </h1>
+          <h2>
+            {position}. {chapterTitle}
+          </h2>
+          {elements.map(element => <Element {...element} key={element.id} />)}
         </div>
       </div>
     )
   }
-};
+}
 
 Chapter.propTypes = {
   data: PropTypes.shape({
@@ -39,11 +44,13 @@ Chapter.propTypes = {
           title: PropTypes.string.isRequired,
           position: PropTypes.number.isRequired,
           part: PropTypes.string.isRequired,
-          elements: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            content: PropTypes.string,
-            tag: PropTypes.string.isRequired
-          }))
+          elements: PropTypes.arrayOf(
+            PropTypes.shape({
+              id: PropTypes.string.isRequired,
+              content: PropTypes.string,
+              tag: PropTypes.string.isRequired
+            })
+          )
         })
       })
     })

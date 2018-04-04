@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Error from 'error'
 
-export default function errorWrapper (WrappedComponent) {
+export default function errorWrapper(WrappedComponent) {
   class ErrorWrapper extends Component {
-    render () {
-      const {data: {error}} = this.props
+    render() {
+      const { data: { error } } = this.props
 
       if (error) return <Error error={error.message} />
 

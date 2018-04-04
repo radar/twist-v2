@@ -1,0 +1,2 @@
+./node_modules/.bin/prettier "src/**/*.js" --write
+./node_modules/.bin/eslint src/**/*.js
