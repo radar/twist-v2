@@ -65,7 +65,7 @@ class Login extends Component {
 
 Login.propTypes = {
   loginMutation: PropTypes.func,
-  history: PropTypes.string.isRequired
+  history: PropTypes.object.isRequired
 }
 
 export default compose(container)(Login)
