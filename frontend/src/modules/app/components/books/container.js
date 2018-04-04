@@ -1,5 +1,5 @@
-import { graphql, compose } from "react-apollo";
-import gql from 'graphql-tag';
+import { graphql, compose } from 'react-apollo'
+import gql from 'graphql-tag'
 
 const allBooks = gql`
   query BooksQuery {
@@ -10,7 +10,6 @@ const allBooks = gql`
       blurb
     }
   }
-`;
+`
 
-
-export default compose(graphql(allBooks));
+export default compose(graphql(allBooks))

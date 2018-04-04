@@ -1,5 +1,5 @@
-import { graphql } from "react-apollo";
-import gql from 'graphql-tag';
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 
 const book = gql`
   query bookQuery($permalink:String!) {
@@ -29,10 +29,10 @@ const book = gql`
     position
     permalink
   }
-`;
+`
 
 export const bookWithData = graphql(book, {
   options: (props) => ({
     variables: { permalink: props.match.params.permalink }
-  }),
-});
+  })
+})

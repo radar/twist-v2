@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { compose } from 'react-apollo';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import { compose } from 'react-apollo'
+import { Link } from 'react-router-dom'
 
-import {bookWithData } from './container';
-import errorWrapper from 'error_wrapper';
-import loadingWrapper from 'loading_wrapper';
+import {bookWithData } from './container'
+import errorWrapper from 'error_wrapper'
+import loadingWrapper from 'loading_wrapper'
 
 class ChapterLink extends Component {
-  render() {
-    const {bookPermalink, title, permalink} = this.props;
+  render () {
+    const {bookPermalink, title, permalink} = this.props
 
     return (
       <li><Link to={`/books/${bookPermalink}/chapters/${permalink}`}>{title}</Link></li>
@@ -17,8 +17,8 @@ class ChapterLink extends Component {
 }
 
 class Book extends React.Component {
-  renderPart(title, chapters) {
-    const permalink = this.props.data.book.permalink;
+  renderPart (title, chapters) {
+    const permalink = this.props.data.book.permalink
 
     return (
       <div>
@@ -29,13 +29,13 @@ class Book extends React.Component {
           ))}
         </ol>
       </div>
-    );
+    )
   }
 
   render () {
-    const {data: {book}} = this.props;
+    const {data: {book}} = this.props
 
-    const {title, defaultBranch: {frontmatter, mainmatter, backmatter}} = book;
+    const {title, defaultBranch: {frontmatter, mainmatter, backmatter}} = book
 
     return (
       <div className='row'>
@@ -54,4 +54,4 @@ class Book extends React.Component {
   }
 };
 
-export default compose(bookWithData)(errorWrapper(loadingWrapper(Book)));
+export default compose(bookWithData)(errorWrapper(loadingWrapper(Book)))

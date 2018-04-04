@@ -1,5 +1,5 @@
-import { graphql } from "react-apollo";
-import gql from 'graphql-tag';
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 
 const book = gql`
   query chapterQuery($bookPermalink: String!, $chapterPermalink: String!) {
@@ -23,7 +23,7 @@ const book = gql`
       }
     }
   }
-`;
+`
 
 export const chapterWithData = graphql(book, {
   options: (props) => ({
@@ -31,5 +31,5 @@ export const chapterWithData = graphql(book, {
       bookPermalink: props.match.params.bookPermalink,
       chapterPermalink: props.match.params.chapterPermalink
     }
-  }),
-});
+  })
+})

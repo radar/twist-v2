@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
-import { compose } from 'react-apollo';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import { compose } from 'react-apollo'
+import { Link } from 'react-router-dom'
 
-import errorWrapper from 'error_wrapper';
-import loadingWrapper from 'loading_wrapper';
+import errorWrapper from 'error_wrapper'
+import loadingWrapper from 'loading_wrapper'
 
-import Element from './element';
-import {chapterWithData} from './container';
-
+import Element from './element'
+import {chapterWithData} from './container'
 
 class Chapter extends Component {
   render () {
-    const {data: {book}} = this.props;
+    const {data: {book}} = this.props
 
-    const {bookPermalink, defaultBranch: {chapter: {title: chapterTitle, position, part, elements}}} = book;
+    const {bookPermalink, defaultBranch: {chapter: {title: chapterTitle, position, part, elements}}} = book
 
     return (
       <div className='row'>
@@ -29,4 +28,4 @@ class Chapter extends Component {
   }
 };
 
-export default compose(chapterWithData)(errorWrapper(loadingWrapper(Chapter)));
+export default compose(chapterWithData)(errorWrapper(loadingWrapper(Chapter)))

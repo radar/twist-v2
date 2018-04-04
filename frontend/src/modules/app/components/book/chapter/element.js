@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class NoteForm extends React.Component {
   render () {
@@ -20,49 +20,49 @@ class NoteForm extends React.Component {
 }
 
 export default class Element extends Component {
-  constructor() {
-    super();
+  constructor () {
+    super()
 
     this.state = {
       showForm: false,
       showThanks: false
     }
 
-    this.toggleForm = this.toggleForm.bind(this);
-    this.noteSubmitted = this.noteSubmitted.bind(this);
+    this.toggleForm = this.toggleForm.bind(this)
+    this.noteSubmitted = this.noteSubmitted.bind(this)
   }
 
-  createMarkup() {
-    return {__html: this.props.content};
+  createMarkup () {
+    return {__html: this.props.content}
   }
 
-  renderNotesCount(count) {
-    return (count === 1 ? "1 note +" : `${count} notes +`)
+  renderNotesCount (count) {
+    return (count === 1 ? '1 note +' : `${count} notes +`)
   }
 
-  toggleForm(e) {
-    this.setState({showThanks: false, showForm: !this.state.showForm});
+  toggleForm (e) {
+    this.setState({showThanks: false, showForm: !this.state.showForm})
     if (e) { e.preventDefault() };
   }
 
-  renderThanks() {
+  renderThanks () {
 
   }
 
-  noteSubmitted(notesCount) {
-    this.toggleForm();
+  noteSubmitted (notesCount) {
+    this.toggleForm()
     this.setState({showThanks: true, notesCount: notesCount})
   }
 
-  renderForm() {
+  renderForm () {
     if (!this.state.showForm) { return }
-    const {chapterURL, elementID} = this.props;
+    const {chapterURL, elementID} = this.props
     return <NoteForm noteSubmitted={this.noteSubmitted} elementID={this.props.id} />
   }
 
-  render() {
-    const {id, tag} = this.props;
-    const notesCount = 0;
+  render () {
+    const {id, tag} = this.props
+    const notesCount = 0
     return (
       <div>
         <a name={id} />

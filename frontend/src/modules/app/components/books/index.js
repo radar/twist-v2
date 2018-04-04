@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { compose } from 'react-apollo';
-import { Link } from 'react-router-dom';
-import errorWrapper from 'error_wrapper';
-import loadingWrapper from 'loading_wrapper';
+import React, { Component } from 'react'
+import { compose } from 'react-apollo'
+import { Link } from 'react-router-dom'
+import errorWrapper from 'error_wrapper'
+import loadingWrapper from 'loading_wrapper'
 
-import container from './container';
+import container from './container'
 
 class BookItem extends Component {
-  render() {
-    const {permalink, title, blurb} = this.props;
+  render () {
+    const {permalink, title, blurb} = this.props
     return (
       <div>
         <h2><Link to={`/books/${permalink}`}>{title}</Link></h2>
@@ -19,8 +19,8 @@ class BookItem extends Component {
 }
 
 class Books extends Component {
-  render() {
-    const {data: {books}} = this.props;
+  render () {
+    const {data: {books}} = this.props
 
     return (
       <div className="row">
@@ -32,8 +32,8 @@ class Books extends Component {
           ))}
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default compose(container)(errorWrapper(loadingWrapper(Books)));
+export default compose(container)(errorWrapper(loadingWrapper(Books)))

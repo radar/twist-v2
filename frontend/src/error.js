@@ -1,14 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class Error extends Component {
-  render() {
+  render () {
     return (
       <div className="error">
         {this.props.error}
       </div>
-    );
+    )
   }
 }
 
-export default Error;
+Error.propTypes = {
+  error: PropTypes.string.isRequired
+}
 
+export default Error
