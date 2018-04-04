@@ -6,6 +6,7 @@ module Books
 
       field :id, types.ID
       field :content, types.String
+      field :tag, types.String
     end
   end
 end
