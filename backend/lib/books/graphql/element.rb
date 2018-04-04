@@ -7,6 +7,9 @@ module Books
       field :id, types.ID
       field :content, types.String
       field :tag, types.String
+      field :noteCount, types.Int do
+        resolve Resolvers::Notes::Count.new
+      end
     end
   end
 end

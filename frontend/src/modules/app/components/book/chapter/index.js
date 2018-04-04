@@ -48,7 +48,8 @@ Chapter.propTypes = {
             PropTypes.shape({
               id: PropTypes.string.isRequired,
               content: PropTypes.string,
-              tag: PropTypes.string.isRequired
+              tag: PropTypes.string.isRequired,
+              noteCount: PropTypes.number.isRequired
             })
           )
         })

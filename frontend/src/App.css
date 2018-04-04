@@ -40,7 +40,7 @@
 .note_button {
   float: left;
   position: absolute;
-  left: -7rem;
+  left: -4.5rem;
   font-size: 90%; }
 
 .footnote_container {
@@ -51,6 +51,20 @@
     font-size: 75%;
     float: left;
     margin-right: 10px; }
+
+.thanks-enter {
+  opacity: 0.01; }
+
+.thanks-enter.thanks-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in; }
+
+.thanks-leave {
+  opacity: 1; }
+
+.thanks-leave.thanks-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in; }
 
 .note .state-new, .note .state-accepted, .note .state-reopened {
   color: green; }

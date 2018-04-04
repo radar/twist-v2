@@ -1,4 +1,4 @@
-import { graphql } from 'react-apollo'
+import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 
 const book = gql`
@@ -19,6 +19,7 @@ const book = gql`
             id
             content
             tag
+            noteCount
           }
         }
       }
@@ -34,3 +35,13 @@ export const chapterWithData = graphql(book, {
     }
   })
 })
+
+const noteMut = gql`
+  mutation noteMutation($elementID: String!, $text: String!) {
+    note(elementID: $elementID, text: $text) {
+      id
+    }
+  }
+`
+
+export const noteMutation = compose(graphql(noteMut, { name: 'noteMutation' }))
