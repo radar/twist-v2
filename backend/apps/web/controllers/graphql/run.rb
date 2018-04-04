@@ -9,7 +9,7 @@ module Web::Controllers::Graphql
         params[:query],
         # Stringify the variable keys here, as that's what GraphQL-Ruby expects them to be
         # Time spent discovering this: ~ 1 hour.
-        variables: variables.map { |k,v| [k.to_s, v] }.to_h,
+        variables: Hanami::Utils::Hash.stringify(params[:variables]),
         context: {
           current_user: find_current_user(params.env["HTTP_AUTHORIZATION"])
         }
