@@ -8,11 +8,7 @@ module Books
       field :blurb, !types.String
       field :permalink, !types.String
       field :defaultBranch, BranchType do
-        resolve -> (book, _args, ctx) {
-          branch_repo = BranchRepository.new
-          branches = branch_repo.by_book(book.id).to_a
-          branches.detect(&:default)
-        }
+        resolve Books::GraphQL::Resolvers::Branch.new
       end
     end
   end
