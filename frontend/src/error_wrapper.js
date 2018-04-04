@@ -15,7 +15,7 @@ export default function errorWrapper (WrappedComponent) {
 
   ErrorWrapper.propTypes = {
     data: PropTypes.shape({
-      error: PropTypes.string.isRequired
+      error: PropTypes.string
     })
   }
 

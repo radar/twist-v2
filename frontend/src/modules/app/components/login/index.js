@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
-import { compose } from 'react-apollo';
+import React, { Component } from 'react'
+import { compose } from 'react-apollo'
+import PropTypes from 'prop-types'
 
-import container from './container';
+import container from './container'
 
 class Login extends Component {
   state = {
     email: '',
-    password: '',
+    password: ''
   }
 
-  render() {
+  render () {
     return (
       <div className="row">
         <div className="main col-md-7">
@@ -48,19 +49,23 @@ class Login extends Component {
   }
 
   _confirm = async () => {
-    const { email, password } = this.state;
+    const { email, password } = this.state
     const result = await this.props.loginMutation({
       variables: {
         email,
-        password,
-      },
+        password
+      }
     })
 
-    localStorage.setItem('auth-token', result.data.token)
+    window.localStorage.setItem('auth-token', result.data.token)
 
-    this.props.history.push("/")
+    this.props.history.push(`/`)
   }
 }
 
-export default compose(container)(Login);
+Login.propTypes = {
+  loginMutation: PropTypes.func,
+  history: PropTypes.string.isRequired
+}
 
+export default compose(container)(Login)

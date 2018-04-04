@@ -18,6 +18,7 @@ const book = gql`
           elements {
             id
             content
+            tag
           }
         }
       }

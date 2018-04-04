@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { compose } from 'react-apollo'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+
 import errorWrapper from 'error_wrapper'
 import loadingWrapper from 'loading_wrapper'
 
@@ -16,6 +18,12 @@ class BookItem extends Component {
       </div>
     )
   }
+}
+
+BookItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  permalink: PropTypes.string.isRequired,
+  blurb: PropTypes.string.isRequired
 }
 
 class Books extends Component {
@@ -34,6 +42,16 @@ class Books extends Component {
       </div>
     )
   }
+}
+
+Books.propTypes = {
+  data: PropTypes.shape({
+    books: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      permalink: PropTypes.string.isRequired,
+      blurb: PropTypes.string.isRequired
+    }))
+  })
 }
 
 export default compose(container)(errorWrapper(loadingWrapper(Books)))

@@ -15,10 +15,10 @@ export default function loadingWrapper (WrappedComponent) {
 
   LoadingWrapper.propTypes = {
     data: PropTypes.shape({
-      error: PropTypes.string.isRequired
+      loading: PropTypes.function
     })
   }
 
-  LoadingWrapper.displayName = 'ErrorWrapper'
+  LoadingWrapper.displayName = 'LoadingWrapper'
   return LoadingWrapper
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class NoteForm extends React.Component {
   render () {
@@ -19,7 +20,12 @@ class NoteForm extends React.Component {
   }
 }
 
-export default class Element extends Component {
+NoteForm.propTypes = {
+  elementID: PropTypes.number.isRequired,
+  content: PropTypes.string.isRequired
+}
+
+class Element extends Component {
   constructor () {
     super()
 
@@ -56,7 +62,6 @@ export default class Element extends Component {
 
   renderForm () {
     if (!this.state.showForm) { return }
-    const {chapterURL, elementID} = this.props
     return <NoteForm noteSubmitted={this.noteSubmitted} elementID={this.props.id} />
   }
 
@@ -76,3 +81,11 @@ export default class Element extends Component {
     )
   }
 }
+
+Element.propTypes = {
+  id: PropTypes.string.isRequired,
+  content: PropTypes.string,
+  tag: PropTypes.string.isRequired
+}
+
+export default Element
