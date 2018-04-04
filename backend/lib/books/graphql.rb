@@ -6,4 +6,3 @@ module Books
     end
   end
 end
-

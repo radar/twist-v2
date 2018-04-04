@@ -13,7 +13,7 @@ class UserRepository < Hanami::Repository
 
   def regenerate_token(id)
     new_token = SecureRandom.hex(32)
-    update(id, {auth_token: new_token})
+    update(id, auth_token: new_token)
     new_token
   end
 end

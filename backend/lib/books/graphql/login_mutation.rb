@@ -8,15 +8,8 @@ module Books
         argument :email, !types.String
         argument :password, !types.String
 
-        resolve -> (obj, args, ctx) {
-          user_repo = UserRepository.new
-          user = user_repo.find_by_email(args["email"])
-          if user.correct_password?(args["password"])
-            user_repo.regenerate_token(user.id)
-          end
-        }
+        resolve Resolvers::Users::Authenticate.new
       end
     end
   end
 end
-

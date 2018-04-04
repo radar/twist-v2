@@ -18,7 +18,7 @@ module Books
       field :currentUser do
         type UserType
 
-        resolve -> (obj, args, ctx) { ctx[:current_user] }
+        resolve ->(_obj, _args, ctx) { ctx[:current_user] }
       end
     end
   end

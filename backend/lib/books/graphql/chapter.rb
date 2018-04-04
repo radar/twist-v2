@@ -11,10 +11,7 @@ module Books
       field :permalink, !types.String
 
       field :elements, types[ElementType] do
-        resolve -> (chapter, _args, _ctx) {
-          element_repo = ElementRepository.new
-          element_repo.by_chapter(chapter.id)
-        }
+        resolve Resolvers::Element::ByChapter.new
       end
     end
   end
