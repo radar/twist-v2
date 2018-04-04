@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "bootstrap": "4.0",
-    "graphiql": "^0.11.11"
-  }
-}
