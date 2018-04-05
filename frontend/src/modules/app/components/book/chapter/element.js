@@ -15,12 +15,12 @@ type ElementState = {
 }
 
 class Element extends Component<ElementProps, ElementState> {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       showForm: false,
-      noteCount: this.props.noteCount
+      noteCount: props.noteCount
     }
   }
 
