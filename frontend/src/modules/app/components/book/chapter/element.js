@@ -34,7 +34,6 @@ class Element extends Component<ElementProps, ElementState> {
   }
 
   toggleForm = (e: ?Function) => {
-
     this.setState({ showForm: !this.state.showForm })
     if (e) {
       e.preventDefault()
@@ -54,7 +53,7 @@ class Element extends Component<ElementProps, ElementState> {
   }
 
   render() {
-    const { id, tag, noteCount } = this.props
+    const { id, tag } = this.props
     return (
       <div>
         <a name={id} />

@@ -6,9 +6,9 @@ import { compose } from 'react-apollo'
 import container from './container'
 
 type LoginProps = {
-  loginMutation: function,
+  loginMutation: Function,
   history: {
-    push: function
+    push: Function
   }
 }
 

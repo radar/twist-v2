@@ -8,7 +8,7 @@ import { noteMutation } from './container'
 
 type NoteFormProps = {
   elementID: string,
-  noteMutation: function
+  noteMutation: Function
 }
 
 type NoteFormState = {
