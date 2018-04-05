@@ -269,7 +269,6 @@ module Web
       #
       # See: http://www.rubydoc.info/gems/hanami-controller#Configuration
       controller.prepare do
-        include Web::Controllers::Authentication
         # include MyAuthentication # included in all the actions
         # before :authenticate!    # run an authentication before callback
       end
@@ -279,11 +278,8 @@ module Web
       #
       # See: http://www.rubydoc.info/gems/hanami-view#Configuration
       view.prepare do
-        require_relative 'views/authentication'
-
         include Hanami::Helpers
         include Web::Assets::Helpers
-        include Web::Views::Authentication
       end
     end
 
