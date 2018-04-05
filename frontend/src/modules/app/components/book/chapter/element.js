@@ -33,7 +33,8 @@ class Element extends Component<ElementProps, ElementState> {
     return count === 1 ? '1 note +' : `${count} notes +`
   }
 
-  toggleForm = (e: ?function) => {
+  toggleForm = (e: ?Function) => {
+
     this.setState({ showForm: !this.state.showForm })
     if (e) {
       e.preventDefault()
