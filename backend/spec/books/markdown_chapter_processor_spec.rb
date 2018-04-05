@@ -16,6 +16,10 @@ describe MarkdownChapterProcessor do
     )
   end
 
+  before do
+    git.fetch!
+  end
+
   subject do
     MarkdownChapterProcessor.new(
       commit,
