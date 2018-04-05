@@ -1,6 +1,8 @@
+// @flow
+
 import React from 'react'
 
-function Loading() {
+function Loading(props: {}) {
   return <div className="loading">Loading...</div>
 }
 

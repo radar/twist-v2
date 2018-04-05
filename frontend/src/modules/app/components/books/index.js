@@ -1,14 +1,20 @@
+// @flow
 import React, { Component } from 'react'
 import { compose } from 'react-apollo'
 import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
 
-import errorWrapper from 'error_wrapper'
-import loadingWrapper from 'loading_wrapper'
+import errorWrapper from 'modules/error_wrapper'
+import loadingWrapper from 'modules/loading_wrapper'
 
 import container from './container'
 
-class BookItem extends Component {
+type BookItemProps = {
+  title: string,
+  permalink: string,
+  blurb: string
+}
+
+class BookItem extends Component<BookItemProps> {
   render() {
     const { permalink, title, blurb } = this.props
     return (
@@ -22,13 +28,20 @@ class BookItem extends Component {
   }
 }
 
-BookItem.propTypes = {
-  title: PropTypes.string.isRequired,
-  permalink: PropTypes.string.isRequired,
-  blurb: PropTypes.string.isRequired
+type Book = {
+  id: string,
+  title: string,
+  permalink: string,
+  blurb: string
 }
 
-class Books extends Component {
+type BooksProps = {
+  data: {
+    books: Array<Book>
+  }
+}
+
+class Books extends Component<BooksProps> {
   render() {
     const { data: { books } } = this.props
 
@@ -42,18 +55,6 @@ class Books extends Component {
       </div>
     )
   }
-}
-
-Books.propTypes = {
-  data: PropTypes.shape({
-    books: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        permalink: PropTypes.string.isRequired,
-        blurb: PropTypes.string.isRequired
-      })
-    )
-  })
 }
 
 export default compose(container)(errorWrapper(loadingWrapper(Books)))

@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { App } from './modules/app/components/app'
@@ -6,7 +8,9 @@ import { ApolloProvider } from 'react-apollo'
 
 import './App.css'
 
-class Root extends Component {
+type Props = {}
+
+class Root extends Component<Props> {
   render() {
     return (
       <ApolloProvider client={apolloClient}>

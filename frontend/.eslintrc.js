@@ -1,6 +1,7 @@
 module.exports = {
   "extends": ["standard", "plugin:react/recommended", "plugin:jest/recommended"],
   "parser": "babel-eslint",
+  "plugins": ["flowtype"],
   "rules": {
     "strict": 0,
     // incompatible with prettier

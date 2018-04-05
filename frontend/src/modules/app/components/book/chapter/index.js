@@ -1,20 +1,45 @@
+// import @flow
+
 import React, { Component } from 'react'
 import { compose } from 'react-apollo'
 import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
 
-import errorWrapper from 'error_wrapper'
-import loadingWrapper from 'loading_wrapper'
+import errorWrapper from 'modules/error_wrapper'
+import loadingWrapper from 'modules/loading_wrapper'
 
 import Element from './element'
 import { chapterWithData } from './container'
 
-class Chapter extends Component {
+type ElementProps = {
+  id: string,
+  content: string,
+  tag: string,
+  noteCount: number
+}
+
+type ChapterProps = {
+  data: {
+    book: {
+      title: string,
+      permalink: string,
+      defaultBranch: {
+        chapter: {
+          title: string,
+          position: number,
+          part: string,
+          elements: Array<ElementProps>
+        }
+      }
+    }
+  }
+}
+
+class Chapter extends Component<ChapterProps> {
   render() {
     const { data: { book } } = this.props
 
     const {
-      bookPermalink,
+      permalink: bookPermalink,
       defaultBranch: { chapter: { title: chapterTitle, position, elements } }
     } = book
 
@@ -32,30 +57,6 @@ class Chapter extends Component {
       </div>
     )
   }
-}
-
-Chapter.propTypes = {
-  data: PropTypes.shape({
-    book: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      permalink: PropTypes.string.isRequired,
-      defaultBranch: PropTypes.shape({
-        chapter: PropTypes.shape({
-          title: PropTypes.string.isRequired,
-          position: PropTypes.number.isRequired,
-          part: PropTypes.string.isRequired,
-          elements: PropTypes.arrayOf(
-            PropTypes.shape({
-              id: PropTypes.string.isRequired,
-              content: PropTypes.string,
-              tag: PropTypes.string.isRequired,
-              noteCount: PropTypes.number.isRequired
-            })
-          )
-        })
-      })
-    })
-  })
 }
 
 export default compose(chapterWithData)(errorWrapper(loadingWrapper(Chapter)))

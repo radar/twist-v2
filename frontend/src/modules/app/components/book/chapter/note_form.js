@@ -1,14 +1,29 @@
+// @flow
+
 import React, { Component } from 'react'
 import { compose } from 'react-apollo'
-import PropTypes from 'prop-types'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import { noteMutation } from './container'
 
-class NoteForm extends Component {
-  state = {
-    showThanks: false,
-    text: ''
+type NoteFormProps = {
+  elementID: string,
+  noteMutation: function
+}
+
+type NoteFormState = {
+  showThanks: boolean,
+  text: string
+}
+
+class NoteForm extends Component<NoteFormProps, NoteFormState> {
+  constructor() {
+    super()
+
+    this.state = {
+      showThanks: false,
+      text: ''
+    }
   }
 
   render() {
@@ -35,10 +50,12 @@ class NoteForm extends Component {
   }
 
   renderThanks() {
-    if (!this.state.showThanks) { return }
+    if (!this.state.showThanks) {
+      return
+    }
     return (
       <ReactCSSTransitionGroup
-        transitionName='example'
+        transitionName="example"
         transitionEnterTimeout={500}
         transitionLeaveTimeout={3000}
       >
@@ -47,11 +64,11 @@ class NoteForm extends Component {
     )
   }
 
-  showThanks = () => {
-    this.setState({showThanks: true})
+  showThanks() {
+    this.setState({ showThanks: true })
   }
 
-  _submit = async () => {
+  async _submit() {
     await this.props.noteMutation({
       variables: {
         elementID: this.props.elementID,
@@ -59,13 +76,8 @@ class NoteForm extends Component {
       }
     })
 
-    this.setState({showThanks: true})
+    this.setState({ showThanks: true })
   }
-}
-
-NoteForm.propTypes = {
-  elementID: PropTypes.string.isRequired,
-  noteMutation: PropTypes.func
 }
 
 export default compose(noteMutation)(NoteForm)

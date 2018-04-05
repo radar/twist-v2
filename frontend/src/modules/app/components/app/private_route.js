@@ -1,9 +1,10 @@
-import React from 'react'
+// @flow
+
+import * as React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { graphql } from 'react-apollo'
-import PropTypes from 'prop-types'
 
-import loadingWrapper from 'loading_wrapper'
+import loadingWrapper from 'modules/loading_wrapper'
 
 import gql from 'graphql-tag'
 
@@ -15,7 +16,18 @@ const currentUserQuery = gql`
   }
 `
 
-function PrivateRoute({ component: Component, data: { currentUser }, ...rest }) {
+type Props = {
+  component: React.ComponentType<any>,
+  location: {},
+  data: {
+    currentUser: {
+      email: string
+    }
+  }
+}
+
+function PrivateRoute(props: Props) {
+  const { component: Component, data: { currentUser }, ...rest } = props
   return (
     <Route
       {...rest}
@@ -33,16 +45,6 @@ function PrivateRoute({ component: Component, data: { currentUser }, ...rest }) 
       }
     />
   )
-}
-
-PrivateRoute.propTypes = {
-  component: PropTypes.func,
-  location: PropTypes.shape({}),
-  data: PropTypes.shape({
-    currentUser: PropTypes.shape({
-      email: PropTypes.string
-    })
-  })
 }
 
 export default graphql(currentUserQuery)(loadingWrapper(PrivateRoute))

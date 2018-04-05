@@ -1,13 +1,30 @@
+// @flow
+
 import React, { Component } from 'react'
 import { compose } from 'react-apollo'
-import PropTypes from 'prop-types'
 
 import container from './container'
 
-class Login extends Component {
-  state = {
-    email: '',
-    password: ''
+type LoginProps = {
+  loginMutation: function,
+  history: {
+    push: function
+  }
+}
+
+type LoginState = {
+  email: string,
+  password: string
+}
+
+class Login extends Component<LoginProps, LoginState> {
+  constructor() {
+    super()
+
+    this.state = {
+      email: '',
+      password: ''
+    }
   }
 
   render() {
@@ -48,7 +65,7 @@ class Login extends Component {
     )
   }
 
-  _confirm = async () => {
+  async _confirm() {
     const { email, password } = this.state
     const result = await this.props.loginMutation({
       variables: {
@@ -61,11 +78,6 @@ class Login extends Component {
 
     this.props.history.push(`/`)
   }
-}
-
-Login.propTypes = {
-  loginMutation: PropTypes.func,
-  history: PropTypes.object.isRequired
 }
 
 export default compose(container)(Login)

@@ -1,37 +1,48 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import NoteForm from './note_form'
 
-class Element extends Component {
+type ElementProps = {
+  id: string,
+  content: string,
+  tag: string,
+  noteCount: number
+}
+
+type ElementState = {
+  showForm: boolean,
+  noteCount: number
+}
+
+class Element extends Component<ElementProps, ElementState> {
   constructor() {
     super()
 
     this.state = {
-      showForm: false
+      showForm: false,
+      noteCount: this.props.noteCount
     }
-
-    this.toggleForm = this.toggleForm.bind(this)
-    this.noteSubmitted = this.noteSubmitted.bind(this)
   }
 
   createMarkup() {
     return { __html: this.props.content }
   }
 
-  renderNotesCount(count) {
+  renderNotesCount() {
+    const count = this.state.noteCount
     return count === 1 ? '1 note +' : `${count} notes +`
   }
 
-  toggleForm(e) {
+  toggleForm = (e: ?function) => {
     this.setState({ showForm: !this.state.showForm })
     if (e) {
       e.preventDefault()
     }
   }
 
-  noteSubmitted(notesCount) {
+  noteSubmitted(noteCount: number) {
     this.toggleForm()
-    this.setState({ notesCount: notesCount })
+    this.setState({ noteCount: noteCount })
   }
 
   renderForm() {
@@ -48,7 +59,7 @@ class Element extends Component {
         <a name={id} />
         <span className={`note_button note_button_${tag}`} id={`note_button_${id}`}>
           <a href="#" onClick={this.toggleForm}>
-            {this.renderNotesCount(noteCount)}
+            {this.renderNotesCount()}
           </a>
         </span>
         <div className="element" dangerouslySetInnerHTML={this.createMarkup()} />
@@ -56,13 +67,6 @@ class Element extends Component {
       </div>
     )
   }
-}
-
-Element.propTypes = {
-  id: PropTypes.string.isRequired,
-  content: PropTypes.string,
-  tag: PropTypes.string.isRequired,
-  noteCount: PropTypes.number.isRequired
 }
 
 export default Element

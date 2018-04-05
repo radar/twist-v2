@@ -1,14 +1,15 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+// @flow
 
-class Error extends Component {
+import React, { Component } from 'react'
+
+type ErrorProps = {
+  error: string
+}
+
+class Error extends Component<ErrorProps> {
   render() {
     return <div className="error">{this.props.error}</div>
   }
-}
-
-Error.propTypes = {
-  error: PropTypes.string.isRequired
 }
 
 export default Error

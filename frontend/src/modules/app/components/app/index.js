@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
@@ -7,7 +8,9 @@ import Book from 'modules/app/components/book'
 import Chapter from 'modules/app/components/book/chapter'
 import Login from 'modules/app/components/login'
 
-export function App() {
+type Props = {}
+
+export function App(props: Props) {
   return (
     <div className="container">
       <Switch>
