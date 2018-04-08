@@ -10,6 +10,10 @@ module Books
       field :defaultBranch, BranchType do
         resolve Books::GraphQL::Resolvers::Branch.new
       end
+
+      field :elementsWithNotes, types[ElementType] do
+        resolve Resolvers::Element::ByBook.new
+      end
     end
   end
 end

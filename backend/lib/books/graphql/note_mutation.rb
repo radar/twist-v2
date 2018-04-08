@@ -7,7 +7,7 @@ module Books
         argument :elementID, !types.String
         argument :text, !types.String
 
-        resolve Resolvers::Notes::Submit.new
+        resolve Resolvers::Note::Submit.new
       end
     end
   end

@@ -23,6 +23,9 @@ GEM
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
     database_cleaner (1.6.2)
+    dataloader (1.0.0)
+      concurrent-ruby (~> 1)
+      promise.rb (~> 0.7.3)
     debug_inspector (0.0.3)
     diff-lcs (1.3)
     dotenv (2.2.1)
@@ -144,6 +147,7 @@ GEM
       ast (~> 2.4.0)
     pg (1.0.0)
     powerpack (0.1.1)
+    promise.rb (0.7.4)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -151,7 +155,6 @@ GEM
     pygments.rb (1.1.2)
       multi_json (>= 1.0.0)
     rack (2.0.4)
-    rack-graphiql (0.1.1)
     rack-protection (2.0.1)
       rack
     rack-test (0.8.3)
@@ -243,6 +246,7 @@ DEPENDENCIES
   bcrypt
   capybara
   database_cleaner
+  dataloader
   dotenv (~> 2.0)
   dry-transaction
   graphql
@@ -254,7 +258,6 @@ DEPENDENCIES
   pg
   pry
   pygments.rb
-  rack-graphiql
   rake
   redcarpet
   rollbar

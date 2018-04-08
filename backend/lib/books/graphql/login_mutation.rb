@@ -8,7 +8,7 @@ module Books
         argument :email, !types.String
         argument :password, !types.String
 
-        resolve Resolvers::Users::Authenticate.new
+        resolve Resolvers::User::Authenticate.new
       end
     end
   end

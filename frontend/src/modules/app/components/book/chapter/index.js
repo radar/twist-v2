@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import errorWrapper from 'modules/error_wrapper'
 import loadingWrapper from 'modules/loading_wrapper'
 
-import Element from './element'
+import { Element } from './element'
 import { chapterWithData } from './container'
 
 type ElementProps = {

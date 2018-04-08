@@ -43,17 +43,3 @@
     font-size: 75%;
     float: left;
     margin-right: 10px; }
-
-.thanks-enter {
-  opacity: 0.01; }
-
-.thanks-enter.thanks-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in; }
-
-.thanks-leave {
-  opacity: 1; }
-
-.thanks-leave.thanks-leave-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in; }

@@ -2,7 +2,7 @@ module Books
   module GraphQL
     module Resolvers
       module Chapter
-        class All
+        class ByPart
           def call(branch, args, _ctx)
             commit_repo = CommitRepository.new
             commit = commit_repo.latest_for_branch(branch.id)

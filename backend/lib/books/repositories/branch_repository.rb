@@ -1,4 +1,9 @@
 class BranchRepository < Hanami::Repository
+  associations do
+    belongs_to :book
+    has_many :commits
+  end
+
   def by_book(book_id)
     branches.where(book_id: book_id)
   end

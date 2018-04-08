@@ -25,7 +25,7 @@ gem 'rollbar'
 gem 'babosa'
 
 gem 'graphql'
-gem 'rack-graphiql'
+gem 'dataloader'
 
 group :development do
   # Code reloading

@@ -14,18 +14,24 @@ type ElementState = {
   noteCount: number
 }
 
-class Element extends Component<ElementProps, ElementState> {
-  constructor(props) {
+export class BareElement extends Component<ElementProps> {
+  createMarkup() {
+    return { __html: this.props.content }
+  }
+
+  render() {
+    return <div className="element" dangerouslySetInnerHTML={this.createMarkup()} />
+  }
+}
+
+export class Element extends Component<ElementProps, ElementState> {
+  constructor(props: ElementProps) {
     super(props)
 
     this.state = {
       showForm: false,
       noteCount: props.noteCount
     }
-  }
-
-  createMarkup() {
-    return { __html: this.props.content }
   }
 
   renderNotesCount() {
@@ -62,11 +68,9 @@ class Element extends Component<ElementProps, ElementState> {
             {this.renderNotesCount()}
           </a>
         </span>
-        <div className="element" dangerouslySetInnerHTML={this.createMarkup()} />
+        <BareElement {...this.props} />
         {this.renderForm()}
       </div>
     )
   }
 }
-
-export default Element

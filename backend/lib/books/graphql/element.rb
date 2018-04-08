@@ -8,7 +8,11 @@ module Books
       field :content, types.String
       field :tag, types.String
       field :noteCount, types.Int do
-        resolve Resolvers::Notes::Count.new
+        resolve Resolvers::Note::Count.new
+      end
+
+      field :notes, types[NoteType] do
+        resolve Resolvers::Note::ByElement.new
       end
     end
   end

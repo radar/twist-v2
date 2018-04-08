@@ -65,13 +65,13 @@ class Book extends Component<BookProps> {
   render() {
     const { data: { book } } = this.props
 
-    const { title, defaultBranch: { frontmatter, mainmatter, backmatter } } = book
+    const { title, permalink, defaultBranch: { frontmatter, mainmatter, backmatter } } = book
 
     return (
       <div className="row">
         <div className="col-md-7 main">
           <h1>{title}</h1>
-          LINK TO NOTES GOES HERE
+          <Link to={`/books/${permalink}/notes`}>Notes for this book</Link>
           <hr />
           {this.renderPart('Frontmatter', frontmatter)}
           {this.renderPart('Mainmatter', mainmatter)}

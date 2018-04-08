@@ -1,3 +1,33 @@
+.element-group {
+  background: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #e9e9e9;
+  margin-bottom: 10px;
+  border-radius: 5px;
+
+  .element {
+    background: white;
+    padding: 10px;
+    border: 1px solid #e9e9e9;
+    border-radius: 5px;
+  }
+}
+
+.notes {
+  .note {
+    margin: 20px 0px;
+    padding-left: 5px;
+    padding-top: 5px;
+    background: white;
+    border: 1px solid #e9e9e9;
+    border-radius: 5px;
+
+    .avatar {
+      width: 80px;
+    }
+  }
+}
+
 .note {
   .state-new, .state-accepted, .state-reopened {
     color: green;

@@ -1,4 +1,8 @@
 class CommitRepository < Hanami::Repository
+  associations do
+    belongs_to :branch
+  end
+
   def latest_for_branch(branch_id)
     by_branch(branch_id)
       .order { created_at.desc }

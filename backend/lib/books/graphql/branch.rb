@@ -10,7 +10,7 @@ module Books
       field :chapters, types[ChapterType] do
         argument :part, !PartType
 
-        resolve Resolvers::Chapter::All.new
+        resolve Resolvers::Chapter::ByPart.new
       end
 
       field :chapter, ChapterType do

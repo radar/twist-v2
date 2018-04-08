@@ -1,7 +1,6 @@
 require 'bundler/setup'
 require 'hanami/setup'
 require 'hanami/model'
-require 'rack-graphiql'
 
 require_relative '../lib/books'
 require_relative '../apps/web/application'

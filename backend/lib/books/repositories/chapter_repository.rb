@@ -1,5 +1,6 @@
 class ChapterRepository < Hanami::Repository
   associations do
+    belongs_to :commit
     has_many :elements
   end
 

@@ -3,6 +3,10 @@ class UserRepository < Hanami::Repository
     users.by_pk(id).one
   end
 
+  def by_ids(ids)
+    users.where(id: ids)
+  end
+
   def find_by_email(email)
     users.where(email: email).one
   end

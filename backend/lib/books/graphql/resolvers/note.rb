@@ -1,7 +1,21 @@
 module Books
   module GraphQL
     module Resolvers
-      module Notes
+      module Note
+        class ByBook
+          def call(book, _args, _ctx)
+            book_note_repo = BookNoteRepository.new
+            book_note_repo.by_book(book.id)
+          end
+        end
+
+        class ByElement
+          def call(element, _args, _ctx)
+            book_note_repo = BookNoteRepository.new
+            book_note_repo.by_element(element.id)
+          end
+        end
+
         class Count
           def call(element, _args, _ctx)
             note_repo = NoteRepository.new
