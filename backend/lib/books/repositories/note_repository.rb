@@ -8,7 +8,7 @@ class NoteRepository < Hanami::Repository
       .as(NoteCount)
       .to_a
 
-    _, missing = element_ids.partition { |id| counts.detect { |c| c.element_id == id } }
+    missing = element_ids.select { |id| counts.none? { |c| c.element_id == id } }
     counts += missing.map { |m| NoteCount.new(element_id: m, count: 0) }
     counts.map { |element_id:, count:| [element_id, count] }.to_h
   end
