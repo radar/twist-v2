@@ -8,6 +8,7 @@ module Web::Controllers::Graphql
       variables = params[:variables] || {}
       find_current_user(params.env["HTTP_AUTHORIZATION"])
       user_loader = Dataloader.new { |ids| UserRepository.new.by_ids(ids).to_a }
+      note_count_loader = Dataloader.new { |element_ids| NoteRepository.new.count(element_ids) }
       result = Books::GraphQL::Schema.execute(
         params[:query],
         # Stringify the variable keys here, as that's what GraphQL-Ruby expects them to be
@@ -15,6 +16,7 @@ module Web::Controllers::Graphql
         variables: Hanami::Utils::Hash.stringify(variables),
         context: {
           user_loader: user_loader,
+          note_count_loader: note_count_loader,
           current_user: find_current_user(params.env["HTTP_AUTHORIZATION"]),
         },
       )

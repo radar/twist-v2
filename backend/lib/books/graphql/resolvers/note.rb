@@ -17,9 +17,8 @@ module Books
         end
 
         class Count
-          def call(element, _args, _ctx)
-            note_repo = NoteRepository.new
-            note_repo.count(element.id)
+          def call(element, _args, ctx)
+            ctx[:note_count_loader].load(element.id)
           end
         end
 
