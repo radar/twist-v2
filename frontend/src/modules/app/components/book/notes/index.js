@@ -47,16 +47,14 @@ class Notes extends Component<NotesProps> {
     const { data: { book: { title, permalink, elements } } } = this.props
 
     return (
-      <div className="row">
-        <div className="col-md-7 main">
-          <h1>
-            <Link to={`/books/${permalink}`}>{title}</Link> - Notes
-          </h1>
+      <div>
+        <h1>
+          <Link to={`/books/${permalink}`}>{title}</Link> - Notes
+        </h1>
 
-          {elements.map(element => (
-            <Element {...element} bookPermalink={permalink} key={element.id} />
-          ))}
-        </div>
+        {elements.map(element => (
+          <Element {...element} bookPermalink={permalink} key={element.id} />
+        ))}
       </div>
     )
   }
@@ -67,10 +65,12 @@ class Element extends Component<ElementProps> {
     const { bookPermalink, notes } = this.props
 
     return (
-      <div className='element-group'>
-        <BareElement {...this.props} />
-        <div className="notes">
-          {notes.map(note => <Note {...note} bookPermalink={bookPermalink} key={note.id} />)}
+      <div className="row">
+        <div className="col-md-7 main element-group">
+          <BareElement {...this.props} />
+          <div className="notes">
+            {notes.map(note => <Note {...note} bookPermalink={bookPermalink} key={note.id} />)}
+          </div>
         </div>
       </div>
     )
