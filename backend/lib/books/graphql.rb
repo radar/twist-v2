@@ -4,8 +4,7 @@ module Books
       lazy_resolve(Promise, :sync)
 
       query QueryType
-      mutation LoginMutationType
-      mutation NoteMutationType
+      mutation Mutations
     end
   end
 end

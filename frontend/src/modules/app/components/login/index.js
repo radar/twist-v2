@@ -74,7 +74,7 @@ class Login extends Component<LoginProps, LoginState> {
       }
     })
 
-    window.localStorage.setItem('auth-token', result.data.token)
+    window.localStorage.setItem('auth-token', result.data.login)
 
     this.props.history.push(`/`)
   }
