@@ -1,12 +1,3 @@
-[submodule "spec/fixtures/radar/markdown_book_test"]
-	path = spec/fixtures/repos/radar/markdown_book_test
-	url = git://github.com/radar/markdown_book_test
-[submodule "spec/fixtures/repos/radar/markdown_book_test"]
-	path = spec/fixtures/repos/radar/markdown_book_test
-	url = git://github.com/radar/markdown_book_test
-[submodule "spec/books/repos/radar/markdown_book_test"]
-	path = spec/books/repos/radar/markdown_book_test
-	url = git://github.com/radar/markdown_book_test
 [submodule "backend/spec/fixtures/repos/radar/markdown_book_test"]
 	path = backend/spec/fixtures/repos/radar/markdown_book_test
 	url = git://github.com/radar/markdown_book_test
