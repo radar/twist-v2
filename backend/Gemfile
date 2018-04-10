@@ -27,6 +27,8 @@ gem 'babosa'
 gem 'graphql'
 gem 'dataloader'
 
+gem 'puma'
+
 group :development do
   # Code reloading
   # See: http://hanamirb.org/guides/projects/code-reloading
@@ -35,6 +37,10 @@ group :development do
   gem 'hanami-webconsole'
 
   gem 'rubocop'
+
+  gem 'capistrano'
+  gem 'capistrano-chruby'
+  gem 'capistrano-bundler'
 end
 
 group :test, :development do
@@ -50,6 +56,3 @@ group :test do
   gem 'launchy'
 end
 
-group :production do
-  # gem 'puma'
-end

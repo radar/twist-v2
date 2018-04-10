@@ -3,6 +3,8 @@ GEM
   specs:
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    airbrussh (1.3.0)
+      sshkit (>= 1.6.1, != 1.7.0)
     ast (2.4.0)
     babosa (1.0.2)
     bcrypt (3.1.11)
@@ -12,6 +14,17 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
+    capistrano (3.10.1)
+      airbrussh (>= 1.0.0)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (>= 1.9.0)
+    capistrano-bundler (1.3.0)
+      capistrano (~> 3.1)
+      sshkit (~> 1.2)
+    capistrano-chruby (0.1.2)
+      capistrano (~> 3.0)
+      sshkit (~> 1.3)
     capybara (2.18.0)
       addressable
       mini_mime (>= 0.1.3)
@@ -130,6 +143,8 @@ GEM
     http_router (0.11.2)
       rack (>= 1.0.0)
       url_mount (~> 0.2.1)
+    i18n (1.0.0)
+      concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     inflecto (0.0.2)
     launchy (2.4.3)
@@ -140,6 +155,9 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     multi_json (1.13.1)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (4.2.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     parallel (1.12.1)
@@ -152,6 +170,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     public_suffix (3.0.2)
+    puma (3.11.3)
     pygments.rb (1.1.2)
       multi_json (>= 1.0.0)
     rack (2.0.4)
@@ -227,6 +246,9 @@ GEM
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
+    sshkit (1.16.0)
+      net-scp (>= 1.1.2)
+      net-ssh (>= 2.8.0)
     tilt (2.0.8)
     transproc (1.0.2)
     unicode-display_width (1.3.0)
@@ -244,6 +266,9 @@ PLATFORMS
 DEPENDENCIES
   babosa
   bcrypt
+  capistrano
+  capistrano-bundler
+  capistrano-chruby
   capybara
   database_cleaner
   dataloader
@@ -257,6 +282,7 @@ DEPENDENCIES
   nokogiri
   pg
   pry
+  puma
   pygments.rb
   rake
   redcarpet
