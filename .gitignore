@@ -1,6 +1,7 @@
 */db/*.sqlite
 backend/public/assets*
 backend/public/uploads/*
+backend/shared
 */tmp
 backend/repos/*
 backend/spec/repos/*
