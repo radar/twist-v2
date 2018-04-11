@@ -41,6 +41,7 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-chruby'
   gem 'capistrano-bundler'
+  gem 'capistrano-hanami', require: false
 end
 
 group :test, :development do
