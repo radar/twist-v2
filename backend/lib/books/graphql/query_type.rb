@@ -1,3 +1,8 @@
+require_relative 'book'
+require_relative 'user'
+
+require_relative 'resolvers/book'
+
 module Books
   module GraphQL
     QueryType = ::GraphQL::ObjectType.define do

@@ -1,3 +1,8 @@
+require_relative 'note'
+
+require_relative 'resolvers/note'
+require_relative 'resolvers/user'
+
 module Books
   module GraphQL
     Mutations = ::GraphQL::ObjectType.define do

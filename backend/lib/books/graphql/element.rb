@@ -1,3 +1,6 @@
+require_relative 'note'
+require_relative 'resolvers/note'
+
 module Books
   module GraphQL
     ElementType = ::GraphQL::ObjectType.define do

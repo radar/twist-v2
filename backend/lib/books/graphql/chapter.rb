@@ -1,3 +1,6 @@
+require_relative 'element'
+require_relative 'resolvers/element'
+
 module Books
   module GraphQL
     ChapterType = ::GraphQL::ObjectType.define do

@@ -1,3 +1,8 @@
+require_relative 'chapter'
+require_relative 'part'
+
+require_relative 'resolvers/chapter'
+
 module Books
   module GraphQL
     BranchType = ::GraphQL::ObjectType.define do

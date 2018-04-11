@@ -1,3 +1,5 @@
+require_relative 'resolvers/note'
+
 module Books
   module GraphQL
     NoteMutationType = ::GraphQL::ObjectType.define do

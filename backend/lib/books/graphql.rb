@@ -1,3 +1,6 @@
+require_relative 'graphql/query_type'
+require_relative 'graphql/mutations'
+
 module Books
   module GraphQL
     Schema = ::GraphQL::Schema.define do

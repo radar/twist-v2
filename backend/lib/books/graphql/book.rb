@@ -1,3 +1,9 @@
+require_relative 'branch'
+require_relative 'element'
+
+require_relative 'resolvers/branch'
+require_relative 'resolvers/element'
+
 module Books
   module GraphQL
     BookType = ::GraphQL::ObjectType.define do
