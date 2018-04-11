@@ -148,10 +148,11 @@ module.exports = {
             test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
-            options: {
-              
-              compact: true,
-            },
+            query: {
+              presets: ['env', 'react', 'stage-0'],
+              plugins: ['transform-object-rest-spread', 'transform-async-to-generator'],
+              compact: true
+            }
           },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
