@@ -3,7 +3,7 @@ module Web::Controllers::Books
     include Web::Action
 
     def call(params)
-      book = find_book(params[:id])
+      book = find_book(params[:permalink])
       unless book
         self.status = 404
         self.body = JSON.generate(error: "Book not found")
