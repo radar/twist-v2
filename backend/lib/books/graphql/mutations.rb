@@ -11,7 +11,7 @@ module Books
         resolve Resolvers::User::Authenticate.new
       end
 
-      field :note, NoteType do
+      field :createNote, NoteType do
         argument :elementID, !types.String
         argument :text, !types.String
 

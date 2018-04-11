@@ -8,16 +8,13 @@ module Books
         resolve Resolvers::Book::All.new
       end
 
-      field :book do
+      field :book, BookType do
         argument :permalink, !types.String
 
-        type BookType
         resolve Resolvers::Book::ByPermalink.new
       end
 
-      field :currentUser do
-        type UserType
-
+      field :currentUser, UserType do
         resolve ->(_obj, _args, ctx) { ctx[:current_user] }
       end
     end
