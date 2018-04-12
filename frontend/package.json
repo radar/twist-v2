@@ -75,6 +75,8 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.10.0",
     "eslint-plugin-node": "^6.0.1",
@@ -83,6 +85,7 @@
     "flow-bin": "^0.69.0",
     "node-sass": "^4.8.3",
     "prettier": "^1.11.1",
+    "react-test-renderer": "^16.3.1",
     "sass-loader": "^6.0.7"
   },
   "jest": {
@@ -90,7 +93,9 @@
       "src/**/*.{js,jsx,mjs}"
     ],
     "setupFiles": [
-      "<rootDir>/config/polyfills.js"
+      "<rootDir>/config/polyfills.js",
+      "<rootDir>/config/jest/enzyme.js"
+
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
@@ -111,12 +116,12 @@
     },
     "moduleFileExtensions": [
       "web.js",
-      "mjs",
       "js",
       "json",
       "web.jsx",
       "jsx",
-      "node"
+      "node",
+      "mjs"
     ]
   },
   "babel": {
