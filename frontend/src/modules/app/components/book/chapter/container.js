@@ -38,7 +38,7 @@ export const chapterWithData = graphql(book, {
 
 const noteMut = gql`
   mutation noteMutation($elementID: String!, $text: String!) {
-    note(elementID: $elementID, text: $text) {
+    createNote(elementID: $elementID, text: $text) {
       id
     }
   }
