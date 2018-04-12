@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
 import PrivateRoute from './private_route'
 import Books from 'modules/app/components/books'
@@ -24,6 +24,7 @@ export function App(props: Props) {
           path="/books/:bookPermalink/chapters/:chapterPermalink"
           component={Chapter}
         />
+        <Redirect from="/books" to="/" />
         <PrivateRoute component={NotFound} />
       </Switch>
     </div>
