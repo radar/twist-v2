@@ -1,25 +1,25 @@
-// Link.react.test.js
 import React from 'react';
-import Books from './index.js';
-import { shallow } from 'enzyme';
-import { ApolloProvider } from 'react-apollo'
+import renderer from 'react-test-renderer'
+import { MemoryRouter } from 'react-router'
+import { Books } from './index.js'
 
-const client = {}
+const RouterContext = React.createContext('router');
 
 test('Books', () => {
   const data = {
-    loading: false,
     books: [
       {
         id: 1,
         title: "Exploding Rails",
         permalink: "exploding-rails",
-        blurb: "Explode your Rails application"
+        blurb: "Explode your Rails applications"
       }
     ]
   }
-  const component = shallow(
-    <Books data={data} />
+  const component = renderer.create(
+    <MemoryRouter>
+      <Books data={data} />
+    </MemoryRouter>
   );
-  expect(component.render()).toMatchSnapshot();
+  expect(component.toJSON()).toMatchSnapshot();
 });

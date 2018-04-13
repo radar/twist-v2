@@ -38,7 +38,7 @@
     "graphql-tag": "^2.8.0",
     "gravatar": "^1.6.0",
     "html-webpack-plugin": "2.29.0",
-    "jest": "20.0.4",
+    "jest": "22",
     "moment": "^2.22.0",
     "node-sass-chokidar": "^1.2.2",
     "object-assign": "4.1.1",
@@ -70,7 +70,9 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "devDependencies": {
+    "apollo-link-schema": "^1.1.0",
     "babel-cli": "^6.26.0",
+    "babel-plugin-inline-import": "^2.0.6",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-polyfill": "^6.26.0",
     "babel-preset-flow": "^6.23.0",
@@ -82,7 +84,9 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
+    "faker": "^4.1.0",
     "flow-bin": "^0.69.0",
+    "graphql-tools": "^2.24.0",
     "node-sass": "^4.8.3",
     "prettier": "^1.11.1",
     "react-test-renderer": "^16.3.1",
@@ -95,7 +99,6 @@
     "setupFiles": [
       "<rootDir>/config/polyfills.js",
       "<rootDir>/config/jest/enzyme.js"
-
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",

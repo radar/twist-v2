@@ -57,4 +57,5 @@ class Books extends Component<BooksProps> {
   }
 }
 
-export default compose(container)(errorWrapper(loadingWrapper(Books)))
+export const WrappedBooks = compose(container)(errorWrapper(loadingWrapper(Books)))
+export { Books }
