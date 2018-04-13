@@ -1,7 +1,7 @@
 module Books
   module GraphQL
     PartType = ::GraphQL::EnumType.define do
-      name "Book Parts"
+      name "BookParts"
       description "Parts of the book"
       value "FRONTMATTER", "The front of the book, introductions, prefaces, etc."
       value "MAINMATTER", "The main content of the book"
