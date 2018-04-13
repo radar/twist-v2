@@ -91,7 +91,7 @@ GEM
       dry-types (~> 0.11.0)
     erubi (1.7.0)
     ffi (1.9.23)
-    graphql (1.7.13)
+    graphql (1.7.14)
     hanami (1.2.0.rc2)
       bundler
       concurrent-ruby (~> 1.0)
