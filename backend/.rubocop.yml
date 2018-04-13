@@ -1,7 +1,10 @@
 AllCops:
   TargetRubyVersion: 2.5
   Exclude:
+    - "Capfile"
+    - "config/deploy/**/*"
     - "repos/**/*"
+    - "sbin/*"
 
 Bundler/OrderedGems:
   Enabled: false
@@ -50,4 +53,7 @@ Metrics/BlockLength:
     - "spec/**/*"
 
 Naming/VariableNumber:
+  Enabled: false
+
+Layout/MultilineMethodCallIndentation:
   Enabled: false

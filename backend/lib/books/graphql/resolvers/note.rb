@@ -28,7 +28,7 @@ module Books
             note_repo.create(
               user_id: ctx[:current_user].id,
               element_id: args["elementID"],
-              text: args["text"]
+              text: args["text"],
             )
           end
         end

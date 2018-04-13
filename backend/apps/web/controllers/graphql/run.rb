@@ -4,6 +4,7 @@ module Web::Controllers::Graphql
 
     before :set_cors_headers
 
+    # rubocop:disable Metrics/AbcSize
     def call(params)
       variables = params[:variables] || {}
       find_current_user(params.env["HTTP_AUTHORIZATION"])
@@ -24,6 +25,7 @@ module Web::Controllers::Graphql
       self.format = :json
       self.body = result.to_json
     end
+    # rubocop:enable Metrics/AbcSize
 
     private
 
