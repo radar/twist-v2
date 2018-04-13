@@ -29,7 +29,7 @@ type ElementProps = {
   notes: Array<NoteProps>,
   noteCount: number,
   tag: string,
-  bookPermalink: string,
+  bookPermalink: string
 }
 
 type NotesProps = {
@@ -106,7 +106,9 @@ class Note extends Component<NoteProps> {
             </strong>
           </div>
 
-          <div className="body"><Markdown source={text} /></div>
+          <div className="body">
+            <Markdown source={text} />
+          </div>
         </div>
       </div>
     )

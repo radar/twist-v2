@@ -70,7 +70,9 @@ class Book extends Component<BookProps> {
     return (
       <div className="row">
         <div className="col-md-7 main">
-          <h1><Link to={`/`}>Books</Link> - {title}</h1>
+          <h1>
+            <Link to={`/`}>Books</Link> - {title}
+          </h1>
           <Link to={`/books/${permalink}/notes`}>Notes for this book</Link>
           <hr />
           {this.renderPart('Frontmatter', frontmatter)}
