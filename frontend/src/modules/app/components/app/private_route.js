@@ -1,50 +1,37 @@
 // @flow
-
 import * as React from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import { graphql } from 'react-apollo'
 
-import loadingWrapper from 'modules/loading_wrapper'
-
-import gql from 'graphql-tag'
-
-const currentUserQuery = gql`
-  query currentUser {
-    currentUser {
-      email
-    }
-  }
-`
+import CurrentUserContext from 'modules/current_user_context'
 
 type Props = {
-  component: React.ComponentType<any>,
-  location: {},
-  data: {
-    currentUser: {
-      email: string
-    }
+  component: React.ComponentType<any>
+}
+
+class PrivateRoute extends React.Component<Props> {
+  renderOrRedirect(Component: React.ComponentType<any>, props: {}) {
+    return (
+      <CurrentUserContext.Consumer>
+        {user =>
+          user ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: '/login',
+                state: { from: '/' }
+              }}
+            />
+          )
+        }
+      </CurrentUserContext.Consumer>
+    )
+  }
+
+  render() {
+    const { component: Component, ...rest } = this.props
+    return <Route {...rest} render={props => this.renderOrRedirect(Component, props)} />
   }
 }
 
-function PrivateRoute(props: Props) {
-  const { component: Component, data: { currentUser }, ...rest } = props
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        currentUser ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/login',
-              state: { from: props.location }
-            }}
-          />
-        )
-      }
-    />
-  )
-}
-
-export default graphql(currentUserQuery)(loadingWrapper(PrivateRoute))
+export default PrivateRoute
