@@ -21,11 +21,12 @@ class MarkdownElementProcessor
     @image_repo ||= ImageRepository.new
   end
 
-  def create_element(markup, name)
+  def create_element(markup, name, identifier=nil)
     element_repo.create(
       chapter_id: chapter.id,
       tag: name,
       content: markup,
+      identifier: identifier,
     )
   end
 
@@ -117,12 +118,18 @@ class MarkdownElementProcessor
     # Already processed as the chapter title
   end
 
+  def new_id(markup)
+    markup.text.to_slug.normalize.to_s
+  end
+
   def process_h2!(markup)
-    create_element(markup.to_html, "h2")
+    markup["id"] = new_id(markup)
+    create_element(markup.to_html, "h2", markup["id"])
   end
 
   def process_h3!(markup)
-    create_element(markup.to_html, "h3")
+    markup["id"] = new_id(markup)
+    create_element(markup.to_html, "h3", markup["id"])
   end
 
   def process_h4!(markup)
