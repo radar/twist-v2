@@ -15,6 +15,12 @@ const book = gql`
           position
           permalink
           part
+          sections {
+            ...sectionFragment
+            subsections {
+              ...sectionFragment
+            }
+          }
           elements {
             id
             content
@@ -24,6 +30,12 @@ const book = gql`
         }
       }
     }
+  }
+
+  fragment sectionFragment on Section {
+    id
+    title
+    link
   }
 `
 

@@ -11,4 +11,8 @@ class ElementRepository < Hanami::Repository
   def by_ids(ids)
     elements.where(id: ids)
   end
+
+  def sections_for_chapter(chapter_id)
+    by_chapter(chapter_id).where(tag: ["h2", "h3"])
+  end
 end

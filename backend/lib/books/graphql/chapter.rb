@@ -1,6 +1,9 @@
 require_relative 'element'
 require_relative 'resolvers/element'
 
+require_relative 'section'
+require_relative 'resolvers/section'
+
 module Books
   module GraphQL
     ChapterType = ::GraphQL::ObjectType.define do
@@ -15,6 +18,10 @@ module Books
 
       field :elements, types[ElementType] do
         resolve Resolvers::Element::ByChapter.new
+      end
+
+      field :sections, types[SectionType] do
+        resolve Resolvers::Section::ByChapter.new
       end
     end
   end

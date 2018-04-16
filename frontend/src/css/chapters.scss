@@ -28,10 +28,9 @@
   }
 }
 
-#section_listing {
+.section_listing {
   list-style-type: none;
   margin-left: -2rem;
-  font-size: 90%;
 
   li {
     margin-bottom: 1rem;
@@ -64,4 +63,9 @@
     float: left;
     margin-right: 10px;
   }
+}
+
+#sidebar {
+  position: sticky;
+  top: 2em;
 }
