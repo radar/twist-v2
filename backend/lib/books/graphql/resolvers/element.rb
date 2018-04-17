@@ -19,12 +19,9 @@ module Books
         end
 
         class Image
-          def call(element, _args, _ctx)
-            image_repository = ImageRepository.new
-            image_repository.by_chapter_and_filename(
-              element.chapter_id,
-              element.identifier
-            )
+          def call(element, _args, ctx)
+            return nil if element.image_id.nil?
+            ctx[:image_loader].load(element.image_id)
           end
         end
       end

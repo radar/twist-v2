@@ -21,21 +21,23 @@ class MarkdownElementProcessor
     @image_repo ||= ImageRepository.new
   end
 
-  def create_element(markup, name, identifier=nil)
-    element_repo.create(
+  def create_element(markup, name, extra={})
+    element_repo.create({
       chapter_id: chapter.id,
       tag: name,
       content: markup,
-      identifier: identifier,
-    )
+    }.merge(extra))
   end
 
   def process_p!(markup)
     if markup.css('img').any?
       # TODO: can Markdown really contain multiple images in the same p tag?
       markup.css('img').each do |img|
-        process_img!(img)
-        create_element(img.to_html, "img", img['src'])
+        image = process_img!(img)
+        create_element(img.to_html, "img", {
+          identifier: img['src'],
+          image_id: image.id
+        })
       end
     else
       create_element(markup.to_html, "p")
@@ -124,12 +126,12 @@ class MarkdownElementProcessor
 
   def process_h2!(markup)
     markup["id"] = new_id(markup)
-    create_element(markup.to_html, "h2", markup["id"])
+    create_element(markup.to_html, "h2", identifier: markup["id"])
   end
 
   def process_h3!(markup)
     markup["id"] = new_id(markup)
-    create_element(markup.to_html, "h3", markup["id"])
+    create_element(markup.to_html, "h3", identifier: markup["id"])
   end
 
   def process_h4!(markup)

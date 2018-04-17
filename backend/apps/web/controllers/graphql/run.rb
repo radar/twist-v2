@@ -10,6 +10,7 @@ module Web::Controllers::Graphql
       find_current_user(params.env["HTTP_AUTHORIZATION"])
       user_loader = Dataloader.new { |ids| UserRepository.new.by_ids(ids).to_a }
       note_count_loader = Dataloader.new { |element_ids| NoteRepository.new.count(element_ids) }
+      image_loader = Dataloader.new { |ids| ImageRepository.new.by_ids(ids).to_a }
       result = Books::GraphQL::Schema.execute(
         params[:query],
         # Stringify the variable keys here, as that's what GraphQL-Ruby expects them to be
@@ -18,6 +19,7 @@ module Web::Controllers::Graphql
         context: {
           user_loader: user_loader,
           note_count_loader: note_count_loader,
+          image_loader: image_loader,
           current_user: find_current_user(params.env["HTTP_AUTHORIZATION"]),
         },
       )
