@@ -19,6 +19,7 @@ gem 'pygments.rb'
 gem 'nokogiri'
 
 gem 'shrine'
+gem 'aws-sdk-s3'
 
 gem 'rollbar'
 

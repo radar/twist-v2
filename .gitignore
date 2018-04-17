@@ -3,6 +3,7 @@ backend/public/assets*
 backend/public/uploads/*
 backend/log
 backend/shared
+backend/.aws_credentials
 */tmp
 backend/repos/*
 backend/spec/repos/*
