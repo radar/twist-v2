@@ -32,6 +32,9 @@ const book = gql`
             content
             tag
             noteCount
+            image {
+              path
+            }
           }
         }
       }

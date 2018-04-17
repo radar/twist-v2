@@ -6,7 +6,10 @@ type ElementProps = {
   id: string,
   content: string,
   tag: string,
-  noteCount: number
+  noteCount: number,
+  image: {
+    path: string,
+  }
 }
 
 type ElementState = {
@@ -20,6 +23,14 @@ export class BareElement extends Component<ElementProps> {
   }
 
   render() {
+    if (this.props.tag === 'img') {
+      return (
+        <div className="element">
+          <img src={this.props.image.path} />
+        </div>
+      )
+    }
+
     return <div className="element" dangerouslySetInnerHTML={this.createMarkup()} />
   }
 }

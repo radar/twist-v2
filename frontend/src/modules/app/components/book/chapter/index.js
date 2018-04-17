@@ -15,7 +15,10 @@ type ElementProps = {
   id: string,
   content: string,
   tag: string,
-  noteCount: number
+  noteCount: number,
+  image: {
+    path: string,
+  }
 }
 
 type SubsectionProps = {

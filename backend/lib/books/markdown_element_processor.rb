@@ -35,7 +35,7 @@ class MarkdownElementProcessor
       # TODO: can Markdown really contain multiple images in the same p tag?
       markup.css('img').each do |img|
         process_img!(img)
-        create_element(img.to_html, "img")
+        create_element(img.to_html, "img", img['src'])
       end
     else
       create_element(markup.to_html, "p")

@@ -14,6 +14,10 @@ class ImageRepository < Hanami::Repository
     images.where(chapter_id: chapter_id)
   end
 
+  def by_chapter_and_filename(chapter_id, filename)
+    by_chapter(chapter_id).where(filename: filename).one
+  end
+
   private
 
   def update_image(image, image_path)

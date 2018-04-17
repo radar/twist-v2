@@ -17,6 +17,16 @@ module Books
             element_repo.by_chapter(chapter.id)
           end
         end
+
+        class Image
+          def call(element, _args, _ctx)
+            image_repository = ImageRepository.new
+            image_repository.by_chapter_and_filename(
+              element.chapter_id,
+              element.identifier
+            )
+          end
+        end
       end
     end
   end

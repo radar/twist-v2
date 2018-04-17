@@ -1,6 +1,9 @@
 require_relative 'note'
 require_relative 'resolvers/note'
 
+require_relative 'image'
+require_relative 'resolvers/image'
+
 module Books
   module GraphQL
     ElementType = ::GraphQL::ObjectType.define do
@@ -12,6 +15,10 @@ module Books
       field :tag, types.String
       field :noteCount, types.Int do
         resolve Resolvers::Note::Count.new
+      end
+
+      field :image, ImageType do
+        resolve Resolvers::Element::Image.new
       end
 
       field :notes, types[NoteType] do

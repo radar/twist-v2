@@ -1,8 +1,13 @@
+require_relative 'resolvers/chapter'
+
 require_relative 'element'
 require_relative 'resolvers/element'
 
 require_relative 'section'
 require_relative 'resolvers/section'
+
+require_relative 'image'
+require_relative 'resolvers/image'
 
 module Books
   module GraphQL
@@ -30,6 +35,10 @@ module Books
 
       field :sections, types[SectionType] do
         resolve Resolvers::Section::ByChapter.new
+      end
+
+      field :images, types[ImageType] do
+        resolve Resolvers::Image::ByChapter.new
       end
     end
   end

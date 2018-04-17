@@ -29,7 +29,10 @@ type ElementProps = {
   notes: Array<NoteProps>,
   noteCount: number,
   tag: string,
-  bookPermalink: string
+  bookPermalink: string,
+  image: {
+    path: string,
+  }
 }
 
 type NotesProps = {
