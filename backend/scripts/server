@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source .aws_credentials
+
+bundle exec hanami server
