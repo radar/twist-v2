@@ -25,7 +25,7 @@ export class BareElement extends Component<ElementProps> {
   render() {
     if (this.props.tag === 'img') {
       return (
-        <div className="element">
+        <div className="element image">
           <img src={this.props.image.path} />
         </div>
       )
