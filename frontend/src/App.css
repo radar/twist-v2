@@ -28,11 +28,14 @@
 .section_listing {
   list-style-type: none;
   margin-left: -2rem; }
+  .section_listing .section_listing {
+    margin-top: 1rem; }
   .section_listing li {
     margin-bottom: 1rem; }
     .section_listing li.major {
       font-weight: bold; }
     .section_listing li.minor {
+      font-weight: normal;
       font-size: 90%;
       line-height: 90%; }
 

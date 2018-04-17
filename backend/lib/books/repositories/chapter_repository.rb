@@ -24,7 +24,7 @@ class ChapterRepository < Hanami::Repository
     return last_chapter_in_previous_part(commit_id, chapter.part) if chapter.position == 1
 
     for_commit(commit_id)
-      .where(position: chapter.position - 1)
+      .where(position: chapter.position - 1, part: chapter.part)
       .limit(1).one
   end
 

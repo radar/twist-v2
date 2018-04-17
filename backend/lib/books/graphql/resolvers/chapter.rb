@@ -23,6 +23,20 @@ module Books
             chapter_repo.for_commit_and_permalink(commit.id, args["permalink"])
           end
         end
+
+        class PreviousChapter
+          def call(chapter, _args, _ctx)
+            chapter_repo = ChapterRepository.new
+            chapter_repo.previous_chapter(chapter.commit_id, chapter)
+          end
+        end
+
+        class NextChapter
+          def call(chapter, _args, _ctx)
+            chapter_repo = ChapterRepository.new
+            chapter_repo.next_chapter(chapter.commit_id, chapter)
+          end
+        end
       end
     end
   end

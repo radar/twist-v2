@@ -31,6 +31,15 @@ type SectionProps = {
   subsections: Array<SubsectionProps>
 }
 
+type NavigationalChapter = {
+  id: string,
+  permalink: string,
+  part: string,
+  title: string,
+  position: number,
+  bookPermalink: string,
+}
+
 type ChapterProps = {
   data: {
     book: {
@@ -42,10 +51,48 @@ type ChapterProps = {
           position: number,
           part: string,
           elements: Array<ElementProps>,
-          sections: Array<SectionProps>
+          sections: Array<SectionProps>,
+          previousChapter: NavigationalChapter,
+          nextChapter: NavigationalChapter,
         }
       }
     }
+  }
+}
+
+const chapterPositionAndTitle = (part, position, title) => {
+  if (part === 'mainmatter') {
+    return `${position}. ${title}`
+  } else {
+    return title
+  }
+}
+
+class PreviousChapterLink extends Component<NavigationalChapter> {
+  render() {
+    const { id, part, position, title, permalink, bookPermalink } = this.props
+
+    if (typeof id === 'undefined') { return null }
+
+    const text = chapterPositionAndTitle(part, position, title)
+
+    return (
+      <Link to={`/books/${bookPermalink}/chapters/${permalink}`}>&laquo; {text}</Link>
+    )
+  }
+}
+
+class NextChapterLink extends Component<NavigationalChapter> {
+  render() {
+    const { id, part, position, title, permalink, bookPermalink } = this.props
+
+    if (id === '') { return null }
+
+    const text = chapterPositionAndTitle(part, position, title)
+
+    return (
+      <Link to={`/books/${bookPermalink}/chapters/${permalink}`}>{text} &raquo;</Link>
+    )
   }
 }
 
@@ -55,26 +102,32 @@ class Chapter extends Component<ChapterProps> {
 
     const {
       permalink: bookPermalink,
-      defaultBranch: { chapter: { title: chapterTitle, position, elements, sections } }
+      defaultBranch: { chapter: { part, title: chapterTitle, position, elements, sections, previousChapter, nextChapter } }
     } = book
+
+    const positionAndTitle = chapterPositionAndTitle(part, position, chapterTitle)
 
     return (
       <div className="row">
         <div id="chapter" className="main col-md-7">
           <h1>
-            <Link to={`/books/${bookPermalink}`}>{book.title}</Link>
+            <Link name='top' to={`/books/${bookPermalink}`}>{book.title}</Link>
           </h1>
-          <h2>
-            {position}. {chapterTitle}
-          </h2>
+          <h2>{positionAndTitle}</h2>
           {elements.map(element => <Element {...element} key={element.id} />)}
         </div>
 
         <div className="col-md-4">
           <div id="sidebar">
-            <strong id="previous_chapter">PREVIOUS CHAPTER</strong>
+            <PreviousChapterLink {...previousChapter} bookPermalink={bookPermalink} />
+            <hr />
+
+            <h4><a href='#top'>{positionAndTitle}</a></h4>
+
             <SectionList sections={sections} />
-            <strong id="next_chapter">NEXT CHAPTER</strong>
+
+            <hr />
+            <NextChapterLink {...nextChapter} bookPermalink={bookPermalink} />
           </div>
         </div>
       </div>

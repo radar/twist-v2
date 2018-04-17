@@ -8,7 +8,7 @@ module Books
             headers = element_repo.sections_for_chapter(chapter.id)
 
             hierarchy = []
-            current_section = nil
+            current_section = { subsections: [] }
 
             headers.each do |header|
               case header.tag

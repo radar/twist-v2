@@ -21,6 +21,12 @@ const book = gql`
               ...sectionFragment
             }
           }
+          previousChapter {
+            ...chapterFragment
+          }
+          nextChapter {
+            ...chapterFragment
+          }
           elements {
             id
             content
@@ -36,6 +42,14 @@ const book = gql`
     id
     title
     link
+  }
+
+  fragment chapterFragment on Chapter {
+    id
+    title
+    position
+    part
+    permalink
   }
 `
 

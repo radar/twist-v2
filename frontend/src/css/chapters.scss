@@ -32,6 +32,10 @@
   list-style-type: none;
   margin-left: -2rem;
 
+  .section_listing {
+    margin-top: 1rem;
+  }
+
   li {
     margin-bottom: 1rem;
 
@@ -40,6 +44,7 @@
     }
 
     &.minor {
+      font-weight: normal;
       font-size: 90%;
       line-height: 90%;
     }

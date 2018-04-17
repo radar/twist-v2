@@ -16,6 +16,14 @@ module Books
       field :position, !types.Int
       field :permalink, !types.String
 
+      field :previousChapter, ChapterType do
+        resolve Resolvers::Chapter::PreviousChapter.new
+      end
+
+      field :nextChapter, ChapterType do
+        resolve Resolvers::Chapter::NextChapter.new
+      end
+
       field :elements, types[ElementType] do
         resolve Resolvers::Element::ByChapter.new
       end

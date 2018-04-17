@@ -16,11 +16,11 @@ type SectionProps = {
 
 class Section extends React.Component<SectionProps> {
   render() {
-    const { title, subsections } = this.props
+    const { title, link, subsections } = this.props
 
     return (
       <li className="major">
-        {title}
+        <a href={`#${link}`}>{title}</a>
         <ul className="section_listing">
           {subsections.map(section => <Subsection {...section} key={section.id} />)}
         </ul>
@@ -31,7 +31,13 @@ class Section extends React.Component<SectionProps> {
 
 class Subsection extends React.Component<SubsectionProps> {
   render() {
-    return <li className="minor">{this.props.title}</li>
+    const { title, link } = this.props
+
+    return (
+      <li className="minor">
+        <a href={`#${link}`}>{title}</a>
+      </li>
+    )
   }
 }
 
