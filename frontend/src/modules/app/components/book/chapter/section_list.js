@@ -15,15 +15,25 @@ type SectionProps = {
 }
 
 class Section extends React.Component<SectionProps> {
+  renderSubsections() {
+    const { subsections } = this.props
+
+    if (subsections.length === 0) { return null }
+
+    return (
+      <ul className="section_listing">
+        {subsections.map(section => <Subsection {...section} key={section.id} />)}
+      </ul>
+    )
+  }
+
   render() {
-    const { title, link, subsections } = this.props
+    const { title, link } = this.props
 
     return (
       <li className="major">
         <a href={`#${link}`}>{title}</a>
-        <ul className="section_listing">
-          {subsections.map(section => <Subsection {...section} key={section.id} />)}
-        </ul>
+        {this.renderSubsections() }
       </li>
     )
   }
@@ -48,6 +58,7 @@ type SectionListProps = {
 export default class SectionList extends React.Component<SectionListProps> {
   render() {
     const { sections } = this.props
+
     return (
       <ul className="section_listing">
         {sections.map(section => <Section {...section} key={section.id} />)}

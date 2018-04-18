@@ -37,14 +37,11 @@
   list-style-type: none;
   margin-left: -2rem;
 
-  .section_listing {
-    margin-top: 1rem;
-  }
-
   li {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 
     &.major {
+      margin-bottom: 0.75rem;
       font-weight: bold;
     }
 

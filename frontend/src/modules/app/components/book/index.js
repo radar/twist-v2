@@ -48,6 +48,8 @@ type BookProps = {
 
 class Book extends Component<BookProps> {
   renderPart(title, chapters) {
+    if (chapters.length === 0) { return null }
+
     const permalink = this.props.data.book.permalink
 
     return (
