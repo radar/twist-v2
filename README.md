@@ -1,5 +1,7 @@
 # Twist (v2)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/5de873eaf015ddf9f465/maintainability)](https://codeclimate.com/github/radar/twist-v2/maintainability)
+
 This is an attempt to rewrite my [Rails-based book review
 app](https://github.com/radar/twist) in Hanami, GraphQL, React, Apollo, Flow and whatever other Cool Hipster Tech™ I can get my grubby hands on.
 
