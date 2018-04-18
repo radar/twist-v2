@@ -5,6 +5,7 @@ module Web
     module Books
       class Create
         include Dry::Transaction
+        include Web::Import["book_repo"]
 
         step :make_permalink
         step :create_book

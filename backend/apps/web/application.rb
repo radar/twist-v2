@@ -1,5 +1,6 @@
 require 'hanami/helpers'
 require 'hanami/assets'
+require_relative 'container'
 
 module Web
   class Application < Hanami::Application

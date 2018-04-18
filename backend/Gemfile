@@ -9,6 +9,8 @@ gem 'pg'
 gem 'bcrypt'
 gem 'warden'
 
+gem 'dry-container'
+gem 'dry-auto_inject'
 gem 'dry-transaction'
 
 gem 'sidekiq'
