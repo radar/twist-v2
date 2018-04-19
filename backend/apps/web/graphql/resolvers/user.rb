@@ -13,7 +13,7 @@ module Web
         class Authenticate
           include Dry::Monads::Result::Mixin
 
-          Result = Struct.new(:token, :error)
+          Result = Struct.new(:token, :email, :error)
 
           def call(_obj, args, ctx)
             user_repo = ctx[:user_repo]
@@ -26,7 +26,7 @@ module Web
             payload = { email: user.email }
             token = JWT.encode payload, hmac_secret, 'HS256'
 
-            Result.new(token, nil)
+            Result.new(token, user.email, nil)
           end
         end
       end

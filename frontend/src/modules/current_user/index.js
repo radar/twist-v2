@@ -7,7 +7,7 @@ import loadingWrapper from 'modules/loading_wrapper'
 import errorWrapper from 'modules/error_wrapper'
 import CurrentUserContext from 'modules/current_user_context'
 
-const currentUserQuery = gql`
+export const CurrentUserQuery = gql`
   query currentUser {
     currentUser {
       email
@@ -37,4 +37,4 @@ class CurrentUser extends React.Component<CurrentUserProps> {
   }
 }
 
-export default graphql(currentUserQuery)(errorWrapper(loadingWrapper(CurrentUser)))
+export default graphql(CurrentUserQuery)(errorWrapper(loadingWrapper(CurrentUser)))

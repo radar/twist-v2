@@ -4,6 +4,7 @@ import * as React from 'react'
 import { Mutation } from 'react-apollo'
 
 import LoginMutation from './container'
+import { CurrentUserQuery } from 'modules/current_user'
 
 type LoginProps = {
   history: {
@@ -26,14 +27,27 @@ class Login extends React.Component<LoginProps, LoginState> {
     }
   }
 
+  redirect() {
+    this.props.history.push(`/`)
+  }
+
   async submit(login: Function) {
     const result = await login({
-      variables: { email: this.state.email, password: this.state.password }
+      variables: { email: this.state.email, password: this.state.password },
+      update: (store, { data: { login } }) => {
+        const data = {
+          currentUser: {
+            __typename: 'LoginResult',
+            email: login.email
+          }
+        }
+        store.writeQuery({ query: CurrentUserQuery, data: data })
+      }
     })
 
     window.localStorage.setItem('auth-token', result.data.login.token)
 
-    this.props.history.push(`/`)
+    this.redirect()
   }
 
   render() {

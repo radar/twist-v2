@@ -4,6 +4,7 @@ module Web
       name "LoginResult"
       description "Result from a login mutation"
 
+      field :email, types.String
       field :token, types.String
       field :error, types.String
     end
