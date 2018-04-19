@@ -18,7 +18,7 @@ describe MarkdownElementProcessor do
       expect(subject).to receive(:create_element).with(
         "<h2 id=\"hello-world\">Hello World</h2>",
         "h2",
-        "hello-world",
+        identifier: "hello-world",
       )
 
       subject.process!(markup)
@@ -34,7 +34,7 @@ describe MarkdownElementProcessor do
       expect(subject).to receive(:create_element).with(
         "<h3 id=\"hello-world\">Hello World</h3>",
         "h3",
-        "hello-world",
+        identifier: "hello-world",
       )
 
       subject.process!(markup)
