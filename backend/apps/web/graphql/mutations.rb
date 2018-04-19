@@ -3,12 +3,12 @@ require_relative 'note'
 require_relative 'resolvers/note'
 require_relative 'resolvers/user'
 
-module Books
+module Web
   module GraphQL
     Mutations = ::GraphQL::ObjectType.define do
       name "Mutations"
 
-      field :login, types.String do
+      field :login, LoginResultType do
         description "Login attempt"
         argument :email, !types.String
         argument :password, !types.String

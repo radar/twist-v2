@@ -4,7 +4,7 @@ require_relative 'element'
 require_relative 'resolvers/branch'
 require_relative 'resolvers/element'
 
-module Books
+module Web
   module GraphQL
     BookType = ::GraphQL::ObjectType.define do
       name "Book"
@@ -14,7 +14,7 @@ module Books
       field :blurb, !types.String
       field :permalink, !types.String
       field :defaultBranch, BranchType do
-        resolve Books::GraphQL::Resolvers::Branch.new
+        resolve Resolvers::Branch.new
       end
 
       field :elementsWithNotes, types[ElementType] do

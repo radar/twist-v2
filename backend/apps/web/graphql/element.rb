@@ -4,7 +4,7 @@ require_relative 'resolvers/note'
 require_relative 'image'
 require_relative 'resolvers/image'
 
-module Books
+module Web
   module GraphQL
     ElementType = ::GraphQL::ObjectType.define do
       name "Element"

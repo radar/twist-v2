@@ -1,4 +1,4 @@
-module Books
+module Web
   module GraphQL
     module Resolvers
       module Chapter

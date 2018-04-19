@@ -1,4 +1,4 @@
-module Books
+module Web
   module GraphQL
     ImageType = ::GraphQL::ObjectType.define do
       name "Image"

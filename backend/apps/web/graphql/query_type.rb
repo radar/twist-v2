@@ -3,7 +3,7 @@ require_relative 'user'
 
 require_relative 'resolvers/book'
 
-module Books
+module Web
   module GraphQL
     QueryType = ::GraphQL::ObjectType.define do
       name "Query"

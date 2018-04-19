@@ -1,7 +1,7 @@
-require_relative 'graphql/query_type'
-require_relative 'graphql/mutations'
+require_relative 'query_type'
+require_relative 'mutations'
 
-module Books
+module Web
   module GraphQL
     Schema = ::GraphQL::Schema.define do
       lazy_resolve(Promise, :sync)

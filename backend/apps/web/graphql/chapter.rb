@@ -9,7 +9,7 @@ require_relative 'resolvers/section'
 require_relative 'image'
 require_relative 'resolvers/image'
 
-module Books
+module Web
   module GraphQL
     ChapterType = ::GraphQL::ObjectType.define do
       name "Chapter"

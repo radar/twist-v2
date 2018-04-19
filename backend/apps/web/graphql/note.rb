@@ -1,6 +1,6 @@
 require_relative 'resolvers/user'
 
-module Books
+module Web
   module GraphQL
     NoteType = ::GraphQL::ObjectType.define do
       name "Note"

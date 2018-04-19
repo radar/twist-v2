@@ -1,4 +1,4 @@
-module Books
+module Web
   module GraphQL
     SectionType = ::GraphQL::ObjectType.define do
       name "Section"

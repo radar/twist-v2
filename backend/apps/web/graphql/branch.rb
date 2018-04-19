@@ -3,7 +3,7 @@ require_relative 'part'
 
 require_relative 'resolvers/chapter'
 
-module Books
+module Web
   module GraphQL
     BranchType = ::GraphQL::ObjectType.define do
       name "Branch"

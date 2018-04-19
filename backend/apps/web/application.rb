@@ -21,6 +21,7 @@ module Web
       #
       load_paths << %w[
         controllers
+        graphql
         transactions
         views
         workers

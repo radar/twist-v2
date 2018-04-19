@@ -1,4 +1,4 @@
-module Books
+module Web
   module GraphQL
     UserType = ::GraphQL::ObjectType.define do
       name "User"

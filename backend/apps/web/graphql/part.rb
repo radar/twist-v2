@@ -1,4 +1,4 @@
-module Books
+module Web
   module GraphQL
     PartType = ::GraphQL::EnumType.define do
       name "BookParts"
