@@ -34,7 +34,9 @@ module Web::Controllers::Graphql
 
     def find_current_user(token)
       return unless token
-      payload, _headers = JWT.decode token.split.last, ENV.fetch('AUTH_TOKEN_SECRET'), true, { algorithm: 'HS256' }
+      token = token.split.last
+      return if token.blank?
+      payload, _headers = JWT.decode token, ENV.fetch('AUTH_TOKEN_SECRET'), true, { algorithm: 'HS256' }
       user_repo = UserRepository.new
       user_repo.find_by_email(payload["email"])
     end
