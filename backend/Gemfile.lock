@@ -166,6 +166,7 @@ GEM
     ice_nine (0.11.2)
     inflecto (0.0.2)
     jmespath (1.4.0)
+    jwt (2.1.0)
     launchy (2.4.3)
       addressable (~> 2.3)
     mail (2.7.0)
@@ -301,6 +302,7 @@ DEPENDENCIES
   hanami (= 1.2.0.rc2)
   hanami-model (= 1.2.0.rc2)
   hanami-webconsole
+  jwt
   launchy
   nokogiri
   pg

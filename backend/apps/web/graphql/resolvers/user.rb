@@ -1,3 +1,5 @@
+require 'jwt'
+
 module Web
   module GraphQL
     module Resolvers
@@ -20,7 +22,10 @@ module Web
             error = Result.new(nil, "Invalid username or password.")
             return error unless user&.correct_password?(args["password"])
 
-            token = user_repo.regenerate_token(user.id)
+            hmac_secret = ENV.fetch("AUTH_TOKEN_SECRET")
+            payload = { email: user.email }
+            token = JWT.encode payload, hmac_secret, 'HS256'
+
             Result.new(token, nil)
           end
         end

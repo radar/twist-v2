@@ -8,7 +8,7 @@ describe Web::GraphQL::Runner do
 
     context 'when the credentials are valid' do
       let(:email) { "test@example.com" }
-      let(:user) { double(User, id: 1) }
+      let(:user) { double(User, id: 1, email: email) }
 
       before do
         allow(user_repo).to receive(:find_by_email) { user }

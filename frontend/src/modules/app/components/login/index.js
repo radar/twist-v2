@@ -31,7 +31,7 @@ class Login extends React.Component<LoginProps, LoginState> {
       variables: { email: this.state.email, password: this.state.password }
     })
 
-    window.localStorage.setItem('auth-token', result.data.login)
+    window.localStorage.setItem('auth-token', result.data.login.token)
 
     this.props.history.push(`/`)
   }

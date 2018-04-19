@@ -8,7 +8,7 @@ module Web::Controllers::Graphql
       variables = Hanami::Utils::Hash.stringify(params[:variables] || {})
       current_user = find_current_user(params.env["HTTP_AUTHORIZATION"])
 
-      Web::GraphQL::Runner.new.run(
+      result = Web::GraphQL::Runner.new.run(
         query: params[:query],
         variables: variables,
         context: {
@@ -34,8 +34,9 @@ module Web::Controllers::Graphql
 
     def find_current_user(token)
       return unless token
+      payload, _headers = JWT.decode token.split.last, ENV.fetch('AUTH_TOKEN_SECRET'), true, { algorithm: 'HS256' }
       user_repo = UserRepository.new
-      user_repo.find_by_auth_token(token.split.last)
+      user_repo.find_by_email(payload["email"])
     end
   end
 end
