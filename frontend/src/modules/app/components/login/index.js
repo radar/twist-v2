@@ -27,10 +27,6 @@ class Login extends React.Component<LoginProps, LoginState> {
     }
   }
 
-  redirect() {
-    this.props.history.push(`/`)
-  }
-
   async submit(login: Function) {
     const result = await login({
       variables: { email: this.state.email, password: this.state.password },
@@ -47,7 +43,7 @@ class Login extends React.Component<LoginProps, LoginState> {
 
     window.localStorage.setItem('auth-token', result.data.login.token)
 
-    this.redirect()
+    this.props.history.push(`/`)
   }
 
   render() {
