@@ -12,8 +12,8 @@ module Web::Controllers::Graphql
         query: params[:query],
         variables: variables,
         context: {
-          current_user: current_user
-        }
+          current_user: current_user,
+        },
       )
 
       self.format = :json

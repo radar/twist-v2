@@ -34,7 +34,7 @@ describe MarkdownElementProcessor do
       expect(subject).to receive(:create_element).with(
         "<h3 id=\"hello-world\">Hello World</h3>",
         "h3",
-        "hello-world"
+        "hello-world",
       )
 
       subject.process!(markup)

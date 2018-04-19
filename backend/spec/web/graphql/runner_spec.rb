@@ -7,7 +7,7 @@ describe Web::GraphQL::Runner do
     subject { described_class.new(user_repo: user_repo) }
 
     context 'when the credentials are valid' do
-      let(:email) { "test@example.com"}
+      let(:email) { "test@example.com" }
       let(:user) { double(User, id: 1) }
 
       before do
@@ -17,7 +17,7 @@ describe Web::GraphQL::Runner do
       end
 
       it 'logs in successfully' do
-        query = %Q|
+        query = %|
           mutation loginMutation {
             login(email: "#{email}", password: "password") {
               token
@@ -39,7 +39,7 @@ describe Web::GraphQL::Runner do
       end
 
       it 'fails to login' do
-        query = %Q|
+        query = %|
           mutation loginMutation {
             login(email: "me@ryanbigg.com", password: "password") {
               token
@@ -56,7 +56,7 @@ describe Web::GraphQL::Runner do
     end
 
     context 'when the password is invalid' do
-      let(:email) { "test@example.com"}
+      let(:email) { "test@example.com" }
       let(:user) { double(User, id: 1) }
 
       before do
@@ -66,7 +66,7 @@ describe Web::GraphQL::Runner do
       end
 
       it 'fails to login' do
-        query = %Q|
+        query = %|
           mutation loginMutation {
             login(email: "me@ryanbigg.com", password: "password") {
               token

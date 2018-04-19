@@ -4,6 +4,13 @@ module Web
       module Section
         class ByChapter
           def call(chapter, _args, _ctx)
+            build_sections(build_hierarchy(chapter))
+          end
+
+          private
+
+          # rubocop:disable Metrics/MethodLength
+          def build_hierarchy(chapter)
             element_repo = ElementRepository.new
             headers = element_repo.sections_for_chapter(chapter.id)
 
@@ -20,20 +27,21 @@ module Web
               end
             end
 
-            hierarchy.map! do |item|
+            hierarchy
+          end
+          # rubocop:enable Metrics/MethodLength
+
+          def build_sections(hierarchy)
+            hierarchy.map do |item|
               item[:subsections].map! do |subitem|
                 ::Section.new(subitem)
               end
 
               ::Section.new(item)
             end
-
-            hierarchy
           end
 
-          private
-
-          def build_section(element, subsections=false)
+          def build_section(element, subsections = false)
             title = extract_text(element.content)
 
             section = {
@@ -43,7 +51,7 @@ module Web
               link: slugify(title),
             }
 
-            section.merge!(subsections: []) if subsections
+            section[:subsections] = [] if subsections
 
             section
           end

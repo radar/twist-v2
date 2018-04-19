@@ -10,5 +10,3 @@ module Web
   Container.register(:note_repo, -> { NoteRepository.new })
   Container.register(:user_repo, -> { UserRepository.new })
 end
-
-

@@ -13,6 +13,6 @@ class ElementRepository < Hanami::Repository
   end
 
   def sections_for_chapter(chapter_id)
-    by_chapter(chapter_id).where(tag: ["h2", "h3"])
+    by_chapter(chapter_id).where(tag: %w(h2 h3))
   end
 end

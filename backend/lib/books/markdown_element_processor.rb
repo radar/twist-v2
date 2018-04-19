@@ -21,7 +21,7 @@ class MarkdownElementProcessor
     @image_repo ||= ImageRepository.new
   end
 
-  def create_element(markup, name, extra={})
+  def create_element(markup, name, extra = {})
     element_repo.create({
       chapter_id: chapter.id,
       tag: name,
@@ -34,10 +34,7 @@ class MarkdownElementProcessor
       # TODO: can Markdown really contain multiple images in the same p tag?
       markup.css('img').each do |img|
         image = process_img!(img)
-        create_element(img.to_html, "img", {
-          identifier: img['src'],
-          image_id: image.id
-        })
+        create_element(img.to_html, "img", identifier: img['src'], image_id: image.id)
       end
     else
       create_element(markup.to_html, "p")

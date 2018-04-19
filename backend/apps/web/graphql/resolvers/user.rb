@@ -18,7 +18,7 @@ module Web
             user = user_repo.find_by_email(args["email"])
 
             error = Result.new(nil, "Invalid username or password.")
-            return error unless user && user.correct_password?(args["password"])
+            return error unless user&.correct_password?(args["password"])
 
             token = user_repo.regenerate_token(user.id)
             Result.new(token, nil)

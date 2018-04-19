@@ -6,9 +6,7 @@ module Web
 
       field :id, types.ID
       field :path, !types.String do
-        resolve -> (image, _args, _ctx) {
-          image.image.url
-        }
+        resolve ->(image, _args, _ctx) { image.image.url }
       end
     end
   end

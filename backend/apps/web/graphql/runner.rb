@@ -6,7 +6,7 @@ module Web
       include Import["image_repo"]
 
       def run(query:, variables: {}, context: {})
-        result = Web::GraphQL::Schema.execute(
+        Web::GraphQL::Schema.execute(
           query,
           variables: variables,
           context: context.merge(
@@ -14,7 +14,7 @@ module Web
             user_loader: user_loader,
             note_count_loader: note_count_loader,
             image_loader: image_loader,
-          )
+          ),
         )
       end
 
