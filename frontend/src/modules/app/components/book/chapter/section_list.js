@@ -18,7 +18,9 @@ class Section extends React.Component<SectionProps> {
   renderSubsections() {
     const { subsections } = this.props
 
-    if (subsections.length === 0) { return null }
+    if (subsections.length === 0) {
+      return null
+    }
 
     return (
       <ul className="section_listing">
@@ -33,7 +35,7 @@ class Section extends React.Component<SectionProps> {
     return (
       <li className="major">
         <a href={`#${link}`}>{title}</a>
-        {this.renderSubsections() }
+        {this.renderSubsections()}
       </li>
     )
   }

@@ -8,7 +8,7 @@ type ElementProps = {
   tag: string,
   noteCount: number,
   image: {
-    path: string,
+    path: string
   }
 }
 

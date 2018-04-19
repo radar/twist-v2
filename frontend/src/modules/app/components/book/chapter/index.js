@@ -17,7 +17,7 @@ type ElementProps = {
   tag: string,
   noteCount: number,
   image: {
-    path: string,
+    path: string
   }
 }
 
@@ -40,7 +40,7 @@ type NavigationalChapter = {
   part: string,
   title: string,
   position: number,
-  bookPermalink: string,
+  bookPermalink: string
 }
 
 type ChapterProps = {
@@ -56,7 +56,7 @@ type ChapterProps = {
           elements: Array<ElementProps>,
           sections: Array<SectionProps>,
           previousChapter: NavigationalChapter,
-          nextChapter: NavigationalChapter,
+          nextChapter: NavigationalChapter
         }
       }
     }
@@ -75,13 +75,13 @@ class PreviousChapterLink extends Component<NavigationalChapter> {
   render() {
     const { id, part, position, title, permalink, bookPermalink } = this.props
 
-    if (typeof id === 'undefined') { return null }
+    if (typeof id === 'undefined') {
+      return null
+    }
 
     const text = chapterPositionAndTitle(part, position, title)
 
-    return (
-      <Link to={`/books/${bookPermalink}/chapters/${permalink}`}>&laquo; {text}</Link>
-    )
+    return <Link to={`/books/${bookPermalink}/chapters/${permalink}`}>&laquo; {text}</Link>
   }
 }
 
@@ -89,13 +89,13 @@ class NextChapterLink extends Component<NavigationalChapter> {
   render() {
     const { id, part, position, title, permalink, bookPermalink } = this.props
 
-    if (id === '') { return null }
+    if (id === '') {
+      return null
+    }
 
     const text = chapterPositionAndTitle(part, position, title)
 
-    return (
-      <Link to={`/books/${bookPermalink}/chapters/${permalink}`}>{text} &raquo;</Link>
-    )
+    return <Link to={`/books/${bookPermalink}/chapters/${permalink}`}>{text} &raquo;</Link>
   }
 }
 
@@ -105,7 +105,17 @@ class Chapter extends Component<ChapterProps> {
 
     const {
       permalink: bookPermalink,
-      defaultBranch: { chapter: { part, title: chapterTitle, position, elements, sections, previousChapter, nextChapter } }
+      defaultBranch: {
+        chapter: {
+          part,
+          title: chapterTitle,
+          position,
+          elements,
+          sections,
+          previousChapter,
+          nextChapter
+        }
+      }
     } = book
 
     const positionAndTitle = chapterPositionAndTitle(part, position, chapterTitle)
@@ -114,7 +124,9 @@ class Chapter extends Component<ChapterProps> {
       <div className="row">
         <div id="chapter" className="main col-md-7">
           <h1>
-            <Link name='top' to={`/books/${bookPermalink}`}>{book.title}</Link>
+            <Link name="top" to={`/books/${bookPermalink}`}>
+              {book.title}
+            </Link>
           </h1>
           <h2>{positionAndTitle}</h2>
           {elements.map(element => <Element {...element} key={element.id} />)}
@@ -125,7 +137,9 @@ class Chapter extends Component<ChapterProps> {
             <PreviousChapterLink {...previousChapter} bookPermalink={bookPermalink} />
             <hr />
 
-            <h4><a href='#top'>{positionAndTitle}</a></h4>
+            <h4>
+              <a href="#top">{positionAndTitle}</a>
+            </h4>
 
             <SectionList sections={sections} />
 

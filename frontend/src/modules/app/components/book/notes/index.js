@@ -31,7 +31,7 @@ type ElementProps = {
   tag: string,
   bookPermalink: string,
   image: {
-    path: string,
+    path: string
   }
 }
 
