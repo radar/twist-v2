@@ -23,15 +23,16 @@ export class BareElement extends Component<ElementProps> {
   }
 
   render() {
-    if (this.props.tag === 'img') {
+    const { tag, image, id } = this.props
+    if (tag === 'img') {
       return (
-        <div className="element image">
-          <img src={this.props.image.path} />
+        <div className="element image" id={id}>
+          <img src={image.path} />
         </div>
       )
     }
 
-    return <div className="element" dangerouslySetInnerHTML={this.createMarkup()} />
+    return <div className="element" id={id} dangerouslySetInnerHTML={this.createMarkup()} />
   }
 }
 

@@ -17,6 +17,7 @@ const book = gql`
           createdAt
           text
           user {
+            name
             email
           }
         }

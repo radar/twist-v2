@@ -12,7 +12,12 @@ import loadingWrapper from 'modules/loading_wrapper'
 import { BareElement } from 'modules/app/components/book/chapter/element'
 
 type UserProps = {
-  email: string
+  email: string,
+  name: string,
+}
+
+type GravatarProps = {
+  email: string,
 }
 
 type NoteProps = {
@@ -55,9 +60,11 @@ class Notes extends Component<NotesProps> {
           <Link to={`/books/${permalink}`}>{title}</Link> - Notes
         </h1>
 
-        {elements.map(element => (
-          <Element {...element} bookPermalink={permalink} key={element.id} />
-        ))}
+        <div className="notes">
+          {elements.map(element => (
+            <Element {...element} bookPermalink={permalink} key={element.id} />
+          ))}
+        </div>
       </div>
     )
   }
@@ -69,20 +76,19 @@ class Element extends Component<ElementProps> {
 
     return (
       <div className="row">
-        <div className="col-md-7 main element-group">
-          <BareElement {...this.props} />
-          <div className="notes">
-            {notes.map(note => <Note {...note} bookPermalink={bookPermalink} key={note.id} />)}
-          </div>
+        <div className="col-md-7">
+          <BareElement {...this.props} className="element" />
+
+          {notes.map(note => <Note {...note} bookPermalink={bookPermalink} key={note.id} />)}
         </div>
       </div>
     )
   }
 }
 
-class Gravatar extends Component<UserProps> {
+class Gravatar extends Component<GravatarProps> {
   render() {
-    return <img src={gravatar.url(this.props.email)} />
+    return <img src={gravatar.url(this.props.email, { s: 40 })} />
   }
 }
 
@@ -94,22 +100,20 @@ class Note extends Component<NoteProps> {
   }
 
   render() {
-    const { id, text, user: { email }, bookPermalink } = this.props
+    const { text, user: { email, name } } = this.props
     return (
-      <div className="note row">
-        <div className="avatar">
+      <div className="row note">
+        <div className="avatar col-md-1">
           <Gravatar email={email} />
         </div>
-        <div className="col-md-10 comment-box">
+        <div className="col-md-10 body">
           <div className="title">
-            <Link to={`books/${bookPermalink}/notes/${id}`}>Note #{id}</Link>
-            <br />
             <strong>
-              {email} commented {this.relativeTime()}
+              {name} commented {this.relativeTime()}
             </strong>
           </div>
 
-          <div className="body">
+          <div>
             <Markdown source={text} />
           </div>
         </div>
