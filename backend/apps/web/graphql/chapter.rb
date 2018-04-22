@@ -40,6 +40,10 @@ module Web
       field :images, types[ImageType] do
         resolve Resolvers::Image::ByChapter.new
       end
+
+      field :commit, CommitType do
+        resolve -> (chapter, _args, _ctx) { Resolvers::Commit::ByID.new.(chapter.commit_id) }
+      end
     end
   end
 end

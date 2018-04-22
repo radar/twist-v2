@@ -13,11 +13,11 @@ import { BareElement } from 'modules/app/components/book/chapter/element'
 
 type UserProps = {
   email: string,
-  name: string,
+  name: string
 }
 
 type GravatarProps = {
-  email: string,
+  email: string
 }
 
 type NoteProps = {
@@ -25,7 +25,8 @@ type NoteProps = {
   createdAt: string,
   text: string,
   user: UserProps,
-  bookPermalink: string
+  bookPermalink: string,
+  goToNote: Function
 }
 
 type ElementProps = {
@@ -37,10 +38,14 @@ type ElementProps = {
   bookPermalink: string,
   image: {
     path: string
-  }
+  },
+  goToNote: Function
 }
 
 type NotesProps = {
+  history: {
+    push: Function
+  },
   data: {
     book: {
       title: string,
@@ -51,6 +56,11 @@ type NotesProps = {
 }
 
 class Notes extends Component<NotesProps> {
+  goToNote = id => {
+    const { history, data: { book: { permalink } } } = this.props
+    history.push(`/books/${permalink}/notes/${id}`)
+  }
+
   render() {
     const { data: { book: { title, permalink, elements } } } = this.props
 
@@ -62,7 +72,12 @@ class Notes extends Component<NotesProps> {
 
         <div className="notes">
           {elements.map(element => (
-            <Element {...element} bookPermalink={permalink} key={element.id} />
+            <Element
+              {...element}
+              bookPermalink={permalink}
+              goToNote={this.goToNote}
+              key={element.id}
+            />
           ))}
         </div>
       </div>
@@ -72,14 +87,16 @@ class Notes extends Component<NotesProps> {
 
 class Element extends Component<ElementProps> {
   render() {
-    const { bookPermalink, notes } = this.props
+    const { bookPermalink, notes, goToNote } = this.props
 
     return (
       <div className="row">
         <div className="col-md-7">
           <BareElement {...this.props} className="element" />
 
-          {notes.map(note => <Note {...note} bookPermalink={bookPermalink} key={note.id} />)}
+          {notes.map(note => (
+            <Note {...note} bookPermalink={bookPermalink} key={note.id} goToNote={goToNote} />
+          ))}
         </div>
       </div>
     )
@@ -100,9 +117,14 @@ class Note extends Component<NoteProps> {
   }
 
   render() {
-    const { text, user: { email, name } } = this.props
+    const { id, text, user: { email, name }, goToNote } = this.props
     return (
-      <div className="row note">
+      <div
+        className="row note"
+        onClick={e => {
+          goToNote(id)
+        }}
+      >
         <div className="avatar col-md-1">
           <Gravatar email={email} />
         </div>

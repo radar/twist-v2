@@ -18,6 +18,13 @@ module Web
           end
         end
 
+        class ByID
+          def call(note, _args, _ctx)
+            element_repo = ElementRepository.new
+            element_repo.by_id(note.element_id)
+          end
+        end
+
         class Image
           def call(element, _args, ctx)
             return nil if element.image_id.nil?

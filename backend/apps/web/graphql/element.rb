@@ -4,6 +4,9 @@ require_relative 'resolvers/note'
 require_relative 'image'
 require_relative 'resolvers/image'
 
+require_relative 'chapter'
+require_relative 'resolvers/chapter'
+
 module Web
   module GraphQL
     ElementType = ::GraphQL::ObjectType.define do
@@ -23,6 +26,10 @@ module Web
 
       field :notes, types[NoteType] do
         resolve Resolvers::Note::ByElement.new
+      end
+
+      field :chapter, ChapterType do
+        resolve -> (element, _args, _ctx) { Resolvers::Chapter::ByID.new.(element.chapter_id) }
       end
     end
   end

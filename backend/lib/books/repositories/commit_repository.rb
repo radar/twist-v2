@@ -10,6 +10,10 @@ class CommitRepository < Hanami::Repository
       .one!
   end
 
+  def by_id(id)
+    commits.by_pk(id).one
+  end
+
   def find_and_clean_or_create(branch_id, sha, chapter_repo)
     fields = { branch_id: branch_id, sha: sha }
 

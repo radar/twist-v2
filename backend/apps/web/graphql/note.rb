@@ -13,6 +13,10 @@ module Web
       field :user, UserType do
         resolve Resolvers::User::ByID.new
       end
+
+      field :element, ElementType do
+        resolve Resolvers::Element::ByID.new
+      end
     end
   end
 end

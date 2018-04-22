@@ -24,6 +24,13 @@ module Web
           end
         end
 
+        class ByID
+          def call(id)
+            chapter_repo = ChapterRepository.new
+            chapter_repo.by_id(id)
+          end
+        end
+
         class PreviousChapter
           def call(chapter, _args, _ctx)
             chapter_repo = ChapterRepository.new
