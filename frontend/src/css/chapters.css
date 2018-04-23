@@ -11,7 +11,7 @@
     text-align: center; }
     #chapter .image img {
       border: 1px solid #eee;
-      width: 95%; }
+      max-width: 95%; }
     #chapter .image .missing_image {
       background: red;
       color: white; }
@@ -32,6 +32,8 @@
       font-weight: normal;
       font-size: 90%;
       line-height: 90%; }
+  .section_listing .note_form textarea {
+    font-family: "Menlo"; }
 
 .note_button {
   float: left;

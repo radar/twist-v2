@@ -17,7 +17,7 @@
 
     img {
       border: 1px solid #eee;
-      width: 95%;
+      max-width: 95%;
     }
 
     .missing_image {
@@ -49,6 +49,12 @@
       font-weight: normal;
       font-size: 90%;
       line-height: 90%;
+    }
+  }
+
+  .note_form {
+    textarea {
+      font-family: "Menlo"
     }
   }
 }
