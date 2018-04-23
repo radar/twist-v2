@@ -85,4 +85,5 @@ class CommentBox extends React.Component<CommentBoxProps> {
   }
 }
 
-export default compose(noteWithData)(errorWrapper(loadingWrapper(BookNote)))
+export const WrappedBook = compose(noteWithData)(errorWrapper(loadingWrapper(BookNote)))
+export { BookNote }
