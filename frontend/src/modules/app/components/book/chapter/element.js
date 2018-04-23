@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import NoteForm from './note_form'
 
-type ElementProps = {
+export type ElementProps = {
   id: string,
   content: string,
   tag: string,

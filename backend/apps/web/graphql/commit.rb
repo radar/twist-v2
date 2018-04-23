@@ -8,6 +8,7 @@ module Web
       name "Commit"
       description "A commit"
 
+      field :id, !types.ID
       field :sha, !types.String
       field :created_at, types.String
 

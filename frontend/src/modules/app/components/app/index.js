@@ -4,7 +4,7 @@ import { Switch, Route, Redirect, Link } from 'react-router-dom'
 
 import PrivateRoute from './private_route'
 import { WrappedBooks as Books } from 'modules/app/components/books'
-import Book from 'modules/app/components/book'
+import { WrappedBook as Book } from 'modules/app/components/book'
 import Chapter from 'modules/app/components/book/chapter'
 import BookNotes from 'modules/app/components/book/notes'
 import BookNote from 'modules/app/components/book/note'

@@ -4,14 +4,14 @@
     background: white; }
 
 .notes .element {
-  padding: 1rem;
   background: white; }
+  .notes .element p {
+    padding: 1rem; }
 
 .notes .note {
   margin: 20px 0px;
-  margin-left: 0.5rem;
-  padding-left: 5px;
-  padding-top: 5px;
+  padding-left: 1rem;
+  padding-top: 1rem;
   border: 1px solid #99caff;
   background: #f0f7ff;
   border-radius: 10px; }
@@ -20,6 +20,8 @@
     width: 80px; }
     .notes .note .avatar img {
       border-radius: 50%; }
+  .notes .note .note, .notes .note .comment-box {
+    margin-left: 0.5rem; }
 
 .note .state-new, .note .state-accepted, .note .state-reopened {
   color: green; }

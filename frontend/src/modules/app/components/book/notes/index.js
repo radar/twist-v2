@@ -25,8 +25,7 @@ type NoteProps = {
   createdAt: string,
   text: string,
   user: UserProps,
-  bookPermalink: string,
-  goToNote: Function
+  onClick: ?Function,
 }
 
 type ElementProps = {
@@ -95,7 +94,14 @@ class Element extends Component<ElementProps> {
           <BareElement {...this.props} className="element" />
 
           {notes.map(note => (
-            <Note {...note} bookPermalink={bookPermalink} key={note.id} goToNote={goToNote} />
+            <Note
+              {...note}
+              bookPermalink={bookPermalink}
+              key={note.id}
+              onClick={e => {
+                goToNote(note.id)
+              }}
+            />
           ))}
         </div>
       </div>
@@ -109,7 +115,7 @@ class Gravatar extends Component<GravatarProps> {
   }
 }
 
-class Note extends Component<NoteProps> {
+export class Note extends Component<NoteProps> {
   relativeTime() {
     const { createdAt } = this.props
 
@@ -117,14 +123,9 @@ class Note extends Component<NoteProps> {
   }
 
   render() {
-    const { id, text, user: { email, name }, goToNote } = this.props
+    const { text, user: { email, name } } = this.props
     return (
-      <div
-        className="row note"
-        onClick={e => {
-          goToNote(id)
-        }}
-      >
+      <div className="row note" onClick={this.props.onClick}>
         <div className="avatar col-md-1">
           <Gravatar email={email} />
         </div>
