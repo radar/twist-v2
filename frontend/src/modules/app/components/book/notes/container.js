@@ -12,10 +12,26 @@ const book = gql`
         id
         content
 
+        chapter {
+          id
+          position
+          part
+          title
+
+          commit {
+            sha
+            createdAt
+            branch {
+              name
+            }
+          }
+        }
+
         notes {
           id
           createdAt
           text
+
           user {
             name
             email

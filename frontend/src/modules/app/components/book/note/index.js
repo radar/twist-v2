@@ -38,7 +38,7 @@ type BookNoteProps = {
         createdAt: string,
         text: string,
         user: UserProps,
-        onClick: ?Function,
+        onClick: ?Function
       }
     }
   }
@@ -70,20 +70,20 @@ class BookNote extends React.Component<BookNoteProps> {
 }
 
 type CommentBoxProps = {
-  noteID: number,
+  noteID: number
 }
 
 class CommentBox extends React.Component<CommentBoxProps> {
-  render () {
+  render() {
     return (
-      <form className='comment-box'>
-        <div className='form-group'>
-          <input type='text' className='form-control' placeholder='Leave a comment...' />
+      <form className="comment-box">
+        <div className="form-group">
+          <input type="text" className="form-control" placeholder="Leave a comment..." />
         </div>
       </form>
     )
   }
 }
 
-export const WrappedBook = compose(noteWithData)(errorWrapper(loadingWrapper(BookNote)))
+export const WrappedNote = compose(noteWithData)(errorWrapper(loadingWrapper(BookNote)))
 export { BookNote }

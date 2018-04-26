@@ -10,10 +10,12 @@ module Web
 
       field :id, !types.ID
       field :sha, !types.String
-      field :created_at, types.String
+      field :createdAt, types.String do
+        resolve ->(obj, _args, _ctx) { obj.created_at.iso8601 }
+      end
 
       field :branch, BranchType do
-        resolve -> (commit, _args, _ctx) { Resolvers::Branch::ByID.new.(commit.branch_id) }
+        resolve -> (commit, _args, ctx) { ctx[:branch_loader].load(commit.branch_id) }
       end
     end
   end

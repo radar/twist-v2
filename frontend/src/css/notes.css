@@ -7,6 +7,10 @@
   background: white; }
   .notes .element p {
     padding: 1rem; }
+  .notes .element .chapter-info {
+    padding: 1rem;
+    font-size: 85%;
+    color: #aaa; }
 
 .notes .note {
   margin: 20px 0px;

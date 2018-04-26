@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@storybook/addon-options": "^3.4.2",
     "apollo-boost": "0.1.1",
     "apollo-cache-inmemory": "^1.1.12",
     "apollo-client": "^2.2.8",

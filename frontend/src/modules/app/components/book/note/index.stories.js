@@ -12,6 +12,7 @@ const noteData = {
     note: {
       id: 1,
       createdAt: '2018-04-23T11:15:20+10:00',
+      text: 'Lorem ipsum dolor sit amet',
       element: {
         id: '1',
         noteCount: 0,
@@ -27,9 +28,17 @@ const noteData = {
   }
 }
 
+<<<<<<< HEAD
 storiesOf('Note', module)
   .add('show', () => (
     <MemoryRouter>
       <BookNote data={noteData} />
     </MemoryRouter>
   ))
+=======
+storiesOf('Note', module).add('show', () => (
+  <MemoryRouter>
+    <BookNote data={noteData} />
+  </MemoryRouter>
+))
+>>>>>>> Show chapter + commit info on an element for a note

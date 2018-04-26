@@ -25,7 +25,7 @@ type NoteProps = {
   createdAt: string,
   text: string,
   user: UserProps,
-  onClick: ?Function,
+  onClick: ?Function
 }
 
 type ElementProps = {
@@ -37,6 +37,19 @@ type ElementProps = {
   bookPermalink: string,
   image: {
     path: string
+  },
+  chapter: {
+    id: string,
+    title: string,
+    part: string,
+    position: string,
+    commit: {
+      sha: string,
+      createdAt: string,
+      branch: {
+        name: string
+      }
+    }
   },
   goToNote: Function
 }
@@ -85,13 +98,37 @@ class Notes extends Component<NotesProps> {
 }
 
 class Element extends Component<ElementProps> {
+  renderChapterTitle(chapter) {
+    const {part, position, title} = chapter
+
+    if (part === 'mainmatter') {
+      return `${position}. ${title}`
+    } else {
+      return title
+    }
+  }
+
+  renderCommitInfo(commit) {
+    const {sha, branch: { name }} = commit
+
+    return (
+      <span>&nbsp;on {name} @ {sha.slice(0, 8)}</span>
+    )
+  }
+
   render() {
-    const { bookPermalink, notes, goToNote } = this.props
+    const { bookPermalink, notes, goToNote, chapter } = this.props
 
     return (
       <div className="row">
         <div className="col-md-7">
-          <BareElement {...this.props} className="element" />
+          <div className="element">
+            <BareElement {...this.props} className="bare-element" />
+            <span className='chapter-info'>
+              From {this.renderChapterTitle(chapter)}
+              {this.renderCommitInfo(chapter.commit)}
+            </span>
+          </div>
 
           {notes.map(note => (
             <Note

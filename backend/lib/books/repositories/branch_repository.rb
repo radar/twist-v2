@@ -12,6 +12,10 @@ class BranchRepository < Hanami::Repository
     branches.by_pk(id).one
   end
 
+  def by_ids(ids)
+    branches.where(id: ids)
+  end
+
   def find_by_book_id_and_name(book_id, name)
     by_book(book_id).where(name: name).limit(1).one
   end

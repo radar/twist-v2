@@ -35,5 +35,8 @@ const bookData = {
   }
 }
 
-storiesOf('Book', module)
-  .add('viewing chapters', () => (<MemoryRouter><Book data={bookData} /></MemoryRouter>))
+storiesOf('Book', module).add('viewing chapters', () => (
+  <MemoryRouter>
+    <Book data={bookData} />
+  </MemoryRouter>
+))

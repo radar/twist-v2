@@ -8,6 +8,10 @@ class ChapterRepository < Hanami::Repository
     chapters.by_pk(id).one
   end
 
+  def by_ids(ids)
+    chapters.where(id: ids)
+  end
+
   def for_commit(commit_id)
     chapters.where(commit_id: commit_id)
   end
