@@ -47,7 +47,7 @@ type BookProps = {
 }
 
 class Book extends Component<BookProps> {
-  renderPart(title, chapters) {
+  renderPart(title: string, chapters: Array<chapterProps>) {
     if (chapters.length === 0) {
       return null
     }

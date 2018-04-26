@@ -17,13 +17,9 @@ type NoteFormState = {
 }
 
 class NoteForm extends Component<NoteFormProps, NoteFormState> {
-  constructor() {
-    super()
-
-    this.state = {
-      showThanks: false,
-      text: ''
-    }
+  state = {
+    showThanks: false,
+    text: ''
   }
 
   render() {

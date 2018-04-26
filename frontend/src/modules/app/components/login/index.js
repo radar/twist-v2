@@ -18,16 +18,13 @@ type LoginState = {
 }
 
 class Login extends React.Component<LoginProps, LoginState> {
-  constructor() {
-    super()
-
-    this.state = {
-      email: '',
-      password: ''
-    }
+  state = {
+    email: '',
+    password: ''
   }
 
-  async submit(login: Function) {
+  // all class methods can use this pattern except lifecycle methods
+  submit = async (login: Function) => {
     const result = await login({
       variables: { email: this.state.email, password: this.state.password },
       update: (store, { data: { login } }) => {
@@ -55,6 +52,7 @@ class Login extends React.Component<LoginProps, LoginState> {
               <div className="col-md-6">
                 <h1>Login</h1>
                 <form
+                  // class methods are preferred for neatness and testing purposes e.g. handleSubmit =
                   onSubmit={e => {
                     e.preventDefault()
                     this.submit(login)
