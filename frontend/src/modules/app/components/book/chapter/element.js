@@ -2,22 +2,16 @@
 import React, { Component } from 'react'
 import NoteForm from './note_form'
 
-export type ElementProps = {
+type BareElementProps = {
   id: string,
   content: string,
   tag: string,
-  noteCount: number,
   image: {
     path: string
   }
 }
 
-type ElementState = {
-  showForm: boolean,
-  noteCount: number
-}
-
-export class BareElement extends Component<ElementProps> {
+class BareElement extends Component<BareElementProps> {
   createMarkup() {
     return { __html: this.props.content }
   }
@@ -34,6 +28,69 @@ export class BareElement extends Component<ElementProps> {
 
     return <div className="element" id={id} dangerouslySetInnerHTML={this.createMarkup()} />
   }
+}
+
+type CommitProps = {
+  sha: string,
+  branch: {
+    name: string
+  }
+}
+
+type ChapterProps = {
+  part: string,
+  position: string,
+  title: string,
+  commit: CommitProps
+}
+
+export type ElementWithInfoProps = BareElementProps & {
+  chapter: ChapterProps
+}
+
+export class ElementWithInfo extends Component<ElementWithInfoProps> {
+  renderChapterTitle(chapter: ChapterProps) {
+    const { part, position, title } = chapter
+
+    if (part === 'mainmatter') {
+      return `${position}. ${title}`
+    } else {
+      return title
+    }
+  }
+
+  renderCommitInfo(commit: CommitProps) {
+    const { sha, branch: { name } } = commit
+
+    return (
+      <span>
+        &nbsp;on {name} @ {sha.slice(0, 8)}
+      </span>
+    )
+  }
+
+  render() {
+    const { chapter } = this.props
+
+    return (
+      <div className="element">
+        <BareElement {...this.props} className="bare-element" />
+        <span className="chapter-info">
+          From {this.renderChapterTitle(chapter)}
+          {this.renderCommitInfo(chapter.commit)}
+        </span>
+      </div>
+    )
+  }
+}
+
+type ElementState = {
+  showForm: boolean,
+  noteCount: number
+}
+
+export type ElementProps = BareElementProps & {
+  noteCount: number
 }
 
 export class Element extends Component<ElementProps, ElementState> {

@@ -7,6 +7,7 @@ import { Books } from './index'
 const booksData = {
   books: [
     {
+      id: 1,
       title: 'Exploding Rails',
       permalink: 'exploding-rails',
       blurb: 'Explode your Rails app'

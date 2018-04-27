@@ -9,7 +9,8 @@ import Markdown from 'react-remarkable'
 import { bookWithData } from './container'
 import errorWrapper from 'modules/error_wrapper'
 import loadingWrapper from 'modules/loading_wrapper'
-import { BareElement } from 'modules/app/components/book/chapter/element'
+import { ElementWithInfo } from 'modules/app/components/book/chapter/element'
+import type { ElementWithInfoProps } from 'modules/app/components/book/chapter/element'
 
 type UserProps = {
   email: string,
@@ -28,30 +29,10 @@ type NoteProps = {
   onClick: ?Function
 }
 
-type ElementProps = {
-  id: string,
-  content: string,
-  notes: Array<NoteProps>,
-  noteCount: number,
-  tag: string,
+type ElementProps = ElementWithInfoProps & {
   bookPermalink: string,
-  image: {
-    path: string
-  },
-  chapter: {
-    id: string,
-    title: string,
-    part: string,
-    position: string,
-    commit: {
-      sha: string,
-      createdAt: string,
-      branch: {
-        name: string
-      }
-    }
-  },
-  goToNote: Function
+  goToNote: Function,
+  notes: Array<NoteProps>
 }
 
 type NotesProps = {
@@ -98,37 +79,13 @@ class Notes extends Component<NotesProps> {
 }
 
 class Element extends Component<ElementProps> {
-  renderChapterTitle(chapter) {
-    const {part, position, title} = chapter
-
-    if (part === 'mainmatter') {
-      return `${position}. ${title}`
-    } else {
-      return title
-    }
-  }
-
-  renderCommitInfo(commit) {
-    const {sha, branch: { name }} = commit
-
-    return (
-      <span>&nbsp;on {name} @ {sha.slice(0, 8)}</span>
-    )
-  }
-
   render() {
-    const { bookPermalink, notes, goToNote, chapter } = this.props
+    const { bookPermalink, notes, goToNote } = this.props
 
     return (
       <div className="row">
         <div className="col-md-7">
-          <div className="element">
-            <BareElement {...this.props} className="bare-element" />
-            <span className='chapter-info'>
-              From {this.renderChapterTitle(chapter)}
-              {this.renderCommitInfo(chapter.commit)}
-            </span>
-          </div>
+          <ElementWithInfo {...this.props} />
 
           {notes.map(note => (
             <Note

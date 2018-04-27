@@ -26,7 +26,7 @@ const noteQuery = gql`
             commit {
               id
               sha
-              created_at
+              createdAt
 
               branch {
                 id

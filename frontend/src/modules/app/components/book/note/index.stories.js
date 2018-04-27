@@ -18,7 +18,19 @@ const noteData = {
         noteCount: 0,
         tag: 'p',
         content: '<p>Thanks for reading!</p>',
-        image: null
+        image: null,
+        chapter: {
+          id: '1',
+          title: 'Introduction',
+          part: 'frontmatter',
+          commit: {
+            sha: 'abc123',
+            createdAt: '2018-04-22:15:20+10:00',
+            branch: {
+              name: "master"
+            }
+          }
+        }
       },
       user: {
         email: 'me@ryanbigg.com',
@@ -28,17 +40,8 @@ const noteData = {
   }
 }
 
-<<<<<<< HEAD
-storiesOf('Note', module)
-  .add('show', () => (
-    <MemoryRouter>
-      <BookNote data={noteData} />
-    </MemoryRouter>
-  ))
-=======
 storiesOf('Note', module).add('show', () => (
   <MemoryRouter>
     <BookNote data={noteData} />
   </MemoryRouter>
 ))
->>>>>>> Show chapter + commit info on an element for a note

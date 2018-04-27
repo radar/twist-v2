@@ -7,19 +7,9 @@ import { Link } from 'react-router-dom'
 import errorWrapper from 'modules/error_wrapper'
 import loadingWrapper from 'modules/loading_wrapper'
 
-import { BareElement } from 'modules/app/components/book/chapter/element'
+import type { ElementWithInfoProps } from 'modules/app/components/book/chapter/element'
+import { ElementWithInfo } from 'modules/app/components/book/chapter/element'
 import { Note } from 'modules/app/components/book/notes'
-
-// TODO: One day I'll figure out how to import flow types...
-type ElementProps = {
-  id: string,
-  content: string,
-  tag: string,
-  noteCount: number,
-  image: {
-    path: string
-  }
-}
 
 type UserProps = {
   email: string,
@@ -34,7 +24,7 @@ type BookNoteProps = {
       title: string,
       note: {
         id: number,
-        element: ElementProps,
+        element: ElementWithInfoProps,
         createdAt: string,
         text: string,
         user: UserProps,
@@ -57,7 +47,7 @@ class BookNote extends React.Component<BookNoteProps> {
 
         <div className="row">
           <div className="col-md-7">
-            <BareElement {...note.element} className="element" />
+            <ElementWithInfo {...note.element} className="element" />
 
             <Note {...note} />
 
