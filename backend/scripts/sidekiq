@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source .aws_credentials
+
+sidekiq -r ./lib/sidekiq_env.rb
