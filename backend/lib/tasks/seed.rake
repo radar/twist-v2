@@ -1,9 +1,40 @@
-task add_book: :environment do
+task seed: :environment do
+  create_user = Web::Transactions::CreateUser.new
+  create_user.(
+    email: "me@ryanbigg.com",
+    password: "password"
+  ) do |result|
+    result.success do
+      puts "User me@ryanbigg.com created."
+    end
+
+    result.failure do
+      puts "User could not be created."
+      exit(1)
+    end
+
+  end
+
   create_book = Web::Transactions::Books::Create.new
   create_book.(
-    title: "Exploding Rails",
+    title: "Markdown Book Test",
     source: "GitHub",
     format: "markdown",
     default_branch: "master",
-  )
+    blurb: "This is a test of the Twist book review system.",
+  ) do |result|
+    result.success do |book|
+      MarkdownBookWorker.perform_async(
+        permalink: book.permalink,
+        branch: "master",
+        github_path: "radar/markdown_book_test",
+      )
+      puts "Book Exploding Rails created and enqueued."
+    end
+
+    result.failure do
+      puts "Book could not be created."
+      exit(1)
+    end
+  end
 end

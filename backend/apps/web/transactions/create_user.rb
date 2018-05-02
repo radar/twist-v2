@@ -2,6 +2,7 @@ module Web
   module Transactions
     class CreateUser
       include Dry::Transaction
+      include Import["user_repo"]
 
       step :encrypt_password
       step :persist
@@ -13,7 +14,7 @@ module Web
         Success(input)
       end
 
-      def persist(input, user_repo)
+      def persist(input)
         user = user_repo.create(
           email: input[:email],
           encrypted_password: input[:password],
