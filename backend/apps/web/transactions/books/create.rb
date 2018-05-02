@@ -20,18 +20,12 @@ module Web
         def create_book(input)
           book_data = input.merge(
             branches: [
-              name: input[:default_branch],
+              name: input.delete(:default_branch),
               default: true,
             ],
           )
           book = book_repo.create_with_branches(book_data)
           Success(book)
-        end
-
-        private
-
-        def book_repo
-          BookRepository.new
         end
       end
     end
