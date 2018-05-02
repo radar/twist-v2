@@ -27,9 +27,7 @@ describe Web::GraphQL::Runner do
     end
 
     context 'when the text is not provided' do
-      it 'returns an error' do
-        pending 'TODO: Implement'
-      end
+      it 'returns an error'
     end
   end
 end
