@@ -82,6 +82,4 @@ describe Web::GraphQL::Runner do
       end
     end
   end
-
-
 end

@@ -13,15 +13,15 @@ describe Web::Transactions::Books::Create do
         branches: [
           {
             name: "master",
-            default: true
-          }
-        ]
+            default: true,
+          },
+        ],
       )
 
       subject.(
         title: "Exploding Rails",
         default_branch: "master",
-        format: "markdown"
+        format: "markdown",
       )
     end
   end

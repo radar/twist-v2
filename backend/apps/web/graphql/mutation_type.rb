@@ -3,7 +3,6 @@ require_relative 'note'
 require_relative 'mutations/note'
 require_relative 'mutations/user'
 
-
 module Web
   module GraphQL
     MutationType = ::GraphQL::ObjectType.define do

@@ -15,7 +15,7 @@ module Web
       end
 
       field :branch, BranchType do
-        resolve -> (commit, _args, ctx) { ctx[:branch_loader].load(commit.branch_id) }
+        resolve ->(commit, _args, ctx) { ctx[:branch_loader].load(commit.branch_id) }
       end
     end
   end

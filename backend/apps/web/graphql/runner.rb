@@ -7,6 +7,7 @@ module Web
       include Import["note_repo"]
       include Import["user_repo"]
 
+      # rubocop:disable Metrics/MethodLength
       def run(query:, variables: {}, context: {})
         Web::GraphQL::Schema.execute(
           query,
@@ -22,6 +23,7 @@ module Web
           ),
         )
       end
+      # rubocop:enable Metrics/MethodLength
 
       private
 

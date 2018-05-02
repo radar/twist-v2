@@ -42,7 +42,7 @@ module Web
       end
 
       field :commit, CommitType do
-        resolve -> (chapter, _args, ctx) { ctx[:commit_loader].load(chapter.commit_id) }
+        resolve ->(chapter, _args, ctx) { ctx[:commit_loader].load(chapter.commit_id) }
       end
     end
   end

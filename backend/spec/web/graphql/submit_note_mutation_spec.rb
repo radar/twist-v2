@@ -20,7 +20,7 @@ describe Web::GraphQL::Runner do
 
         result = subject.run(
           query: query,
-          context: { current_user: current_user }
+          context: { current_user: current_user },
         )
         expect(result.dig("data", "submitNote", "id")).not_to be_nil
       end
