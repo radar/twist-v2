@@ -2,10 +2,10 @@ require_relative 'resolvers/note'
 
 module Web
   module GraphQL
-    NoteMutationType = ::GraphQL::ObjectType.define do
-      name "NoteMutation"
+    SubmitNoteMutationType = ::GraphQL::ObjectType.define do
+      name "SubmitNote"
 
-      field :note, NoteType do
+      field :submitNote, NoteType do
         argument :elementID, !types.String
         argument :text, !types.String
 
