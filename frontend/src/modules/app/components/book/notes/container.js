@@ -19,6 +19,7 @@ const book = gql`
           title
 
           commit {
+            id
             sha
             createdAt
             branch {
