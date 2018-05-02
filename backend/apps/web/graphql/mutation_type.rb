@@ -1,8 +1,7 @@
 require_relative 'note'
 
 require_relative 'mutations/note'
-
-require_relative 'resolvers/user'
+require_relative 'mutations/user'
 
 
 module Web
@@ -15,7 +14,7 @@ module Web
         argument :email, !types.String
         argument :password, !types.String
 
-        resolve Resolvers::User::Authenticate.new
+        resolve Mutations::User::Authenticate.new
       end
 
       field :submitNote, NoteType do
