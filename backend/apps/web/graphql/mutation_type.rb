@@ -22,6 +22,12 @@ module Web
 
         resolve Mutations::Note::Submit.new
       end
+
+      field :closeNote, NoteType do
+        argument :id, !types.String
+
+        resolve Mutations::Note::Close.new
+      end
     end
   end
 end
