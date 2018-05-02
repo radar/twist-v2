@@ -17,6 +17,7 @@ module Web
             image_loader: image_loader,
             note_count_loader: note_count_loader,
             user_loader: user_loader,
+            note_repo: note_repo,
             user_repo: user_repo,
           ),
         )

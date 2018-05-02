@@ -1,5 +1,5 @@
 require_relative 'query_type'
-require_relative 'mutations'
+require_relative 'mutation_type'
 
 module Web
   module GraphQL
@@ -7,7 +7,7 @@ module Web
       lazy_resolve(Promise, :sync)
 
       query QueryType
-      mutation Mutations
+      mutation MutationType
     end
   end
 end
