@@ -14,4 +14,12 @@ class NoteRepository < Hanami::Repository
     counts.map { |element_id:, count:| [element_id, count] }.to_h
   end
   # rubocop:enable Metrics/AbcSize
+
+  def close(id)
+    update(id, { state: "closed" })
+  end
+
+  def open(id)
+    update(id, { state: "open" })
+  end
 end

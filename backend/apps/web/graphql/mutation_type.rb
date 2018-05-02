@@ -28,6 +28,12 @@ module Web
 
         resolve Mutations::Note::Close.new
       end
+
+      field :openNote, NoteType do
+        argument :id, !types.String
+
+        resolve Mutations::Note::Open.new
+      end
     end
   end
 end

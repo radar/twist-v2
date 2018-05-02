@@ -17,6 +17,12 @@ module Web
             ctx[:note_repo].close(args["id"])
           end
         end
+
+        class Open
+          def call(_obj, args, ctx)
+            ctx[:note_repo].open(args["id"])
+          end
+        end
       end
     end
   end
