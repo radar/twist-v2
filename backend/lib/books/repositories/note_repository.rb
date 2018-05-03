@@ -16,10 +16,10 @@ class NoteRepository < Hanami::Repository
   # rubocop:enable Metrics/AbcSize
 
   def close(id)
-    update(id, { state: "closed" })
+    update(id, state: "closed")
   end
 
   def open(id)
-    update(id, { state: "open" })
+    update(id, state: "open")
   end
 end

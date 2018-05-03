@@ -2,17 +2,19 @@ module Web
   module GraphQL
     module Resolvers
       module Note
-        class ByBook
-          def call(book, _args, _ctx)
+        class ByBookAndState
+          def call(book_permalink, state)
+            book_repo = BookRepository.new
+            book = book_repo.find_by_permalink(book_permalink)
             book_note_repo = BookNoteRepository.new
-            book_note_repo.by_book(book.id)
+            book_note_repo.by_book_and_state(book.id, state)
           end
         end
 
-        class ByElement
-          def call(element, _args, _ctx)
+        class ByElementAndState
+          def call(element, args, _ctx)
             book_note_repo = BookNoteRepository.new
-            book_note_repo.by_element(element.id)
+            book_note_repo.by_element_and_state(element.id, args["state"])
           end
         end
 

@@ -12,6 +12,8 @@ const noteQuery = gql`
         id
         createdAt
         text
+        state
+
         element {
           id
           content

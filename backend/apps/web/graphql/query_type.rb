@@ -19,6 +19,12 @@ module Web
         resolve Resolvers::Book::ByPermalink.new
       end
 
+      field :elementsWithNotes, types[ElementType] do
+        argument :bookPermalink, types.String
+        argument :state, types.String
+        resolve Resolvers::Element::ByBook.new
+      end
+
       field :currentUser, UserType do
         resolve ->(_obj, _args, ctx) { ctx[:current_user] }
       end

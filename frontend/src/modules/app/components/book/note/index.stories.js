@@ -27,7 +27,7 @@ const noteData = {
             sha: 'abc123',
             createdAt: '2018-04-22:15:20+10:00',
             branch: {
-              name: "master"
+              name: 'master'
             }
           }
         }

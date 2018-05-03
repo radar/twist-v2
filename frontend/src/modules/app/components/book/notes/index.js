@@ -2,38 +2,13 @@
 import React, { Component } from 'react'
 import { compose } from 'react-apollo'
 import { Link } from 'react-router-dom'
-import gravatar from 'gravatar'
-import moment from 'moment'
-import Markdown from 'react-remarkable'
 
-import { bookWithData } from './container'
 import errorWrapper from 'modules/error_wrapper'
 import loadingWrapper from 'modules/loading_wrapper'
-import { ElementWithInfo } from 'modules/app/components/book/chapter/element'
-import type { ElementWithInfoProps } from 'modules/app/components/book/chapter/element'
 
-type UserProps = {
-  email: string,
-  name: string
-}
+import { bookWithData } from './book_query'
 
-type GravatarProps = {
-  email: string
-}
-
-type NoteProps = {
-  id: number,
-  createdAt: string,
-  text: string,
-  user: UserProps,
-  onClick: ?Function
-}
-
-type ElementProps = ElementWithInfoProps & {
-  bookPermalink: string,
-  goToNote: Function,
-  notes: Array<NoteProps>
-}
+import { WrappedNoteList as NoteList } from './note_list'
 
 type NotesProps = {
   history: {
@@ -42,20 +17,55 @@ type NotesProps = {
   data: {
     book: {
       title: string,
-      permalink: string,
-      elements: Array<ElementProps>
+      permalink: string
     }
   }
 }
 
-class Notes extends Component<NotesProps> {
+type NotesState = {
+  state: string
+}
+
+class Notes extends Component<NotesProps, NotesState> {
+  state = {
+    state: 'open'
+  }
+
   goToNote = id => {
     const { history, data: { book: { permalink } } } = this.props
     history.push(`/books/${permalink}/notes/${id}`)
   }
 
+  toggleState() {
+    if (this.state.state === 'open') {
+      this.setState({ state: 'closed' })
+    } else {
+      this.setState({ state: 'open' })
+    }
+  }
+
+  renderStates() {
+    const { state } = this.state
+    return (
+      <div className="btn-group current-state">
+        <button
+          className={'btn btn-outline-success ' + (state === 'open' ? 'active' : '')}
+          onClick={() => this.toggleState()}
+        >
+          Open
+        </button>
+        <button
+          className={'btn btn-outline-danger ' + (state === 'closed' ? 'active' : '')}
+          onClick={() => this.toggleState()}
+        >
+          Closed
+        </button>
+      </div>
+    )
+  }
+
   render() {
-    const { data: { book: { title, permalink, elements } } } = this.props
+    const { data: { book: { title, permalink } } } = this.props
 
     return (
       <div>
@@ -64,75 +74,9 @@ class Notes extends Component<NotesProps> {
         </h1>
 
         <div className="notes">
-          {elements.map(element => (
-            <Element
-              {...element}
-              bookPermalink={permalink}
-              goToNote={this.goToNote}
-              key={element.id}
-            />
-          ))}
-        </div>
-      </div>
-    )
-  }
-}
+          {this.renderStates()}
 
-class Element extends Component<ElementProps> {
-  render() {
-    const { bookPermalink, notes, goToNote } = this.props
-
-    return (
-      <div className="row">
-        <div className="col-md-7">
-          <ElementWithInfo {...this.props} />
-
-          {notes.map(note => (
-            <Note
-              {...note}
-              bookPermalink={bookPermalink}
-              key={note.id}
-              onClick={e => {
-                goToNote(note.id)
-              }}
-            />
-          ))}
-        </div>
-      </div>
-    )
-  }
-}
-
-class Gravatar extends Component<GravatarProps> {
-  render() {
-    return <img src={gravatar.url(this.props.email, { s: 40 })} />
-  }
-}
-
-export class Note extends Component<NoteProps> {
-  relativeTime() {
-    const { createdAt } = this.props
-
-    return moment(createdAt).fromNow()
-  }
-
-  render() {
-    const { text, user: { email, name } } = this.props
-    return (
-      <div className="row note" onClick={this.props.onClick}>
-        <div className="avatar col-md-1">
-          <Gravatar email={email} />
-        </div>
-        <div className="col-md-10 body">
-          <div className="title">
-            <strong>
-              {name} commented {this.relativeTime()}
-            </strong>
-          </div>
-
-          <div>
-            <Markdown source={text} />
-          </div>
+          <NoteList state={this.state.state} bookPermalink={permalink} goToNote={this.goToNote} />
         </div>
       </div>
     )

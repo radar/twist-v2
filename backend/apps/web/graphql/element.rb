@@ -25,7 +25,8 @@ module Web
       end
 
       field :notes, types[NoteType] do
-        resolve Resolvers::Note::ByElement.new
+        argument :state, !types.String
+        resolve Resolvers::Note::ByElementAndState.new
       end
 
       field :chapter, ChapterType do

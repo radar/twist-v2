@@ -3,6 +3,7 @@ AllCops:
   Exclude:
     - "Capfile"
     - "config/deploy/**/*"
+    - "lib/tasks/**"
     - "repos/**/*"
     - "sbin/*"
 

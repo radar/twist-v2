@@ -24,13 +24,13 @@ module Web
       end
 
       field :closeNote, NoteType do
-        argument :id, !types.String
+        argument :id, !types.ID
 
         resolve Mutations::Note::Close.new
       end
 
       field :openNote, NoteType do
-        argument :id, !types.String
+        argument :id, !types.ID
 
         resolve Mutations::Note::Open.new
       end

@@ -19,10 +19,6 @@ module Web
         resolve Resolvers::Branch::Default.new
       end
 
-      field :elementsWithNotes, types[ElementType] do
-        resolve Resolvers::Element::ByBook.new
-      end
-
       field :note, NoteType do
         argument :id, !types.ID
 
