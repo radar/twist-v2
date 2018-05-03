@@ -2,7 +2,8 @@ task seed: :environment do
   create_user = Web::Transactions::CreateUser.new
   create_user.(
     email: "me@ryanbigg.com",
-    password: "password"
+    password: "password",
+    name: "Ryan Bigg",
   ) do |result|
     result.success do
       puts "User me@ryanbigg.com created."
