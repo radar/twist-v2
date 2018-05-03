@@ -18,6 +18,7 @@ const elements = gql`
           sha
           createdAt
           branch {
+            id
             name
           }
         }
@@ -30,6 +31,7 @@ const elements = gql`
         state
 
         user {
+          id
           name
           email
         }

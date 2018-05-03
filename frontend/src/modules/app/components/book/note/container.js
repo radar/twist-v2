@@ -39,6 +39,7 @@ const noteQuery = gql`
         }
 
         user {
+          id
           name
           email
         }
