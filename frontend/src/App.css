@@ -90,6 +90,8 @@
       border-radius: 50%; }
   .notes .note .note, .notes .note .comment-box {
     margin-left: 0.5rem; }
+  .notes .note .state {
+    margin-bottom: 10px; }
 
 .note .state-new, .note .state-accepted, .note .state-reopened {
   color: green; }
