@@ -9,7 +9,7 @@ import loadingWrapper from 'modules/loading_wrapper'
 
 import type { ElementWithInfoProps } from 'modules/app/components/book/chapter/element'
 import { ElementWithInfo } from 'modules/app/components/book/chapter/element'
-import Note from 'modules/app/components/book/notes/note'
+import Note, { type NoteProps } from 'modules/app/components/book/notes/note'
 
 type UserProps = {
   email: string,
@@ -22,14 +22,9 @@ type BookNoteProps = {
       id: string,
       permalink: string,
       title: string,
-      note: {
-        id: number,
+      note: NoteProps & {
         element: ElementWithInfoProps,
-        createdAt: string,
-        state: string,
-        text: string,
-        user: UserProps,
-        onClick: ?Function
+        user: UserProps
       }
     }
   }
