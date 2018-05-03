@@ -52,13 +52,13 @@ class Notes extends Component<NotesProps, NotesState> {
           className={'btn btn-outline-success ' + (state === 'open' ? 'active' : '')}
           onClick={() => this.toggleState()}
         >
-          Open
+          Open Notes
         </button>
         <button
           className={'btn btn-outline-danger ' + (state === 'closed' ? 'active' : '')}
           onClick={() => this.toggleState()}
         >
-          Closed
+          Closed Notes
         </button>
       </div>
     )
