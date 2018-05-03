@@ -23,11 +23,14 @@ class NoteStateOpen extends React.Component<NoteStateOpenProps> {
   render() {
     return (
       <div>
-        Note is open.{' '}
-        <button className="btn btn-danger" onClick={(e) => {
-          e.preventDefault()
-          this.closeNote()
-        }}>
+        Note is <span className="open-label">open</span>.{' '}
+        <button
+          className="btn btn-danger"
+          onClick={e => {
+            e.preventDefault()
+            this.closeNote()
+          }}
+        >
           Close
         </button>
       </div>

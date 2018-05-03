@@ -49,14 +49,7 @@ class Element extends Component<ElementProps> {
           <ElementWithInfo {...this.props} />
 
           {notes.map(note => (
-            <Note
-              {...note}
-              bookPermalink={bookPermalink}
-              key={note.id}
-              onClick={e => {
-                goToNote(note.id)
-              }}
-            />
+            <Note {...note} bookPermalink={bookPermalink} key={note.id} goToNote={goToNote} />
           ))}
         </div>
       </div>

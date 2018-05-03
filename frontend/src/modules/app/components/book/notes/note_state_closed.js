@@ -23,10 +23,10 @@ class NoteStateClosed extends React.Component<NoteStateClosedProps> {
   render() {
     return (
       <div>
-        Note is closed.{' '}
+        Note is <span className="closed-label">closed</span>.{' '}
         <button
           className="btn btn-success"
-          onClick={(e) => {
+          onClick={e => {
             e.preventDefault()
             this.openNote()
           }}

@@ -28,7 +28,7 @@ export type NoteProps = {
   text: string,
   state: string,
   user: UserProps,
-  onClick: ?Function
+  goToNote: ?Function
 }
 
 type NoteState = {
@@ -64,25 +64,48 @@ export default class Note extends Component<NoteProps, NoteState> {
     }
   }
 
+  renderTimestamp() {
+    const { id, goToNote, user: { name } } = this.props
+    const time = this.relativeTime()
+
+    if (goToNote === undefined || goToNote === null) {
+      return (
+        <strong>
+          {name} commented {time}
+        </strong>
+      )
+    } else {
+      return (
+        <strong>
+          {name}{' '}
+          <a
+            href="#"
+            onClick={e => {
+              e.preventDefault()
+              goToNote(id)
+            }}
+          >
+            {' '}
+            commented {time} <small>(#{id})</small>
+          </a>
+        </strong>
+      )
+    }
+  }
+
   render() {
-    const { text, user: { email, name } } = this.props
+    const { text, user: { email } } = this.props
     return (
-      <div className="row note" onClick={this.props.onClick}>
+      <div className="row note">
         <div className="avatar col-md-1">
           <Gravatar email={email} />
         </div>
         <div className="col-md-10 body">
-          <div className="title">
-            <strong>
-              {name} commented {this.relativeTime()}
-            </strong>
-          </div>
+          <div className="timestamp">{this.renderTimestamp()}</div>
 
           <Markdown source={text} />
 
-          <div className='state'>
-            {this.renderStateTransitions()}
-          </div>
+          <div className="state">{this.renderStateTransitions()}</div>
         </div>
       </div>
     )
