@@ -24,7 +24,10 @@ class NoteStateOpen extends React.Component<NoteStateOpenProps> {
     return (
       <div>
         Note is open.{' '}
-        <button className="btn btn-outline-danger" onClick={() => this.closeNote()}>
+        <button className="btn btn-danger" onClick={(e) => {
+          e.preventDefault()
+          this.closeNote()
+        }}>
           Close
         </button>
       </div>

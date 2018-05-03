@@ -78,11 +78,11 @@ export default class Note extends Component<NoteProps, NoteState> {
             </strong>
           </div>
 
-          <div>
-            <Markdown source={text} />
-          </div>
+          <Markdown source={text} />
 
-          {this.renderStateTransitions()}
+          <div className='state'>
+            {this.renderStateTransitions()}
+          </div>
         </div>
       </div>
     )

@@ -25,8 +25,9 @@ class NoteStateClosed extends React.Component<NoteStateClosedProps> {
       <div>
         Note is closed.{' '}
         <button
-          className="btn btn-outline-success"
-          onClick={() => {
+          className="btn btn-success"
+          onClick={(e) => {
+            e.preventDefault()
             this.openNote()
           }}
         >
