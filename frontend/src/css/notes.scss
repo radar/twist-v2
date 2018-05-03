@@ -7,6 +7,10 @@
 }
 
 .notes {
+  .current-state {
+    margin-bottom: 10px;
+  }
+
   .element {
     p {
       padding: 1rem;
@@ -43,8 +47,15 @@
 
     .state {
       margin-bottom: 10px;
-    }
 
+      .open-label {
+        color: #28a745;
+      }
+
+      .closed-label {
+        color: #dc3545;
+      }
+    }
   }
 }
 
