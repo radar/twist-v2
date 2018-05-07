@@ -31,7 +31,10 @@ module Web
       end
 
       def elements_with_notes(book_permalink:, state:)
-        Resolvers::Element::ByBook.new.(book_permalink: book_permalink, state: state)
+        book = context[:book_repo].find_by_permalink(book_permalink)
+        notes = context[:book_note_repo].by_book_and_state(book.id, state)
+
+        context[:element_repo].by_ids(notes.to_a.map(&:element_id).uniq)
       end
 
       def current_user

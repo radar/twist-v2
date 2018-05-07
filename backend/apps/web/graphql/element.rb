@@ -30,7 +30,7 @@ module Web
       end
 
       field :chapter, ChapterType do
-        resolve ->(element, _args, _ctx) { Resolvers::Chapter::ByID.new.(element.chapter_id) }
+        resolve ->(element, _args, ctx) { ctx[:chapter_repo].by_id(element.chapter_id) }
       end
     end
   end

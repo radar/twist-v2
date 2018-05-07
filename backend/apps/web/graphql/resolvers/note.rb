@@ -12,16 +12,8 @@ module Web
         end
 
         class ByElementAndState
-          def call(element, args, _ctx)
-            book_note_repo = BookNoteRepository.new
-            book_note_repo.by_element_and_state(element.id, args["state"])
-          end
-        end
-
-        class ById
-          def call(book, args, _ctx)
-            book_note_repo = BookNoteRepository.new
-            book_note_repo.by_book_and_id(book.id, args[:id])
+          def call(element, args, ctx)
+            ctx[:book_note_repo].by_element_and_state(element.id, args["state"])
           end
         end
 

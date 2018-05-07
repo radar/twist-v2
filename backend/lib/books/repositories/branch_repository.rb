@@ -5,7 +5,7 @@ class BranchRepository < Hanami::Repository
   end
 
   def by_book(book_id)
-    branches.where(book_id: book_id)
+    branches.where(book_id: book_id).to_a
   end
 
   def by_id(id)

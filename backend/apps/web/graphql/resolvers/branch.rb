@@ -3,9 +3,9 @@ module Web
     module Resolvers
       module Branch
         class Default
-          def call(book, _args, _ctx)
+          def call(book_id)
             branch_repo = BranchRepository.new
-            branches = branch_repo.by_book(book.id).to_a
+            branches = branch_repo.by_book(book_id).to_a
             branches.detect(&:default)
           end
         end

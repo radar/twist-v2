@@ -8,21 +8,26 @@ require_relative 'resolvers/note'
 
 module Web
   module GraphQL
-    BookType = ::GraphQL::ObjectType.define do
-      name "Book"
+    class BookType < ::GraphQL::Schema::Object
+      graphql_name "Book"
       description "A book"
-      field :id, types.ID
-      field :title, !types.String
-      field :blurb, !types.String
-      field :permalink, !types.String
-      field :defaultBranch, BranchType do
-        resolve Resolvers::Branch::Default.new
+
+      field :id, ID, null: false
+      field :title, String, null: false
+      field :blurb, String, null: false
+      field :permalink, String, null: false
+      field :defaultBranch, BranchType, null: false
+
+      field :note, NoteType, null: false do
+        argument :id, ID, required: true
       end
 
-      field :note, NoteType do
-        argument :id, !types.ID
+      def default_branch
+        context[:branch_repo].by_book(object.id).detect(&:default)
+      end
 
-        resolve Resolvers::Note::ById.new
+      def note(id:)
+        context[:book_note_repo].by_book_and_id(object.id, id)
       end
     end
   end
