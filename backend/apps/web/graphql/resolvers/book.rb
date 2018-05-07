@@ -10,9 +10,9 @@ module Web
         end
 
         class ByPermalink
-          def call(_obj, args, _ctx)
+          def call(permalink)
             book_repo = BookRepository.new
-            book_repo.find_by_permalink(args[:permalink])
+            book_repo.find_by_permalink(permalink)
           end
         end
       end

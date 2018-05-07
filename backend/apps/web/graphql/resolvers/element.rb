@@ -3,8 +3,8 @@ module Web
     module Resolvers
       module Element
         class ByBook
-          def call(_obj, args, _ctx)
-            notes = Note::ByBookAndState.new.(args["bookPermalink"], args["state"])
+          def call(bookPermalink:, state:)
+            notes = Note::ByBookAndState.new(bookPermalink, state)
 
             element_repo = ElementRepository.new
             element_repo.by_ids(notes.to_a.map(&:element_id).uniq)

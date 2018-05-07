@@ -2,31 +2,41 @@ require_relative 'book'
 require_relative 'user'
 
 require_relative 'resolvers/book'
+require_relative 'resolvers/element'
 
 module Web
   module GraphQL
-    QueryType = ::GraphQL::ObjectType.define do
-      name "Query"
+    class QueryType < ::GraphQL::Schema::Object
+      graphql_name "Query"
       description "The query root of this schema"
 
-      field :books, types[BookType] do
-        resolve Resolvers::Book::All.new
+      field :books, [BookType], null: false
+
+      field :book, BookType, null: false do
+        argument :permalink, String, required: true
       end
 
-      field :book, BookType do
-        argument :permalink, !types.String
-
-        resolve Resolvers::Book::ByPermalink.new
+      field :elements_with_notes, [ElementType], null: false do
+        argument :book_permalink, String, required: true
+        argument :state, String, required: true
       end
 
-      field :elementsWithNotes, types[ElementType] do
-        argument :bookPermalink, types.String
-        argument :state, types.String
-        resolve Resolvers::Element::ByBook.new
+      field :current_user, UserType, null: true
+
+      def books
+        Resolvers::Book::All.()
       end
 
-      field :currentUser, UserType do
-        resolve ->(_obj, _args, ctx) { ctx[:current_user] }
+      def book(permalink:)
+        Resolvers::Book::ByPermalink.(permalink)
+      end
+
+      def elements_with_notes(book_permalink:, state:)
+        Resolvers::Element::ByBook.(book_permalink: book_permalink, state: state)
+      end
+
+      def current_user
+        context[:current_user]
       end
     end
   end
