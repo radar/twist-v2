@@ -1,7 +1,6 @@
 require_relative 'book'
 require_relative 'user'
 
-require_relative 'resolvers/book'
 require_relative 'resolvers/element'
 
 module Web
@@ -24,15 +23,15 @@ module Web
       field :current_user, UserType, null: true
 
       def books
-        Resolvers::Book::All.()
+        context[:book_repo].all
       end
 
       def book(permalink:)
-        Resolvers::Book::ByPermalink.(permalink)
+        context[:book_repo].find_by_permalink(permalink)
       end
 
       def elements_with_notes(book_permalink:, state:)
-        Resolvers::Element::ByBook.(book_permalink: book_permalink, state: state)
+        Resolvers::Element::ByBook.new.(book_permalink: book_permalink, state: state)
       end
 
       def current_user

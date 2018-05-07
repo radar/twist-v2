@@ -3,7 +3,7 @@ module Web
     module Resolvers
       module Note
         class ByBookAndState
-          def call(permalink: permalink, state: state)
+          def call(permalink:, state:)
             book_repo = BookRepository.new
             book = book_repo.find_by_permalink(permalink)
             book_note_repo = BookNoteRepository.new

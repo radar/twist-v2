@@ -1,6 +1,7 @@
 module Web
   module GraphQL
     class Runner
+      include Import["book_repo"]
       include Import["branch_repo"]
       include Import["commit_repo"]
       include Import["image_repo"]
@@ -18,6 +19,7 @@ module Web
             image_loader: image_loader,
             note_count_loader: note_count_loader,
             user_loader: user_loader,
+            book_repo: book_repo,
             note_repo: note_repo,
             user_repo: user_repo,
           ),
