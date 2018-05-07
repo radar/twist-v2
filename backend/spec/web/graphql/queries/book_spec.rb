@@ -15,7 +15,7 @@ describe Web::GraphQL::Runner do
 
     subject { described_class.new(book_repo: book_repo) }
 
-    it "fetches all the books" do
+    it "fetches the book" do
       query = %|
         query allBooks {
           book(permalink: "exploding-rails") {
