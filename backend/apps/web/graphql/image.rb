@@ -1,12 +1,14 @@
 module Web
   module GraphQL
-    ImageType = ::GraphQL::ObjectType.define do
-      name "Image"
+    class ImageType < ::GraphQL::Schema::Object
+      graphql_name "Image"
       description "An image"
 
-      field :id, types.ID
-      field :path, !types.String do
-        resolve ->(image, _args, _ctx) { image.image.url }
+      field :id, ID, null: false
+      field :path, String, null: false
+
+      def path
+        object.image.url
       end
     end
   end

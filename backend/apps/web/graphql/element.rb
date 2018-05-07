@@ -1,36 +1,40 @@
-require_relative 'note'
-require_relative 'resolvers/note'
-
-require_relative 'image'
-require_relative 'resolvers/image'
-
-require_relative 'chapter'
-require_relative 'resolvers/chapter'
-
 module Web
   module GraphQL
-    ElementType = ::GraphQL::ObjectType.define do
-      name "Element"
+    class ElementType < ::GraphQL::Schema::Object
+      require_relative 'chapter'
+      require_relative 'image'
+      require_relative 'note'
+
+      graphql_name "Element"
       description "An element"
 
-      field :id, types.ID
-      field :content, types.String
-      field :tag, types.String
-      field :noteCount, types.Int do
-        resolve Resolvers::Note::Count.new
+      field :id, ID, null: false
+      field :content, String, null: false
+      field :tag, String, null: false
+      field :note_count, Integer, null: false
+      field :image, ImageType, null: true
+      field :chapter, ChapterType, null: false
+
+      field :notes, NoteType, null: false do
+        argument :state, String, required: true
       end
 
-      field :image, ImageType do
-        resolve Resolvers::Element::Image.new
+
+      def image
+        return nil if object.image_id.nil?
+        context[:image_loader].load(object.image_id)
       end
 
-      field :notes, types[NoteType] do
-        argument :state, !types.String
-        resolve Resolvers::Note::ByElementAndState.new
+      def note_count
+        context[:note_count_loader].load(object.id)
       end
 
-      field :chapter, ChapterType do
-        resolve ->(element, _args, ctx) { ctx[:chapter_repo].by_id(element.chapter_id) }
+      def notes(state:)
+        context[:book_note_repo].by_element_and_state(object.id, state)
+      end
+
+      def chapter
+        context[:chapter_repo].by_id(object.id)
       end
     end
   end

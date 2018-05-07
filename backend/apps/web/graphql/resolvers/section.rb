@@ -3,16 +3,15 @@ module Web
     module Resolvers
       module Section
         class ByChapter
-          def call(chapter, _args, _ctx)
-            build_sections(build_hierarchy(chapter))
+          def call(element_repo, chapter_id)
+            build_sections(build_hierarchy(element_repo, chapter_id))
           end
 
           private
 
           # rubocop:disable Metrics/MethodLength
-          def build_hierarchy(chapter)
-            element_repo = ElementRepository.new
-            headers = element_repo.sections_for_chapter(chapter.id)
+          def build_hierarchy(element_repo, chapter_id)
+            headers = element_repo.sections_for_chapter(chapter_id)
 
             hierarchy = []
             current_section = { subsections: [] }

@@ -16,12 +16,6 @@ module Web
             ctx[:book_note_repo].by_element_and_state(element.id, args["state"])
           end
         end
-
-        class Count
-          def call(element, _args, ctx)
-            ctx[:note_count_loader].load(element.id)
-          end
-        end
       end
     end
   end

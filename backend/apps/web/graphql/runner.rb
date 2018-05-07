@@ -25,6 +25,7 @@ module Web
             book_repo: book_repo,
             branch_repo: branch_repo,
             chapter_repo: chapter_repo,
+            commit_repo: commit_repo,
             book_note_repo: book_note_repo,
             element_repo: element_repo,
             note_repo: note_repo,

@@ -1,19 +1,11 @@
-require_relative 'resolvers/chapter'
-
-require_relative 'commit'
-
-require_relative 'element'
-require_relative 'resolvers/element'
-
-require_relative 'section'
-require_relative 'resolvers/section'
-
-require_relative 'image'
-require_relative 'resolvers/image'
-
 module Web
   module GraphQL
     class ChapterType < ::GraphQL::Schema::Object
+      require_relative 'commit'
+      require_relative 'element'
+      require_relative 'image'
+      require_relative 'section'
+
       graphql_name "Chapter"
       description "A chapter"
 
@@ -31,19 +23,19 @@ module Web
       field :commit, CommitType, null: true
 
       def previous_chapter
-        Resolvers::Chapter::PreviousChapter.new.(object)
+        context[:chapter_repo].previous_chapter(object.commit_id, object)
       end
 
       def next_chapter
-        Resolvers::Chapter::NextChapter.new.(object)
+        context[:chapter_repo].next_chapter(object.commit_id, object)
       end
 
       def elements
-        Resolvers::Element::ByChapter.new.(object)
+        context[:element_repo].by_chapter(object.id)
       end
 
       def sections
-        Resolvers::Section::ByChapter.new.(object)
+        Resolvers::Section::ByChapter.new.(context[:element_repo], object.id)
       end
 
       def images
@@ -51,8 +43,12 @@ module Web
       end
 
       def commit
-        context[:commit_loader].load(object.commit_id)
+        nil
       end
+
+      # def commit
+      #   context[:commit_loader].load(object.commit_id)
+      # end
     end
   end
 end
