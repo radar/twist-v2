@@ -1,7 +1,7 @@
 module Web
   module GraphQL
-    LoginResultType = ::GraphQL::ObjectType.define do
-      name "LoginResult"
+    class LoginResultType < ::GraphQL::Schema::Object
+      graphql_name "LoginResult"
       description "Result from a login mutation"
 
       field :email, types.String
