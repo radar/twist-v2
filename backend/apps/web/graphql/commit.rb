@@ -4,7 +4,7 @@ require_relative 'resolvers/branch'
 
 module Web
   module GraphQL
-    class CommitType < GraphQL::Schema::Object
+    class CommitType < ::GraphQL::Schema::Object
       graphql_name "Commit"
       description "A commit"
 
