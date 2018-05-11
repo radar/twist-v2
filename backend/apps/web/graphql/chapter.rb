@@ -43,12 +43,8 @@ module Web
       end
 
       def commit
-        nil
+        context[:commit_loader].load(object.commit_id)
       end
-
-      # def commit
-      #   context[:commit_loader].load(object.commit_id)
-      # end
     end
   end
 end
