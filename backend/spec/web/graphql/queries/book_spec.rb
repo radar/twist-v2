@@ -44,10 +44,12 @@ describe Web::GraphQL::Runner do
 
     subject do
       described_class.new(
-        book_repo: book_repo,
-        branch_repo: branch_repo,
-        chapter_repo: chapter_repo,
-        commit_repo: commit_repo,
+        repos: {
+          book: book_repo,
+          branch: branch_repo,
+          chapter: chapter_repo,
+          commit: commit_repo
+        }
       )
     end
 

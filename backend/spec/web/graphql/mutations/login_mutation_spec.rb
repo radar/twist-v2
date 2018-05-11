@@ -4,7 +4,13 @@ describe Web::GraphQL::Runner do
   context 'login mutation' do
     let(:user_repo) { double }
 
-    subject { described_class.new(user_repo: user_repo) }
+    subject do
+      described_class.new(
+        repos: {
+          user: user_repo,
+        },
+      )
+    end
 
     context 'when the credentials are valid' do
       let(:email) { "test@example.com" }

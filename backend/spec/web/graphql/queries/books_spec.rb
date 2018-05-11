@@ -13,7 +13,7 @@ describe Web::GraphQL::Runner do
 			)
     end
 
-    subject { described_class.new(book_repo: book_repo) }
+    subject { described_class.new(repos: { book: book_repo }) }
 
     it "fetches all the books" do
       query = %|

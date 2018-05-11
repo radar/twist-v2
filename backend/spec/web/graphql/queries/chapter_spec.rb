@@ -9,6 +9,7 @@ describe Web::GraphQL::Runner do
     let(:chapter_repo) { double(ChapterRepository) }
     let(:element_repo) { double(ElementRepository) }
     let(:image_repo) { double(ImageRepository) }
+    let(:note_repo) { double(NoteRepository) }
     let(:book) do
       double(
         Book,
@@ -112,12 +113,15 @@ describe Web::GraphQL::Runner do
 
     subject do
       described_class.new(
-        book_repo: book_repo,
-        branch_repo: branch_repo,
-        chapter_repo: chapter_repo,
-        commit_repo: commit_repo,
-        element_repo: element_repo,
-        image_repo: image_repo,
+        repos: {
+          book: book_repo,
+          branch: branch_repo,
+          chapter: chapter_repo,
+          commit: commit_repo,
+          element: element_repo,
+          image: image_repo,
+          note: note_repo,
+        }
       )
     end
 
@@ -175,15 +179,14 @@ describe Web::GraphQL::Runner do
 
       expect(book_repo).to receive(:find_by_permalink) { book }
       expect(branch_repo).to receive(:by_book) { [branch] }
-      expect(branch_repo).to receive(:by_ids).with([]) { [] }
       expect(commit_repo).to receive(:latest_for_branch) { commit }
-      expect(commit_repo).to receive(:by_ids).with([]) { [] }
       expect(chapter_repo).to receive(:for_commit_and_permalink) { chapter }
       expect(chapter_repo).to receive(:previous_chapter) { previous_chapter }
       expect(chapter_repo).to receive(:next_chapter) { next_chapter }
       expect(element_repo).to receive(:by_chapter) { [element] }
       expect(element_repo).to receive(:sections_for_chapter) { [section, sub_section] }
       expect(image_repo).to receive(:by_ids) { [image] }
+      expect(note_repo).to receive(:count) { [0] }
 
       result = subject.run(
         query: query,

@@ -3,6 +3,16 @@ require 'spec_helper'
 describe Web::GraphQL::Runner do
   context 'current_user' do
     let(:current_user) { double(User, id: 1) }
+    let(:user_repository) { double(UserRepository) }
+
+    subject do
+      described_class.new(
+        repos: {
+          user: user_repository
+        }
+      )
+    end
+
 
     it "fetches the current user's information" do
       query = %|
@@ -15,7 +25,9 @@ describe Web::GraphQL::Runner do
 
       result = subject.run(
         query: query,
-        context: { current_user: current_user },
+        context: {
+          current_user: current_user
+        },
       )
 
       user = result.dig("data", "currentUser")

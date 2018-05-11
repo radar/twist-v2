@@ -1,15 +1,9 @@
 module Web
   module GraphQL
     class Runner
-      include Import["book_repo"]
-      include Import["book_note_repo"]
-      include Import["branch_repo"]
-      include Import["chapter_repo"]
-      include Import["commit_repo"]
-      include Import["element_repo"]
-      include Import["image_repo"]
-      include Import["note_repo"]
-      include Import["user_repo"]
+      def initialize(repos:)
+        @repos = repos
+      end
 
       # rubocop:disable Metrics/MethodLength
       def run(query:, variables: {}, context: {})
@@ -22,14 +16,14 @@ module Web
             image_loader: image_loader,
             note_count_loader: note_count_loader,
             user_loader: user_loader,
-            book_repo: book_repo,
-            branch_repo: branch_repo,
-            chapter_repo: chapter_repo,
-            commit_repo: commit_repo,
-            book_note_repo: book_note_repo,
-            element_repo: element_repo,
-            note_repo: note_repo,
-            user_repo: user_repo,
+            book_repo: repo(:book),
+            branch_repo: repo(:branch),
+            chapter_repo: repo(:chapter),
+            commit_repo: repo(:commit),
+            book_note_repo: repo(:book_note),
+            element_repo: repo(:element),
+            note_repo: repo(:note),
+            user_repo: repo(:user),
           ),
         )
       end
@@ -37,24 +31,40 @@ module Web
 
       private
 
+      attr_reader :repos
+
+      def repo(name)
+        repos[name] || NullRepository.new(name)
+      end
+
       def branch_loader
-        Dataloader.new { |ids| branch_repo.by_ids(ids).to_a }
+        Dataloader.new do |ids|
+          ids.empty? ? [] : repo(:branch).by_ids(ids)
+        end
       end
 
       def commit_loader
-        Dataloader.new { |ids| commit_repo.by_ids(ids).to_a }
+        Dataloader.new do |ids|
+          ids.empty? ? [] : repo(:commit).by_ids(ids)
+        end
       end
 
       def image_loader
-        Dataloader.new { |ids| image_repo.by_ids(ids).to_a }
+        Dataloader.new do |ids|
+          ids.empty? ? [] : repo(:image).by_ids(ids)
+        end
       end
 
       def note_count_loader
-        Dataloader.new { |element_ids| note_repo.count(element_ids) }
+        Dataloader.new do |element_ids|
+          element_ids.empty? ? [] : repo(:note).count(element_ids)
+        end
       end
 
       def user_loader
-        Dataloader.new { |ids| user_repo.by_ids(ids).to_a }
+        Dataloader.new do |ids|
+          ids.empty? ? [] : repo(:user).by_ids(ids)
+        end
       end
     end
   end

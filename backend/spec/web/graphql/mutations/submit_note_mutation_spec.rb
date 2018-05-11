@@ -4,7 +4,13 @@ describe Web::GraphQL::Runner do
   context 'submitNote mutation' do
     let(:current_user) { double(User, id: 1) }
     let(:note_repo) { double }
-    subject { described_class.new(note_repo: note_repo) }
+    subject do
+      described_class.new(
+        repos: {
+          note: note_repo
+        }
+      )
+    end
 
     context "when text is provided" do
       it "creates a note" do
