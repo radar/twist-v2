@@ -19,7 +19,6 @@ module Web
         argument :state, String, required: true
       end
 
-
       def image
         return nil if object.image_id.nil?
         context[:image_loader].load(object.image_id)
