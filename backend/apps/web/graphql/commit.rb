@@ -4,18 +4,21 @@ require_relative 'resolvers/branch'
 
 module Web
   module GraphQL
-    CommitType = ::GraphQL::ObjectType.define do
-      name "Commit"
+    class CommitType < GraphQL::Schema::Object
+      graphql_name "Commit"
       description "A commit"
 
       field :id, !types.ID
       field :sha, !types.String
-      field :createdAt, types.String do
-        resolve ->(obj, _args, _ctx) { obj.created_at.iso8601 }
+      field :created_at, types.String
+      field :branch, BranchType
+
+      def created_at
+        object.created_at.iso8601
       end
 
-      field :branch, BranchType do
-        resolve ->(commit, _args, ctx) { ctx[:branch_loader].load(commit.branch_id) }
+      def branch
+        context[:branch_loader].load(object.branch_id)
       end
     end
   end
