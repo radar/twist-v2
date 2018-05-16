@@ -5,34 +5,46 @@ require_relative 'mutations/user'
 
 module Web
   module GraphQL
-    MutationType = ::GraphQL::ObjectType.define do
-      name "Mutations"
+    class MutationType < ::GraphQL::Schema::Object
+      graphql_name "Mutations"
 
-      field :login, LoginResultType do
+      field :login, LoginResultType, null: true do
         description "Login attempt"
-        argument :email, !types.String
-        argument :password, !types.String
-
-        resolve Mutations::User::Authenticate.new
+        argument :email, String, required: true
+        argument :password, String, required: true
       end
 
-      field :submitNote, NoteType do
-        argument :elementID, !types.String
-        argument :text, !types.String
+      field :submit_note, NoteType, null: true do
+        argument :element_id, String, required: true
+        argument :text, String, required: true
 
-        resolve Mutations::Note::Submit.new
       end
 
-      field :closeNote, NoteType do
-        argument :id, !types.ID
-
-        resolve Mutations::Note::Close.new
+      field :close_note, NoteType, null: true do
+        argument :id, ID, required: true
       end
 
-      field :openNote, NoteType do
-        argument :id, !types.ID
+      field :openNote, NoteType, null: true do
+        argument :id, ID, required: true
+      end
 
-        resolve Mutations::Note::Open.new
+      def login(email:, password:)
+        Mutations::User::Authenticate.new.(
+          email: email,
+          password: password,
+        )
+      end
+
+      def submit_note(element_id:, text:)
+        Mutations::Note::Submit.new.(element_id: element_id, text: text)
+      end
+
+      def close_note(id:)
+        Mutations::Note::Close.new.(id: id)
+      end
+
+      def open_note(id:)
+        Mutations::Note::Close.new.(id: id)
       end
     end
   end
