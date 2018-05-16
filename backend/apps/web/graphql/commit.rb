@@ -6,10 +6,10 @@ module Web
       graphql_name "Commit"
       description "A commit"
 
-      field :id, !types.ID
-      field :sha, !types.String
-      field :created_at, types.String
-      field :branch, BranchType
+      field :id, ID, null: false
+      field :sha, String, null: false
+      field :created_at, String, null: false
+      field :branch, BranchType, null: false
 
       def created_at
         object.created_at.iso8601
