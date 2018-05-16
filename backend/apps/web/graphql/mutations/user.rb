@@ -4,15 +4,15 @@ module Web
       module User
         class Authenticate
           include Dry::Monads::Result::Mixin
+          include Import["user_repo"]
 
           Result = Struct.new(:token, :email, :error)
 
-          def call(_obj, args, ctx)
-            user_repo = ctx[:user_repo]
-            user = user_repo.find_by_email(args["email"])
+          def call(email:, password:)
+            user = user_repo.find_by_email(email)
 
             error = Result.new(nil, nil, "Invalid username or password.")
-            return error unless user&.correct_password?(args["password"])
+            return error unless user&.correct_password?(password)
 
             hmac_secret = ENV.fetch("AUTH_TOKEN_SECRET")
             payload = { email: user.email }
