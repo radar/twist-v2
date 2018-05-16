@@ -15,7 +15,7 @@ class CommitRepository < Hanami::Repository
   end
 
   def by_ids(ids)
-    commits.where(id: ids)
+    commits.where(id: ids).to_a
   end
 
   def find_and_clean_or_create(branch_id, sha, chapter_repo)

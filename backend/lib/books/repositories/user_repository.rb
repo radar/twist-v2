@@ -4,7 +4,7 @@ class UserRepository < Hanami::Repository
   end
 
   def by_ids(ids)
-    users.where(id: ids)
+    users.where(id: ids).to_a
   end
 
   def find_by_email(email)

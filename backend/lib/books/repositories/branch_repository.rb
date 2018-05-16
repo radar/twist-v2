@@ -13,7 +13,7 @@ class BranchRepository < Hanami::Repository
   end
 
   def by_ids(ids)
-    branches.where(id: ids)
+    branches.where(id: ids).to_a
   end
 
   def find_by_book_id_and_name(book_id, name)

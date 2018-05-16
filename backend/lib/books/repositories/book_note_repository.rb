@@ -25,7 +25,7 @@ class BookNoteRepository < Hanami::Repository
     book_notes.where(
       element_id: element_id,
       state: state,
-    )
+    ).to_a
   end
 
   def by_book_and_id(book_id, id)

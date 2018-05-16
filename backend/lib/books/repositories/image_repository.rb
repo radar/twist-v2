@@ -11,11 +11,11 @@ class ImageRepository < Hanami::Repository
   end
 
   def by_chapter(chapter_id)
-    images.where(chapter_id: chapter_id)
+    images.where(chapter_id: chapter_id).to_a
   end
 
   def by_ids(ids)
-    images.where(id: ids)
+    images.where(id: ids).to_a
   end
 
   private
