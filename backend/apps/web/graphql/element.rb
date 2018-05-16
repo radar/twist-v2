@@ -15,7 +15,7 @@ module Web
       field :image, ImageType, null: true
       field :chapter, ChapterType, null: false
 
-      field :notes, NoteType, null: false do
+      field :notes, [NoteType], null: false do
         argument :state, String, required: true
       end
 
