@@ -1,11 +1,9 @@
-require_relative 'chapter'
-require_relative 'part'
-
-require_relative 'resolvers/chapter'
-
 module Web
   module GraphQL
     class BranchType < ::GraphQL::Schema::Object
+      require_relative 'chapter'
+      require_relative 'part'
+
       graphql_name "Branch"
       description "A branch"
 
