@@ -13,11 +13,11 @@ class ChapterRepository < Hanami::Repository
   end
 
   def for_commit(commit_id)
-    chapters.where(commit_id: commit_id)
+    chapters.where(commit_id: commit_id).to_a
   end
 
   def for_commit_and_part(commit_id, part)
-    for_commit(commit_id).where(part: part)
+    chapters.where(commit_id: commit_id, part: part).to_a
   end
 
   def for_commit_and_permalink(commit_id, permalink)
