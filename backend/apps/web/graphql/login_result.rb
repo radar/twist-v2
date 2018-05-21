@@ -5,8 +5,8 @@ module Web
       description "Result from a login mutation"
 
       field :email, String, null: true
-      field :token, String, null: false
-      field :error, String, null: false
+      field :token, String, null: true
+      field :error, String, null: true
     end
   end
 end
