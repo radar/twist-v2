@@ -20,6 +20,12 @@ module Web
         argument :state, String, required: true
       end
 
+      field :note, NoteType, null: false do
+        argument :book_permalink, String, required: true
+        argument :id, ID, required: true
+      end
+
+
       field :current_user, UserType, null: true
 
       def books
@@ -35,6 +41,11 @@ module Web
         notes = context[:book_note_repo].by_book_and_state(book.id, state)
 
         context[:element_repo].by_ids(notes.to_a.map(&:element_id).uniq)
+      end
+
+      def note(book_permalink:, id:)
+        book = context[:book_repo].find_by_permalink(book_permalink)
+        context[:book_note_repo].by_book_and_id(book.id, id)
       end
 
       def current_user

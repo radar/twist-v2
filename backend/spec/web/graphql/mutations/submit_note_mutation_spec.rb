@@ -16,7 +16,7 @@ describe Web::GraphQL::Runner do
       it "creates a note" do
         query = %|
           mutation submitNoteMutation {
-            submitNote(elementID: "1", text: "Just a note.") {
+            submitNote(elementId: "1", text: "Just a note.") {
               id
             }
           }
@@ -28,6 +28,7 @@ describe Web::GraphQL::Runner do
           query: query,
           context: { current_user: current_user },
         )
+
         expect(result.dig("data", "submitNote", "id")).not_to be_nil
       end
     end
