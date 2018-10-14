@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Web::Transactions::Books::Create do
+RSpec.describe Twist::Core::Books::Create do
   context 'when given valid parameters' do
     let(:book_repo) { double(BookRepository) }
     subject { described_class.new(book_repo: book_repo) }

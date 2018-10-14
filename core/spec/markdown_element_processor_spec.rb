@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MarkdownElementProcessor do
+RSpec.describe MarkdownElementProcessor do
   let(:chapter) { double(Chapter) }
   let(:book_path) { "fake/path/to/book" }
   let(:element_repo) { double }

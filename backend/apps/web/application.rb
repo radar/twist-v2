@@ -1,6 +1,4 @@
 require 'hanami/helpers'
-require 'hanami/assets'
-require_relative 'container'
 
 module Web
   class Application < Hanami::Application
@@ -22,7 +20,6 @@ module Web
       load_paths << %w[
         controllers
         graphql
-        transactions
         views
         workers
       ]
@@ -133,44 +130,6 @@ module Web
       # The relative path to templates
       #
       templates 'templates'
-
-      ##
-      # ASSETS
-      #
-      assets do
-        # JavaScript compressor
-        #
-        # Supported engines:
-        #
-        #   * :builtin
-        #   * :uglifier
-        #   * :yui
-        #   * :closure
-        #
-        # See: http://hanamirb.org/guides/assets/compressors
-        #
-        # In order to skip JavaScript compression comment the following line
-        javascript_compressor :builtin
-
-        # Stylesheet compressor
-        #
-        # Supported engines:
-        #
-        #   * :builtin
-        #   * :yui
-        #   * :sass
-        #
-        # See: http://hanamirb.org/guides/assets/compressors
-        #
-        # In order to skip stylesheet compression comment the following line
-        stylesheet_compressor :builtin
-
-        # Specify sources for assets
-        #
-        sources << [
-          'assets',
-        ]
-      end
 
       ##
       # SECURITY

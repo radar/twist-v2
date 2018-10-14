@@ -1,18 +1,18 @@
 require 'dry-transaction'
 
-module Web
-  module Transactions
+module Twist
+  module Core
     module Books
       class Create
         include Dry::Transaction
-        include Web::Import["book_repo"]
+        include Import["book_repo"]
 
         step :make_permalink
         step :create_book
 
         def make_permalink(input)
           input_with_permalink = input.merge(
-            permalink: ::Books::Permalinker.new(input[:title]).permalink,
+            permalink: Permalinker.new(input[:title]).permalink,
           )
           Success(input_with_permalink)
         end

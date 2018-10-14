@@ -1,3 +1,7 @@
+require 'redcarpet'
+require 'nokogiri'
+require 'pygments'
+
 class MarkdownRenderer < Redcarpet::Render::HTML
   # rubocop:disable Metrics/MethodLength
   def paragraph(text)

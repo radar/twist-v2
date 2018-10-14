@@ -1,14 +1,14 @@
 module Web::Controllers::Graphql
   class Run
     include Web::Action
-    include Web::Import["book_repo"]
-    include Web::Import["book_note_repo"]
-    include Web::Import["branch_repo"]
-    include Web::Import["chapter_repo"]
-    include Web::Import["commit_repo"]
-    include Web::Import["element_repo"]
-    include Web::Import["note_repo"]
-    include Web::Import["user_repo"]
+    include Twist::Core::Import["book_repo"]
+    include Twist::Core::Import["book_note_repo"]
+    include Twist::Core::Import["branch_repo"]
+    include Twist::Core::Import["chapter_repo"]
+    include Twist::Core::Import["commit_repo"]
+    include Twist::Core::Import["element_repo"]
+    include Twist::Core::Import["note_repo"]
+    include Twist::Core::Import["user_repo"]
 
     before :set_cors_headers
 

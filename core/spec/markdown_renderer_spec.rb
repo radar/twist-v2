@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MarkdownRenderer do
+RSpec.describe MarkdownRenderer do
   let(:renderer) { Redcarpet::Markdown.new(MarkdownRenderer, fenced_code_blocks: true) }
 
   def render(element)

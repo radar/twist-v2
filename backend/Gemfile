@@ -1,31 +1,21 @@
 source 'https://rubygems.org'
 
+gem 'twist-core', path: '../core', require: 'twist/core'
+
 gem 'rake'
-gem 'hanami',       '1.2.0.rc2'
-gem 'hanami-model', '1.2.0.rc2'
+gem 'hanami',       '~> 1.2'
 
 gem 'pg'
 
 gem 'bcrypt'
 gem 'warden'
 
-gem 'dry-container'
-gem 'dry-auto_inject'
-gem 'dry-transaction'
-
 gem 'sidekiq'
-
-gem 'rugged'
-gem 'redcarpet'
-gem 'pygments.rb'
-gem 'nokogiri'
 
 gem 'shrine'
 gem 'aws-sdk-s3'
 
 gem 'rollbar'
-
-gem 'babosa'
 
 gem 'graphql', '~> 1.8'
 gem 'dataloader'

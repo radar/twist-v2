@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MarkdownChapterProcessor do
+RSpec.describe MarkdownChapterProcessor do
   let(:book_repo) { BookRepository.new }
   let(:element_repo) { ElementRepository.new }
   let(:image_repo) { ImageRepository.new }
