@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 services:
   database:
     environment:
@@ -24,17 +24,20 @@ services:
 
   backend:
     build: ./backend
+    hostname: backend
     environment:
       - HANAMI_ENV=test
       - DATABASE_URL=postgres://postgres@twist_database_1/books_test
+      - PORT=80
     command: scripts/server
+
     depends_on:
       - database
 
   frontend:
     build: ./frontend
     environment:
-      - API_HOST=http://backend
+      - API_HOST=http://backend:2300
     ports:
       - 80
     depends_on:
@@ -51,3 +54,15 @@ services:
       - HEADLESS=1
       - FRONTEND_APP_URL=http://frontend
       - HANAMI_ENV=test
+
+  screenshots:
+    depends_on:
+      - migrated_database
+      - frontend
+    build: ./screenshots
+    command: google-chrome --headless --no-sandbox --disable-gpu --screenshot=/opt/app/static/screenshot.png --window-size=1280,1696 http://frontend
+    volumes:
+      - type: bind
+        source: ./static
+        target: /opt/app/static
+
