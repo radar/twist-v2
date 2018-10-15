@@ -11,6 +11,7 @@ RSpec.describe "Books", type: :feature do
 
     create_book.(
       title: "Exploding Rails",
+      blurb: "Explode your Rails applications!",
       default_branch: "master"
     )
   end
@@ -23,8 +24,6 @@ RSpec.describe "Books", type: :feature do
   end
 
   def login(email:, password:)
-    puts page.html
-    puts page.content
     fill_in "Email", with: email
     fill_in "Password", with: password
     click_button "Login"
