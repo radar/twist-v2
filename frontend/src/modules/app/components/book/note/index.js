@@ -1,11 +1,12 @@
 // @flow
 import * as React from 'react'
-import { noteWithData } from './container'
 import { compose } from 'react-apollo'
 import { Link } from 'react-router-dom'
 
 import errorWrapper from 'modules/error_wrapper'
 import loadingWrapper from 'modules/loading_wrapper'
+
+import { noteWithData } from './note_query'
 
 import type { ElementWithInfoProps } from 'modules/app/components/book/chapter/element'
 import { ElementWithInfo } from 'modules/app/components/book/chapter/element'
@@ -32,7 +33,7 @@ type BookNoteProps = {
 
 class BookNote extends React.Component<BookNoteProps> {
   render() {
-    const { data: { book: { permalink, title, note } } } = this.props
+    const { data: { book: { permalink, title }, note } } = this.props
     return (
       <div className="notes">
         <h1>

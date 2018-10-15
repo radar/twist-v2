@@ -1,0 +1,53 @@
+version: '3'
+services:
+  database:
+    environment:
+      - POSTGRES_DB=books_test
+    image: postgres
+
+  console:
+    depends_on:
+      - migrated_database
+    build: ./backend
+    environment:
+      - HANAMI_ENV=test
+      - DATABASE_URL=postgres://postgres@twist_database_1/books_test
+    command: bash -c "sleep 5 && bundle exec hanami console"
+
+  migrated_database:
+    depends_on:
+      - database
+    build: ./backend
+    command: bash -c "sleep 5 && bundle exec hanami db migrate"
+    environment:
+      - HANAMI_ENV=test
+
+  backend:
+    build: ./backend
+    environment:
+      - HANAMI_ENV=test
+      - DATABASE_URL=postgres://postgres@twist_database_1/books_test
+    command: scripts/server
+    depends_on:
+      - database
+
+  frontend:
+    build: ./frontend
+    environment:
+      - API_HOST=http://backend
+    ports:
+      - 80
+    depends_on:
+      - backend
+
+  tests:
+    depends_on:
+      - migrated_database
+      - frontend
+    build: ./backend
+    command: bash -c "sleep 5 && bundle exec rspec spec/features"
+    environment:
+      - DATABASE_URL=postgres://postgres@twist_database_1/books_test
+      - HEADLESS=1
+      - FRONTEND_APP_URL=http://frontend
+      - HANAMI_ENV=test

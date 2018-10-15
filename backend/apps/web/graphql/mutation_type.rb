@@ -30,21 +30,27 @@ module Web
 
       def login(email:, password:)
         Mutations::User::Authenticate.new.(
+          context[:user_repo],
           email: email,
           password: password,
         )
       end
 
       def submit_note(element_id:, text:)
-        Mutations::Note::Submit.new.(element_id: element_id, text: text)
+        Mutations::Note::Submit.new.(
+          note_repo: context[:note_repo],
+          current_user: context[:current_user].id,
+          element_id: element_id,
+          text: text,
+        )
       end
 
       def close_note(id:)
-        Mutations::Note::Close.new.(id: id)
+        Mutations::Note::Close.new.(context[:note_repo], id)
       end
 
       def open_note(id:)
-        Mutations::Note::Close.new.(id: id)
+        Mutations::Note::Open.new.(context[:note_repo], id)
       end
     end
   end

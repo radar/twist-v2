@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom'
 import errorWrapper from 'modules/error_wrapper'
 import loadingWrapper from 'modules/loading_wrapper'
 
-import { bookWithData } from './book_query'
+import { bookData } from './book_query'
+// import { notesData } from './notes_query'
 
 import { WrappedNoteList as NoteList } from './note_list'
 
@@ -83,4 +84,4 @@ class Notes extends Component<NotesProps, NotesState> {
   }
 }
 
-export default compose(bookWithData)(errorWrapper(loadingWrapper(Notes)))
+export default compose(bookData)(errorWrapper(loadingWrapper(Notes)))

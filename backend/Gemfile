@@ -27,7 +27,7 @@ gem 'rollbar'
 
 gem 'babosa'
 
-gem 'graphql', '1.8.0.pre11'
+gem 'graphql', '~> 1.8'
 gem 'dataloader'
 
 gem 'puma'

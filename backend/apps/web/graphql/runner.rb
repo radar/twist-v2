@@ -13,6 +13,7 @@ module Web
           context: context.merge(
             branch_loader: branch_loader,
             commit_loader: commit_loader,
+            element_loader: element_loader,
             image_loader: image_loader,
             note_count_loader: note_count_loader,
             user_loader: user_loader,
@@ -46,6 +47,12 @@ module Web
       def commit_loader
         Dataloader.new do |ids|
           ids.empty? ? [] : repo(:commit).by_ids(ids)
+        end
+      end
+
+      def element_loader
+        Dataloader.new do |ids|
+          ids.empty? ? [] : repo(:element).by_ids(ids)
         end
       end
 

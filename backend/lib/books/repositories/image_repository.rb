@@ -1,6 +1,9 @@
 class ImageRepository < Hanami::Repository
   def find_or_create_image(chapter_id, filename, image_path)
-    image = by_chapter(chapter_id).where(filename: filename).limit(1).one
+    image = images.where(
+      chapter_id: chapter_id,
+      filename: filename
+    ).limit(1).one
 
     if image
       updated_image = update_image(image, image_path)

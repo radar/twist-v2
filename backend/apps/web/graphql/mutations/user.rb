@@ -3,12 +3,9 @@ module Web
     module Mutations
       module User
         class Authenticate
-          include Dry::Monads::Result::Mixin
-          include Import["user_repo"]
-
           Result = Struct.new(:token, :email, :error)
 
-          def call(email:, password:)
+          def call(user_repo, email:, password:)
             user = user_repo.find_by_email(email)
 
             error = Result.new(nil, nil, "Invalid username or password.")

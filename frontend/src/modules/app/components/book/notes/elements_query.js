@@ -3,6 +3,12 @@ import gql from 'graphql-tag'
 
 const elements = gql`
   query elementsQuery($bookPermalink: String!, $state: String!) {
+    book(permalink: $bookPermalink) {
+      id
+      title
+      permalink
+    }
+
     elements: elementsWithNotes(bookPermalink: $bookPermalink, state: $state) {
       id
       content

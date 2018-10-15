@@ -5,4 +5,4 @@ require 'capybara'
 require 'capybara/dsl'
 require 'capybara/rspec'
 
-Capybara.app = Hanami.app
+Capybara.app_host = ENV['FRONTEND_APP_URL']
