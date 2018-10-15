@@ -55,6 +55,8 @@ group :test, :development do
 end
 
 group :test do
+  gem 'selenium-webdriver'
+  # gem 'chromedriver-helper'
   gem 'rspec'
   gem 'capybara'
   gem 'database_cleaner'
