@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Query } from 'react-apollo'
+import QueryWrapper from '../QueryWrapper'
 import { Link } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router'
 
@@ -69,14 +69,9 @@ interface WrappedBookProps extends RouteComponentProps<WrappedBookMatchParams> {
 export default class WrappedBook extends Component<WrappedBookProps> {
   render() {
     return (
-      <Query query={bookQuery} variables={{permalink: this.props.match.params.permalink}}>
-        {({ loading, error, data }) => {
-          if (loading) return "Loading...";
-          if (error) return `Error! ${error.message}`;
-          return <Book {...data.book} />
-        }}
-      </Query>
-
+      <QueryWrapper query={bookQuery} variables={{permalink: this.props.match.params.permalink}}>
+        {(data) => { return <Book {...data.book} /> }}
+      </QueryWrapper>
     )
   }
 }

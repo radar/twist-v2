@@ -1,5 +1,5 @@
 import React from 'react'
-import { Query } from "react-apollo";
+import QueryWrapper from "../QueryWrapper";
 
 import booksQuery from './BooksQuery'
 import BookItem, { Book } from './BookItem'
@@ -27,13 +27,9 @@ class Books extends React.Component<BooksProps> {
 export default class WrappedBooks extends React.Component<BooksProps, {}> {
   render() {
     return (
-      <Query query={booksQuery}>
-        {({ loading, error, data }) => {
-          if (loading) return "Loading...";
-          if (error) return `Error! ${error.message}`;
-          return <Books books={data.books} />
-        }}
-      </Query>
+      <QueryWrapper query={booksQuery}>
+        {({books}: BooksProps) => { return <Books books={books} /> }}
+      </QueryWrapper>
     )
   }
 }

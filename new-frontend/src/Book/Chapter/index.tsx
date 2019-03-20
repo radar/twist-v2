@@ -3,6 +3,7 @@ import { Query } from 'react-apollo'
 import { Link } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router'
 
+import QueryWrapper from '../../QueryWrapper'
 import chapterQuery from './ChapterQuery'
 import Element from './Element'
 import { PreviousChapterLink, NextChapterLink } from './Link'
@@ -131,13 +132,11 @@ class WrappedChapter extends React.Component<WrappedChapterProps> {
   render() {
     const {bookPermalink, chapterPermalink} = this.props.match.params
     return (
-      <Query query={chapterQuery} variables={{bookPermalink, chapterPermalink}}>
-        {({ loading, error, data }) => {
-          if (loading) return "Loading...";
-          if (error) return `Error! ${error.message}`;
+      <QueryWrapper query={chapterQuery} variables={{bookPermalink, chapterPermalink}}>
+        {(data) => {
           return <Chapter book={data.book} />
         }}
-      </Query>
+      </QueryWrapper>
     )
   }
 }
