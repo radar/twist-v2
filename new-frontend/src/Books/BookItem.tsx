@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-interface BookItemProps {
+export interface Book {
+  id: number,
   title: string,
   permalink: string,
   blurb: string
 }
 
-export default class BookItem extends Component<BookItemProps> {
+export default class BookItem extends Component<Book> {
   render() {
     const { permalink, title, blurb } = this.props
     return (

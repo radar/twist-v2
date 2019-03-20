@@ -6,12 +6,35 @@ import PrivateRoute from './PrivateRoute'
 import ApolloClient from './ApolloClient'
 
 import CurrentUser from './CurrentUser'
+import CurrentUserContext from './CurrentUser/Context'
 import Login from './Login'
 import Books from './Books'
+import Book from './Book'
+import Chapter from './Book/Chapter'
 
-import './App.css'
+import './App.scss'
+
+type UserInfoProps = {
+  user: {
+    email: string
+  }
+}
+
+function UserInfo(props: UserInfoProps) {
+  return (
+    <span>Signed in as {props.user.email}</span>
+  )
+}
 
 class Root extends Component<{}> {
+  renderUserInfo() {
+    return (
+      <CurrentUserContext.Consumer>
+        {user => (user ? <UserInfo user={user} /> : <Link to="#">Sign in</Link>)}
+      </CurrentUserContext.Consumer>
+    )
+  }
+
   render() {
     return (
       <ApolloProvider client={ApolloClient}>
@@ -22,21 +45,21 @@ class Root extends Component<{}> {
                 <strong>Twist</strong>
               </Link>{' '}
               &nbsp; | &nbsp;
-              {/* {this.renderUserInfo()} */}
+              {this.renderUserInfo()}
             </menu>
 
             <div className="container">
               <Switch>
                 <Route path="/login" component={Login} />
-                <PrivateRoute path="/" component={Books} />
-                {/* <PrivateRoute exact path="/books/:permalink" component={Book} />
-                <PrivateRoute exact path="/books/:permalink/notes" component={BookNotes} />
-                <PrivateRoute exact path="/books/:permalink/notes/:id" component={BookNote} />
                 <PrivateRoute
-                  exact
                   path="/books/:bookPermalink/chapters/:chapterPermalink"
                   component={Chapter}
                 />
+                <PrivateRoute path="/books/:permalink" component={Book} />
+                <PrivateRoute path="/" component={Books} />
+                {/* <PrivateRoute exact path="/books/:permalink/notes" component={BookNotes} />
+                <PrivateRoute exact path="/books/:permalink/notes/:id" component={BookNote} />
+
                 <Redirect from="/books" to="/" />
                 <PrivateRoute component={NotFound} /> */}
               </Switch>

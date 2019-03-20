@@ -1,15 +1,10 @@
 import React from 'react'
 import { Query } from "react-apollo";
 
-import booksQuery from './booksQuery'
-import BookItem from './BookItem'
+import booksQuery from './BooksQuery'
+import BookItem, { Book } from './BookItem'
 
-interface Book {
-  id: string,
-  title: string,
-  permalink: string,
-  blurb: string
-}
+import * as styles from './Books.module.scss'
 
 interface BooksProps {
   books: Book[]
@@ -19,7 +14,7 @@ class Books extends React.Component<BooksProps> {
   render() {
     return (
       <div className="row">
-        <div className="main col-md-7" id="books">
+        <div className={`${styles.main} col-md-7`} id="books">
           <h1>Your Books</h1>
 
           {this.props.books.map(book => <BookItem {...book} key={book.id} />)}

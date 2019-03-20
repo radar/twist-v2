@@ -1,11 +1,9 @@
-// @flow
-
 import * as React from 'react'
 import { Mutation, MutationFn, FetchResult } from 'react-apollo'
 import { DataProxy } from 'apollo-cache'
 
 import loginMutation from './LoginMutation'
-import CurrentUserQuery from '../CurrentUser/query'
+import CurrentUserQuery from '../CurrentUser/Query'
 
 type LoginProps = {
   history: {
@@ -37,16 +35,18 @@ class Login extends React.Component<LoginProps, LoginState> {
 
   handleLoginResult = (
     store: DataProxy,
-    data: FetchResult<LoginMutationData>,
+    data: LoginMutationData | undefined,
   ) => {
-    if (data.data) {
+    if (data) {
       const currentUserData = {
         currentUser: {
           __typename: 'LoginResult',
-          email: data.data.login
+          email: data.login
         }
       }
       store.writeQuery({ query: CurrentUserQuery, data: currentUserData })
+
+      window.localStorage.setItem('auth-token', data.login.token)
 
       this.props.history.push("/")
     }
@@ -56,7 +56,7 @@ class Login extends React.Component<LoginProps, LoginState> {
     const {email, password} = this.state
     loginMutation({
       variables: { email, password },
-      update: (store, data) => { this.handleLoginResult(store, data)}
+      update: (store, data) => { this.handleLoginResult(store, data.data)}
     })
   }
 

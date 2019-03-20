@@ -1,8 +1,7 @@
-// @flow
 import * as React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 
-import CurrentUserContext from '../CurrentUser/context'
+import CurrentUserContext from '../CurrentUser/Context'
 
 type Props = {
   component: React.ComponentType<any>,
