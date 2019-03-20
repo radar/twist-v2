@@ -47,7 +47,7 @@ class Books extends Component<BooksProps> {
 
     return (
       <div className="row">
-        <div className="main col-md-7">
+        <div className="main col-md-7" id="books">
           <h1>Your Books</h1>
 
           {books.map(book => <BookItem {...book} key={book.id} />)}
