@@ -5,7 +5,7 @@ class ElementRepository < Hanami::Repository
   end
 
   def by_chapter(chapter_id)
-    elements.where(chapter_id: chapter_id).to_a
+    by_chapter_scope(chapter_id).to_a
   end
 
   def by_ids(ids)
@@ -17,6 +17,12 @@ class ElementRepository < Hanami::Repository
   end
 
   def sections_for_chapter(chapter_id)
-    by_chapter(chapter_id).where(tag: %w(h2 h3)).to_a
+    by_chapter_scope(chapter_id).where(tag: %w(h2 h3)).to_a
+  end
+
+  private
+
+  def by_chapter_scope(chapter_id)
+    elements.where(chapter_id: chapter_id)
   end
 end
