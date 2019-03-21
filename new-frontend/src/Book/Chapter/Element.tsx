@@ -121,7 +121,7 @@ export default class Element extends Component<ElementProps, ElementState> {
     if (!this.state.showForm) {
       return
     }
-    return <NoteForm noteSubmitted={this.noteSubmitted} elementID={this.props.id} />
+    return <NoteForm noteSubmitted={this.noteSubmitted} elementId={this.props.id} />
   }
 
   render() {

@@ -5,7 +5,7 @@ import submitNoteMutation from './SubmitNoteMutation'
 import { Mutation, MutationFn, FetchResult } from 'react-apollo'
 
 type FormProps = {
-  elementID: string,
+  elementId: string,
   submitNote: MutationFn,
   noteSubmitted: Function,
 }
@@ -27,19 +27,23 @@ class Form extends Component<FormProps, FormState> {
   }
 
   submit = () => {
-    this.props.submitNote()
+    const {submitNote, elementId} = this.props
+    submitNote({
+      variables: { elementId, text: this.state.text },
+      update: (store, data) => { console.log(data) }
+    })
   }
 
   render() {
-    const {elementID, submitNote} = this.props
+    const {elementId, submitNote} = this.props
     return (
       <div>
         <form className="simple_form note_form">
           <p>
-            <label htmlFor={`element_${elementID}_note`}>Leave a note (Markdown enabled)</label>
+            <label htmlFor={`element_${elementId}_note`}>Leave a note (Markdown enabled)</label>
             <textarea
               className="text required form-control"
-              id={`element_${elementID}_note`}
+              id={`element_${elementId}_note`}
               onChange={e => this.setState({ text: e.target.value })}
             />
           </p>
@@ -71,21 +75,10 @@ class Form extends Component<FormProps, FormState> {
   showThanks() {
     this.setState({ showThanks: true })
   }
-
-  // async _submit() {
-  //   await this.props.noteMutation({
-  //     variables: {
-  //       elementID: this.props.elementID,
-  //       text: this.state.text
-  //     }
-  //   })
-
-  //   this.setState({ showThanks: true })
-  // }
 }
 
 type WrappedFormProps = {
-  elementID: string,
+  elementId: string,
   noteSubmitted: Function,
 }
 
