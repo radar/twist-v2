@@ -9,6 +9,7 @@ module Web::Controllers::Graphql
     include Web::Import["element_repo"]
     include Web::Import["note_repo"]
     include Web::Import["user_repo"]
+    include Web::Import["image_repo"]
 
     before :set_cors_headers
 
@@ -26,6 +27,7 @@ module Web::Controllers::Graphql
           element: element_repo,
           note: note_repo,
           user: user_repo,
+          image: image_repo,
         }
       )
       result = runner.run(

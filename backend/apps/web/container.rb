@@ -13,4 +13,5 @@ module Web
   Container.register(:element_repo, -> { ElementRepository.new })
   Container.register(:note_repo, -> { NoteRepository.new })
   Container.register(:user_repo, -> { UserRepository.new })
+  Container.register(:image_repo, -> { ImageRepository.new })
 end
