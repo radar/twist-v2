@@ -1,0 +1,1 @@
+{"__schema":{"types":[{"kind":"UNION","name":"LoginResult","possibleTypes":[{"name":"SuccessfulLoginResult"},{"name":"FailedLoginResult"}]}]}}

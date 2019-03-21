@@ -21,6 +21,7 @@
     "typescript": "3.3.3333"
   },
   "scripts": {
+    "update-graphql-types": "dotenv node scripts/update-graphql-types",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
