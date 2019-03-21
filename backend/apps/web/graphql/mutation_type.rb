@@ -1,4 +1,4 @@
-require_relative 'note'
+require_relative 'objects/note'
 
 require_relative 'mutations/note'
 require_relative 'mutations/user'
@@ -8,7 +8,7 @@ module Web
     class MutationType < ::GraphQL::Schema::Object
       graphql_name "Mutations"
 
-      field :login, LoginResultType, null: true do
+      field :login, LoginResult, null: true do
         description "Login attempt"
         argument :email, String, required: true
         argument :password, String, required: true
@@ -30,9 +30,9 @@ module Web
 
       def login(email:, password:)
         Mutations::User::Authenticate.new.(
-          context[:user_repo],
+          user_repo: context[:user_repo],
           email: email,
-          password: password,
+          password: password
         )
       end
 

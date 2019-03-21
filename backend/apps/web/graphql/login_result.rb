@@ -1,12 +1,20 @@
+require_relative 'base_union'
+require_relative 'objects/successful_login_result'
+require_relative 'objects/failed_login_result'
+
 module Web
   module GraphQL
-    class LoginResultType < ::GraphQL::Schema::Object
-      graphql_name "LoginResult"
-      description "Result from a login mutation"
+    class LoginResult < BaseUnion
+      description "The result from attempting a login"
+      possible_types SuccessfulLoginResult, FailedLoginResult
 
-      field :email, String, null: true
-      field :token, String, null: true
-      field :error, String, null: true
+      def self.resolve_type(object, _context)
+        if object.success?
+          SuccessfulLoginResult
+        else
+          FailedLoginResult
+        end
+      end
     end
   end
 end

@@ -12,6 +12,22 @@ describe Web::GraphQL::Runner do
       )
     end
 
+    def query(email, password)
+      %|
+        mutation loginMutation {
+          login(email: "#{email}", password: "#{password}") {
+            ... on SuccessfulLoginResult {
+              email
+              token
+            }
+            ... on FailedLoginResult {
+              error
+            }
+          }
+        }
+      |
+    end
+
     context 'when the credentials are valid' do
       let(:email) { "test@example.com" }
       let(:user) { double(User, id: 1, email: email) }
@@ -23,18 +39,10 @@ describe Web::GraphQL::Runner do
       end
 
       it 'logs in successfully' do
-        query = %|
-          mutation loginMutation {
-            login(email: "#{email}", password: "password") {
-              token
-              error
-            }
-          }
-        |
-        result = subject.run(query: query)
+        result = subject.run(query: query(email, "password"))
         login = result.dig("data", "login")
+        expect(login["email"]).to_not be_nil
         expect(login["token"]).to_not be_nil
-        expect(login["error"]).to be_nil
       end
     end
 
@@ -45,18 +53,8 @@ describe Web::GraphQL::Runner do
       end
 
       it 'fails to login' do
-        query = %|
-          mutation loginMutation {
-            login(email: "me@ryanbigg.com", password: "password") {
-              token
-              error
-            }
-          }
-        |
-
-        result = subject.run(query: query)
+        result = subject.run(query: query(nil, "fail"))
         login = result.dig("data", "login")
-        expect(login["token"]).to be_nil
         expect(login["error"]).to_not be_nil
       end
     end
@@ -72,18 +70,8 @@ describe Web::GraphQL::Runner do
       end
 
       it 'fails to login' do
-        query = %|
-          mutation loginMutation {
-            login(email: "me@ryanbigg.com", password: "password") {
-              token
-              error
-            }
-          }
-        |
-
-        result = subject.run(query: query)
+        result = subject.run(query: query(email, "badpassword"))
         login = result.dig("data", "login")
-        expect(login["token"]).to be_nil
         expect(login["error"]).to_not be_nil
       end
     end

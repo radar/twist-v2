@@ -2,9 +2,9 @@ require_relative 'branch'
 require_relative 'element'
 require_relative 'note'
 
-require_relative 'resolvers/branch'
-require_relative 'resolvers/element'
-require_relative 'resolvers/note'
+require_relative '../resolvers/branch'
+require_relative '../resolvers/element'
+require_relative '../resolvers/note'
 
 
 

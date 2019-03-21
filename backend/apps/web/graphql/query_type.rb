@@ -1,5 +1,5 @@
-require_relative 'book'
-require_relative 'user'
+require_relative 'objects/book'
+require_relative 'objects/user'
 
 require_relative 'resolvers/element'
 

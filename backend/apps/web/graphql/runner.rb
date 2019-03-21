@@ -23,6 +23,7 @@ module Web
             commit_repo: repo(:commit),
             book_note_repo: repo(:book_note),
             element_repo: repo(:element),
+            image_repo: repo(:image),
             note_repo: repo(:note),
             user_repo: repo(:user),
           ),
