@@ -55,8 +55,6 @@ class Login extends React.Component<LoginProps, LoginState> {
       }
     }
 
-    console.log("omg")
-
     store.writeQuery({ query: CurrentUserQuery, data: currentUserData })
 
     window.localStorage.setItem('auth-token', login.token)
