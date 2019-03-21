@@ -4,6 +4,26 @@ import { DataProxy } from 'apollo-cache'
 
 import loginMutation from './LoginMutation'
 import CurrentUserQuery from '../CurrentUser/Query'
+import * as styles from './Login.module.scss'
+
+interface SuccessfulLoginData {
+  __typename: string,
+  email: string,
+  token: string
+}
+
+interface FailedLoginData {
+  __typename: string,
+  error: string,
+}
+
+type LoginData = SuccessfulLoginData | FailedLoginData
+
+interface LoginMutationData {
+  login: LoginData
+}
+
+class LoginMutation extends Mutation<LoginMutationData, {}> {}
 
 type LoginProps = {
   history: {
@@ -13,24 +33,39 @@ type LoginProps = {
 
 type LoginState = {
   email: string,
-  password: string
+  password: string,
+  failed: boolean,
+  error: string,
 }
-
-interface LoginMutationData {
-  login: {
-    email: string,
-    token: string,
-    error: string
-  }
-}
-
-class LoginMutation extends Mutation<LoginMutationData, {}> {}
 
 
 class Login extends React.Component<LoginProps, LoginState> {
   state = {
     email: '',
-    password: ''
+    password: '',
+    failed: false,
+    error: ''
+  }
+
+  handleSuccessfulLogin(store: DataProxy, login: SuccessfulLoginData) {
+    const currentUserData = {
+      currentUser: {
+        __typename: 'LoginResult',
+        email: login.email
+      }
+    }
+
+    console.log("omg")
+
+    store.writeQuery({ query: CurrentUserQuery, data: currentUserData })
+
+    window.localStorage.setItem('auth-token', login.token)
+
+    this.props.history.push("/")
+  }
+
+  handleFailedLogin(login: FailedLoginData) {
+    this.setState({failed: true, error: login.error})
   }
 
   handleLoginResult = (
@@ -38,21 +73,16 @@ class Login extends React.Component<LoginProps, LoginState> {
     data: LoginMutationData | undefined,
   ) => {
     if (data) {
-      const currentUserData = {
-        currentUser: {
-          __typename: 'LoginResult',
-          email: data.login
-        }
+      if ((data.login as FailedLoginData).error) {
+        this.handleFailedLogin((data.login as FailedLoginData))
+      } else {
+        this.handleSuccessfulLogin(store, (data.login as SuccessfulLoginData))
       }
-      store.writeQuery({ query: CurrentUserQuery, data: currentUserData })
-
-      window.localStorage.setItem('auth-token', data.login.token)
-
-      this.props.history.push("/")
     }
   }
 
   submit(loginMutation: MutationFn<LoginMutationData>) {
+    this.setState({failed: false})
     const {email, password} = this.state
     loginMutation({
       variables: { email, password },
@@ -60,9 +90,17 @@ class Login extends React.Component<LoginProps, LoginState> {
     })
   }
 
+  renderError() {
+    if (this.state.failed) {
+      return (
+        <span className={styles.error}>{this.state.error}</span>
+      )
+    }
+  }
+
   render() {
     return (
-      <Mutation mutation={loginMutation}>
+      <LoginMutation mutation={loginMutation}>
         {(login, { data }) => (
           <div className="row">
             <div className="main col-md-7">
@@ -96,13 +134,16 @@ class Login extends React.Component<LoginProps, LoginState> {
                       onChange={e => this.setState({ password: e.target.value })}
                     />
                   </div>
-                  <input type="submit" className="btn btn-primary" value="Login" />
+                  <div>
+                    <input type="submit" className="btn btn-primary" value="Login" />
+                    {this.renderError()}
+                  </div>
                 </form>
               </div>
             </div>
           </div>
         )}
-      </Mutation>
+      </LoginMutation>
     )
   }
 }
