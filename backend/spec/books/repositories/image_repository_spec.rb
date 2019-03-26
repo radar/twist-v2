@@ -11,7 +11,7 @@ describe ImageRepository do
   let(:commit) { commit_repo.create(branch_id: branch.id, sha: "abc123") }
   let(:chapter) { chapter_repo.create(commit_id: commit.id, title: "Chapter 1") }
 
-  let(:image_path) { "spec/fixtures/repos/radar/markdown_book_test/images/chapter_1/1.png" }
+  let(:image_path) { "spec/books/repos/radar/markdown_book_test/images/chapter_1/1.png" }
   let(:filename) { File.basename(image_path) }
 
   context "find_or_create_image" do
