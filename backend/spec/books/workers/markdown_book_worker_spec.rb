@@ -47,6 +47,24 @@ describe MarkdownBookWorker do
         expect(appendix.position).to eq(1)
         expect(appendix.part).to eq("backmatter")
       end
+
+      it "can process the same commit & chapters twice" do
+        process = lambda do
+          subject.perform(
+            "permalink" => book.permalink,
+            "branch" => branch.name,
+            "github_path" => "radar/markdown_book_test",
+          )
+        end
+
+        process.call
+        process.call
+
+        commit = commit_repo.latest_for_branch(branch.id)
+        chapters = chapter_repo.for_commit(commit.id).to_a
+
+        expect(chapters.count).to eq(4)
+      end
     end
   end
 
