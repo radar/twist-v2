@@ -29,7 +29,7 @@ describe Git do
     let(:head_branch) { subject.rugged_repo.head.name.split("/").last }
 
     it "locally sources the repo (sustainably)" do
-      path = File.expand_path(File.join(__dir__, "../fixtures/repos/radar/markdown_book_test"))
+      path = File.expand_path(File.join(__dir__, "../books/repos/radar/markdown_book_test"))
       expect(subject.rugged_repo.remotes.first.url).to eq(path)
     end
 

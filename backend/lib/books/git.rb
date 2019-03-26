@@ -64,7 +64,7 @@ class Git
 
   def source
     if self.class.test
-      File.expand_path(File.join(__dir__, "../../spec/fixtures/repos")) + "/"
+      File.expand_path(File.join(__dir__, "../../spec/books/repos")) + "/"
     else
       "git@github.com:"
     end
