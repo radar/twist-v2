@@ -19,6 +19,18 @@ Once the book has been "received" by that particular endpoint, the book is proce
 
 ### Setting up
 
+#### Homebrew, libssh2 + openssl
+
+One of the gem dependencies of this app is `rugged`. This talks over the Git protocol, and requires some additional packages. It requires `libssh2` (and its dependency, `openssl`) and `pkg-config` to be installed. It will also be necessary to configure `pkg-config` to point it at your `openssl` directory, because it has trouble finding it:
+
+```
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/opt/openssl/lib/pkgconfig
+```
+
+Once that is done, proceed with the following setup.
+
+#### Ruby dependencies
+
 To setup the backend app, you can run:
 
 ```
