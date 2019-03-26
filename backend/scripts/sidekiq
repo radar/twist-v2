@@ -2,4 +2,4 @@
 
 source .aws_credentials
 
-sidekiq -r ./lib/sidekiq_env.rb
+bundle exec sidekiq -r ./lib/sidekiq_env.rb
