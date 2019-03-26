@@ -1,5 +1,5 @@
 task seed: :environment do
-  create_user = Web::Transactions::CreateUser.new
+  create_user = Web::Transactions::Users::Create.new
   create_user.(
     email: "me@ryanbigg.com",
     password: "password",
