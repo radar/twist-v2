@@ -9,26 +9,31 @@ class BookNoteRepository < Hanami::Repository
       state: state,
     )
 
-    # When displaying open notes, it's helpful to see oldest first.
-    # But when displaying closed notes, it makes sense to show those recently closed
-    # (in case you want to review them or re-open them)
-    notes = if state == "open"
-              notes.order { updated_at.asc }
-            else
-              notes.order { updated_at.desc }
-            end
-
-    notes.to_a
+    reorder_notes(notes, state).to_a
   end
 
   def by_element_and_state(element_id, state)
-    book_notes.where(
+    notes = book_notes.where(
       element_id: element_id,
       state: state,
-    ).to_a
+    )
+    reorder_notes(notes, state).to_a
   end
 
   def by_book_and_id(book_id, id)
     by_book(book_id).where(id: id).one
+  end
+
+  private
+
+  def reorder_notes(notes, state)
+    # When displaying open notes, it's helpful to see oldest first.
+    # But when displaying closed notes, it makes sense to show those recently closed
+    # (in case you want to review them or re-open them)
+    if state == "open"
+      notes.order { created_at.asc }
+    else
+      notes.order { updated_at.desc }
+    end
   end
 end
