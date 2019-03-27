@@ -42,21 +42,15 @@ export type NavigationalChapter = {
 }
 
 type ChapterProps = {
-  book: {
-    title: string,
-    permalink: string,
-    defaultBranch: {
-      chapter: {
-        title: string,
-        position: number,
-        part: string,
-        elements: Array<ElementProps>,
-        sections: Array<SectionProps>,
-        previousChapter: NavigationalChapter,
-        nextChapter: NavigationalChapter
-      }
-    }
-  }
+  bookTitle: string,
+  bookPermalink: string,
+  title: string,
+  position: number,
+  part: string,
+  elements: Array<ElementProps>,
+  sections: Array<SectionProps>,
+  previousChapter: NavigationalChapter | null,
+  nextChapter: NavigationalChapter | null
 }
 
 export const chapterPositionAndTitle = (part: string, position: number, title: string) => {
@@ -68,33 +62,40 @@ export const chapterPositionAndTitle = (part: string, position: number, title: s
 }
 
 
-class Chapter extends Component<ChapterProps> {
-  render() {
-    const { book } = this.props
+export class Chapter extends Component<ChapterProps> {
+  renderPreviousChapterLink() {
+    const {bookPermalink, previousChapter} = this.props;
+    if (previousChapter) {
+      return <PreviousChapterLink {...previousChapter} bookPermalink={bookPermalink} />
+    }
+  }
 
+  renderNextChapterLink() {
+    const {bookPermalink, nextChapter} = this.props;
+    if (nextChapter) {
+      return <NextChapterLink {...nextChapter} bookPermalink={bookPermalink} />
+    }
+  }
+
+  render() {
     const {
-      permalink: bookPermalink,
-      defaultBranch: {
-        chapter: {
-          part,
-          title: chapterTitle,
-          position,
-          elements,
-          sections,
-          previousChapter,
-          nextChapter
-        }
-      }
-    } = book
+      bookTitle,
+      bookPermalink,
+      part,
+      title: chapterTitle,
+      position,
+      elements,
+      sections,
+    } = this.props;
 
     const positionAndTitle = chapterPositionAndTitle(part, position, chapterTitle)
 
     return (
       <div className="row">
-        <div id="chapter" className="main col-md-7">
+        <div id="chapter" className="main col-md-7 col-md-offset-1">
           <h1>
             <Link id="top" to={`/books/${bookPermalink}`}>
-              {book.title}
+              {bookTitle}
             </Link>
           </h1>
           <h2>{positionAndTitle}</h2>
@@ -103,7 +104,7 @@ class Chapter extends Component<ChapterProps> {
 
         <div className="col-md-4">
           <div id="sidebar">
-            <PreviousChapterLink {...previousChapter} bookPermalink={bookPermalink} />
+            {this.renderPreviousChapterLink()}
             <hr />
 
             <h4>
@@ -113,7 +114,7 @@ class Chapter extends Component<ChapterProps> {
             <SectionList sections={sections} />
 
             <hr />
-            <NextChapterLink {...nextChapter} bookPermalink={bookPermalink} />
+            {this.renderNextChapterLink()}
           </div>
         </div>
       </div>
@@ -134,7 +135,11 @@ class WrappedChapter extends React.Component<WrappedChapterProps> {
     return (
       <QueryWrapper query={chapterQuery} variables={{bookPermalink, chapterPermalink}}>
         {(data) => {
-          return <Chapter book={data.book} />
+          return <Chapter
+            bookTitle={data.book.title}
+            bookPermalink={bookPermalink}
+            {...data.book.defaultBranch.chapter}
+          />
         }}
       </QueryWrapper>
     )

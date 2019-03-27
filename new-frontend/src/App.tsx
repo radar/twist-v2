@@ -40,15 +40,18 @@ class Root extends Component<{}> {
       <ApolloProvider client={ApolloClient}>
         <CurrentUser>
           <BrowserRouter>
-            <menu>
-              <Link to="/">
-                <strong>Twist</strong>
-              </Link>{' '}
-              &nbsp; | &nbsp;
-              {this.renderUserInfo()}
-            </menu>
-
             <div className="container">
+              <div className="row">
+                <div className="col-md-12">
+                  <menu>
+                    <Link to="/">
+                      <strong>Twist</strong>
+                    </Link>{' '}
+                    &nbsp; | &nbsp;
+                    {this.renderUserInfo()}
+                  </menu>
+                </div>
+              </div>
               <Switch>
                 <Route path="/login" component={Login} />
                 <PrivateRoute
