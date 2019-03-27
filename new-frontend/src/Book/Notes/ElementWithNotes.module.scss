@@ -1,0 +1,22 @@
+.elementContainer {
+  border: 1px solid #dedede;
+}
+
+.element, .note {
+  padding: 1rem;
+}
+
+.element {
+  background: #f8f8f8;
+}
+
+.chapterInfo {
+  font-size: 85%;
+  font-style: italic;
+}
+
+.note {
+  border: 1px solid #efefef;
+  border-radius: 5px;
+  margin: 0.5rem;
+}

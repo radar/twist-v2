@@ -61,7 +61,7 @@ export class Book extends Component<BookProps> {
 }
 
 interface WrappedBookMatchParams {
-  permalink: string;
+  bookPermalink: string;
 }
 
 interface WrappedBookProps extends RouteComponentProps<WrappedBookMatchParams> {}
@@ -69,7 +69,7 @@ interface WrappedBookProps extends RouteComponentProps<WrappedBookMatchParams> {
 export default class WrappedBook extends Component<WrappedBookProps> {
   render() {
     return (
-      <QueryWrapper query={bookQuery} variables={{permalink: this.props.match.params.permalink}}>
+      <QueryWrapper query={bookQuery} variables={{permalink: this.props.match.params.bookPermalink}}>
         {(data) => { return <Book {...data.book} /> }}
       </QueryWrapper>
     )

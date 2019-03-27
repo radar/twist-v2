@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import NoteForm from './Note/Form'
 import * as styles from './Element.module.scss'
 
-type BareElementProps = {
+export type BareElementProps = {
   id: string,
   content: string,
   tag: string,
@@ -11,7 +11,7 @@ type BareElementProps = {
   }
 }
 
-class BareElement extends Component<BareElementProps> {
+export class BareElement extends Component<BareElementProps> {
   createMarkup() {
     return { __html: this.props.content }
   }
@@ -30,59 +30,6 @@ class BareElement extends Component<BareElementProps> {
   }
 }
 
-type CommitProps = {
-  sha: string,
-  branch: {
-    name: string
-  }
-}
-
-type ChapterProps = {
-  part: string,
-  position: string,
-  title: string,
-  commit: CommitProps
-}
-
-export type ElementWithInfoProps = BareElementProps & {
-  chapter: ChapterProps
-}
-
-export class ElementWithInfo extends Component<ElementWithInfoProps> {
-  renderChapterTitle(chapter: ChapterProps) {
-    const { part, position, title } = chapter
-
-    if (part === 'mainmatter') {
-      return `${position}. ${title}`
-    } else {
-      return title
-    }
-  }
-
-  renderCommitInfo(commit: CommitProps) {
-    const { sha, branch: { name } } = commit
-
-    return (
-      <span>
-        &nbsp;on {name} @ {sha.slice(0, 8)}
-      </span>
-    )
-  }
-
-  render() {
-    const { chapter } = this.props
-
-    return (
-      <div className="element">
-        <BareElement {...this.props} />
-        <span className="chapter-info">
-          From {this.renderChapterTitle(chapter)}
-          {this.renderCommitInfo(chapter.commit)}
-        </span>
-      </div>
-    )
-  }
-}
 
 type ElementState = {
   showForm: boolean,

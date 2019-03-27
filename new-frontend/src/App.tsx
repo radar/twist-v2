@@ -11,6 +11,7 @@ import Login from './Login'
 import Books from './Books'
 import Book from './Book'
 import Chapter from './Book/Chapter'
+import Notes from './Book/Notes'
 
 import './App.scss'
 
@@ -58,13 +59,13 @@ class Root extends Component<{}> {
                   path="/books/:bookPermalink/chapters/:chapterPermalink"
                   component={Chapter}
                 />
-                <PrivateRoute path="/books/:permalink" component={Book} />
+                <PrivateRoute path="/books/:bookPermalink/notes" component={Notes} />
+                <PrivateRoute path="/books/:bookPermalink" component={Book} />
                 <PrivateRoute path="/" component={Books} />
-                {/* <PrivateRoute exact path="/books/:permalink/notes" component={BookNotes} />
-                <PrivateRoute exact path="/books/:permalink/notes/:id" component={BookNote} />
+                {/* <PrivateRoute exact path="/books/:permalink/notes/:id" component={BookNote} /> */}
 
                 <Redirect from="/books" to="/" />
-                <PrivateRoute component={NotFound} /> */}
+                {/* <PrivateRoute component={NotFound} /> */}
               </Switch>
             </div>
           </BrowserRouter>
