@@ -4,9 +4,9 @@ module Web
       graphql_name "User"
       description "A user"
 
-      field :id, ID, null: true
-      field :name, String, null: true
-      field :email, String, null: true
+      field :id, ID, null: false
+      field :name, String, null: false
+      field :email, String, null: false
     end
   end
 end
