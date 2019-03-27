@@ -22,7 +22,7 @@ type BookProps = {
   }
 }
 
-class Book extends Component<BookProps> {
+export class Book extends Component<BookProps> {
   renderPart(title: string, chapters: ChapterProps[]) {
     if (chapters.length === 0) {
       return null

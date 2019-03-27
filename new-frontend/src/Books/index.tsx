@@ -10,7 +10,7 @@ interface BooksProps {
   books: Book[]
 }
 
-class Books extends React.Component<BooksProps> {
+export class Books extends React.Component<BooksProps> {
   render() {
     return (
       <div className="row">
