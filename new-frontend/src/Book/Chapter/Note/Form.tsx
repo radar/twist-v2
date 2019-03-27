@@ -27,10 +27,10 @@ class Form extends Component<FormProps, FormState> {
   }
 
   submit = () => {
-    const {submitNote, elementId} = this.props
+    const {submitNote, elementId, noteSubmitted} = this.props
     submitNote({
       variables: { elementId, text: this.state.text },
-      update: (store, data) => { console.log(data) }
+      update: (store, data) => { noteSubmitted() }
     })
   }
 

@@ -94,13 +94,9 @@ export type ElementProps = BareElementProps & {
 }
 
 export default class Element extends Component<ElementProps, ElementState> {
-  constructor(props: ElementProps) {
-    super(props)
-
-    this.state = {
-      showForm: false,
-      noteCount: props.noteCount
-    }
+  state = {
+    showForm: false,
+    noteCount: this.props.noteCount
   }
 
   renderNotesCount() {
@@ -112,9 +108,9 @@ export default class Element extends Component<ElementProps, ElementState> {
     this.setState({ showForm: !this.state.showForm })
   }
 
-  noteSubmitted(noteCount: number) {
+  noteSubmitted = () => {
     this.toggleForm()
-    this.setState({ noteCount: noteCount })
+    this.setState({ noteCount: this.state.noteCount + 1 })
   }
 
   renderForm() {
