@@ -9,7 +9,7 @@ module Web
       description "An element"
 
       field :id, ID, null: false
-      field :content, String, null: false
+      field :content, String, null: true
       field :tag, String, null: false
       field :note_count, Integer, null: false
       field :image, ImageType, null: true
