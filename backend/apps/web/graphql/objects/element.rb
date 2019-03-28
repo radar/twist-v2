@@ -33,7 +33,7 @@ module Web
       end
 
       def chapter
-        context[:chapter_repo].by_id(object.id)
+        context[:chapter_repo].by_id(object.chapter_id)
       end
     end
   end
