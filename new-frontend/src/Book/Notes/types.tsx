@@ -31,5 +31,6 @@ export type ElementWithInfoProps = BareElementProps & {
 }
 
 export type ElementWithNotesProps = ElementWithInfoProps & {
+  bookPermalink: string,
   notes: Note[]
 }

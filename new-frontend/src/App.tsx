@@ -12,6 +12,7 @@ import Books from './Books'
 import Book from './Book'
 import Chapter from './Book/Chapter'
 import Notes from './Book/Notes'
+import Note from './Book/Note'
 
 import './App.scss'
 
@@ -59,10 +60,10 @@ class Root extends Component<{}> {
                   path="/books/:bookPermalink/chapters/:chapterPermalink"
                   component={Chapter}
                 />
+                <PrivateRoute path="/books/:bookPermalink/notes/:id" component={Note} />
                 <PrivateRoute path="/books/:bookPermalink/notes" component={Notes} />
                 <PrivateRoute path="/books/:bookPermalink" component={Book} />
                 <PrivateRoute path="/" component={Books} />
-                {/* <PrivateRoute exact path="/books/:permalink/notes/:id" component={BookNote} /> */}
 
                 <Redirect from="/books" to="/" />
                 {/* <PrivateRoute component={NotFound} /> */}

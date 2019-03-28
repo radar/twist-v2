@@ -1,22 +1,11 @@
 import gql from 'graphql-tag'
+import ElementWithInfoFragment from './ElementWithInfoFragment'
 
 export default gql`
   query bookQuery($bookPermalink: String!, $state: String!) {
     elementsWithNotes(bookPermalink: $bookPermalink, state: $state) {
-      id
-      content
-      tag
-      chapter {
-        title
-        part
-        position
-        commit {
-          sha
-          branch {
-            name
-          }
-        }
-      }
+      ...elementWithInfo
+
       notes(state: $state) {
         id
         text
@@ -27,4 +16,6 @@ export default gql`
       }
     }
   }
+
+  ${ElementWithInfoFragment}
 `

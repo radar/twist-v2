@@ -7,13 +7,15 @@ import ElementWithNotes from "./ElementWithNotes"
 import NotesQuery from "./NotesQuery"
 
 type NoteListProps = {
+  bookPermalink: string,
   elementsWithNotes: ElementWithNotesProps[],
 }
 
 class NoteList extends React.Component<NoteListProps> {
   renderElements() {
-    return this.props.elementsWithNotes.map(
-      element => <ElementWithNotes key={element.id} {...element} />
+    const {elementsWithNotes, bookPermalink} = this.props
+    return elementsWithNotes.map(
+      element => <ElementWithNotes key={element.id} bookPermalink={bookPermalink} {...element} />
     )
   }
 
@@ -43,7 +45,7 @@ export default class WrappedNoteList extends React.Component<WrappedNoteListProp
       <QueryWrapper query={NotesQuery} variables={variables}>
         {({elementsWithNotes}) => {
           return (
-            <NoteList elementsWithNotes={elementsWithNotes} />
+            <NoteList bookPermalink={this.props.bookPermalink} elementsWithNotes={elementsWithNotes} />
           )
         }}
       </QueryWrapper>

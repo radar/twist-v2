@@ -8,9 +8,33 @@ import BookQuery from "./BookQuery"
 
 type HeaderProps = {
   permalink: string,
+  noteId?: string
+}
+
+type Book = {
+  permalink: string,
+  title: string
 }
 
 export default class Header extends React.Component<HeaderProps> {
+
+  renderSuffix(book: Book, noteId?: string) {
+    const bookRoot = `/books/${book.permalink}`
+    if (noteId) {
+      return (
+        <span>
+          - <Link to={`${bookRoot}/notes`}>Notes</Link>
+          - #{noteId}
+        </span>
+      )
+    } else {
+      return (
+        <span>
+            - Notes
+        </span>
+      )
+    }
+  }
   render() {
 
     const {permalink} = this.props;
@@ -19,7 +43,7 @@ export default class Header extends React.Component<HeaderProps> {
         {({book}) => {
           return (
             <h1>
-              <Link to={`/books/${permalink}`}>{book.title}</Link> - Notes
+              <Link to={`/books/${permalink}`}>{book.title}</Link> {this.renderSuffix(book, this.props.noteId)}
             </h1>
           )
         }}
