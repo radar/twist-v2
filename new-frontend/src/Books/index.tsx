@@ -13,12 +13,10 @@ interface BooksProps {
 export class Books extends React.Component<BooksProps> {
   render() {
     return (
-      <div className="row">
-        <div className={`${styles.main} col-md-7`} id="books">
-          <h1>Your Books</h1>
+      <div className={`${styles.main} col-md-7`} id="books">
+        <h1>Your Books</h1>
 
-          {this.props.books.map(book => <BookItem {...book} key={book.id} />)}
-        </div>
+        {this.props.books.map(book => <BookItem {...book} key={book.id} />)}
       </div>
     )
   }

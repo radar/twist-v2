@@ -6,7 +6,7 @@ export type BareElementProps = {
   id: string,
   content: string,
   tag: string,
-  image: {
+  image?: {
     path: string
   }
 }
@@ -18,7 +18,7 @@ export class BareElement extends Component<BareElementProps> {
 
   render() {
     const { tag, image, id } = this.props
-    if (tag === 'img') {
+    if (tag === 'img' && image) {
       return (
         <div className="element image" id={id}>
           <img src={image.path} />

@@ -11,7 +11,7 @@ type NoteListProps = {
   elementsWithNotes: ElementWithNotesProps[],
 }
 
-class NoteList extends React.Component<NoteListProps> {
+export class NoteList extends React.Component<NoteListProps> {
   renderElements() {
     const {elementsWithNotes, bookPermalink} = this.props
     return elementsWithNotes.map(

@@ -6,7 +6,7 @@ import { Mutation, MutationFn, FetchResult } from 'react-apollo'
 
 type FormProps = {
   elementId: string,
-  submitNote: MutationFn,
+  submitNote?: MutationFn,
   noteSubmitted: Function,
 }
 
@@ -20,7 +20,7 @@ interface SubmitNoteMutationData {
 
 class SubmitNoteMutation extends Mutation<SubmitNoteMutationData, {}> {}
 
-class Form extends Component<FormProps, FormState> {
+export class Form extends Component<FormProps, FormState> {
   state = {
     showThanks: false,
     text: ''
@@ -28,14 +28,17 @@ class Form extends Component<FormProps, FormState> {
 
   submit = () => {
     const {submitNote, elementId, noteSubmitted} = this.props
-    submitNote({
-      variables: { elementId, text: this.state.text },
-      update: (store, data) => { noteSubmitted() }
-    })
+    // This is not passed in during storybook, but is everywhere else
+    if (submitNote) {
+      submitNote({
+        variables: { elementId, text: this.state.text },
+        update: (store, data) => { noteSubmitted() }
+      })
+    }
   }
 
   render() {
-    const {elementId, submitNote} = this.props
+    const {elementId} = this.props
     return (
       <div>
         <form className="simple_form note_form">

@@ -1,6 +1,44 @@
 .note {
   padding: 1rem;
-  border: 1px solid #efefef;
-  border-radius: 5px;
   margin: 0.5rem;
+}
+
+.avatar {
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+}
+
+.noteHeader {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background: #e8f1f9;
+  padding-top: 0.6rem;
+  height: 44px;
+}
+
+.noteBody {
+  border: 1px solid #efefef;
+  padding: 0.6rem;
+  button:last-child {
+    margin: 0 10px;
+  }
+}
+
+.closeButton {
+  border: 1px solid #c76d6d;
+  background: lighten(#ad0000, 60);
+  color: #ad0000;
+  border-radius: 5px;
+  padding: 0.3rem 1rem;
+}
+
+.openButton {
+  border: 1px solid #6dc76d;
+  background: lighten(#00ad00, 60);
+  color: #00ad00;
+  border-radius: 5px;
+  padding: 0.3rem 1rem;
 }

@@ -8,12 +8,14 @@ import Element from './Element'
 import { PreviousChapterLink, NextChapterLink } from './Link'
 import SectionList from './SectionList'
 
+import * as styles from './Chapter.module.scss'
+
 type ElementProps = {
   id: string,
   content: string,
   tag: string,
   noteCount: number,
-  image: {
+  image?: {
     path: string
   }
 }
@@ -90,30 +92,33 @@ export class Chapter extends Component<ChapterProps> {
     const positionAndTitle = chapterPositionAndTitle(part, position, chapterTitle)
 
     return (
-      <div className="row">
-        <div id="chapter" className="main col-md-7 col-md-offset-1">
-          <h1>
-            <Link id="top" to={`/books/${bookPermalink}`}>
-              {bookTitle}
-            </Link>
-          </h1>
-          <h2>{positionAndTitle}</h2>
-          {elements.map(element => <Element {...element} key={element.id} />)}
-        </div>
+      <div className="col-md-12">
+        <div className="row">
+          <div className="col-md-1">&nbsp;</div>
+          <div className={`main col-md-7 ${styles.chapter}`}>
+            <h1>
+              <Link id="top" to={`/books/${bookPermalink}`}>
+                {bookTitle}
+              </Link>
+            </h1>
+            <h2>{positionAndTitle}</h2>
+            {elements.map(element => <Element {...element} key={element.id} />)}
+          </div>
 
-        <div className="col-md-4">
-          <div id="sidebar">
-            {this.renderPreviousChapterLink()}
-            <hr />
+          <div className="col-md-4">
+            <div id="sidebar">
+              {this.renderPreviousChapterLink()}
+              <hr />
 
-            <h4>
-              <a href="#top">{positionAndTitle}</a>
-            </h4>
+              <h4>
+                <a href="#top">{positionAndTitle}</a>
+              </h4>
 
-            <SectionList sections={sections} />
+              <SectionList sections={sections} />
 
-            <hr />
-            {this.renderNextChapterLink()}
+              <hr />
+              {this.renderNextChapterLink()}
+            </div>
           </div>
         </div>
       </div>

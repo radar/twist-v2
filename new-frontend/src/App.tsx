@@ -54,20 +54,22 @@ class Root extends Component<{}> {
                   </menu>
                 </div>
               </div>
-              <Switch>
-                <Route path="/login" component={Login} />
-                <PrivateRoute
-                  path="/books/:bookPermalink/chapters/:chapterPermalink"
-                  component={Chapter}
-                />
-                <PrivateRoute path="/books/:bookPermalink/notes/:id" component={Note} />
-                <PrivateRoute path="/books/:bookPermalink/notes" component={Notes} />
-                <PrivateRoute path="/books/:bookPermalink" component={Book} />
-                <PrivateRoute path="/" component={Books} />
+              <div className="row">
+                <Switch>
+                  <Route path="/login" component={Login} />
+                  <PrivateRoute
+                    path="/books/:bookPermalink/chapters/:chapterPermalink"
+                    component={Chapter}
+                  />
+                  <PrivateRoute path="/books/:bookPermalink/notes/:id" component={Note} />
+                  <PrivateRoute path="/books/:bookPermalink/notes" component={Notes} />
+                  <PrivateRoute path="/books/:bookPermalink" component={Book} />
+                  <PrivateRoute path="/" component={Books} />
 
-                <Redirect from="/books" to="/" />
-                {/* <PrivateRoute component={NotFound} /> */}
-              </Switch>
+                  <Redirect from="/books" to="/" />
+                  {/* <PrivateRoute component={NotFound} /> */}
+                </Switch>
+              </div>
             </div>
           </BrowserRouter>
         </CurrentUser>

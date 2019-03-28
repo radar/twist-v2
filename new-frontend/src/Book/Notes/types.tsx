@@ -17,12 +17,14 @@ export type ChapterProps = {
 type User = {
   id: string,
   email: string,
+  name: string
 }
 
 export type Note = {
   id: string,
   text: string,
   user: User,
+  createdAt: string,
 }
 
 export type ElementWithInfoProps = BareElementProps & {

@@ -20,7 +20,7 @@ export class Notes extends React.Component<NotesProps, NotesState> {
   render() {
     const {bookPermalink} = this.props;
     return (
-      <div className="main col-md-7">
+      <div className="main col-md-10">
         <Header permalink={bookPermalink} />
         <div className="notes">
           <List state={this.state.currentState} bookPermalink={bookPermalink} />

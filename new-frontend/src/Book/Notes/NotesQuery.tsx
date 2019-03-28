@@ -1,5 +1,6 @@
 import gql from 'graphql-tag'
 import ElementWithInfoFragment from './ElementWithInfoFragment'
+import NoteFragment from '../Notes/NoteFragment'
 
 export default gql`
   query bookQuery($bookPermalink: String!, $state: String!) {
@@ -7,15 +8,11 @@ export default gql`
       ...elementWithInfo
 
       notes(state: $state) {
-        id
-        text
-        user {
-          id
-          email
-        }
+        ...note
       }
     }
   }
 
   ${ElementWithInfoFragment}
+  ${NoteFragment}
 `

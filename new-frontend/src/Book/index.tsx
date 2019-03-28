@@ -44,17 +44,15 @@ export class Book extends Component<BookProps> {
     const { title, permalink, defaultBranch: { frontmatter, mainmatter, backmatter } } = this.props
 
     return (
-      <div className="row">
-        <div className="col-md-7 main">
-          <h1>
-            <Link to={`/`}>Books</Link> - {title}
-          </h1>
-          <Link to={`/books/${permalink}/notes`}>Notes for this book</Link>
-          <hr />
-          {this.renderPart('Frontmatter', frontmatter)}
-          {this.renderPart('Mainmatter', mainmatter)}
-          {this.renderPart('Backmatter', backmatter)}
-        </div>
+      <div className="col-md-7 main">
+        <h1>
+          <Link to={`/`}>Books</Link> - {title}
+        </h1>
+        <Link to={`/books/${permalink}/notes`}>Notes for this book</Link>
+        <hr />
+        {this.renderPart('Frontmatter', frontmatter)}
+        {this.renderPart('Mainmatter', mainmatter)}
+        {this.renderPart('Backmatter', backmatter)}
       </div>
     )
   }

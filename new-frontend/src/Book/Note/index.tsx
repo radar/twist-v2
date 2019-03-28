@@ -17,7 +17,7 @@ type NoteProps = NoteType & {
 
 class Note extends React.Component<NoteProps> {
   render() {
-    const {id, bookPermalink, text, element} = this.props
+    const {id, bookPermalink, element} = this.props
     return (
       <div className="main col-md-10">
         <Header permalink={bookPermalink} noteId={id} />
