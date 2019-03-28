@@ -30,7 +30,7 @@ task seed: :environment do
         branch: "master",
         github_path: "radar/markdown_book_test",
       )
-      puts "Book Exploding Rails created and enqueued."
+      puts "Book Markdown Book Test created and enqueued."
     end
 
     result.failure do
