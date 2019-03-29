@@ -1,2 +1,0 @@
-yarn run prettier "src/**/*.js" --write
-yarn run eslint "src/**/*.js"
