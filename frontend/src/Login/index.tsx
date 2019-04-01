@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Mutation, MutationFn, FetchResult } from 'react-apollo'
+import { Mutation, MutationFn } from 'react-apollo'
 import { DataProxy } from 'apollo-cache'
 
 import loginMutation from './LoginMutation'

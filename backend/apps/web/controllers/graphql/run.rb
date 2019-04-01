@@ -5,6 +5,7 @@ module Web::Controllers::Graphql
     include Web::Import["book_note_repo"]
     include Web::Import["branch_repo"]
     include Web::Import["chapter_repo"]
+    include Web::Import["comment_repo"]
     include Web::Import["commit_repo"]
     include Web::Import["element_repo"]
     include Web::Import["note_repo"]
@@ -23,6 +24,7 @@ module Web::Controllers::Graphql
           book_note: book_note_repo,
           branch: branch_repo,
           chapter: chapter_repo,
+          comment: comment_repo,
           commit: commit_repo,
           element: element_repo,
           note: note_repo,

@@ -1,8 +1,3 @@
-require_relative 'objects/book'
-require_relative 'objects/user'
-
-require_relative 'resolvers/element'
-
 module Web
   module GraphQL
     class QueryType < ::GraphQL::Schema::Object
@@ -25,8 +20,11 @@ module Web
         argument :id, ID, required: true
       end
 
-
       field :current_user, UserType, null: true
+
+      field :comments, [CommentType], null: false do
+        argument :note_id, ID, required: true
+      end
 
       def books
         context[:book_repo].all
@@ -50,6 +48,10 @@ module Web
 
       def current_user
         context[:current_user]
+      end
+
+      def comments(note_id:)
+        context[:comment_repo].by_note_id(note_id)
       end
     end
   end

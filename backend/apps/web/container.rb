@@ -9,6 +9,7 @@ module Web
   Container.register(:book_note_repo, -> { BookNoteRepository.new })
   Container.register(:branch_repo, -> { BranchRepository.new })
   Container.register(:chapter_repo, -> { ChapterRepository.new })
+  Container.register(:comment_repo, -> { CommentRepository.new })
   Container.register(:commit_repo, -> { CommitRepository.new })
   Container.register(:element_repo, -> { ElementRepository.new })
   Container.register(:note_repo, -> { NoteRepository.new })

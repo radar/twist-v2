@@ -10,6 +10,7 @@ module Web
 
       query QueryType
       mutation MutationType
+      mutation MutationType
     end
   end
 end

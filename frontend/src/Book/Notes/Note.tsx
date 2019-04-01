@@ -38,7 +38,6 @@ export default class ElementNote extends React.Component<ElementNoteProps> {
             </div>
           </div>
         </div>
-
       </div>
     )
   }

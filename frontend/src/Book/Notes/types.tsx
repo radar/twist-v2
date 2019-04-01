@@ -14,7 +14,7 @@ export type ChapterProps = {
   commit: CommitProps
 }
 
-type User = {
+export type User = {
   id: string,
   email: string,
   name: string

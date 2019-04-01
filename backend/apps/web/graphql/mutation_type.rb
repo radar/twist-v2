@@ -1,5 +1,6 @@
 require_relative 'objects/note'
 
+require_relative 'mutations/comment'
 require_relative 'mutations/note'
 require_relative 'mutations/user'
 
@@ -24,8 +25,13 @@ module Web
         argument :id, ID, required: true
       end
 
-      field :openNote, NoteType, null: true do
+      field :open_note, NoteType, null: true do
         argument :id, ID, required: true
+      end
+
+      field :add_comment, CommentType, null: true do
+        argument :note_id, ID, required: true
+        argument :text, String, required: true
       end
 
       def login(email:, password:)
@@ -51,6 +57,15 @@ module Web
 
       def open_note(id:)
         Mutations::Note::Open.new.(context[:note_repo], id)
+      end
+
+      def add_comment(note_id:, text:)
+        Mutations::Comment::Add.new.(
+          comment_repo: context[:comment_repo],
+          current_user: context[:current_user],
+          note_id: note_id,
+          text: text,
+        )
       end
     end
   end

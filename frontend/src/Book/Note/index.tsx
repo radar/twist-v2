@@ -6,16 +6,23 @@ import QueryWrapper from "../../QueryWrapper"
 
 import Header from "../Notes/Header"
 import NoteQuery from "./NoteQuery"
-import NoteBox from "../Notes/Note"
 import { ElementWithInfoProps, Note as NoteType } from '../Notes/types'
 import ElementWithInfo from "../Notes/ElementWithInfo"
+import NoteBox from "../Notes/Note"
+
+import Comments from "./Comments"
+import CommentForm from "./Comments/CommentForm"
 
 type NoteProps = NoteType & {
   element: ElementWithInfoProps,
-  bookPermalink: string
+  bookPermalink: string;
 }
 
 class Note extends React.Component<NoteProps> {
+  renderComments() {
+    return <Comments noteId={this.props.id} />
+  }
+
   render() {
     const {id, bookPermalink, element} = this.props
     return (
@@ -23,6 +30,7 @@ class Note extends React.Component<NoteProps> {
         <Header permalink={bookPermalink} noteId={id} />
         <ElementWithInfo {...element} />
         <NoteBox {...this.props} />
+        {this.renderComments()}
       </div>
     )
   }

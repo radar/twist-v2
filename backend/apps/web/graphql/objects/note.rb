@@ -1,6 +1,7 @@
 module Web
   module GraphQL
     class NoteType < ::GraphQL::Schema::Object
+      require_relative 'comment'
       require_relative 'element'
       require_relative 'user'
 
@@ -14,6 +15,7 @@ module Web
       field :user, UserType, null: false
 
       field :element, ElementType, null: false
+      field :comments, [CommentType], null: false
 
       def created_at
         object.created_at.iso8601
@@ -25,6 +27,10 @@ module Web
 
       def element
         context[:element_loader].load(object.element_id)
+      end
+
+      def comments
+        context[:comment_repo].by_note_id(object.id)
       end
     end
   end

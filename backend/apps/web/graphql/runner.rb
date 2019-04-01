@@ -20,6 +20,7 @@ module Web
             book_repo: repo(:book),
             branch_repo: repo(:branch),
             chapter_repo: repo(:chapter),
+            comment_repo: repo(:comment),
             commit_repo: repo(:commit),
             book_note_repo: repo(:book_note),
             element_repo: repo(:element),
