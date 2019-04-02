@@ -76,7 +76,7 @@ export default class CommentForm extends React.Component<CommentFormProps, Comme
                         this.submit(addComment)
                       }}>
                       <textarea placeholder="Leave a comment" onChange={e => this.setState({ text: e.target.value })}></textarea>
-                      <input className="btn-success" type="submit" value="Comment" />
+                      <input className="btn btn-success" type="submit" value="Comment" />
                     </form>
                   </div>
                 </div>
