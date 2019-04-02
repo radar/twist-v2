@@ -20,6 +20,7 @@ class MarkdownBook
         part = 'backmatter'
       else
         next if line.strip == ""
+
         parts[part] << line.strip
       end
     end

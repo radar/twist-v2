@@ -2,7 +2,7 @@ class ImageRepository < Hanami::Repository
   def find_or_create_image(chapter_id, filename, image_path)
     image = images.where(
       chapter_id: chapter_id,
-      filename: filename
+      filename: filename,
     ).limit(1).one
 
     if image

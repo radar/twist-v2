@@ -5,7 +5,13 @@ class NullRepository
     @name = name
   end
 
-  def method_missing(method, *args)
+  # rubocop:disable Style/MethodMissingSuper
+  def method_missing(method, *_args)
     raise "#{method} called on NullRepository (placeholder for #{name} repository)"
+  end
+  # rubocop:enable Style/MethodMissingSuper
+
+  def respond_to_missing?(_method, *)
+    true
   end
 end

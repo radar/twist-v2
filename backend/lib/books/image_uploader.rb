@@ -8,10 +8,10 @@ class ImageUploader < Shrine
   else
     require 'shrine/storage/s3'
     S3_OPTIONS = {
-      access_key_id:     ENV.fetch('AWS_ACCESS_KEY_ID'),
+      access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
       secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
-      bucket:            ENV.fetch('AWS_BUCKET'),
-      region:            ENV.fetch('AWS_REGION'),
+      bucket: ENV.fetch('AWS_BUCKET'),
+      region: ENV.fetch('AWS_REGION'),
     }.freeze
 
     self.storages = {

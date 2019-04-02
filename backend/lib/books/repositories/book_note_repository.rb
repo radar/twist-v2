@@ -3,6 +3,10 @@ class BookNoteRepository < Hanami::Repository
     book_notes.where(book_id: book_id)
   end
 
+  def count_for_book(book_id)
+    by_book(book_id).count
+  end
+
   def by_book_and_state(book_id, state)
     notes = book_notes.where(
       book_id: book_id,

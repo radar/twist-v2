@@ -6,13 +6,13 @@ RSpec.describe "Books", type: :feature do
   before do
     create_user.(
       email: "me@ryanbigg.com",
-      password: "password"
+      password: "password",
     )
 
     create_book.(
       title: "Exploding Rails",
       blurb: "Explode your Rails applications!",
-      default_branch: "master"
+      default_branch: "master",
     )
   end
 
@@ -28,5 +28,4 @@ RSpec.describe "Books", type: :feature do
     fill_in "Password", with: password
     click_button "Login"
   end
-
 end

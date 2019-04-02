@@ -57,8 +57,8 @@ describe MarkdownBookWorker do
           )
         end
 
-        process.call
-        process.call
+        process.()
+        process.()
 
         commit = commit_repo.latest_for_branch(branch.id)
         chapters = chapter_repo.for_commit(commit.id).to_a

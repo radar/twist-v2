@@ -19,7 +19,7 @@ class BranchRepository < Hanami::Repository
   def find_by_book_id_and_name(book_id, name)
     branches.where(
       book_id: book_id,
-      name: name
+      name: name,
     ).limit(1).one
   end
 
