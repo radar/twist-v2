@@ -5,7 +5,7 @@ module Web
         @repos = repos
       end
 
-      # rubocop:disable Metrics/MethodLength
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def run(query:, variables: {}, context: {})
         Web::GraphQL::Schema.execute(
           query,
@@ -30,7 +30,7 @@ module Web
           ),
         )
       end
-      # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       private
 

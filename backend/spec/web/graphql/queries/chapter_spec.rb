@@ -107,7 +107,7 @@ describe Web::GraphQL::Runner do
     let(:image) do
       double(
         Image,
-        image: double(url: "img.jpg")
+        image: double(url: "img.jpg"),
       )
     end
 
@@ -121,7 +121,7 @@ describe Web::GraphQL::Runner do
           element: element_repo,
           image: image_repo,
           note: note_repo,
-        }
+        },
       )
     end
 

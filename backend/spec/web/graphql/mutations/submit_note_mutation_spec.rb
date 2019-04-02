@@ -7,8 +7,8 @@ describe Web::GraphQL::Runner do
     subject do
       described_class.new(
         repos: {
-          note: note_repo
-        }
+          note: note_repo,
+        },
       )
     end
 
@@ -16,7 +16,11 @@ describe Web::GraphQL::Runner do
       it "creates a note" do
         query = %|
           mutation submitNoteMutation {
-            submitNote(elementId: "1", text: "Just a note.") {
+            submitNote(
+              bookId: "1",
+              elementId: "1",
+              text: "Just a note."
+            ) {
               id
             }
           }
@@ -34,7 +38,7 @@ describe Web::GraphQL::Runner do
     end
 
     context 'when the text is not provided' do
-      it 'returns an error'
+      it "fails to create a note"
     end
   end
 end

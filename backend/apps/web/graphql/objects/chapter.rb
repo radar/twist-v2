@@ -1,3 +1,5 @@
+require_relative '../resolvers/section'
+
 module Web
   module GraphQL
     class ChapterType < ::GraphQL::Schema::Object
@@ -18,8 +20,7 @@ module Web
       field :next_chapter, ChapterType, null: true
 
       field :elements, [ElementType], null: true
-      field :sections, [SectionType], null: true
-      field :images, [ImageType], null: true
+      field :sections, resolver: Resolvers::Section::ByChapter
       field :commit, CommitType, null: true
 
       def previous_chapter
@@ -32,14 +33,6 @@ module Web
 
       def elements
         context[:element_repo].by_chapter(object.id)
-      end
-
-      def sections
-        Resolvers::Section::ByChapter.new.(context[:element_repo], object.id)
-      end
-
-      def images
-        Resolvers::Image::ByChapter.new.(object)
       end
 
       def commit

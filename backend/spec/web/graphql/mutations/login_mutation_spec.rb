@@ -12,6 +12,7 @@ describe Web::GraphQL::Runner do
       )
     end
 
+    # rubocop:disable Metrics/MethodLength
     def query(email, password)
       %|
         mutation loginMutation {
@@ -27,6 +28,7 @@ describe Web::GraphQL::Runner do
         }
       |
     end
+    # rubocop:enable Metrics/MethodLength
 
     context 'when the credentials are valid' do
       let(:email) { "test@example.com" }

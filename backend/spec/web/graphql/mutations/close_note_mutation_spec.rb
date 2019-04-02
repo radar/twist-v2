@@ -31,6 +31,7 @@ describe Web::GraphQL::Runner do
         query: query,
         context: { current_user: current_user },
       )
+
       note = result.dig("data", "closeNote")
       expect(note["id"]).to eq("1")
       expect(note["state"]).to eq("closed")

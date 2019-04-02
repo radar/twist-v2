@@ -1,10 +1,8 @@
-require_relative '../resolvers/branch'
-require_relative '../resolvers/element'
-require_relative '../resolvers/note'
-
 module Web
   module GraphQL
     class BookType < ::GraphQL::Schema::Object
+      require_relative 'branch'
+
       graphql_name "Book"
       description "A book"
 

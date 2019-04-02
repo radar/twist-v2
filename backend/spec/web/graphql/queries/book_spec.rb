@@ -48,8 +48,8 @@ describe Web::GraphQL::Runner do
           book: book_repo,
           branch: branch_repo,
           chapter: chapter_repo,
-          commit: commit_repo
-        }
+          commit: commit_repo,
+        },
       )
     end
 

@@ -21,6 +21,7 @@ module Web
 
       def image
         return nil if object.image_id.nil?
+
         context[:image_loader].load(object.image_id)
       end
 

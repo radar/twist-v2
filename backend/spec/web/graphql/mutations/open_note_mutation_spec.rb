@@ -7,8 +7,8 @@ describe Web::GraphQL::Runner do
     subject do
       described_class.new(
         repos: {
-          note: note_repo
-        }
+          note: note_repo,
+        },
       )
     end
 

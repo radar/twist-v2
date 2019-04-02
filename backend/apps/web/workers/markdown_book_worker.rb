@@ -36,6 +36,7 @@ class MarkdownBookWorker
     repo = BookRepository.new
     book = repo.find_by_permalink(permalink)
     raise "Book (#{permalink}) not found" unless book
+
     book
   end
 

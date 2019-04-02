@@ -8,11 +8,10 @@ describe Web::GraphQL::Runner do
     subject do
       described_class.new(
         repos: {
-          user: user_repository
-        }
+          user: user_repository,
+        },
       )
     end
-
 
     it "fetches the current user's information" do
       query = %|
@@ -26,7 +25,7 @@ describe Web::GraphQL::Runner do
       result = subject.run(
         query: query,
         context: {
-          current_user: current_user
+          current_user: current_user,
         },
       )
 

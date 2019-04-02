@@ -1,10 +1,15 @@
+require_relative '../base_resolver'
+require_relative '../objects/section'
+
 module Web
   module GraphQL
     module Resolvers
       module Section
-        class ByChapter
-          def call(element_repo, chapter_id)
-            build_sections(build_hierarchy(element_repo, chapter_id))
+        class ByChapter < BaseResolver
+          type [SectionType], null: false
+
+          def resolve
+            build_sections(build_hierarchy(context[:element_repo], object.id))
           end
 
           private
