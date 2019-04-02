@@ -5,6 +5,7 @@ export default gql`
     id
     text
     createdAt
+    state
     user {
       id
       email

@@ -5,7 +5,7 @@ import {
 } from './types';
 
 import ElementWithInfo from './ElementWithInfo'
-import Note from './Note'
+import Note from '../Note/Note'
 import * as styles from "./ElementWithNotes.module.scss"
 
 export default class ElementWithNotes extends React.Component<ElementWithNotesProps> {

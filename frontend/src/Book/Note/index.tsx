@@ -1,6 +1,5 @@
 import * as React from "react"
 import { RouteComponentProps } from "react-router"
-import ReactMarkdown from "react-markdown"
 
 import QueryWrapper from "../../QueryWrapper"
 
@@ -8,10 +7,9 @@ import Header from "../Notes/Header"
 import NoteQuery from "./NoteQuery"
 import { ElementWithInfoProps, Note as NoteType } from '../Notes/types'
 import ElementWithInfo from "../Notes/ElementWithInfo"
-import NoteBox from "../Notes/Note"
+import NoteBox from "./Note"
 
 import Comments from "./Comments"
-import CommentForm from "./Comments/CommentForm"
 
 type NoteProps = NoteType & {
   element: ElementWithInfoProps,
