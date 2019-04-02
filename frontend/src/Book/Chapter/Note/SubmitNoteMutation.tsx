@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export default gql`
-mutation noteMutation($elementId: String!, $text: String!) {
-  submitNote(elementId: $elementId, text: $text) {
+mutation noteMutation($bookId: ID!, $elementId: ID!, $text: String!) {
+  submitNote(bookId: $bookId, elementId: $elementId, text: $text) {
     id
   }
 }

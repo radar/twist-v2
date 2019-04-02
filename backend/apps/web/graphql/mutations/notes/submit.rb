@@ -4,7 +4,7 @@ module Web
       module Notes
         class Submit < BaseMutation
           argument :book_id, ID, required: true
-          argument :element_id, String, required: true
+          argument :element_id, ID, required: true
           argument :text, String, required: true
 
           type NoteType

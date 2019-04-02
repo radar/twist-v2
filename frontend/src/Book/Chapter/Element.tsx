@@ -3,6 +3,7 @@ import NoteForm from './Note/Form'
 import * as styles from './Element.module.scss'
 
 export type BareElementProps = {
+  bookId: string,
   id: string,
   content: string,
   tag: string,
@@ -64,7 +65,11 @@ export default class Element extends Component<ElementProps, ElementState> {
     if (!this.state.showForm) {
       return
     }
-    return <NoteForm noteSubmitted={this.noteSubmitted} elementId={this.props.id} />
+    return <NoteForm
+      bookId={this.props.bookId}
+      noteSubmitted={this.noteSubmitted}
+      elementId={this.props.id}
+    />
   }
 
   render() {

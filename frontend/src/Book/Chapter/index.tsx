@@ -4,21 +4,11 @@ import { RouteComponentProps } from 'react-router'
 
 import QueryWrapper from '../../QueryWrapper'
 import chapterQuery from './ChapterQuery'
-import Element from './Element'
+import Element, { ElementProps } from './Element'
 import { PreviousChapterLink, NextChapterLink } from './Link'
 import SectionList from './SectionList'
 
 import * as styles from './Chapter.module.scss'
-
-type ElementProps = {
-  id: string,
-  content: string,
-  tag: string,
-  noteCount: number,
-  image?: {
-    path: string
-  }
-}
 
 type SubsectionProps = {
   id: string,
@@ -43,6 +33,7 @@ export type NavigationalChapter = {
 }
 
 type ChapterProps = {
+  bookId: string,
   bookTitle: string,
   bookPermalink: string,
   title: string,
@@ -80,6 +71,7 @@ export class Chapter extends Component<ChapterProps> {
 
   render() {
     const {
+      bookId,
       bookTitle,
       bookPermalink,
       part,
@@ -102,7 +94,7 @@ export class Chapter extends Component<ChapterProps> {
               </Link>
             </h1>
             <h2>{positionAndTitle}</h2>
-            {elements.map(element => <Element {...element} key={element.id} />)}
+            {elements.map(element => <Element {...element} bookId={bookId} key={element.id} />)}
           </div>
 
           <div className="col-md-4">
@@ -140,6 +132,7 @@ class WrappedChapter extends React.Component<WrappedChapterProps> {
       <QueryWrapper query={chapterQuery} variables={{bookPermalink, chapterPermalink}}>
         {(data) => {
           return <Chapter
+            bookId={data.book.id}
             bookTitle={data.book.title}
             bookPermalink={bookPermalink}
             {...data.book.defaultBranch.chapter}

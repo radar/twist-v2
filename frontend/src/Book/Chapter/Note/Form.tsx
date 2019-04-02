@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 // import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import submitNoteMutation from './SubmitNoteMutation'
-import { Mutation, MutationFn, FetchResult } from 'react-apollo'
+import { Mutation, MutationFn } from 'react-apollo'
 
 type FormProps = {
+  bookId: string,
   elementId: string,
   submitNote?: MutationFn,
   noteSubmitted: Function,
@@ -27,11 +28,11 @@ export class Form extends Component<FormProps, FormState> {
   }
 
   submit = () => {
-    const {submitNote, elementId, noteSubmitted} = this.props
+    const {submitNote, bookId, elementId, noteSubmitted} = this.props
     // This is not passed in during storybook, but is everywhere else
     if (submitNote) {
       submitNote({
-        variables: { elementId, text: this.state.text },
+        variables: { bookId, elementId, text: this.state.text },
         update: (store, data) => { noteSubmitted() }
       })
     }
@@ -81,6 +82,7 @@ export class Form extends Component<FormProps, FormState> {
 }
 
 type WrappedFormProps = {
+  bookId: string,
   elementId: string,
   noteSubmitted: Function,
 }
