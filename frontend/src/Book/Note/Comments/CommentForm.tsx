@@ -43,8 +43,6 @@ export default class CommentForm extends React.Component<CommentFormProps, Comme
             data: { comments: comments },
           });
 
-          console.log(comments)
-
           this.props.updateComments(comments)
         }
       }
