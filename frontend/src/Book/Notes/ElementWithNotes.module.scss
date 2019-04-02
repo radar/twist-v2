@@ -2,6 +2,10 @@
   border: 1px solid #dedede;
 }
 
+.elementContainer + .elementContainer {
+  margin-top: 1rem;
+}
+
 .element {
   padding: 1rem;
   background: #f8f8f8;

@@ -83,6 +83,34 @@ storiesOf('Book/Notes', module)
             }
           }
         }
+      },
+      {
+        id: "2",
+        content: "This is a second element which also has content",
+        tag: "p",
+        bookPermalink: "markdown-book-test",
+        notes: [
+          {
+            id: "1",
+            text: "Second _things_ **second**!",
+            user: {
+              id: "1",
+              email: "me@ryanbigg.com",
+              name: "Ryan Bigg"
+            }
+          }
+        ],
+        chapter: {
+          title: "Introduction",
+          position: "1",
+          part: "mainmatter",
+          commit: {
+            sha: "abc1234",
+            branch: {
+              name: "master"
+            }
+          }
+        }
       }
     ]
     return (
