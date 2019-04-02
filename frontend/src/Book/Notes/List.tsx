@@ -42,7 +42,7 @@ export default class WrappedNoteList extends React.Component<WrappedNoteListProp
 
 
     return (
-      <QueryWrapper query={NotesQuery} variables={variables}>
+      <QueryWrapper query={NotesQuery} variables={variables} fetchPolicy="network-only">
         {({elementsWithNotes}) => {
           return (
             <NoteList bookPermalink={this.props.bookPermalink} elementsWithNotes={elementsWithNotes} />
