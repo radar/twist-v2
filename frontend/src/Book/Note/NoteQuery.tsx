@@ -3,8 +3,8 @@ import ElementWithInfoFragment from '../Notes/ElementWithInfoFragment'
 import NoteFragment from '../Notes/NoteFragment'
 
 export default gql`
-  query noteQuery($bookPermalink: String!, $id: ID!) {
-    note(bookPermalink: $bookPermalink, id: $id) {
+  query noteQuery($bookPermalink: String!, $number: Int!) {
+    note(bookPermalink: $bookPermalink, number: $number) {
       ...note
 
       element {

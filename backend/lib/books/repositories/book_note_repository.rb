@@ -24,8 +24,8 @@ class BookNoteRepository < Hanami::Repository
     reorder_notes(notes, state).to_a
   end
 
-  def by_book_and_id(book_id, id)
-    by_book(book_id).where(id: id).one
+  def by_book_and_number(book_id, number)
+    by_book(book_id).where(number: number).one
   end
 
   private

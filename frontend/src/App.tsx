@@ -61,7 +61,7 @@ class Root extends Component<{}> {
                     path="/books/:bookPermalink/chapters/:chapterPermalink"
                     component={Chapter}
                   />
-                  <PrivateRoute path="/books/:bookPermalink/notes/:id" component={Note} />
+                  <PrivateRoute path="/books/:bookPermalink/notes/:number" component={Note} />
                   <PrivateRoute path="/books/:bookPermalink/notes" component={Notes} />
                   <PrivateRoute path="/books/:bookPermalink" component={Book} />
                   <PrivateRoute path="/" component={Books} />

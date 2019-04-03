@@ -22,10 +22,10 @@ class Note extends React.Component<NoteProps> {
   }
 
   render() {
-    const {id, bookPermalink, element} = this.props
+    const {number, bookPermalink, element} = this.props
     return (
       <div className="main col-md-10">
-        <Header permalink={bookPermalink} noteId={id} />
+        <Header permalink={bookPermalink} noteNumber={number} />
         <ElementWithInfo {...element} />
         <NoteBox {...this.props} />
         {this.renderComments()}
@@ -35,7 +35,7 @@ class Note extends React.Component<NoteProps> {
 }
 
 interface WrappedNoteMatchParams {
-  id: string
+  number: string,
   bookPermalink: string
 }
 
@@ -43,10 +43,10 @@ interface WrappedNoteProps extends RouteComponentProps<WrappedNoteMatchParams> {
 
 export default class WrappedNote extends React.Component<WrappedNoteProps> {
   render() {
-    const {id, bookPermalink} = this.props.match.params;
+    const {number, bookPermalink} = this.props.match.params;
 
     return (
-      <QueryWrapper query={NoteQuery} variables={{id: id, bookPermalink: bookPermalink}}>
+      <QueryWrapper query={NoteQuery} variables={{number: parseInt(number), bookPermalink: bookPermalink}}>
       {({note}) => {
         return (
           <Note bookPermalink={bookPermalink} {...note} />

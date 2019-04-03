@@ -5,6 +5,8 @@ import moment from "moment"
 import { Link } from "react-router-dom"
 
 import {Note} from '../Notes/types'
+import CloseButton from "./CloseButton"
+import OpenButton from "./OpenButton"
 import * as styles from './Note.module.scss'
 
 
@@ -25,21 +27,12 @@ export default class ElementNote extends React.Component<ElementNoteProps, Eleme
     this.setState({state: state})
   }
 
-  renderState() {
-    const {state} = this.props
-    if (state == "open") {
-      return (
-        <span className={styles.openState}>Open</span>
-      )
-    } else {
-      return (
-        <span className={styles.closedState}>Closed</span>
-      )
-    }
+  stateClass() {
+    return this.props.state == "open" ? styles.openState : styles.closedState
   }
 
   render() {
-    const {user, text, createdAt, bookPermalink, id} = this.props
+    const {user, text, createdAt, bookPermalink, state, id, number} = this.props
     const time = moment(createdAt).fromNow();
 
     return (
@@ -52,8 +45,8 @@ export default class ElementNote extends React.Component<ElementNoteProps, Eleme
           <div className={`${styles.noteContainer} col-md-11`}>
             <div className="row">
               <div className={`${styles.noteHeader} col-md-12`}>
-                <Link to={`/books/${bookPermalink}/notes/${id}`}>{user.name} left a note {time}</Link> -
-                &nbsp;{this.renderState()}
+                <Link to={`/books/${bookPermalink}/notes/${number}`}>{user.name} left note #{number}</Link> <small>{time}</small>
+                  <div className={`${styles.state} ${this.stateClass()}`}>{state}</div>
               </div>
             </div>
             <div className="row">

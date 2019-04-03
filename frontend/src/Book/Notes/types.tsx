@@ -23,6 +23,7 @@ export type User = {
 export type Note = {
   state: string,
   id: string,
+  number: number,
   text: string,
   user: User,
   createdAt: string,

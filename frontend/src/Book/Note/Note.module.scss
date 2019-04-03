@@ -18,12 +18,21 @@
   padding-top: 0.6rem;
   height: 44px;
 
-  .openState {
-    color: green;
-  }
+  .state {
+    float: right;
+    color: white;
+    position: relative;
+    top: -2px;
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
 
-  .closedState {
-    color: red;
+    &.openState {
+      background: rgb(84, 189, 84);
+    }
+
+    &.closedState {
+      background: rgb(255, 88, 88);
+    }
   }
 }
 
@@ -37,21 +46,5 @@
 
   button + button {
     margin-left: 0.5rem;
-  }
-
-  .closeButton {
-    border: 1px solid #c76d6d;
-    background: lighten(#ad0000, 60);
-    color: #ad0000;
-    border-radius: 5px;
-    padding: 0.3rem 1rem;
-  }
-
-  .openButton {
-    border: 1px solid #6dc76d;
-    background: lighten(#00ad00, 60);
-    color: #00ad00;
-    border-radius: 5px;
-    padding: 0.3rem 1rem;
   }
 }

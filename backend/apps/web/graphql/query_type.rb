@@ -17,7 +17,7 @@ module Web
 
       field :note, NoteType, null: false do
         argument :book_permalink, String, required: true
-        argument :id, ID, required: true
+        argument :number, Integer, required: true
       end
 
       field :current_user, UserType, null: true
@@ -41,9 +41,9 @@ module Web
         context[:element_repo].by_ids(notes.to_a.map(&:element_id).uniq)
       end
 
-      def note(book_permalink:, id:)
+      def note(book_permalink:, number:)
         book = context[:book_repo].find_by_permalink(book_permalink)
-        context[:book_note_repo].by_book_and_id(book.id, id)
+        context[:book_note_repo].by_book_and_number(book.id, number)
       end
 
       def current_user
