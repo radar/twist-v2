@@ -8,8 +8,6 @@ module Web
         step :encrypt_password
         step :persist
 
-        # TODO: check to see if password matches confirmation
-
         def encrypt_password(input)
           input[:password] = BCrypt::Password.create(input[:password])
           Success(input)
@@ -18,6 +16,7 @@ module Web
         def persist(input)
           user = user_repo.create(
             email: input[:email],
+            name: input[:name],
             encrypted_password: input[:password],
           )
           Success(user)

@@ -5,8 +5,6 @@ import moment from "moment"
 import { Link } from "react-router-dom"
 
 import {Note} from '../Notes/types'
-import CloseButton from "./CloseButton"
-import OpenButton from "./OpenButton"
 import * as styles from './Note.module.scss'
 
 
