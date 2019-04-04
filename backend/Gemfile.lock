@@ -296,8 +296,6 @@ GEM
     unicode-display_width (1.5.0)
     url_mount (0.2.1)
       rack
-    warden (1.2.8)
-      rack (>= 2.0.6)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 

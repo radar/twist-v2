@@ -87,18 +87,6 @@ module Web
       #
       sessions :cookie, secret: ENV['WEB_SESSIONS_SECRET']
 
-      # Configure Rack middleware for this application
-      #
-      middleware.use Warden::Manager do |manager|
-        manager.default_strategies :password
-
-        manager.serialize_into_session(&:id)
-
-        manager.serialize_from_session do |id|
-          UserRepository.new.by_pk(id)
-        end
-      end
-
       # Default format for the requests that don't specify an HTTP_ACCEPT header
       # Argument: A symbol representation of a mime type, defaults to :html
       #
