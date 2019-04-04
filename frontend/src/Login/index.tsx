@@ -5,6 +5,7 @@ import { DataProxy } from 'apollo-cache'
 import loginMutation from './LoginMutation'
 import CurrentUserQuery from '../CurrentUser/Query'
 import * as styles from './Login.module.scss'
+import API from "../api"
 
 interface SuccessfulLoginData {
   __typename: string,
@@ -36,6 +37,7 @@ type LoginState = {
   password: string,
   failed: boolean,
   error: string,
+  githubAuthorizeUrl: string,
 }
 
 
@@ -44,7 +46,15 @@ class Login extends React.Component<LoginProps, LoginState> {
     email: '',
     password: '',
     failed: false,
-    error: ''
+    error: '',
+    githubAuthorizeUrl: '',
+  }
+
+  componentDidMount() {
+    const api = new API;
+    api.authorizationURL(({data: {github_authorize_url}}) => {
+      this.setState({githubAuthorizeUrl: github_authorize_url })
+    })
   }
 
   handleSuccessfulLogin(store: DataProxy, login: SuccessfulLoginData) {
@@ -101,41 +111,46 @@ class Login extends React.Component<LoginProps, LoginState> {
       <LoginMutation mutation={loginMutation}>
         {(login, { data }) => (
           <div className="main col-md-7">
+            <div className="row">
             <div className="col-md-6">
-              <h1>Login</h1>
-              <form
-                // class methods are preferred for neatness and testing purposes e.g. handleSubmit =
-                onSubmit={e => {
-                  e.preventDefault()
-                  this.submit(login)
-                }}
-              >
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="email"
-                    value={this.state.email}
-                    onChange={e => this.setState({ email: e.target.value })}
-                  />
-                </div>
+                <h1>Login</h1>
+                <form
+                  // class methods are preferred for neatness and testing purposes e.g. handleSubmit =
+                  onSubmit={e => {
+                    e.preventDefault()
+                    this.submit(login)
+                  }}
+                >
+                  <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="email"
+                      value={this.state.email}
+                      onChange={e => this.setState({ email: e.target.value })}
+                    />
+                  </div>
 
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="password"
-                    value={this.state.password}
-                    onChange={e => this.setState({ password: e.target.value })}
-                  />
-                </div>
-                <div>
-                  <input type="submit" className="btn btn-primary" value="Login" />
-                  {this.renderError()}
-                </div>
-              </form>
+                  <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      id="password"
+                      value={this.state.password}
+                      onChange={e => this.setState({ password: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <input type="submit" className="btn btn-primary" value="Login" />
+                    {this.renderError()}
+                  </div>
+                </form>
+              </div>
+              <div className="col-md-6">
+                <a href={this.state.githubAuthorizeUrl}>Login With GitHub</a>
+              </div>
             </div>
           </div>
         )}

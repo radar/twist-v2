@@ -7,6 +7,7 @@ import ApolloClient from './ApolloClient'
 
 import CurrentUser from './CurrentUser'
 import CurrentUserContext from './CurrentUser/Context'
+import OAuthCallback from './OAuth/Callback'
 import Login from './Login'
 import Books from './Books'
 import Book from './Book'
@@ -18,13 +19,14 @@ import './App.scss'
 
 type UserInfoProps = {
   user: {
-    email: string
+    email: string,
+    githubLogin: string,
   }
 }
 
 function UserInfo(props: UserInfoProps) {
   return (
-    <span>Signed in as {props.user.email}</span>
+    <span>Signed in as {props.user.githubLogin || props.user.email}</span>
   )
 }
 
@@ -40,8 +42,8 @@ class Root extends Component<{}> {
   render() {
     return (
       <ApolloProvider client={ApolloClient}>
-        <CurrentUser>
-          <BrowserRouter>
+        <BrowserRouter>
+          <CurrentUser>
             <div className="container">
               <div className="row">
                 <div className="col-md-12">
@@ -56,6 +58,7 @@ class Root extends Component<{}> {
               </div>
               <div className="row">
                 <Switch>
+                  <Route path="/oauth/callback" component={OAuthCallback} />
                   <Route path="/login" component={Login} />
                   <PrivateRoute
                     path="/books/:bookPermalink/chapters/:chapterPermalink"
@@ -71,8 +74,8 @@ class Root extends Component<{}> {
                 </Switch>
               </div>
             </div>
-          </BrowserRouter>
-        </CurrentUser>
+          </CurrentUser>
+        </BrowserRouter>
       </ApolloProvider>
     )
   }

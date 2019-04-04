@@ -1,6 +1,9 @@
+require_relative "../cors"
+
 module Web::Controllers::Graphql
   class Run
     include Web::Action
+    include Web::Controllers::CORS
     include Web::Import["book_repo"]
     include Web::Import["book_note_repo"]
     include Web::Import["branch_repo"]
@@ -11,8 +14,6 @@ module Web::Controllers::Graphql
     include Web::Import["note_repo"]
     include Web::Import["user_repo"]
     include Web::Import["image_repo"]
-
-    before :set_cors_headers
 
     # rubocop:disable Metrics/AbcSize
     def call(params)
@@ -47,12 +48,6 @@ module Web::Controllers::Graphql
     # rubocop:enable Metrics/AbcSize
 
     private
-
-    def set_cors_headers
-      headers["Access-Control-Allow-Origin"] = '*'
-      headers["Access-Control-Allow-Headers"] = 'Content-Type, Authorization'
-      headers["Access-Control-Request-Method"] = '*'
-    end
 
     def verify_csrf_token?
       false

@@ -1,0 +1,8 @@
+$errorColor: rgb(255, 135, 135);
+
+.error {
+  background: $errorColor;
+  border: 2px solid darken($errorColor, 5);
+  padding: 1rem;
+  color: white;
+}

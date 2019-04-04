@@ -3,7 +3,6 @@ import { Query } from 'react-apollo'
 
 import QueryWrapper from '../QueryWrapper'
 import currentUserQuery from './Query'
-import { User } from './User'
 import CurrentUserContext from './Context'
 
 type CurrentUserProps = {
@@ -13,7 +12,7 @@ type CurrentUserProps = {
 export default class CurrentUser extends React.Component<CurrentUserProps> {
   render() {
     return (
-      <QueryWrapper query={currentUserQuery}>
+      <QueryWrapper query={currentUserQuery} fetchPolicy="network-only">
         {(data) => {
           return (
             <CurrentUserContext.Provider value={data.currentUser}>

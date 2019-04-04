@@ -17,6 +17,7 @@ module Web
           user = user_repo.create(
             email: input[:email],
             name: input[:name],
+            github_login: input[:github_login],
             encrypted_password: input[:password],
           )
           Success(user)

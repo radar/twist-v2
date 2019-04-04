@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source .aws_credentials
+source .oauth_credentials
 
 if [ -z "$PORT" ]; then
   PORT=2300

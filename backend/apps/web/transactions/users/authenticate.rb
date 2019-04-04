@@ -25,9 +25,8 @@ module Web
         end
 
         def encode_token(user)
-          hmac_secret = ENV.fetch("AUTH_TOKEN_SECRET")
-          payload = { email: user.email }
-          token = JWT.encode payload, hmac_secret, 'HS256'
+          generate_jwt = GenerateJWT.new
+          generate_jwt.(email: user.email)
 
           Success(email: user.email, token: token)
         end
