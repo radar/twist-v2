@@ -1,12 +1,16 @@
 require 'bundler/setup'
 require 'hanami/setup'
 require 'hanami/model'
+require "hanami/middleware/body_parser"
+
 
 require_relative '../lib/books'
 require_relative '../apps/web/application'
 
 Hanami.configure do
   mount Web::Application, at: '/'
+  middleware.use Hanami::Middleware::BodyParser, :json
+
 
   model do
     ##
