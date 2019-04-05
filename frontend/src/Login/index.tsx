@@ -7,6 +7,8 @@ import CurrentUserQuery from '../CurrentUser/Query'
 import * as styles from './Login.module.scss'
 import API from "../api"
 
+import githubLogo from "./github.png"
+
 interface SuccessfulLoginData {
   __typename: string,
   email: string,
@@ -148,8 +150,14 @@ class Login extends React.Component<LoginProps, LoginState> {
                   </div>
                 </form>
               </div>
-              <div className="col-md-6">
-                <a href={this.state.githubAuthorizeUrl}>Login With GitHub</a>
+              <div className={`${styles.oauth} col-md-6`}>
+                <div className="row">
+                  <button className="col-md-8 col-md-offset-2" onClick={() => {
+                     window.location.href = this.state.githubAuthorizeUrl
+                  }}>
+                    <img src={githubLogo} /> Sign in with GitHub
+                  </button>
+                </div>
               </div>
             </div>
           </div>

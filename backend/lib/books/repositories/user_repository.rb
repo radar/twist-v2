@@ -7,6 +7,10 @@ class UserRepository < Hanami::Repository
     users.where(id: ids).to_a
   end
 
+  def find_by_github_login(login)
+    users.where(github_login: login).one
+  end
+
   def find_by_email(email)
     users.where(email: email).one
   end

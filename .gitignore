@@ -4,6 +4,7 @@ backend/public/uploads/*
 backend/log
 backend/shared
 backend/.aws_credentials
+backend/.oauth_credentials
 */tmp
 backend/repos/*
 backend/spec/repos/*

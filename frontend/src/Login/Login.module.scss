@@ -2,3 +2,24 @@
   color: #dd0000;
   margin-left: 1rem;
 }
+
+.oauth {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+
+  button {
+    img {
+      max-height: 40px;
+      margin-right: 0.5rem;
+    }
+
+    border: 1px solid #dedede;
+    background: #343434;
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+    padding: 1rem 0.5rem;
+  }
+}
