@@ -1,9 +1,9 @@
-require_relative "../cors"
+require "controllers/cors"
 
 module Web::Controllers::Graphql
   class Run
     include Web::Action
-    include Web::Controllers::CORS
+    include Controllers::CORS
     include Web::Import["book_repo"]
     include Web::Import["book_note_repo"]
     include Web::Import["branch_repo"]

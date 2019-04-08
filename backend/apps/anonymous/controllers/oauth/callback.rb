@@ -1,13 +1,13 @@
 require "oauth2"
 require "octokit"
 require_relative "client"
-require_relative "../cors"
+require "controllers/cors"
 
-module Web::Controllers::Oauth
+module Anonymous::Controllers::Oauth
   class Callback
-    include Web::Action
-    include Web::Import["user_repo"]
-    include Web::Controllers::CORS
+    include Anonymous::Action
+    include Anonymous::Import["user_repo"]
+    include Controllers::CORS
     include Client
 
     def call(params)
@@ -27,7 +27,7 @@ module Web::Controllers::Oauth
 
       user = user_repo.find_by_github_login(github_user.login)
       user ||= begin
-        create_user = Web::Transactions::Users::Create.new(
+        create_user = Anonymous::Transactions::Users::Create.new(
           user_repo: user_repo,
         )
         result = create_user.(
@@ -39,7 +39,7 @@ module Web::Controllers::Oauth
         result.success
       end
 
-      generate_jwt = Web::Transactions::Users::GenerateJWT.new
+      generate_jwt = Anonymous::Transactions::Users::GenerateJWT.new
       jwt_token = generate_jwt.(email: user.email)
 
       self.format = :json

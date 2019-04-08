@@ -1,4 +1,4 @@
-module Web
+module Anonymous
   module GraphQL
     class SuccessfulLoginResult < ::GraphQL::Schema::Object
       field :email, String, null: false

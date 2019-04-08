@@ -1,8 +1,8 @@
-require_relative 'base_union'
-require_relative 'objects/successful_login_result'
-require_relative 'objects/failed_login_result'
+require_relative '../base_union'
+require_relative 'successful_login_result'
+require_relative 'failed_login_result'
 
-module Web
+module Anonymous
   module GraphQL
     class LoginResult < BaseUnion
       description "The result from attempting a login"

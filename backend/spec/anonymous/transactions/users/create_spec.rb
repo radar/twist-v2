@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Web::Transactions::Users::Create do
+describe Anonymous::Transactions::Users::Create do
   it "creates a user with an encrypted password" do
     result = subject.(
       email: "me@ryanbigg.com",

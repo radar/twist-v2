@@ -7,14 +7,10 @@ require_relative 'mutations/notes/close'
 require_relative 'mutations/notes/open'
 require_relative 'mutations/notes/submit'
 
-require_relative 'mutations/users/authenticate'
-
 module Web
   module GraphQL
     class MutationType < ::GraphQL::Schema::Object
       graphql_name "Mutations"
-
-      field :login, mutation: Mutations::Users::Authenticate
 
       field :submit_note, mutation: Mutations::Notes::Submit
       field :close_note, mutation: Mutations::Notes::Close

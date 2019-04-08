@@ -1,4 +1,4 @@
-module Web
+module Anonymous
   module Transactions
     module Users
       class Create

@@ -1,4 +1,4 @@
-module Web::Controllers
+module Controllers
   module CORS
     def self.included(base)
       base.before :set_cors_headers

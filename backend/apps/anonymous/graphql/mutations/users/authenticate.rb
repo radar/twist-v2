@@ -1,4 +1,6 @@
-module Web
+require_relative '../../objects/login_result'
+
+module Anonymous
   module GraphQL
     module Mutations
       module Users

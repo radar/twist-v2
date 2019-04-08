@@ -1,4 +1,4 @@
-module Web
+module Anonymous
   module GraphQL
     class FailedLoginResult < ::GraphQL::Schema::Object
       field :error, String, null: false

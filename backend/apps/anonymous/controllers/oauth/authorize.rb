@@ -1,10 +1,10 @@
-require "oauth2"
 require_relative "client"
+require "controllers/cors"
 
-module Web::Controllers::Oauth
+module Anonymous::Controllers::Oauth
   class Authorize
-    include Web::Action
-    include Web::Controllers::CORS
+    include Anonymous::Action
+    include Controllers::CORS
     include Client
 
     def call(params)

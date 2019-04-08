@@ -1,4 +1,6 @@
-module Web::Controllers::Oauth
+require 'oauth2'
+
+module Anonymous::Controllers::Oauth
   module Client
     def client
       OAuth2::Client.new(
@@ -7,7 +9,7 @@ module Web::Controllers::Oauth
         authorize_url: '/login/oauth/authorize',
         token_url: '/login/oauth/access_token',
         site: 'https://github.com',
-        raise_errors: false
+        raise_errors: false,
       )
     end
   end

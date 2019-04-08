@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Web::GraphQL::Runner do
+describe Anonymous::GraphQL::Runner do
   context 'login mutation' do
     let(:user_repo) { double }
 

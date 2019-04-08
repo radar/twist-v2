@@ -23,8 +23,4 @@ RSpec.configure do |config|
   end
 
   config.include ControllerAuthenticationHelpers, uses_authentication: true
-  config.include Warden::Test::Helpers, warden: true
-  config.after(warden: true) do
-    Warden.test_reset!
-  end
 end
