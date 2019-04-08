@@ -2,7 +2,7 @@ require 'features_helper'
 
 RSpec.describe "Books", type: :integration_feature do
   let(:create_book) { Web::Transactions::Books::Create.new }
-  let(:create_user) { Anonymous::Transactions::Users::Create.new }
+  let(:create_user) { Users::Transactions::Users::Create.new }
   before do
     create_user.(
       email: "me@ryanbigg.com",

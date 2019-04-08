@@ -6,12 +6,12 @@ require "hanami/middleware/body_parser"
 
 require_relative '../lib/books'
 require_relative '../apps/web/application'
-require_relative '../apps/anonymous/application'
+require_relative '../apps/users/application'
 
 Hanami.configure do
   middleware.use Hanami::Middleware::BodyParser, :json
 
-  mount Anonymous::Application, at: '/anonymous'
+  mount Users::Application, at: '/users'
   mount Web::Application, at: '/'
 
   model do
