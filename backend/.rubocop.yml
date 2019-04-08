@@ -44,6 +44,9 @@ Style/PercentLiteralDelimiters:
 Style/LambdaCall:
   EnforcedStyle: braces
 
+Metrics/MethodLength:
+  Max: 20
+
 Metrics/LineLength:
   Max: 200
 
