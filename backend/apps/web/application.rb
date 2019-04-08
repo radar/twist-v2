@@ -1,5 +1,4 @@
 require 'hanami/helpers'
-require 'hanami/assets'
 require_relative 'container'
 
 module Web
@@ -101,56 +100,6 @@ module Web
       # it redirects to the secure equivalent (https). Disabled by default.
       #
       # force_ssl true
-
-      ##
-      # TEMPLATES
-      #
-
-      # The layout to be used by all views
-      #
-      layout :application # It will load Web::Views::ApplicationLayout
-
-      # The relative path to templates
-      #
-      templates 'templates'
-
-      ##
-      # ASSETS
-      #
-      assets do
-        # JavaScript compressor
-        #
-        # Supported engines:
-        #
-        #   * :builtin
-        #   * :uglifier
-        #   * :yui
-        #   * :closure
-        #
-        # See: http://hanamirb.org/guides/assets/compressors
-        #
-        # In order to skip JavaScript compression comment the following line
-        javascript_compressor :builtin
-
-        # Stylesheet compressor
-        #
-        # Supported engines:
-        #
-        #   * :builtin
-        #   * :yui
-        #   * :sass
-        #
-        # See: http://hanamirb.org/guides/assets/compressors
-        #
-        # In order to skip stylesheet compression comment the following line
-        stylesheet_compressor :builtin
-
-        # Specify sources for assets
-        #
-        sources << [
-          'assets',
-        ]
-      end
 
       ##
       # SECURITY
