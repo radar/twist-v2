@@ -3,7 +3,7 @@ module Users
     module Users
       class Authenticate
         include Dry::Transaction
-        include Users::Import["user_repo"]
+        include ::Users::Import["user_repo"]
 
         step :find_by_email
         step :validate_password

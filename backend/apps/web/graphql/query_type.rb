@@ -20,8 +20,6 @@ module Web
         argument :number, Integer, required: true
       end
 
-      field :current_user, UserType, null: true
-
       field :comments, [CommentType], null: false do
         argument :note_id, ID, required: true
       end
@@ -44,10 +42,6 @@ module Web
       def note(book_permalink:, number:)
         book = context[:book_repo].find_by_permalink(book_permalink)
         context[:book_note_repo].by_book_and_number(book.id, number)
-      end
-
-      def current_user
-        context[:current_user]
       end
 
       def comments(note_id:)
