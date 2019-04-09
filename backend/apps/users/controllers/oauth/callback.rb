@@ -1,7 +1,6 @@
 require "oauth2"
 require "octokit"
 require_relative "client"
-require "controllers/cors"
 
 module Users::Controllers::Oauth
   class Callback

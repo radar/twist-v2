@@ -1,5 +1,4 @@
 require_relative "client"
-require "controllers/cors"
 
 module Users::Controllers::Oauth
   class Authorize
