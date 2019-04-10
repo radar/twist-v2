@@ -27,13 +27,13 @@ export class Form extends Component<FormProps, FormState> {
     text: ''
   }
 
-  submit = () => {
+  submit = (e: React.FormEvent) => {
     const {submitNote, bookId, elementId, noteSubmitted} = this.props
     // This is not passed in during storybook, but is everywhere else
     if (submitNote) {
       submitNote({
         variables: { bookId, elementId, text: this.state.text },
-        update: (store, data) => { noteSubmitted() }
+        update: (store, data) => { noteSubmitted(e) }
       })
     }
   }

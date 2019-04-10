@@ -1,7 +1,7 @@
 import * as React from "react"
 import { RouteComponentProps } from "react-router"
 
-import QueryWrapper from "../../QueryWrapper"
+import QueryWrapper from "../../../QueryWrapper"
 
 import Header from "../Notes/Header"
 import NoteQuery from "./NoteQuery"

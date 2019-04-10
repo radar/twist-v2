@@ -2,6 +2,7 @@ module Web::Controllers::Graphql
   class Run
     include Web::Action
     include Controllers::CORS
+    include Controllers::CurrentUser
     include Web::Import["book_repo"]
     include Web::Import["book_note_repo"]
     include Web::Import["branch_repo"]

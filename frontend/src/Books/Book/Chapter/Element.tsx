@@ -52,12 +52,13 @@ export default class Element extends Component<ElementProps, ElementState> {
     return count === 1 ? '1 note +' : `${count} notes +`
   }
 
-  toggleForm = () => {
+  toggleForm = (e: React.FormEvent) => {
+    e.preventDefault()
     this.setState({ showForm: !this.state.showForm })
   }
 
-  noteSubmitted = () => {
-    this.toggleForm()
+  noteSubmitted = (e: React.FormEvent) => {
+    this.toggleForm(e)
     this.setState({ noteCount: this.state.noteCount + 1 })
   }
 

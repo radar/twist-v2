@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { Query } from 'react-apollo'
 
-import QueryWrapper from '../QueryWrapper'
+import QueryWrapper from '../../QueryWrapper'
 import currentUserQuery from './Query'
 import CurrentUserContext from './Context'
 

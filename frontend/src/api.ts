@@ -21,7 +21,7 @@ export default class Api {
     onFailure: (value: AxiosResponse<any>) => void,
     ): void {
     this.client.get(
-      "/oauth/callback", {
+      "/users/oauth/callback", {
         params: {
           code: code,
           state: state
@@ -32,9 +32,9 @@ export default class Api {
 
   authorizationURL(callback: (value: AxiosResponse<any>) => void) {
     this.client.get(
-      "/oauth/authorize", {
+      "/users/oauth/authorize", {
         params: {
-          redirect_uri: process.env.REACT_APP_HOST + "/oauth/callback"
+          redirect_uri: process.env.REACT_APP_HOST + "/users/oauth/callback"
         }
       }
     ).then(callback)

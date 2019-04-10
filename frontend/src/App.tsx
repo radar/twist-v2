@@ -1,19 +1,14 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Switch, Route, Redirect, Link } from 'react-router-dom'
+import { BrowserRouter, Link } from 'react-router-dom'
 import { ApolloProvider } from 'react-apollo'
 
-import PrivateRoute from './PrivateRoute'
-import ApolloClient from './ApolloClient'
+import UsersApolloClient from './Users/ApolloClient'
+import { User } from './Users/CurrentUser/User'
+import CurrentUser from './Users/CurrentUser'
 
-import CurrentUser from './CurrentUser'
-import CurrentUserContext from './CurrentUser/Context'
-import OAuthCallback from './OAuth/Callback'
-import Login from './Login'
-import Books from './Books'
-import Book from './Book'
-import Chapter from './Book/Chapter'
-import Notes from './Book/Notes'
-import Note from './Book/Note'
+import CurrentUserContext from './Users/CurrentUser/Context'
+import UsersApp from './Users/App'
+import BooksApp from './Books/App'
 
 import './App.scss'
 
@@ -39,44 +34,58 @@ class Root extends Component<{}> {
     )
   }
 
+  renderApp(user: User | null) {
+    const Component = user ? BooksApp : UsersApp
+    return (
+      <Container user={user}>
+        <Component />
+      </Container>
+    )
+  }
+
   render() {
     return (
-      <ApolloProvider client={ApolloClient}>
+      <div>
         <BrowserRouter>
-          <CurrentUser>
-            <div className="container">
-              <div className="row">
-                <div className="col-md-12">
-                  <menu>
-                    <Link to="/">
-                      <strong>Twist</strong>
-                    </Link>{' '}
-                    &nbsp; | &nbsp;
-                    {this.renderUserInfo()}
-                  </menu>
-                </div>
-              </div>
-              <div className="row">
-                <Switch>
-                  <Route path="/oauth/callback" component={OAuthCallback} />
-                  <Route path="/login" component={Login} />
-                  <PrivateRoute
-                    path="/books/:bookPermalink/chapters/:chapterPermalink"
-                    component={Chapter}
-                  />
-                  <PrivateRoute path="/books/:bookPermalink/notes/:number" component={Note} />
-                  <PrivateRoute path="/books/:bookPermalink/notes" component={Notes} />
-                  <PrivateRoute path="/books/:bookPermalink" component={Book} />
-                  <PrivateRoute path="/" component={Books} />
-
-                  <Redirect from="/books" to="/" />
-                  {/* <PrivateRoute component={NotFound} /> */}
-                </Switch>
-              </div>
-            </div>
-          </CurrentUser>
+          <ApolloProvider client={UsersApolloClient}>
+            <CurrentUser>
+              <CurrentUserContext.Consumer>
+                {this.renderApp}
+              </CurrentUserContext.Consumer>
+            </CurrentUser>
+          </ApolloProvider>
         </BrowserRouter>
-      </ApolloProvider>
+      </div>
+    )
+  }
+}
+
+type ContainerProps = {
+  user: User | null;
+}
+
+class Container extends React.Component<ContainerProps> {
+  renderUser() {
+    const {user} = this.props
+    if (user) {
+      return <span>| Signed in as {user.email}</span>
+    }
+  }
+  render() {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <menu>
+              <Link to="/">
+                <strong>Twist</strong>
+              </Link>{' '}
+              {this.renderUser()}
+            </menu>
+            {this.props.children}
+          </div>
+        </div>
+      </div>
     )
   }
 }

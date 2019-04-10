@@ -1,8 +1,7 @@
 import * as React from "react";
-import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 
-import QueryWrapper from "../../QueryWrapper"
+import QueryWrapper from "../../../QueryWrapper"
 
 import BookQuery from "./BookQuery"
 

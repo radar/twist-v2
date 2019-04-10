@@ -5,7 +5,7 @@ import { DataProxy } from 'apollo-cache'
 import loginMutation from './LoginMutation'
 import CurrentUserQuery from '../CurrentUser/Query'
 import * as styles from './Login.module.scss'
-import API from "../api"
+import API from "../../api"
 
 import githubLogo from "./github.png"
 

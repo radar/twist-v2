@@ -2,7 +2,7 @@ import React from "react"
 import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import queryString from 'query-string'
-import API from "../api"
+import API from "../../api"
 import { AxiosResponse } from "axios"
 import * as styles from "./Callback.module.scss"
 

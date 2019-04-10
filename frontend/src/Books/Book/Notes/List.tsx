@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import QueryWrapper from "../../QueryWrapper"
+import QueryWrapper from "../../../QueryWrapper"
 
 import {ElementWithNotesProps} from "./types"
 import ElementWithNotes from "./ElementWithNotes"

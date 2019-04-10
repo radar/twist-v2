@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router'
 
-import QueryWrapper from '../../QueryWrapper'
+import QueryWrapper from '../../../QueryWrapper'
 import chapterQuery from './ChapterQuery'
 import Element, { ElementProps } from './Element'
 import { PreviousChapterLink, NextChapterLink } from './Link'

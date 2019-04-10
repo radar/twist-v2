@@ -2,7 +2,7 @@ import * as React from "react"
 import Gravatar from "react-gravatar"
 import { Mutation, MutationFn } from "react-apollo"
 
-import CurrentUserContext from "../../../CurrentUser/Context"
+import CurrentUserContext from "../../../../Users/CurrentUser/Context"
 
 import { CommentProps } from "./Comment"
 import commentsQuery from "./CommentsQuery"

@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import QueryWrapper from "../../../QueryWrapper"
+import QueryWrapper from "../../../../QueryWrapper"
 import commentsQuery from "./CommentsQuery"
 import CommentForm from "./CommentForm"
 import Comment, { CommentProps } from "./Comment"

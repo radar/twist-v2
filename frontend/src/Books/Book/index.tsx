@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import QueryWrapper from '../QueryWrapper'
+import QueryWrapper from '../../QueryWrapper'
 import { Link } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router'
 
