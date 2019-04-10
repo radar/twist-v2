@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { storiesOf, addDecorator } from '@storybook/react';
-// import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import StoryRouter from 'storybook-react-router';
+import apolloStorybookDecorator from 'apollo-storybook-react';
 
 import '../App.scss'
 
@@ -14,13 +14,39 @@ addDecorator(StoryRouter({
   '/books/:bookId/chapters/:chapterId': linkTo('Chapter', 'show'),
 }));
 
-import { Book } from '../Book'
-import { Books } from '../Books'
-import { Chapter } from '../Book/Chapter'
-import { Form as NoteForm } from '../Book/Chapter/Note/Form'
-import { NoteList } from '../Book/Notes/List'
+const typeDefs = `
+  type Query {
+    helloWorld: String
+  }
 
-import { ElementWithNotesProps } from '../Book/Notes/types'
+  schema {
+    query: Query
+  }
+`;
+
+const mocks = {
+  Query: () => {
+    return {
+      helloWorld: () => {
+        return 'Hello from Apollo!!';
+      }
+    };
+  },
+}
+
+
+addDecorator(
+  apolloStorybookDecorator({
+    typeDefs,
+    mocks,
+  }),
+)
+
+import { Book } from '../Books/Book'
+import { Books } from '../Books/index'
+import { Chapter } from '../Books/Book/Chapter'
+import { Form as NoteForm } from '../Books/Book/Chapter/Note/Form'
+import { NoteList } from '../Books/Book/Notes/List'
 
 storiesOf('Books', module).add('list', () => {
   const books = [
@@ -65,6 +91,7 @@ storiesOf('Book/Notes', module)
           {
             id: "1",
             text: "First _things_ **first**!",
+            state: "open",
             user: {
               id: "1",
               email: "me@ryanbigg.com",
@@ -93,6 +120,7 @@ storiesOf('Book/Notes', module)
           {
             id: "1",
             text: "Second _things_ **second**!",
+            state: "closed",
             user: {
               id: "1",
               email: "me@ryanbigg.com",
