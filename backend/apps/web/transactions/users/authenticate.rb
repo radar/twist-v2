@@ -26,7 +26,7 @@ module Web
 
         def encode_token(user)
           generate_jwt = GenerateJWT.new
-          generate_jwt.(email: user.email)
+          token = generate_jwt.(email: user.email)
 
           Success(email: user.email, token: token)
         end
