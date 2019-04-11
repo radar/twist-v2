@@ -1,5 +1,12 @@
 module Web
   module GraphQL
+    module Types
+      class NoteState < ::GraphQL::Schema::Enum
+        value "OPEN", "Open notes"
+        value "CLOSED", "Closed notes"
+      end
+    end
+
     class ElementType < ::GraphQL::Schema::Object
       require_relative 'chapter'
       require_relative 'image'
@@ -16,7 +23,7 @@ module Web
       field :chapter, ChapterType, null: false
 
       field :notes, [NoteType], null: false do
-        argument :state, String, required: true
+        argument :state, Types::NoteState, required: true
       end
 
       def image

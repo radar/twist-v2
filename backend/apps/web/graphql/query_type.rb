@@ -12,7 +12,7 @@ module Web
 
       field :elements_with_notes, [ElementType], null: false do
         argument :book_permalink, String, required: true
-        argument :state, String, required: true
+        argument :state, Types::NoteState, required: true
       end
 
       field :note, NoteType, null: false do
