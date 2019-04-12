@@ -37,7 +37,7 @@ module Web
       end
 
       def notes(state:)
-        context[:book_note_repo].by_element_and_state(object.id, state)
+        context[:book_note_repo].by_element_and_state(object.id, state.downcase)
       end
 
       def chapter
