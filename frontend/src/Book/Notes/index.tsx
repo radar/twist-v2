@@ -15,15 +15,15 @@ type NotesState = {
 
 export class Notes extends React.Component<NotesProps, NotesState> {
   state = {
-    currentState: 'open'
+    currentState: 'OPEN'
   }
 
   showOpenNotes = () => {
-    this.setState({currentState: "open"})
+    this.setState({currentState: "OPEN"})
   }
 
   showClosedNotes = () => {
-    this.setState({currentState: "closed"})
+    this.setState({currentState: "CLOSED"})
   }
 
   render() {
