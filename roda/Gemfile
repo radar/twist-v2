@@ -1,0 +1,39 @@
+source 'https://rubygems.org'
+
+# Web
+gem 'rake'
+gem 'rack'
+gem 'roda'
+
+# ROM / Database
+gem 'rom-sql'
+gem 'rom-changeset'
+gem 'rom-repository'
+gem 'sequel'
+gem 'pg'
+
+# dry-rb
+gem 'dry-transaction'
+gem 'dry-auto_inject'
+
+# Twist
+gem 'rugged'
+gem 'redcarpet'
+gem 'nokogiri'
+gem 'pygments.rb'
+gem 'shrine'
+gem 'babosa'
+gem 'sidekiq'
+gem 'bcrypt'
+
+group :dev, :test do
+  gem 'pry'
+  gem 'dotenv'
+  gem 'rspec'
+  gem 'database_cleaner'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'selenium-webdriver'
+end

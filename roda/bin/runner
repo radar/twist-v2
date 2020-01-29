@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require 'pry'
+require_relative '../config/environment'
+
+book_repo = BookRepository.new
+binding.pry
+book_repo.create({})

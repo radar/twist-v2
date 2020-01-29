@@ -1,3 +1,6 @@
 [submodule "backend/spec/books/repos/radar/markdown_book_test"]
 	path = backend/spec/books/repos/radar/markdown_book_test
 	url = git://github.com/radar/markdown_book_test
+[submodule "roda/spec/books/repos/radar/markdown_book_test"]
+	path = roda/spec/books/repos/radar/markdown_book_test
+	url = git://github.com/radar/markdown_book_test
