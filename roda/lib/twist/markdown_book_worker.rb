@@ -38,7 +38,7 @@ module Twist
     private
 
     def find_book(permalink)
-      repo = BookRepository.new
+      repo = Repositories::BookRepo.new
       book = repo.find_by_permalink(permalink)
       raise "Book (#{permalink}) not found" unless book
 
@@ -46,15 +46,15 @@ module Twist
     end
 
     def find_branch(book, branch)
-      repo = BranchRepository.new
+      repo = Repositories::BranchRepo.new
       branch = repo.find_by_book_id_and_name(book.id, branch)
       branch = raise "Branch (#{branch_name}) not found" unless book
       branch
     end
 
     def find_and_clean_or_create_commit(branch_id, commit)
-      repo = CommitRepository.new
-      repo.find_and_clean_or_create(branch_id, commit, ChapterRepository.new)
+      repo = Repositories::CommitRepo.new
+      repo.find_and_clean_or_create(branch_id, commit, Repositories::ChapterRepo.new)
     end
   end
 end

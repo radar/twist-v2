@@ -1,54 +1,58 @@
 require_relative '../../spec_helper'
 
-describe Twist::CommitRepository do
-  context "find_and_clean_or_create_commit" do
-    let(:book_repo) { Twist::BookRepository.new }
-    let(:chapter_repo) { double }
+module Twist
+  module Repositories
+    describe CommitRepo do
+      context "find_and_clean_or_create_commit" do
+        let(:book_repo) { BookRepo.new }
+        let(:chapter_repo) { double }
 
-    let(:book) { book_repo.create(permalink: "markdown_book_test") }
-    let(:branch) { book_repo.add_branch(book, name: "master") }
+        let(:book) { book_repo.create(permalink: "markdown_book_test") }
+        let(:branch) { book_repo.add_branch(book, name: "master") }
 
-    let(:sha) { "abc123" }
+        let(:sha) { "abc123" }
 
-    context "when the commit does not exist" do
-      it "creates the commit" do
-        commit = subject.find_and_clean_or_create(branch.id, sha, chapter_repo)
-        expect(commit.sha).to eq("abc123")
-        expect(commit.branch_id).to eq(branch.id)
-      end
-    end
-
-    context "when the commit exists" do
-      let!(:existing_commit) do
-        subject.create(sha: sha, branch_id: branch.id)
-      end
-
-      it "finds that commit" do
-        expect(chapter_repo).to receive(:wipe)
-        commit = subject.find_and_clean_or_create(branch.id, sha, chapter_repo)
-        expect(commit.id).to eq(existing_commit.id)
-      end
-
-      context "and the commit has a related chapter" do
-        let(:chapter_repo) { Twist::ChapterRepository.new }
-
-        before do
-          chapter_repo.create(
-            commit_id: existing_commit.id,
-            name: "Chapter 1",
-          )
+        context "when the commit does not exist" do
+          it "creates the commit" do
+            commit = subject.find_and_clean_or_create(branch.id, sha, chapter_repo)
+            expect(commit.sha).to eq("abc123")
+            expect(commit.branch_id).to eq(branch.id)
+          end
         end
 
-        def chapters
-          chapter_repo.for_commit(existing_commit.id)
-        end
+        context "when the commit exists" do
+          let!(:existing_commit) do
+            subject.create(sha: sha, branch_id: branch.id)
+          end
 
-        it "deletes the chapter" do
-          expect(chapters.count).to eq(1)
+          it "finds that commit" do
+            expect(chapter_repo).to receive(:wipe)
+            commit = subject.find_and_clean_or_create(branch.id, sha, chapter_repo)
+            expect(commit.id).to eq(existing_commit.id)
+          end
 
-          subject.find_and_clean_or_create(branch.id, sha, chapter_repo)
+          context "and the commit has a related chapter" do
+            let(:chapter_repo) { ChapterRepo.new }
 
-          expect(chapters.count).to eq(0)
+            before do
+              chapter_repo.create(
+                commit_id: existing_commit.id,
+                name: "Chapter 1",
+              )
+            end
+
+            def chapters
+              chapter_repo.for_commit(existing_commit.id)
+            end
+
+            it "deletes the chapter" do
+              expect(chapters.count).to eq(1)
+
+              subject.find_and_clean_or_create(branch.id, sha, chapter_repo)
+
+              expect(chapters.count).to eq(0)
+            end
+          end
         end
       end
     end

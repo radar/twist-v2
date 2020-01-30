@@ -5,6 +5,8 @@ require 'capybara'
 require 'capybara/dsl'
 require 'capybara/rspec'
 
+require 'selenium/webdriver'
+
 # Selenium::WebDriver.logger.level = :debug
 
 Capybara.default_max_wait_time = 10

@@ -6,7 +6,7 @@ module Twist
     module Books
       class Create
         include Dry::Transaction
-        include Twist::Import["book_repo"]
+        include Twist::Import["twist.repositories.book_repo"]
 
         step :make_permalink
         step :create_book
@@ -19,13 +19,12 @@ module Twist
         end
 
         def create_book(input)
-          book_data = input.merge(
-            branches: [
-              name: input.delete(:default_branch),
-              default: true,
-            ],
-          )
-          book = book_repo.create_with_branches(book_data)
+          branches = [
+            name: input.delete(:default_branch),
+            default: true,
+          ]
+
+          book = book_repo.create_with_branches(input, branches)
           Success(book)
         end
       end

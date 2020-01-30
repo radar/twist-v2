@@ -1,8 +1,8 @@
 require 'features_helper'
 
 RSpec.describe "Books", type: :feature do
-  let(:create_book) { Web::Transactions::Books::Create.new }
-  let(:create_user) { Web::Transactions::Users::Create.new }
+  let(:create_book) { Twist::Transactions::Books::Create.new }
+  let(:create_user) { Twist::Transactions::Users::Create.new }
   before do
     create_user.(
       email: "me@ryanbigg.com",

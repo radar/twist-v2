@@ -1,20 +1,8 @@
-
-
-module Web
-  class Container
-    extend Dry::Container::Mixin
+class TwistWeb < Dry::System::Container
+  configure do |config|
+    config.root = Pathname('./twist_web')
+    config.auto_register = '.'
   end
-
-  Import = Dry::AutoInject(Container)
-
-  Container.register(:book_repo, -> { BookRepository.new })
-  Container.register(:book_note_repo, -> { BookNoteRepository.new })
-  Container.register(:branch_repo, -> { BranchRepository.new })
-  Container.register(:chapter_repo, -> { ChapterRepository.new })
-  Container.register(:comment_repo, -> { CommentRepository.new })
-  Container.register(:commit_repo, -> { CommitRepository.new })
-  Container.register(:element_repo, -> { ElementRepository.new })
-  Container.register(:note_repo, -> { NoteRepository.new })
-  Container.register(:user_repo, -> { UserRepository.new })
-  Container.register(:image_repo, -> { ImageRepository.new })
 end
+
+TwistWeb.finalize!

@@ -1,4 +1,4 @@
-module Web
+module Twist
   module Transactions
     module Comments
       class Add

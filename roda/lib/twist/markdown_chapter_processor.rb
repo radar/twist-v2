@@ -1,7 +1,3 @@
-require 'redcarpet'
-require 'nokogiri'
-require 'pygments'
-
 require_relative 'markdown_renderer'
 require_relative 'markdown_element_processor'
 
@@ -34,7 +30,7 @@ module Twist
     attr_reader :commit, :path, :part, :file_name, :position
 
     def create_chapter(title)
-      repo = ChapterRepository.new
+      repo = Repositories::ChapterRepo.new
       repo.create(
         commit_id: commit.id,
         title: title,

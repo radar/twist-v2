@@ -1,11 +1,11 @@
 require "bcrypt"
 
-module Web
+module Twist
   module Transactions
     module Users
       class Create
         include Dry::Transaction
-        include Twist::Import["user_repo"]
+        include Twist::Import["twist.repositories.user_repo"]
 
         step :encrypt_password
         step :persist

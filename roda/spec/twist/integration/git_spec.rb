@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Git, integration: true do
+describe Twist::Git, integration: true do
   let(:target) { File.expand_path(File.join(__dir__, "../repos")) }
 
   subject do
-    Git.new(
+    Twist::Git.new(
       username: "radar",
       repo: "markdown_book_test",
       target: target,

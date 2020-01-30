@@ -2,8 +2,8 @@ require "spec_helper"
 
 describe Twist::Transactions::Notes::Submit do
   context 'when given valid parameters' do
-    let(:note_repo) { double(Twist::NoteRepository) }
-    let(:book_note_repo) { double(Twist::BookNoteRepository) }
+    let(:note_repo) { double(Twist::Repositories::NoteRepo) }
+    let(:book_note_repo) { double(Twist::Repositories::BookNoteRepo) }
     let(:user) { double(Twist::User, id: 1) }
 
     subject do

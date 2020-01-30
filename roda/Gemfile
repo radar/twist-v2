@@ -15,6 +15,10 @@ gem 'pg'
 # dry-rb
 gem 'dry-transaction'
 gem 'dry-auto_inject'
+gem 'dry-system'
+
+# Hanami
+gem 'hanami-controller'
 
 # Twist
 gem 'rugged'
@@ -25,6 +29,11 @@ gem 'shrine'
 gem 'babosa'
 gem 'sidekiq'
 gem 'bcrypt'
+gem 'aws-sdk-s3'
+gem 'oauth2'
+gem 'octokit'
+gem 'graphql'
+gem 'dataloader'
 
 group :dev, :test do
   gem 'pry'

@@ -10,7 +10,7 @@ module Web
         step :authenticate
 
         def find_user(input)
-          repo = UserRepository.new
+          repo = UserRepo.new
           user = repo.find_by_email(input[:email])
           user ? Success(user: user, password: input[:password]) : Failure(nil)
         end

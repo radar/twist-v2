@@ -3,6 +3,6 @@
 require 'pry'
 require_relative '../config/environment'
 
-book_repo = BookRepository.new
+book_repo = BookRepo.new
 binding.pry
 book_repo.create({})

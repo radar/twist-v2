@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe Git do
+
+describe Twist::Git do
   let(:target) { File.expand_path(File.join(__dir__, "../repos")) }
   let(:branch) { "master" }
 
@@ -9,7 +10,7 @@ describe Git do
   end
 
   subject do
-    Git.new(
+    Twist::Git.new(
       username: "radar",
       repo: "markdown_book_test",
       branch: branch,

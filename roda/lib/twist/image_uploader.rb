@@ -1,7 +1,7 @@
 require "shrine"
 
 class ImageUploader < Shrine
-  if ENV['APP_ENV'] == "test"
+  if ENV['APP_ENV'] == "test" || ENV['APP_ENV'] == "development"
     require 'shrine/storage/file_system'
     self.storages = {
       store: Shrine::Storage::FileSystem.new("public", prefix: "uploads/store"),

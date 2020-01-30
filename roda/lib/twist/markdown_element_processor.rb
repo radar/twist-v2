@@ -15,11 +15,11 @@ module Twist
     attr_reader :chapter, :book_path
 
     def element_repo
-      @element_repo ||= ElementRepository.new
+      @element_repo ||= Repositories::ElementRepo.new
     end
 
     def image_repo
-      @image_repo ||= ImageRepository.new
+      @image_repo ||= Repositories::ImageRepo.new
     end
 
     def create_element(markup, name, extra = {})
