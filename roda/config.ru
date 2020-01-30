@@ -1,3 +1,3 @@
 require './config/environment'
 
-run Twist::Router.freeze.app
+run Twist::Web::Router.freeze.app

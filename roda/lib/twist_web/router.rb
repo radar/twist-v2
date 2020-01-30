@@ -1,34 +1,18 @@
 require "roda"
 
+module Twist
+  module Web
+    class Router < Roda
+      plugin :json_parser
 
-class Router < Roda
-  route do |r|
-    # GET / request
-    r.root do
-      r.redirect "/hello"
-    end
-
-    # /hello branch
-    r.on "hello" do
-      # Set variable for all routes in /hello branch
-      @greeting = 'Hello'
-
-      # GET /hello/world request
-      r.get "world" do
-        "#{@greeting} world!"
-      end
-
-      # /hello request
-      r.is do
-        # GET /hello request
-        r.get do
-          "#{@greeting}!"
+      route do |r|
+        # GET / request
+        r.root do
+          r.halt [200, {}, ["OK"]]
         end
 
-        # POST /hello request
-        r.post do
-          puts "Someone said #{@greeting}!"
-          r.redirect
+        r.post "graphql" do
+          r.halt Controllers::Graphql::Run.new.call(r.params)
         end
       end
     end

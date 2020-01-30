@@ -3,8 +3,8 @@ module Twist
     module Notes
       class Submit
         include Dry::Transaction
-        include Twist::Import["twist.repositories.book_note_repo"]
-        include Twist::Import["twist.repositories.note_repo"]
+        include Twist::Import["repositories.book_note_repo"]
+        include Twist::Import["repositories.note_repo"]
 
         step :submit
 

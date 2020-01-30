@@ -5,7 +5,7 @@ module Twist
     module Users
       class Create
         include Dry::Transaction
-        include Twist::Import["twist.repositories.user_repo"]
+        include Twist::Import["repositories.user_repo"]
 
         step :encrypt_password
         step :persist

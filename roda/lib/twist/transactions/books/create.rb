@@ -6,7 +6,7 @@ module Twist
     module Books
       class Create
         include Dry::Transaction
-        include Twist::Import["twist.repositories.book_repo"]
+        include Twist::Import["repositories.book_repo"]
 
         step :make_permalink
         step :create_book
