@@ -5,6 +5,8 @@ require 'capybara'
 require 'capybara/dsl'
 require 'capybara/rspec'
 
+require 'selenium/webdriver'
+
 # Selenium::WebDriver.logger.level = :debug
 
 Capybara.default_max_wait_time = 10
@@ -24,4 +26,5 @@ end
 
 Capybara.current_driver = :chrome_headless
 
+p ENV['FRONTEND_APP_URL']
 Capybara.app_host = ENV['FRONTEND_APP_URL']

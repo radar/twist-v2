@@ -1,3 +1,4 @@
 require './config/environment'
 
-run Hanami.app
+use Hanami::Middleware::BodyParser, :json
+run Twist::Web::Router

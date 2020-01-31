@@ -1,68 +1,49 @@
 source 'https://rubygems.org'
 
+# Web
 gem 'rake'
-gem 'hanami',       '1.3.1'
-gem 'hanami-model', '1.3.1'
+gem 'rack'
 
+# ROM / Database
+gem 'rom-sql'
+gem 'rom-changeset'
+gem 'rom-repository'
+gem 'sequel'
 gem 'pg'
 
-gem 'bcrypt'
-
-gem 'dry-container'
-gem 'dry-auto_inject'
+# dry-rb
 gem 'dry-transaction'
+gem 'dry-auto_inject'
+gem 'dry-system'
 
-gem 'sidekiq'
+# Hanami
+gem 'hanami-controller'
+gem 'hanami-router'
 
+# Twist
 gem 'rugged'
 gem 'redcarpet'
-gem 'pygments.rb'
 gem 'nokogiri'
-
+gem 'pygments.rb'
 gem 'shrine'
-gem 'aws-sdk-s3'
-
-gem 'rollbar'
-
 gem 'babosa'
-
-gem 'graphql', '~> 1.8'
-gem 'dataloader'
-
-gem 'puma'
-
-gem 'jwt'
-
+gem 'sidekiq'
+gem 'bcrypt'
+gem 'aws-sdk-s3'
 gem 'oauth2'
 gem 'octokit'
+gem 'graphql'
+gem 'dataloader'
 
-group :development do
-  # Code reloading
-  # See: http://hanamirb.org/guides/projects/code-reloading
-  gem 'shotgun'
-
-  gem 'hanami-webconsole'
-
-  gem 'rubocop'
-
-  gem 'capistrano'
-  gem 'capistrano-chruby'
-  gem 'capistrano-bundler'
-  gem 'capistrano-hanami', require: false
-end
-
-group :test, :development do
-  gem 'sass'
+group :dev, :test do
   gem 'pry'
+  gem 'dotenv'
+  gem 'rspec'
+  gem 'database_cleaner'
 end
 
 group :test do
-  gem 'selenium-webdriver'
-  # gem 'chromedriver-helper'
-  gem 'rspec'
+  gem 'rack-test'
   gem 'capybara'
-  gem 'database_cleaner'
-  gem 'launchy'
+  gem 'selenium-webdriver'
 end
-
-gem 'dotenv', '~> 2.0'

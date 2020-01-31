@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-source .aws_credentials
-
-bundle exec sidekiq -r ./lib/sidekiq_env.rb

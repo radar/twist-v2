@@ -1,12 +1,9 @@
-require 'rake'
-require 'hanami/rake_tasks'
-require 'rspec/core/rake_task'
-load 'lib/tasks/seed.rake'
+require_relative './config/boot'
+require 'rom-repository'
+require 'rom/sql/rake_task'
 
-RSpec::Core::RakeTask.new(:spec) do |t|
-  t.rspec_opts = "--tag ~integration"
+namespace :db do
+  task :setup do
+    ROM::SQL::RakeSupport.env = ROM.container(:sql, ENV['DATABASE_URL'], extensions: [:pg_json])
+  end
 end
-
-RSpec::Core::RakeTask.new(:all)
-
-task default: :spec
