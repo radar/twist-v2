@@ -37,13 +37,13 @@ module Twist
           end
 
           def find_book(permalink)
-            repo = BookRepo.new
+            repo = Repositories::BookRepo.new
             repo.find_by_permalink(permalink)
           end
 
           def find_or_create_branch(book_id, ref)
             branch = ref.split("/").last
-            repo = BranchRepo.new
+            repo = Repositories::BranchRepo.new
             repo.find_or_create_by_book_id_and_name(book_id, branch)
           end
         end
