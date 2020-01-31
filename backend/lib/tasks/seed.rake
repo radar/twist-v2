@@ -1,3 +1,4 @@
+desc "Seed any environment"
 task seed: :environment do
   create_user = Web::Transactions::Users::Create.new
   create_user.(
