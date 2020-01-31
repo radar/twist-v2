@@ -5,7 +5,9 @@ Twist::Container.boot(:web, namespace: true) do
     require 'oauth2'
     require 'octokit'
     require 'hanami/controller'
+    require 'hanami/router'
     require 'hanami/action/session'
+    require 'hanami/middleware/body_parser'
   end
 
 end

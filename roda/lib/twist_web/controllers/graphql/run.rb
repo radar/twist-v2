@@ -64,7 +64,7 @@ module Twist
             return unless token
 
             payload, _headers = JWT.decode token, ENV.fetch('AUTH_TOKEN_SECRET'), true, algorithm: 'HS256'
-            user_repo = UserRepository.new
+            user_repo = Repositories::UserRepo.new
             user_repo.find_by_email(payload["email"])
           end
         end

@@ -1,3 +1,4 @@
 require './config/environment'
 
-run Twist::Web::Router.freeze.app
+use Hanami::Middleware::BodyParser, :json
+run Twist::Web::Router

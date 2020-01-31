@@ -14,6 +14,8 @@ module Twist
           branches.each do |branch|
             add_branch(book, branch)
           end
+
+          book
         end
       end
 

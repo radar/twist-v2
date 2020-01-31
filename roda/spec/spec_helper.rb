@@ -4,6 +4,7 @@ ENV['APP_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rspec'
 require 'database_cleaner'
+require 'pry'
 
 require_relative 'support/controller_authentication_helpers'
 

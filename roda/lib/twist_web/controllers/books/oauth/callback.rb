@@ -7,7 +7,8 @@ module Twist
       module Oauth
         class Callback
           include Hanami::Action
-          include Twist::Import["user_repo"]
+          include Hanami::Action::Session
+          include Twist::Import["repositories.user_repo"]
           include Web::Controllers::CORS
           include Client
 
@@ -22,7 +23,6 @@ module Twist
               handle_oauth_callback_failure(token)
               return
             end
-
 
             github_client = build_github_client(token)
             github_user = github_client.user

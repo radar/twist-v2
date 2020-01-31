@@ -5,6 +5,8 @@ module Twist
 
       # rubocop:disable Metrics/AbcSize
       def count(element_ids)
+        require 'pry'
+        binding.pry
         counts = relations[:notes]
           .where(element_id: element_ids)
           .select { [element_id, int.count(id).as(:count)] }

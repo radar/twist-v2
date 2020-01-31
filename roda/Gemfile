@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 # Web
 gem 'rake'
 gem 'rack'
-gem 'roda'
 
 # ROM / Database
 gem 'rom-sql'
@@ -19,6 +18,7 @@ gem 'dry-system'
 
 # Hanami
 gem 'hanami-controller'
+gem 'hanami-router'
 
 # Twist
 gem 'rugged'
@@ -43,6 +43,7 @@ group :dev, :test do
 end
 
 group :test do
+  gem 'rack-test'
   gem 'capybara'
   gem 'selenium-webdriver'
 end

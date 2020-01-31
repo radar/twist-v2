@@ -1,20 +1,8 @@
-require "roda"
-
 module Twist
   module Web
-    class Router < Roda
-      plugin :json_parser
-
-      route do |r|
-        # GET / request
-        r.root do
-          r.halt [200, {}, ["OK"]]
-        end
-
-        r.post "graphql" do
-          r.halt Controllers::Graphql::Run.new.call(r.params)
-        end
-      end
+    Router = Hanami::Router.new do
+      post '/graphql', to: Controllers::Graphql::Run
+      options '/graphql', to: Controllers::Graphql::Run
     end
   end
 end
