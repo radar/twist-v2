@@ -34,7 +34,7 @@ export default class Api {
     this.client.get(
       "/oauth/authorize", {
         params: {
-          redirect_uri: process.env.REACT_APP_HOST + "/oauth/callback"
+          redirect_uri: process.env.REACT_APP_API_HOST + "/oauth/callback"
         }
       }
     ).then(callback)
