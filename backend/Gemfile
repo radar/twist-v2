@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 # Web
 gem 'rake'
 gem 'rack'
+gem 'puma'
 
 # ROM / Database
 gem 'rom-sql'
@@ -34,6 +35,13 @@ gem 'oauth2'
 gem 'octokit'
 gem 'graphql'
 gem 'dataloader'
+
+group :dev do
+  # Deployment
+  gem 'capistrano'
+  gem 'capistrano-chruby'
+  gem 'capistrano-bundler'
+end
 
 group :dev, :test do
   gem 'pry'
