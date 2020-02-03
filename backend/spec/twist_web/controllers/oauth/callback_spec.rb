@@ -47,7 +47,7 @@ module Twist
       before do
         expect(auth_code).to receive(:get_token).with(
           "abc123",
-          redirect_uri: ENV.fetch("FRONTEND_URL") + "/oauth/callback",
+          redirect_uri: ENV.fetch("FRONTEND_APP_URL") + "/oauth/callback",
           state: "state-abc123"
         ).and_return(double("Token", token: "token-123abc", params: {}))
         allow(subject).to receive(:build_github_client) { github_client }

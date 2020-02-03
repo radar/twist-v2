@@ -59,10 +59,11 @@ module Twist
           def get_oauth_token(code)
             client.auth_code.get_token(
               code,
-              redirect_uri: "#{ENV.fetch('FRONTEND_URL')}/oauth/callback",
+              redirect_uri: "#{ENV.fetch('FRONTEND_APP_URL')}/oauth/callback",
               state: session[:state],
             )
           end
+
 
           def handle_oauth_callback_failure(token)
             self.status = 401
