@@ -1,0 +1,12 @@
+{
+  "name": "twist-books",
+  "build": {
+    "env": {
+      "REACT_APP_API_HOST": "https://api.twistbooks.com",
+      "REACT_APP_FRONTEND_URL": "https://twist-books.now.sh"
+    }
+  }
+}
+
+https://twist-books.now.sh/oauth/callback
+https://twist-books.now.sh/oauth/callback

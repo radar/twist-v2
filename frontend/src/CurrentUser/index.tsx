@@ -1,26 +1,26 @@
-import * as React from 'react'
-import { Query } from 'react-apollo'
+import * as React from "react";
+import { Query } from "react-apollo";
 
-import QueryWrapper from '../QueryWrapper'
-import currentUserQuery from './Query'
-import CurrentUserContext from './Context'
+import QueryWrapper from "../QueryWrapper";
+import currentUserQuery from "./query";
+import CurrentUserContext from "./context";
 
 type CurrentUserProps = {
-  children: React.ReactNode,
-}
+  children: React.ReactNode;
+};
 
 export default class CurrentUser extends React.Component<CurrentUserProps> {
   render() {
     return (
       <QueryWrapper query={currentUserQuery} fetchPolicy="network-only">
-        {(data) => {
+        {data => {
           return (
             <CurrentUserContext.Provider value={data.currentUser}>
               {this.props.children}
             </CurrentUserContext.Provider>
-          )
+          );
         }}
       </QueryWrapper>
-    )
+    );
   }
 }

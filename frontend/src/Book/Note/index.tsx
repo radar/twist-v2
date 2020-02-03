@@ -1,28 +1,28 @@
-import * as React from "react"
-import { RouteComponentProps } from "react-router"
+import * as React from "react";
+import { RouteComponentProps } from "@reach/router";
 
-import QueryWrapper from "../../QueryWrapper"
+import QueryWrapper from "../../QueryWrapper";
 
-import Header from "../Notes/Header"
-import NoteQuery from "./NoteQuery"
-import { ElementWithInfoProps, Note as NoteType } from '../Notes/types'
-import ElementWithInfo from "../Notes/ElementWithInfo"
-import NoteBox from "./Note"
+import Header from "../Notes/Header";
+import NoteQuery from "./NoteQuery";
+import { ElementWithInfoProps, Note as NoteType } from "../Notes/types";
+import ElementWithInfo from "../Notes/ElementWithInfo";
+import NoteBox from "./Note";
 
-import Comments from "./Comments"
+import Comments from "./Comments";
 
 type NoteProps = NoteType & {
-  element: ElementWithInfoProps,
+  element: ElementWithInfoProps;
   bookPermalink: string;
-}
+};
 
 class Note extends React.Component<NoteProps> {
   renderComments() {
-    return <Comments noteId={this.props.id} />
+    return <Comments noteId={this.props.id} />;
   }
 
   render() {
-    const {number, bookPermalink, element} = this.props
+    const { number, bookPermalink, element } = this.props;
     return (
       <div className="main col-md-10">
         <Header permalink={bookPermalink} noteNumber={number} />
@@ -30,29 +30,34 @@ class Note extends React.Component<NoteProps> {
         <NoteBox {...this.props} />
         {this.renderComments()}
       </div>
-    )
+    );
   }
 }
 
 interface WrappedNoteMatchParams {
-  number: string,
-  bookPermalink: string
+  number: string;
+  bookPermalink: string;
 }
 
-interface WrappedNoteProps extends RouteComponentProps<WrappedNoteMatchParams> {}
+interface WrappedNoteProps
+  extends RouteComponentProps<WrappedNoteMatchParams> {}
 
 export default class WrappedNote extends React.Component<WrappedNoteProps> {
   render() {
-    const {number, bookPermalink} = this.props.match.params;
+    const { number, bookPermalink } = this.props;
 
     return (
-      <QueryWrapper query={NoteQuery} variables={{number: parseInt(number), bookPermalink: bookPermalink}}>
-      {({note}) => {
-        return (
-          <Note bookPermalink={bookPermalink} {...note} />
-        )
-      }}
+      <QueryWrapper
+        query={NoteQuery}
+        variables={{
+          number: parseInt(number as string),
+          bookPermalink: bookPermalink
+        }}
+      >
+        {({ note }) => {
+          return <Note bookPermalink={bookPermalink} {...note} />;
+        }}
       </QueryWrapper>
-    )
+    );
   }
 }

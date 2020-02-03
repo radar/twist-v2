@@ -1,38 +1,48 @@
-import * as React from "react"
-import ReactMarkdown from "react-markdown"
-import Gravatar from "react-gravatar"
-import moment from "moment"
-import { Link } from "react-router-dom"
+import * as React from "react";
+import ReactMarkdown from "react-markdown";
+import Gravatar from "react-gravatar";
+import moment from "moment";
+import { Link } from "@reach/router";
 
-import {Note} from '../Notes/types'
-import CloseButton from "./CloseButton"
-import OpenButton from "./OpenButton"
-import * as styles from './Note.module.scss'
-
+import { Note } from "../Notes/types";
+import CloseButton from "./CloseButton";
+import OpenButton from "./OpenButton";
+import * as styles from "./Note.module.scss";
 
 type ElementNoteProps = Note & {
-  bookPermalink: string
-}
+  bookPermalink: string;
+};
 
 type ElementNoteState = {
-  state: string
-}
+  state: string;
+};
 
-export default class ElementNote extends React.Component<ElementNoteProps, ElementNoteState> {
+export default class ElementNote extends React.Component<
+  ElementNoteProps,
+  ElementNoteState
+> {
   state = {
     state: this.props.state
-  }
+  };
 
   updateState = (state: string) => {
-    this.setState({state: state})
-  }
+    this.setState({ state: state });
+  };
 
   stateClass() {
-    return this.props.state == "open" ? styles.openState : styles.closedState
+    return this.props.state == "open" ? styles.openState : styles.closedState;
   }
 
   render() {
-    const {user, text, createdAt, bookPermalink, state, id, number} = this.props
+    const {
+      user,
+      text,
+      createdAt,
+      bookPermalink,
+      state,
+      id,
+      number
+    } = this.props;
     const time = moment(createdAt).fromNow();
 
     return (
@@ -45,8 +55,13 @@ export default class ElementNote extends React.Component<ElementNoteProps, Eleme
           <div className={`${styles.noteContainer} col-md-11`}>
             <div className="row">
               <div className={`${styles.noteHeader} col-md-12`}>
-                <Link to={`/books/${bookPermalink}/notes/${number}`}>{user.name} left note #{number}</Link> <small>{time}</small>
-                  <div className={`${styles.state} ${this.stateClass()}`}>{state}</div>
+                <Link to={`/books/${bookPermalink}/notes/${number}`}>
+                  {user.name} left note #{number}
+                </Link>{" "}
+                <small>{time}</small>
+                <div className={`${styles.state} ${this.stateClass()}`}>
+                  {state}
+                </div>
               </div>
             </div>
             <div className="row">
@@ -61,6 +76,6 @@ export default class ElementNote extends React.Component<ElementNoteProps, Eleme
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

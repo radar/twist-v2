@@ -1,28 +1,28 @@
-import React from 'react';
+import React from "react";
 
-import { storiesOf, addDecorator } from '@storybook/react';
+import { storiesOf, addDecorator } from "@storybook/react";
 // import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
+import { linkTo } from "@storybook/addon-links";
 
-import StoryRouter from 'storybook-react-router';
+import "../App.scss";
 
-import '../App.scss'
+addDecorator(
+  StoryRouter({
+    "/": linkTo("Books", "list"),
+    "/books/:id": linkTo("Book", "show"),
+    "/books/:bookId/chapters/:chapterId": linkTo("Chapter", "show")
+  })
+);
 
-addDecorator(StoryRouter({
-  '/': linkTo('Books', 'list'),
-  '/books/:id': linkTo('Book', 'show'),
-  '/books/:bookId/chapters/:chapterId': linkTo('Chapter', 'show'),
-}));
+import { Book } from "../Book";
+import { Books } from "../Books";
+import { Chapter } from "../Book/Chapter";
+import { Form as NoteForm } from "../Book/Chapter/Note/Form";
+import { NoteList } from "../Book/Notes/List";
 
-import { Book } from '../Book'
-import { Books } from '../Books'
-import { Chapter } from '../Book/Chapter'
-import { Form as NoteForm } from '../Book/Chapter/Note/Form'
-import { NoteList } from '../Book/Notes/List'
+import { ElementWithNotesProps } from "../Book/Notes/types";
 
-import { ElementWithNotesProps } from '../Book/Notes/types'
-
-storiesOf('Books', module).add('list', () => {
+storiesOf("Books", module).add("list", () => {
   const books = [
     {
       id: 1,
@@ -30,11 +30,11 @@ storiesOf('Books', module).add('list', () => {
       permalink: "markdown-book-test",
       blurb: "For testing Markdown books"
     }
-  ]
-  return (<Books books={books} />);
-})
+  ];
+  return <Books books={books} />;
+});
 
-storiesOf('Book', module).add('show', () => {
+storiesOf("Book", module).add("show", () => {
   const defaultBranch = {
     frontmatter: [
       {
@@ -45,87 +45,88 @@ storiesOf('Book', module).add('show', () => {
     ],
     mainmatter: [],
     backmatter: []
-  }
-  return (<Book
-    title="Markdown Book Test"
-    permalink="markdown-book-test"
-    defaultBranch={defaultBranch}
-  />);
-})
+  };
+  return (
+    <Book
+      title="Markdown Book Test"
+      permalink="markdown-book-test"
+      defaultBranch={defaultBranch}
+    />
+  );
+});
 
-storiesOf('Book/Notes', module)
-  .add('list', () => {
-    const elementsWithNotes = [
-      {
-        id: "1",
-        content: "This is some content that has a note attached to it.",
-        tag: "p",
-        bookPermalink: "markdown-book-test",
-        notes: [
-          {
+storiesOf("Book/Notes", module).add("list", () => {
+  const elementsWithNotes = [
+    {
+      id: "1",
+      content: "This is some content that has a note attached to it.",
+      tag: "p",
+      bookPermalink: "markdown-book-test",
+      notes: [
+        {
+          id: "1",
+          text: "First _things_ **first**!",
+          user: {
             id: "1",
-            text: "First _things_ **first**!",
-            user: {
-              id: "1",
-              email: "me@ryanbigg.com",
-              name: "Ryan Bigg"
-            }
-          }
-        ],
-        chapter: {
-          title: "Introduction",
-          position: "1",
-          part: "mainmatter",
-          commit: {
-            sha: "abc1234",
-            branch: {
-              name: "master"
-            }
+            email: "me@ryanbigg.com",
+            name: "Ryan Bigg"
           }
         }
-      },
-      {
-        id: "2",
-        content: "This is a second element which also has content",
-        tag: "p",
-        bookPermalink: "markdown-book-test",
-        notes: [
-          {
-            id: "1",
-            text: "Second _things_ **second**!",
-            user: {
-              id: "1",
-              email: "me@ryanbigg.com",
-              name: "Ryan Bigg"
-            }
-          }
-        ],
-        chapter: {
-          title: "Introduction",
-          position: "1",
-          part: "mainmatter",
-          commit: {
-            sha: "abc1234",
-            branch: {
-              name: "master"
-            }
+      ],
+      chapter: {
+        title: "Introduction",
+        position: "1",
+        part: "mainmatter",
+        commit: {
+          sha: "abc1234",
+          branch: {
+            name: "master"
           }
         }
       }
-    ]
-    return (
-      <div className="main">
-        <h1>Markdown Book Test - Notes</h1>
-        <NoteList
-          elementsWithNotes={elementsWithNotes}
-          bookPermalink="markdown-book-test"
-        />
-      </div>
-    )
-  })
+    },
+    {
+      id: "2",
+      content: "This is a second element which also has content",
+      tag: "p",
+      bookPermalink: "markdown-book-test",
+      notes: [
+        {
+          id: "1",
+          text: "Second _things_ **second**!",
+          user: {
+            id: "1",
+            email: "me@ryanbigg.com",
+            name: "Ryan Bigg"
+          }
+        }
+      ],
+      chapter: {
+        title: "Introduction",
+        position: "1",
+        part: "mainmatter",
+        commit: {
+          sha: "abc1234",
+          branch: {
+            name: "master"
+          }
+        }
+      }
+    }
+  ];
+  return (
+    <div className="main">
+      <h1>Markdown Book Test - Notes</h1>
+      <NoteList
+        elementsWithNotes={elementsWithNotes}
+        bookPermalink="markdown-book-test"
+      />
+    </div>
+  );
+});
 
-storiesOf('Book/Chapter', module)
-  .add('show', () => {
+storiesOf("Book/Chapter", module)
+  .add("show", () => {
     const chapter = {
       bookTitle: "Markdown Book Test",
       bookPermalink: "markdown-book-test",
@@ -160,30 +161,34 @@ storiesOf('Book/Chapter', module)
           noteCount: 0
         }
       ],
-      sections: [{
-        id: "1",
-        link: "#in-the-beginning",
-        title: "In the beginning",
-        subsections: [{
-          id: "2",
-          link: "#this-is-a-new-section",
-          title: "This is a new section"
-        }]
-      }],
+      sections: [
+        {
+          id: "1",
+          link: "#in-the-beginning",
+          title: "In the beginning",
+          subsections: [
+            {
+              id: "2",
+              link: "#this-is-a-new-section",
+              title: "This is a new section"
+            }
+          ]
+        }
+      ],
       nextChapter: null,
-      previousChapter: null,
-    }
-    return (<Chapter {...chapter} />);
+      previousChapter: null
+    };
+    return <Chapter {...chapter} />;
   })
-  .add('note form', () => {
+  .add("note form", () => {
     const formProps = {
       elementId: "1",
-      submitNote: () => { },
-      noteSubmitted: () => { },
-    }
+      submitNote: () => {},
+      noteSubmitted: () => {}
+    };
     return (
-      <div className='main'>
+      <div className="main">
         <NoteForm {...formProps} />
       </div>
     );
-  })
+  });

@@ -1,71 +1,78 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { RouteComponentProps } from 'react-router'
+import React, { Component } from "react";
+import { Link, RouteComponentProps } from "@reach/router";
 
-import QueryWrapper from '../../QueryWrapper'
-import chapterQuery from './ChapterQuery'
-import Element, { ElementProps } from './Element'
-import { PreviousChapterLink, NextChapterLink } from './Link'
-import SectionList from './SectionList'
+import QueryWrapper from "../../QueryWrapper";
+import chapterQuery from "./ChapterQuery";
+import Element, { ElementProps } from "./Element";
+import { PreviousChapterLink, NextChapterLink } from "./Link";
+import SectionList from "./SectionList";
 
-import * as styles from './Chapter.module.scss'
+import * as styles from "./Chapter.module.scss";
 
 type SubsectionProps = {
-  id: string,
-  title: string,
-  link: string
-}
+  id: string;
+  title: string;
+  link: string;
+};
 
 type SectionProps = {
-  id: string,
-  title: string,
-  link: string,
-  subsections: Array<SubsectionProps>
-}
+  id: string;
+  title: string;
+  link: string;
+  subsections: Array<SubsectionProps>;
+};
 
 export type NavigationalChapter = {
-  id: string,
-  permalink: string,
-  part: string,
-  title: string,
-  position: number,
-  bookPermalink: string
+  id: string;
+  permalink: string;
+  part: string;
+  title: string;
+  position: number;
+  bookPermalink: string;
+};
+
+interface ChapterProps extends RouteComponentProps {
+  bookId: string;
+  bookTitle: string;
+  bookPermalink: string;
+  title: string;
+  position: number;
+  part: string;
+  elements: Array<ElementProps>;
+  sections: Array<SectionProps>;
+  previousChapter: NavigationalChapter | null;
+  nextChapter: NavigationalChapter | null;
 }
 
-type ChapterProps = {
-  bookId: string,
-  bookTitle: string,
-  bookPermalink: string,
-  title: string,
-  position: number,
+export const chapterPositionAndTitle = (
   part: string,
-  elements: Array<ElementProps>,
-  sections: Array<SectionProps>,
-  previousChapter: NavigationalChapter | null,
-  nextChapter: NavigationalChapter | null
-}
-
-export const chapterPositionAndTitle = (part: string, position: number, title: string) => {
-  if (part === 'mainmatter') {
-    return `${position}. ${title}`
+  position: number,
+  title: string
+) => {
+  if (part === "mainmatter") {
+    return `${position}. ${title}`;
   } else {
-    return title
+    return title;
   }
-}
-
+};
 
 export class Chapter extends Component<ChapterProps> {
   renderPreviousChapterLink() {
-    const {bookPermalink, previousChapter} = this.props;
+    const { bookPermalink, previousChapter } = this.props;
     if (previousChapter) {
-      return <PreviousChapterLink {...previousChapter} bookPermalink={bookPermalink} />
+      return (
+        <PreviousChapterLink
+          {...previousChapter}
+          bookPermalink={bookPermalink}
+        />
+      );
     }
   }
 
   renderNextChapterLink() {
-    const {bookPermalink, nextChapter} = this.props;
+    const { bookPermalink, nextChapter } = this.props;
     if (nextChapter) {
-      return <NextChapterLink {...nextChapter} bookPermalink={bookPermalink} />
+      return <NextChapterLink {...nextChapter} bookPermalink={bookPermalink} />;
     }
   }
 
@@ -78,10 +85,14 @@ export class Chapter extends Component<ChapterProps> {
       title: chapterTitle,
       position,
       elements,
-      sections,
+      sections
     } = this.props;
 
-    const positionAndTitle = chapterPositionAndTitle(part, position, chapterTitle)
+    const positionAndTitle = chapterPositionAndTitle(
+      part,
+      position,
+      chapterTitle
+    );
 
     return (
       <div className="col-md-12">
@@ -94,7 +105,9 @@ export class Chapter extends Component<ChapterProps> {
               </Link>
             </h1>
             <h2>{positionAndTitle}</h2>
-            {elements.map(element => <Element {...element} bookId={bookId} key={element.id} />)}
+            {elements.map(element => (
+              <Element {...element} bookId={bookId} key={element.id} />
+            ))}
           </div>
 
           <div className="col-md-4">
@@ -114,7 +127,7 @@ export class Chapter extends Component<ChapterProps> {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -123,24 +136,30 @@ interface WrappedChapterMatchParams {
   chapterPermalink: string;
 }
 
-interface WrappedChapterProps extends RouteComponentProps<WrappedChapterMatchParams> {}
+interface WrappedChapterProps
+  extends RouteComponentProps<WrappedChapterMatchParams> {}
 
 class WrappedChapter extends React.Component<WrappedChapterProps> {
   render() {
-    const {bookPermalink, chapterPermalink} = this.props.match.params
+    const { bookPermalink, chapterPermalink } = this.props;
     return (
-      <QueryWrapper query={chapterQuery} variables={{bookPermalink, chapterPermalink}}>
-        {(data) => {
-          return <Chapter
-            bookId={data.book.id}
-            bookTitle={data.book.title}
-            bookPermalink={bookPermalink}
-            {...data.book.defaultBranch.chapter}
-          />
+      <QueryWrapper
+        query={chapterQuery}
+        variables={{ bookPermalink, chapterPermalink }}
+      >
+        {data => {
+          return (
+            <Chapter
+              bookId={data.book.id}
+              bookTitle={data.book.title}
+              bookPermalink={bookPermalink}
+              {...data.book.defaultBranch.chapter}
+            />
+          );
         }}
       </QueryWrapper>
-    )
+    );
   }
 }
 
-export default WrappedChapter
+export default WrappedChapter;
