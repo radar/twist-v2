@@ -23,11 +23,11 @@ module Twist
 
         book = find_book(args["permalink"])
 
-        path = htmlify_book(git.local_path, book, username, repo)
+        path = htmlify_book(git.local_path, username, repo)
 
         chapter_elements = Nokogiri::HTML.parse(File.read(path)).css(".sect1")
         chapter_elements.each_with_index do |chapter_element, index|
-          Chapter.new(commit, git.local_path, chapter_element, index + 1).process
+          Chapter.new(book, commit, git.local_path, chapter_element, index + 1).process
         end
       end
 
@@ -41,7 +41,7 @@ module Twist
       end
 
 
-      def htmlify_book(path, book, username, repo)
+      def htmlify_book(path, username, repo)
         book_file_candidates = [path + "book.ad", path + "book.adoc"]
         book_file = book_file_candidates.detect { |file| File.exist?(file) }
 

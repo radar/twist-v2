@@ -6,6 +6,9 @@ require 'rspec'
 require 'database_cleaner'
 require 'pry'
 
+require 'sidekiq/testing'
+Sidekiq::Testing.inline!
+
 require_relative 'support/controller_authentication_helpers'
 
 DatabaseCleaner.strategy = :truncation

@@ -3,7 +3,8 @@ require_relative 'chapter_processor'
 module Twist
   module Asciidoc
     class Chapter
-      def initialize(commit, path, element, position)
+      def initialize(book, commit, path, element, position)
+        @book = book
         @commit = commit
         @path = path
         @element = element
@@ -20,7 +21,8 @@ module Twist
           position: position,
           permalink: title_without_number.to_slug.normalize.to_s,
         )
-        ChapterProcessor.perform_async(chapter.permalink, element.to_s)
+
+        ChapterProcessor.perform_async(book.permalink, chapter.id, element.to_s)
       end
 
       def part

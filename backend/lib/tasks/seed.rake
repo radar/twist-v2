@@ -40,5 +40,28 @@ namespace :db do
         exit(1)
       end
     end
+
+    create_book = Twist::Transactions::Books::Create.new
+    create_book.(
+      title: "Asciidoc Book Test",
+      source: "GitHub",
+      format: "markdown",
+      default_branch: "master",
+      blurb: "This is a test of the Twist book review system.",
+    ) do |result|
+      result.success do |book|
+        Twist::Asciidoc::BookWorker.perform_async(
+          permalink: book.permalink,
+          branch: "master",
+          github_path: "radar/asciidoc_book_test",
+        )
+        puts "Book Asciidoc Book Test created and enqueued."
+      end
+
+      result.failure do
+        puts "Book could not be created."
+        exit(1)
+      end
+    end
   end
 end
