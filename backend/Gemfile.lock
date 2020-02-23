@@ -24,6 +24,8 @@ GEM
       aws-eventstream (~> 1.0, >= 1.0.2)
     babosa (1.0.2)
     bcrypt (3.1.12)
+    bugsnag (6.13.0)
+      concurrent-ruby (~> 1.0)
     capistrano (3.11.0)
       airbrussh (>= 1.0.0)
       i18n
@@ -237,6 +239,7 @@ DEPENDENCIES
   aws-sdk-s3
   babosa
   bcrypt
+  bugsnag (~> 6.13)
   capistrano
   capistrano-bundler
   capistrano-chruby
