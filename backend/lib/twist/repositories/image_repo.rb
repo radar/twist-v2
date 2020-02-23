@@ -3,22 +3,21 @@ require 'twist/image_uploader'
 module Twist
   module Repositories
     class ImageRepo < Twist::Repository[:images]
-      struct_namespace Twist
       commands :create, use: :timestamps, plugins_options: { timestamps: { timestamps: %i(created_at updated_at) } }
       commands update: :by_pk
 
-      def find_or_create_image(chapter_id, filename, image_path)
+      def find_or_create_image(chapter_id, filename, image_path, caption)
         image = images.where(
           chapter_id: chapter_id,
           filename: filename,
         ).limit(1).one
 
         if image
-          updated_image = update_image(image, image_path)
+          updated_image = update_image(image, image_path, caption)
           return updated_image
         end
 
-        create_image(chapter_id, filename, image_path)
+        create_image(chapter_id, filename, image_path, caption)
       end
 
       def by_chapter(chapter_id)
@@ -31,14 +30,15 @@ module Twist
 
       private
 
-      def update_image(image, image_path)
+      def update_image(image, image_path, caption)
         upload = upload_image(image_path)
-        update(image.id, image_data: upload.to_json)
+        update(image.id, caption: caption, image_data: upload.to_json)
       end
 
-      def create_image(chapter_id, filename, image_path)
+      def create_image(chapter_id, filename, image_path, caption)
         upload = upload_image(image_path)
         create(
+          caption: caption,
           chapter_id: chapter_id,
           filename: filename,
           image_data: upload.to_json,

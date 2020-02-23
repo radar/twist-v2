@@ -8,10 +8,10 @@ module Twist
     let!(:submit_note) { Twist::Container["transactions.notes.submit"] }
 
     before do
-      MarkdownBookWorker.new.perform(
+      Markdown::BookWorker.new.perform(
         "permalink" => "markdown-book-test",
         "branch" => "master",
-        "github_path" => "radar/markdown_book_test"
+        "github_path" => "radar/markdown_book_test",
       )
     end
 

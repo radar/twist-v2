@@ -44,19 +44,21 @@ Style/PercentLiteralDelimiters:
 Style/LambdaCall:
   EnforcedStyle: braces
 
-Metrics/MethodLength:
-  Max: 20
-
 Metrics/LineLength:
   Max: 200
 
 Metrics/MethodLength:
+  Max: 20
   Exclude:
     - "apps/web/controllers/**/*"
 
 Metrics/BlockLength:
   Exclude:
     - "apps/web/application.rb"
+    - "spec/**/*"
+
+Metrics/ModuleLength:
+  Exclude:
     - "spec/**/*"
 
 Naming/VariableNumber:

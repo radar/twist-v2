@@ -5,6 +5,7 @@ Twist::Container.boot(:core, namespace: true) do
     require 'redcarpet'
     require 'nokogiri'
     require 'pygments'
+    require 'sidekiq'
 
     require "twist/types"
     require "twist/repository"

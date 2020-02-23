@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  database:
+    image: postgres:latest
+
+  redis:
+    image: redis:latest
+
+  console:
+    depends_on:
+      - database
+      - redis
+    environment:
+      DATABASE_URL: postgres://postgres@database/books_development
+    build: .
+    # entrypoint: /bin/bash
+
+  worker:
+    depends_on:
+      - database
+      - redis
+    environment:
+      DATABASE_URL: postgres://postgres@database/books_development
+    build: .
+    command: bundle exec sidekiq -c ./config/environment.rb
+
+  web:
+    depends_on:
+      - database
+      - redis
+    environment:
+      DATABASE_URL: postgres://postgres@database/books_development
+    build: .
+    command: bundle exec rackup

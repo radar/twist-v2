@@ -16,7 +16,9 @@ module Twist
             branch = find_or_create_branch(book.id, params[:ref])
             worker = case book.format
                     when "markdown"
-                      Twist::MarkdownBookWorker
+                      Twist::Markdown::BookWorker
+                    when "asciidoc"
+                      Twist::Asciidoc::BookWorker
                     else
                       raise "unknown format"
                     end

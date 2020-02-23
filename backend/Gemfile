@@ -35,6 +35,7 @@ gem 'oauth2'
 gem 'octokit'
 gem 'graphql'
 gem 'dataloader'
+gem 'asciidoctor', '~> 2.0'
 
 group :dev do
   # Deployment

@@ -21,7 +21,7 @@ describe Twist::Git do
   context "#local_path" do
     it "returns a local path for a repository" do
       expected_local_path = File.expand_path(File.join(__dir__, "../../repos/radar/markdown_book_test"))
-      expect(subject.local_path).to eq(expected_local_path)
+      expect(subject.local_path.to_s).to eq(expected_local_path)
     end
   end
 

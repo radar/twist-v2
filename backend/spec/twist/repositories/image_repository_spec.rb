@@ -19,9 +19,10 @@ module Twist
       context "find_or_create_image" do
         context "when an image does not exist" do
           it "creates a new image" do
-            image = subject.find_or_create_image(chapter.id, filename, image_path)
+            image = subject.find_or_create_image(chapter.id, filename, image_path, "Hello World")
             expect(image.chapter_id).to eq(chapter.id)
             expect(image.filename).to eq(filename)
+            expect(image.caption).to eq("Hello World")
             expect(image.image_data).not_to be_nil
           end
         end
@@ -35,10 +36,11 @@ module Twist
           end
 
           it "updates the existing image" do
-            image = subject.find_or_create_image(chapter.id, filename, image_path)
+            image = subject.find_or_create_image(chapter.id, filename, image_path, "Hello World")
             expect(image.id).to eq(existing_image.id)
             expect(image.chapter_id).to eq(chapter.id)
             expect(image.filename).to eq(filename)
+            expect(image.caption).to eq("Hello World")
             expect(image.image_data).not_to be_nil
           end
         end

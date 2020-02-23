@@ -1,3 +1,6 @@
 [submodule "backend/spec/repos/radar/markdown_book_test"]
 	path = backend/spec/repos/radar/markdown_book_test
 	url = git://github.com/radar/markdown_book_test
+[submodule "backend/spec/twist/repos/radar/asciidoc_book_test"]
+	path = backend/spec/twist/repos/radar/asciidoc_book_test
+	url = git@github.com:radar/asciidoc_book_test

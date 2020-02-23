@@ -7,6 +7,10 @@ module Twist
         by_chapter_scope(chapter_id).to_a
       end
 
+      def by_chapter_and_tag(chapter_id, tag)
+        by_chapter_scope(chapter_id).where(tag: tag)
+      end
+
       def by_ids(ids)
         elements.where(id: ids).to_a
       end
