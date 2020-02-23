@@ -14,7 +14,7 @@ module Twist
               return
             end
 
-            branch = find_or_create_branch(book.id, payload["ref"]])
+            branch = find_or_create_branch(book.id, payload["ref"])
             worker = case book.format
                     when "markdown"
                       Twist::Markdown::BookWorker
@@ -26,7 +26,7 @@ module Twist
             worker.perform_async(
               permalink: book.permalink,
               branch: branch.name,
-              github_path: payload[:repository][:full_name],
+              github_path: payload["repository"]["full_name"],
             )
 
             self.status = 200
