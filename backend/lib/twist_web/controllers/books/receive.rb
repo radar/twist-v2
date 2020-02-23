@@ -14,7 +14,7 @@ module Twist
               return
             end
 
-            branch = find_or_create_branch(book.id, payload[:ref])
+            branch = find_or_create_branch(book.id, payload["ref"]])
             worker = case book.format
                     when "markdown"
                       Twist::Markdown::BookWorker
