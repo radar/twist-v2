@@ -6,6 +6,7 @@ module Twist
           include Hanami::Action
 
           def call(params)
+            payload = JSON.parse(params[:payload])
             book = find_book(params[:permalink])
             unless book
               self.status = 404
@@ -13,7 +14,7 @@ module Twist
               return
             end
 
-            branch = find_or_create_branch(book.id, params[:ref])
+            branch = find_or_create_branch(book.id, payload[:ref])
             worker = case book.format
                     when "markdown"
                       Twist::Markdown::BookWorker
@@ -25,7 +26,7 @@ module Twist
             worker.perform_async(
               permalink: book.permalink,
               branch: branch.name,
-              github_path: params[:repository][:full_name],
+              github_path: payload[:repository][:full_name],
             )
 
             self.status = 200
