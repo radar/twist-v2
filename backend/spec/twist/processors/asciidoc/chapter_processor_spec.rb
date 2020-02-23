@@ -39,14 +39,24 @@ module Twist
         element_repo.by_chapter(chapter.id)
       end
 
+      let(:git) do
+        Git.new(
+          username: "radar",
+          repo: "asciidoc_book_test",
+        )
+      end
+
       def elements_by_tag(tag)
         element_repo.by_chapter_and_tag(chapter.id, tag)
       end
 
-      before { subject.perform(book.permalink, chapter.id, element.to_s) }
+      before do
+        git.fetch!
+        subject.perform(book.permalink, chapter.id, element.to_s)
+      end
 
       def build_chapter_element(tags)
-        Nokogiri::HTML.parse(<<-HTML
+        Nokogiri::HTML.parse(<<-HTML,
           <div class="sect1">
             #{tags}
           </div>
@@ -275,7 +285,7 @@ module Twist
 
         it "adds the ul element to the chapter" do
           element = elements_by_tag("ul").first
-          expect(element.content).to eq(<<-HTML.strip
+          expect(element.content).to eq(<<-HTML.strip,
             <ul>
               <li><p>Item 1</p></li>
               <li><p>Item 2</p></li>
@@ -301,7 +311,7 @@ module Twist
 
         it "adds the ol element to the chapter" do
           element = elements_by_tag("ol").first
-          expect(element.content).to eq(<<-HTML.strip
+          expect(element.content).to eq(<<-HTML.strip,
             <ol>
               <li><p>Item 1</p></li>
               <li><p>Item 2</p></li>

@@ -127,6 +127,8 @@ module Twist
         src = element.css("img").first["src"]
         candidates = Dir[book.path + "**/#{src}"]
         # TODO: what if more than one image matches the path?
+        p book.path
+        p src
         image_path = candidates.first
         if File.exist?(image_path)
           caption = element.css("div.title").text.strip
