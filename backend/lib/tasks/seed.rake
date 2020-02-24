@@ -25,9 +25,11 @@ namespace :db do
       format: "markdown",
       default_branch: "master",
       blurb: "This is a test of the Twist book review system.",
+      github_user: "radar",
+      github_repo: "markdown_book_test",
     ) do |result|
       result.success do |book|
-        Twist::MarkdownBookWorker.perform_async(
+        Twist::Markdown::BookWorker.perform_async(
           permalink: book.permalink,
           branch: "master",
           github_path: "radar/markdown_book_test",
@@ -48,6 +50,8 @@ namespace :db do
       format: "markdown",
       default_branch: "master",
       blurb: "This is a test of the Twist book review system.",
+      github_user: "radar",
+      github_repo: "asciidoc_book_test",
     ) do |result|
       result.success do |book|
         Twist::Asciidoc::BookWorker.perform_async(
