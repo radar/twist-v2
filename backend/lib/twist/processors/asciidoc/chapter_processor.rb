@@ -118,9 +118,19 @@ module Twist
       end
 
       def process_listingblock(element)
+        code = element.css("pre code").text
+        highlighted_code = Pygments.highlight(code, lexer: code['data-lang'])
+        title = element.css(".title").text
+        html = <<~HTML
+          <div class="listingblock">
+            <div class="title">#{title}</div>
+            <div class="content">#{highlighted_code}</div>
+          </div>
+        HTML
+
         create_element(
           tag: "div",
-          content: element.to_s,
+          content: html,
         )
       end
 
