@@ -23,6 +23,10 @@ module Twist
         by_chapter_scope(chapter_id).where(tag: %w(h2 h3)).to_a
       end
 
+      def delete_all_chapter_elements(chapter_id)
+        by_chapter_scope(chapter_id).delete
+      end
+
       private
 
       def by_chapter_scope(chapter_id)

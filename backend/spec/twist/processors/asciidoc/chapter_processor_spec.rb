@@ -39,20 +39,24 @@ module Twist
         element_repo.by_chapter(chapter.id)
       end
 
-      let(:git) do
-        Git.new(
-          username: "radar",
-          repo: "asciidoc_book_test",
-        )
-      end
-
       def elements_by_tag(tag)
         element_repo.by_chapter_and_tag(chapter.id, tag)
       end
 
-      before do
+      before(:all) do
+        git = Git.new(
+          username: "radar",
+          repo: "asciidoc_book_test",
+        )
         git.fetch!
+      end
+
+      def perform
         subject.perform(book.permalink, chapter.id, element.to_s)
+      end
+
+      before do
+        perform
       end
 
       def build_chapter_element(tags)
@@ -97,6 +101,13 @@ module Twist
           element = elements_by_tag("p").first
           expect(element.content).to eq("<p>Simple paragraph</p>")
         end
+
+        # Chapters that are processed twice (for example, due to a Sidekiq failure)
+        # can have duplicate elements. This test makes sure this does not happen.
+        it "only has one P tag" do
+          perform
+          expect(elements_by_tag("p").count).to eq(1)
+        end
       end
 
       context "div.listingblock" do
@@ -119,8 +130,13 @@ module Twist
 
         it "adds the listingblock element to the chapter" do
           element = elements_by_tag("div").first
-          expect(element.content).to eq(content)
+
+          fragment = Nokogiri::HTML::DocumentFragment.parse(element.content)
+          expect(fragment.css(".listingblock")).to be_truthy
+          expect(fragment.css(".title").text).to eq("book.rb")
+          expect(fragment.css(".content .highlight .kr")).to be_truthy
         end
+
       end
 
       context "div.imageblock" do
@@ -141,9 +157,10 @@ module Twist
           element = elements_by_tag("img").first
           expect(element.content).to eq("ch01/images/welcome_aboard.png")
 
-
           image = image_repo.by_chapter(chapter.id).last
+          expect(element.image_id).to eq(image.id)
           expect(image.filename).to eq("welcome_aboard.png")
+
           expect(image.caption).to eq("Figure 1. Welcome aboard!")
         end
       end

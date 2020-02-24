@@ -14,6 +14,7 @@ module Twist
         fragment = Nokogiri::HTML::DocumentFragment.parse(chapter)
         @book = book_repo.find_by_permalink(book_permalink)
         @chapter = chapter_repo.by_id(chapter_id)
+        element_repo.delete_all_chapter_elements(chapter_id)
         process_content(fragment.children.first.children)
       end
 
