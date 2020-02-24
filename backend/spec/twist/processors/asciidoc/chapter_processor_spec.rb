@@ -132,7 +132,9 @@ module Twist
           element = elements_by_tag("div").first
 
           fragment = Nokogiri::HTML::DocumentFragment.parse(element.content)
-          expect(fragment.css(".listingblock")).to be_truthy
+          listing_block = fragment.css(".listingblock").first
+          expect(listing_block).to be_truthy
+          expect(listing_block['class']).to include("lang-ruby")
           expect(fragment.css(".title").text).to eq("book.rb")
           expect(fragment.css(".content .highlight .kr")).to be_truthy
         end
@@ -153,7 +155,9 @@ module Twist
           element = elements_by_tag("div").first
 
           fragment = Nokogiri::HTML::DocumentFragment.parse(element.content)
-          expect(fragment.css(".listingblock")).to be_truthy
+          listing_block = fragment.css(".listingblock").first
+          expect(listing_block['class']).to include('plaintext')
+          expect(listing_block).to be_truthy
           expect(fragment.text).to include("rails g controller posts")
         end
       end

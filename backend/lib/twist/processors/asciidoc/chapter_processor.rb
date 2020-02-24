@@ -121,6 +121,7 @@ module Twist
         if element.css("pre code").any?
           return process_language_block(element)
         else
+          element['class'] += " lang-plaintext"
           create_element(
             tag: "div",
             content: element.to_html,
@@ -129,11 +130,11 @@ module Twist
       end
 
       def process_language_block(element)
-        code = element.css("pre code").text
-        highlighted_code = Pygments.highlight(code, lexer: code['data-lang'])
+        code = element.css("pre code").first
+        highlighted_code = Pygments.highlight(code.text, lexer: code['data-lang'])
         title = element.css(".title").text
         html = <<~HTML
-          <div class="listingblock">
+          <div class="listingblock highlighted lang-#{code['data-lang']}">
             <div class="title">#{title}</div>
             <div class="content">#{highlighted_code}</div>
           </div>
