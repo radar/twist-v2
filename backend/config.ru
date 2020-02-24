@@ -12,5 +12,7 @@ end
 if ENV['APP_ENV'] == "development"
   use Rack::Static, urls: ["/uploads"], root: "public"
 end
+
+use Rack::CommonLogger
 use Hanami::Middleware::BodyParser, :json
 run Twist::Web::Router
