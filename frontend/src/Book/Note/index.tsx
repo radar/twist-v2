@@ -11,6 +11,8 @@ import NoteBox from "./Note";
 
 import Comments from "./Comments";
 
+import styles from "./NoteContainer.module.scss";
+
 type NoteProps = NoteType & {
   element: ElementWithInfoProps;
   bookPermalink: string;
@@ -25,10 +27,12 @@ class Note extends React.Component<NoteProps> {
     const { number, bookPermalink, element } = this.props;
     return (
       <div className="main col-md-10">
-        <Header permalink={bookPermalink} noteNumber={number} />
-        <ElementWithInfo {...element} />
-        <NoteBox {...this.props} />
-        {this.renderComments()}
+        <div className={styles.noteContainer}>
+          <Header permalink={bookPermalink} noteNumber={number} />
+          <ElementWithInfo {...element} />
+          <NoteBox {...this.props} />
+          {this.renderComments()}
+        </div>
       </div>
     );
   }
