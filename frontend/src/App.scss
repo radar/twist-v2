@@ -1,6 +1,8 @@
 @import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css");
 @import "css/_common.scss";
 
+$black-and-blue: #282a36;
+
 body {
   margin: 1% 2.5% 1% 2.5%;
   font: 12pt "Roboto", 'Helvetica Neue';
@@ -27,15 +29,28 @@ hr {
   padding: 2.5rem 1.5rem;
 }
 
-.listingblock {
-  border: 1px solid #282a36;
+.listingblock.lang-plaintext {
+  border: 1px solid #ddd;
   border-radius: 3px;
+
+  pre {
+    padding: 0.5rem 0.5rem;
+    margin-bottom: 0;
+  }
+
+  margin-bottom: 1rem;
+}
+
+.listingblock.highlighted {
+  border: 1px solid $black-and-blue;
+  border-radius: 3px;
+  background: white;
 
   .title {
     padding: 0.5rem;
     padding-right: 0;
     font-style: italic;
-    background: lighten(#282a36, 30);
+    background: lighten($black-and-blue, 30);
     color: white;
   }
 
@@ -63,5 +78,18 @@ hr {
     p {
       margin: 0;
     }
+  }
+}
+
+figure {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+
+  figcaption {
+    padding: 1rem 0.5rem;
+    color: #ddd;
+    font-style: italic;
+
+    background: $black-and-blue;
   }
 }
