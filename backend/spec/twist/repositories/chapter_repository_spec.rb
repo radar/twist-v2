@@ -42,6 +42,26 @@ module Twist
           expect(subject.next_chapter(commit.id, current_chapter)).to eq(next_chapter)
         end
       end
+
+      context "next_position" do
+        context "when a chapter already exists" do
+          before do
+            subject.create(commit_id: commit.id, part: "mainmatter", position: 1)
+          end
+
+          it "position is 2" do
+            next_position = subject.next_position(commit.id, "mainmatter")
+            expect(next_position).to eq(2)
+          end
+        end
+
+        context "when there is no chapter" do
+          it "position is 1" do
+            next_position = subject.next_position(commit.id, "mainmatter")
+            expect(next_position).to eq(1)
+          end
+        end
+      end
     end
   end
 end

@@ -44,7 +44,8 @@ module Twist
       end
 
       def next_position(commit_id, part)
-        _for_commit(commit_id).where(part: part).max(:position) || 1
+        max_position = _for_commit(commit_id).where(part: part).max(:position)
+        max_position ? max_position + 1 : 1
       end
 
       private
