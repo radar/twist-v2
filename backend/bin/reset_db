@@ -1,0 +1,6 @@
+#!/bin/bash
+redis-cli flushall
+dropdb books_development
+createdb books_development
+bundle exec rake db:migrate
+bundle exec rake db:seed
