@@ -31,7 +31,10 @@ module Twist
 
           expect(frontmatter_titles).to eq(["Preface / Introduction"])
 
-          mainmatter_titles = chapter_repo.for_commit_and_part(commit.id, "mainmatter").map(&:title)
+          mainmatter_chapters = chapter_repo.for_commit_and_part(commit.id, "mainmatter")
+          expect(mainmatter_chapters.first.position).to eq(1)
+
+          mainmatter_titles = mainmatter_chapters.map(&:title)
           expect(mainmatter_titles).to eq(["Chapter 1"])
 
           backmatter_titles = chapter_repo.for_commit_and_part(commit.id, "backmatter").map(&:title)
