@@ -1,10 +1,14 @@
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 
 export default gql`
   fragment elementWithInfo on Element {
     id
     content
     tag
+    image {
+      path
+      caption
+    }
     chapter {
       title
       part
@@ -17,4 +21,4 @@ export default gql`
       }
     }
   }
-`
+`;
