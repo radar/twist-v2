@@ -52,22 +52,23 @@ module Twist
       end
 
       def process_h3(element)
-        create_header("h2", element.text)
+        create_header("h2", element)
       end
 
       def process_h4(element)
-        create_header("h3", element.text)
+        create_header("h3", element)
       end
 
       def process_h5(element)
-        create_header("h4", element.text)
+        create_header("h4", element)
 
       end
 
-      def create_header(header, text)
+      def create_header(tag, element)
+        element.name = tag
         create_element(
-          tag: header.to_s,
-          content: "<#{header}>#{text}</#{header}>",
+          tag: tag,
+          content: element.to_html,
         )
       end
 
