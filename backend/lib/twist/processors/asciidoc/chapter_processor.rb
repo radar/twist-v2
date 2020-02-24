@@ -118,6 +118,17 @@ module Twist
       end
 
       def process_listingblock(element)
+        if element.css("pre code").any?
+          return process_language_block(element)
+        else
+          create_element(
+            tag: "div",
+            content: element.to_html,
+          )
+        end
+      end
+
+      def process_language_block(element)
         code = element.css("pre code").text
         highlighted_code = Pygments.highlight(code, lexer: code['data-lang'])
         title = element.css(".title").text

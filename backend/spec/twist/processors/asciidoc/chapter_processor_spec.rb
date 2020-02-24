@@ -110,7 +110,7 @@ module Twist
         end
       end
 
-      context "div.listingblock" do
+      context "div.listingblock, with pre + code" do
         let(:content) do
           <<-HTML.strip
             <div class="listingblock">
@@ -136,7 +136,26 @@ module Twist
           expect(fragment.css(".title").text).to eq("book.rb")
           expect(fragment.css(".content .highlight .kr")).to be_truthy
         end
+      end
 
+      context "div.listingblock, plaintext" do
+        let(:content) do
+          <<-HTML.strip
+          <div class="listingblock">
+            <div class="content">
+              <pre>rails g controller posts</pre>
+            </div>
+          </div>
+          HTML
+        end
+
+        it "adds the listingblock element to the chapter" do
+          element = elements_by_tag("div").first
+
+          fragment = Nokogiri::HTML::DocumentFragment.parse(element.content)
+          expect(fragment.css(".listingblock")).to be_truthy
+          expect(fragment.text).to include("rails g controller posts")
+        end
       end
 
       context "div.imageblock" do
