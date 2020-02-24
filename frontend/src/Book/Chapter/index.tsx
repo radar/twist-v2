@@ -76,6 +76,17 @@ export class Chapter extends Component<ChapterProps> {
     }
   }
 
+  renderChapterLinks() {
+    return (
+      <div className="row">
+        <div className="col-12">
+          <div className="float-left">{this.renderPreviousChapterLink()}</div>
+          <div className="float-right">{this.renderNextChapterLink()}</div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const {
       bookId,
@@ -98,19 +109,21 @@ export class Chapter extends Component<ChapterProps> {
       <div className="col-md-12">
         <div className="row">
           <div className="col-md-1">&nbsp;</div>
-          <div className={`main col-md-7 ${styles.chapter}`}>
+          <div className={`main col-md-7 col-lg-7 col-xl-9 ${styles.chapter}`}>
             <h1>
               <Link id="top" to={`/books/${bookPermalink}`}>
                 {bookTitle}
               </Link>
             </h1>
+            {this.renderChapterLinks()}
             <h2>{positionAndTitle}</h2>
             {elements.map(element => (
               <Element {...element} bookId={bookId} key={element.id} />
             ))}
+            {this.renderChapterLinks()}
           </div>
 
-          <div className="col-md-4">
+          <div className="col-md-4 col-lg-4 col-xl-2">
             <div id="sidebar">
               {this.renderPreviousChapterLink()}
               <hr />
