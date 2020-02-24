@@ -11,3 +11,4 @@ backend/spec/repos/*
 backend/capybara-*
 */node_modules
 */dump.rdb
+.now
