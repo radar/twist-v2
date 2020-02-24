@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require 'pry'
+require_relative '../config/environment'
+
+permalink = ARGV[0]
+branch = ARGV[1]
+
+
+repo = Twist::Repositories::BookRepo.new
+book = repo.find_by_permalink(permalink)
+
+worker = case book.format
+         when "markdown"
+           Twist::Markdown::BookWorker
+         when "asciidoc"
+           Twist::Asciidoc::BookWorker
+         end
+
+worker.perform_async(
+  permalink: permalink,
+  branch: branch,
+  github_path: "#{book.github_user}/#{book.github_repo}",
+)
+
+puts "Update enqueued for #{book.title}"
