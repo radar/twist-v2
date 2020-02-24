@@ -7,6 +7,7 @@ module Twist
 
         field :id, ID, null: false
         field :path, String, null: false
+        field :caption, String, null: true
 
         def path
           object.image.url
