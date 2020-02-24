@@ -140,6 +140,36 @@ module Twist
         end
       end
 
+      context "div.listingblock, with pre + code, but no title" do
+        let(:content) do
+          <<-HTML.strip
+            <div class="listingblock">
+            <div class="title"></div>
+            <div class="content">
+            <pre class="highlight"><code class="language-ruby" data-lang="ruby">class Book
+              attr_reader :title
+
+              def initialize(title)
+                @title = title
+              end
+            end</code></pre>
+            </div>
+          </div>
+          HTML
+        end
+
+        it "adds the listingblock element to the chapter" do
+          element = elements_by_tag("div").first
+
+          fragment = Nokogiri::HTML::DocumentFragment.parse(element.content)
+          listing_block = fragment.css(".listingblock").first
+          expect(listing_block).to be_truthy
+          expect(listing_block['class']).to include("lang-ruby")
+          expect(fragment.css(".title")).to be_empty
+          expect(fragment.css(".content .highlight .kr")).to be_truthy
+        end
+      end
+
       context "div.listingblock, plaintext" do
         let(:content) do
           <<-HTML.strip

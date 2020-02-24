@@ -134,12 +134,10 @@ module Twist
         code = element.css("pre code").first
         highlighted_code = Pygments.highlight(code.text, lexer: code['data-lang'])
         title = element.css(".title").text
-        html = <<~HTML
-          <div class="listingblock highlighted lang-#{code['data-lang']}">
-            <div class="title">#{title}</div>
-            <div class="content">#{highlighted_code}</div>
-          </div>
-        HTML
+        html = %{<div class="listingblock highlighted lang-#{code['data-lang']}">}
+        html << %{<div class="title">#{title}</div>} unless title.empty?
+        html << %{<div class="content">#{highlighted_code}</div>}
+        html << %{</div>}
 
         create_element(
           tag: "div",
