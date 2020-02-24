@@ -1,5 +1,10 @@
 .elementContainer {
   border: 1px solid #dedede;
+
+  img {
+    max-width: 100%;
+    max-height: 50vh;
+  }
 }
 
 .elementContainer + .elementContainer {
