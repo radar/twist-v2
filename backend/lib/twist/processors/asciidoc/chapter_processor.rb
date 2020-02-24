@@ -149,6 +149,7 @@ module Twist
       def process_imageblock(element)
         src = element.css("img").first["src"]
         candidates = Dir[book.path + "**/#{src}"]
+        raise "Couldn't find image for #{src}" if candidates.none?
         # TODO: what if more than one image matches the path?
         image_path = candidates.first
         if File.exist?(image_path)
