@@ -81,7 +81,10 @@ export default class Element extends Component<ElementProps, ElementState> {
     return count === 1 ? "1 note +" : `${count} notes +`;
   }
 
-  toggleForm = () => {
+  toggleForm = (event?: React.MouseEvent) => {
+    if (event) {
+      event.preventDefault();
+    }
     this.setState({ showForm: !this.state.showForm });
   };
 
