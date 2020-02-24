@@ -4,10 +4,12 @@ describe Twist::Web::Controllers::Books::Receive do
   let(:params) do
     {
       permalink: "exploding-rails",
-      ref: "refs/heads/master",
-      repository: {
-        full_name: "radar/exploding_rails",
-      },
+      payload: {
+        ref: "refs/heads/master",
+        repository: {
+          full_name: "radar/exploding_rails",
+        },
+      }.to_json
     }
   end
 
