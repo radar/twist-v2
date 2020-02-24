@@ -1,5 +1,6 @@
 @import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css");
 @import "css/_common.scss";
+@import "./chapter";
 
 $black-and-blue: #282a36;
 
@@ -29,79 +30,6 @@ hr {
   padding: 2.5rem 1.5rem;
 }
 
-.listingblock.lang-plaintext {
-  border: 1px solid #ddd;
-  border-radius: 3px;
-
-  pre {
-    padding: 0.5rem 0.5rem;
-    margin-bottom: 0;
-  }
-
-  margin-bottom: 1rem;
-}
-
-.listingblock.highlighted {
-  border: 1px solid $black-and-blue;
-  border-radius: 3px;
-  background: white;
-
-  .title {
-    padding: 0.5rem;
-    padding-right: 0;
-    font-style: italic;
-    background: lighten($black-and-blue, 30);
-    color: white;
-  }
-
-  .highlight pre {
-    color: white;
-    padding: 1rem 0.5rem;
-    margin-bottom: 0;
-  }
-
-  margin-bottom: 1rem;
-}
-
-.admonitionblock {
-  .title {
-    font-size: 125%;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-
-  .listingblock {
-    margin-top: 1rem;
-    background: white;
-
-    pre {
-      padding: 0.5rem 0.5rem;
-      margin-bottom: 0;
-    }
-  }
-
-  &.note {
-    background: rgb(222, 253, 255);
-    border: 1px solid darken(rgb(222, 253, 255), 60);
-    border-radius: 3px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-
-    p {
-      margin: 0;
-    }
-  }
-}
-
-figure {
-  border: 1px solid #ddd;
-  border-radius: 3px;
-
-  figcaption {
-    padding: 1rem 0.5rem;
-    color: #ddd;
-    font-style: italic;
-
-    background: $black-and-blue;
-  }
+#sidebar {
+  font-size: 85%;
 }
