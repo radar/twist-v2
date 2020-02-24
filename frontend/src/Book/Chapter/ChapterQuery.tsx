@@ -7,6 +7,7 @@ export default gql`
       id
       permalink
       defaultBranch {
+        name
         id
         chapter(permalink: $chapterPermalink) {
           id
@@ -14,6 +15,9 @@ export default gql`
           position
           permalink
           part
+          commit {
+            sha
+          }
           sections {
             ...sectionFragment
             subsections {

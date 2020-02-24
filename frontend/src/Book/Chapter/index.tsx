@@ -35,11 +35,15 @@ interface ChapterProps extends RouteComponentProps {
   bookId: string;
   bookTitle: string;
   bookPermalink: string;
+  branchName: string;
   title: string;
   position: number;
   part: string;
   elements: Array<ElementProps>;
   sections: Array<SectionProps>;
+  commit: {
+    sha: string;
+  };
   previousChapter: NavigationalChapter | null;
   nextChapter: NavigationalChapter | null;
 }
@@ -92,11 +96,13 @@ export class Chapter extends Component<ChapterProps> {
       bookId,
       bookTitle,
       bookPermalink,
+      branchName,
       part,
       title: chapterTitle,
       position,
       elements,
-      sections
+      sections,
+      commit
     } = this.props;
 
     const positionAndTitle = chapterPositionAndTitle(
@@ -109,12 +115,19 @@ export class Chapter extends Component<ChapterProps> {
       <div className="col-md-12">
         <div className="row">
           <div className="col-md-1">&nbsp;</div>
-          <div className={`main col-md-7 col-lg-7 col-xl-9 ${styles.chapter}`}>
-            <h1>
-              <Link id="top" to={`/books/${bookPermalink}`}>
-                {bookTitle}
-              </Link>
-            </h1>
+          <div className={`main col-md-7 col-xl-8 ${styles.chapter}`}>
+            <header>
+              <h1>
+                <Link id="top" to={`/books/${bookPermalink}`}>
+                  {bookTitle}
+                </Link>
+              </h1>
+              <small>
+                <em>
+                  {branchName}@{commit.sha}
+                </em>
+              </small>
+            </header>
             {this.renderChapterLinks()}
             <h2>{positionAndTitle}</h2>
             {elements.map(element => (
