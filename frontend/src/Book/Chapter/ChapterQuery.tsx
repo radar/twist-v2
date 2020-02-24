@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 
 export default gql`
   query chapterQuery($bookPermalink: String!, $chapterPermalink: String!) {
@@ -32,6 +32,7 @@ export default gql`
             tag
             noteCount
             image {
+              caption
               path
             }
           }
@@ -53,4 +54,4 @@ export default gql`
     part
     permalink
   }
-`
+`;

@@ -31,6 +31,7 @@ export default class Api {
   }
 
   authorizationURL(callback: (value: AxiosResponse<any>) => void) {
+    console.log("Callback URL:", process.env.REACT_APP_FRONTEND_URL + "/oauth/callback")
     this.client.get(
       "/oauth/authorize", {
         params: {

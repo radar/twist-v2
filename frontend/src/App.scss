@@ -3,9 +3,13 @@
 
 body {
   margin: 1% 2.5% 1% 2.5%;
-  font: 15px "Titillium Web", 'Helvetica Neue';
+  font: 12pt "Roboto", 'Helvetica Neue';
   color: #444;
   background: #efefef;
+}
+
+pre {
+  font-family: 'Fira Mono';
 }
 
 menu {
@@ -21,4 +25,43 @@ hr {
   border: 1px solid #dadada;
   border-radius: 3px;
   padding: 2.5rem 1.5rem;
+}
+
+.listingblock {
+  border: 1px solid #282a36;
+  border-radius: 3px;
+
+  .title {
+    padding: 0.5rem;
+    padding-right: 0;
+    font-style: italic;
+    background: lighten(#282a36, 30);
+    color: white;
+  }
+
+  .highlight pre {
+    color: white;
+    padding: 1rem 0.5rem;
+    margin-bottom: 0;
+  }
+
+  margin-bottom: 1rem;
+}
+
+.admonitionblock {
+  .title {
+    font-size: 125%;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  &.note {
+    background: rgb(222, 253, 255);
+    padding: 1rem 0.5rem;
+    margin-bottom: 1rem;
+
+    p {
+      margin: 0;
+    }
+  }
 }
