@@ -26,7 +26,10 @@ const Image = (props: ImageElementProps) => {
     image: { path, caption }
   } = props;
 
-  const fullPath = process.env.REACT_APP_API_HOST + path;
+  const fullPath =
+    process.env.NODE_ENV == "development"
+      ? process.env.REACT_APP_API_HOST + path
+      : path;
   return (
     <div className="element image" id={id}>
       <figure>
