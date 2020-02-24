@@ -49,6 +49,7 @@ module Twist
             jwt_token = generate_jwt.(email: user.email)
 
             self.format = :json
+            self.status = 200
             self.body = {
               jwt_token: jwt_token,
             }.to_json
