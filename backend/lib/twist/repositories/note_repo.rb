@@ -2,6 +2,7 @@ module Twist
   module Repositories
     class NoteRepo < Twist::Repository[:notes]
       commands :create, use: :timestamps, plugins_options: { timestamps: { timestamps: %i(created_at updated_at) } }
+      commands update: :by_pk
 
       # rubocop:disable Metrics/AbcSize
       def count(element_ids)
