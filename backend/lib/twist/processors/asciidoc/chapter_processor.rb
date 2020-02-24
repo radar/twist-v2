@@ -138,29 +138,23 @@ module Twist
         src = element.css("img").first["src"]
         candidates = Dir[book.path + "**/#{src}"]
         # TODO: what if more than one image matches the path?
-        p book.path
-        p src
         image_path = candidates.first
         if File.exist?(image_path)
           caption = element.css("div.title").text.strip
-          image_repo.find_or_create_image(chapter.id, File.basename(image_path), image_path, caption)
-          # chapter.images.create!(
-          #   image: File.open(image_path),
-          #   caption: element.css(".title").text.strip.gsub(/^Figure \d+\.\s+/, ''),
-          #   position: chapter.images.count + 1,
-          # )
+          image = image_repo.find_or_create_image(chapter.id, File.basename(image_path), image_path, caption)
         end
 
         create_element(
           tag: "img",
-          content: src
+          content: src,
+          extra: { image_id: image.id },
         )
       end
 
       def process_ulist(element)
         create_element(
           tag: "ul",
-          content: element.css("ul").to_html
+          content: element.css("ul").to_html,
         )
       end
 
