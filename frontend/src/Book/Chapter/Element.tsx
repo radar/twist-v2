@@ -52,11 +52,7 @@ export class BareElement extends Component<BareElementProps> {
     }
 
     return (
-      <div
-        className="element"
-        id={id}
-        dangerouslySetInnerHTML={this.createMarkup()}
-      />
+      <div className="element" dangerouslySetInnerHTML={this.createMarkup()} />
     );
   }
 }
