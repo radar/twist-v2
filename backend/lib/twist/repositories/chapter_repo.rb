@@ -43,6 +43,10 @@ module Twist
         chapters.where(part: next_part(chapter.part), position: 1).limit(1).one
       end
 
+      def next_position(commit_id, part)
+        _for_commit(commit_id).where(part: part).max(:position) || 1
+      end
+
       private
 
       def _for_commit(commit_id)

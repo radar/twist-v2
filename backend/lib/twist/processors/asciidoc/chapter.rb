@@ -14,6 +14,7 @@ module Twist
       def process
         title_without_number = title.gsub(/^\d+\.\s+/, '')
         repo = Repositories::ChapterRepo.new
+        position = repo.next_position(commit.id, part)
         chapter = repo.create(
           commit_id: commit.id,
           title: title_without_number,
