@@ -9,6 +9,7 @@ module Twist
       let(:commit_repo) { double(Repositories::CommitRepo) }
       let(:chapter_repo) { double(Repositories::ChapterRepo) }
       let(:element_repo) { double(Repositories::ElementRepo) }
+      let(:footnote_repo) { double(Repositories::FootnoteRepo) }
       let(:image_repo) { double(Repositories::ImageRepo) }
       let(:note_repo) { double(Repositories::NoteRepo) }
       let(:book) do
@@ -105,6 +106,13 @@ module Twist
         )
       end
 
+      let(:footnote) do
+        double(
+          Footnote,
+          identifier: "_footnotedef_1",
+        )
+      end
+
       let(:image) do
         double(
           Image,
@@ -120,8 +128,10 @@ module Twist
             chapter: chapter_repo,
             commit: commit_repo,
             element: element_repo,
+            footnote: footnote_repo,
             image: image_repo,
             note: note_repo,
+
           },
         )
       end
@@ -158,6 +168,10 @@ module Twist
                       path
                     }
                   }
+
+                  footnotes {
+                    identifier
+                  }
                 }
               }
             }
@@ -185,6 +199,7 @@ module Twist
         expect(chapter_repo).to receive(:previous_chapter) { previous_chapter }
         expect(chapter_repo).to receive(:next_chapter) { next_chapter }
         expect(element_repo).to receive(:by_chapter) { [element] }
+        expect(footnote_repo).to receive(:by_chapter) { [footnote] }
         expect(element_repo).to receive(:sections_for_chapter) { [section, sub_section] }
         expect(image_repo).to receive(:by_ids) { [image] }
         expect(note_repo).to receive(:count) { [0] }
@@ -245,6 +260,12 @@ module Twist
         expect(element["content"]).to eq("<p>Hello World</p>")
         expect(element["noteCount"]).to eq(0)
         expect(element["image"]["path"]).to eq("img.jpg")
+
+        footnotes = chapter["footnotes"]
+        expect(footnotes.count).to eq(1)
+
+        footnote = footnotes.first
+        expect(footnote["identifier"]).to eq("_footnotedef_1")
       end
     end
   end

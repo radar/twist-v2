@@ -7,6 +7,7 @@ module Twist
       let(:branch_repo) { Repositories::BranchRepo.new }
       let(:chapter_repo) { Repositories::ChapterRepo.new }
       let(:commit_repo) { Repositories::CommitRepo.new }
+      let(:footnote_repo) { Repositories::FootnoteRepo.new }
 
       context "with test book" do
         let!(:book) do
@@ -39,6 +40,10 @@ module Twist
 
           backmatter_titles = chapter_repo.for_commit_and_part(commit.id, "backmatter").map(&:title)
           expect(backmatter_titles).to eq(["Appendix A: The First Appendix"])
+
+          footnotes = footnote_repo.for_commit(commit.id)
+          expect(footnotes.count).to eq(1)
+          expect(footnotes.first.content).to include("Footnotes should appear at the end of chapters")
         end
       end
 

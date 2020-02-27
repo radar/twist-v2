@@ -6,6 +6,8 @@ module Twist
       include Import[
         "repositories.image_repo",
         "repositories.element_repo",
+        "repositories.commit_repo",
+        "repositories.footnote_repo",
         "repositories.chapter_repo",
         "repositories.book_repo"
       ]
@@ -14,6 +16,7 @@ module Twist
         fragment = Nokogiri::HTML::DocumentFragment.parse(chapter)
         @book = book_repo.find_by_permalink(book_permalink)
         @chapter = chapter_repo.by_id(chapter_id)
+        @commit = commit_repo.by_id(@chapter.commit_id)
         element_repo.delete_all_chapter_elements(chapter_id)
         process_content(fragment.children.first.children)
       end
@@ -61,7 +64,6 @@ module Twist
 
       def process_h5(element)
         create_header("h4", element)
-
       end
 
       def create_header(tag, element)
@@ -116,18 +118,27 @@ module Twist
           tag: "p",
           content: element.css("p").to_html,
         )
+
+        element.css("sup.footnote a").each do |footnote|
+          process_footnote(footnote)
+        end
+      end
+
+      def process_footnote(footnote)
+        identifier = footnote["href"][1..-1]
+        footnote_repo.link_to_chapter(identifier, chapter.id)
       end
 
       def process_listingblock(element)
         if element.css("pre code").any?
           return process_language_block(element)
-        else
-          element['class'] += " lang-plaintext"
-          create_element(
-            tag: "div",
-            content: element.to_html,
-          )
         end
+
+        element['class'] += " lang-plaintext"
+        create_element(
+          tag: "div",
+          content: element.to_html,
+        )
       end
 
       def process_language_block(element)

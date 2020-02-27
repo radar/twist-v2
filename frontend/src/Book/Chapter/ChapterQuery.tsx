@@ -30,6 +30,12 @@ export default gql`
           nextChapter {
             ...chapterFragment
           }
+
+          footnotes {
+            identifier
+            content
+          }
+
           elements {
             id
             content

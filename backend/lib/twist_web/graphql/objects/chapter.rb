@@ -6,6 +6,7 @@ module Twist
       class ChapterType < ::GraphQL::Schema::Object
         require_relative 'commit'
         require_relative 'element'
+        require_relative 'footnote'
         require_relative 'image'
         require_relative 'section'
 
@@ -21,6 +22,7 @@ module Twist
         field :next_chapter, ChapterType, null: true
 
         field :elements, [ElementType], null: true
+        field :footnotes, [FootnoteType], null: true
         field :sections, resolver: Resolvers::Section::ByChapter
         field :commit, CommitType, null: true
 
@@ -34,6 +36,10 @@ module Twist
 
         def elements
           context[:element_repo].by_chapter(object.id)
+        end
+
+        def footnotes
+          context[:footnote_repo].by_chapter(object.id)
         end
 
         def commit

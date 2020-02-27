@@ -4,10 +4,11 @@ import { Link, RouteComponentProps } from "@reach/router";
 import QueryWrapper from "../../QueryWrapper";
 import chapterQuery from "./ChapterQuery";
 import Element, { ElementProps } from "./Element";
+import Footnote, { FootnoteProps } from "./Footnote";
 import { PreviousChapterLink, NextChapterLink } from "./Link";
 import SectionList from "./SectionList";
 
-import * as styles from "./Chapter.module.scss";
+import styles from "./Chapter.module.scss";
 
 type SubsectionProps = {
   id: string;
@@ -40,6 +41,7 @@ interface ChapterProps extends RouteComponentProps {
   position: number;
   part: string;
   elements: Array<ElementProps>;
+  footnotes: Array<FootnoteProps>;
   sections: Array<SectionProps>;
   commit: {
     sha: string;
@@ -91,6 +93,18 @@ export class Chapter extends Component<ChapterProps> {
     );
   }
 
+  renderFootnotes() {
+    const { footnotes } = this.props;
+    return (
+      <div className={styles.footnotes}>
+        <h3>Footnotes</h3>
+        {footnotes.map(footnote => (
+          <Footnote {...footnote} key={footnote.identifier} />
+        ))}
+      </div>
+    );
+  }
+
   render() {
     const {
       bookId,
@@ -133,6 +147,8 @@ export class Chapter extends Component<ChapterProps> {
             {elements.map(element => (
               <Element {...element} bookId={bookId} key={element.id} />
             ))}
+
+            {this.renderFootnotes()}
             {this.renderChapterLinks()}
           </div>
 
@@ -174,11 +190,13 @@ class WrappedChapter extends React.Component<WrappedChapterProps> {
         variables={{ bookPermalink, chapterPermalink }}
       >
         {data => {
+          const { book } = data;
           return (
             <Chapter
-              bookId={data.book.id}
-              bookTitle={data.book.title}
+              bookId={book.id}
+              bookTitle={book.title}
               bookPermalink={bookPermalink}
+              branchName={book.defaultBranch.name}
               {...data.book.defaultBranch.chapter}
             />
           );
