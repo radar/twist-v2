@@ -142,6 +142,31 @@ module Twist
           end
         end
 
+        context "div.listingblock, with pre + code, as yml" do
+          let(:content) do
+            <<-HTML.strip
+              <div class="listingblock">
+              <div class="title">book.yml</div>
+              <div class="content">
+              <pre class="highlight"><code class="language-yml" data-lang="yml">hello:
+                world: true</code></pre>
+              </div>
+            </div>
+            HTML
+          end
+
+          it "adds the listingblock element to the chapter" do
+            element = elements_by_tag("div").first
+
+            fragment = Nokogiri::HTML::DocumentFragment.parse(element.content)
+            listing_block = fragment.css(".listingblock").first
+            expect(listing_block).to be_truthy
+            expect(listing_block['class']).to include("lang-yaml")
+            expect(fragment.css(".title").text).to eq("book.yml")
+            expect(fragment.css(".content .highlight .kr")).to be_truthy
+          end
+        end
+
         context "div.listingblock, with pre + code, but no title" do
           let(:content) do
             <<-HTML.strip

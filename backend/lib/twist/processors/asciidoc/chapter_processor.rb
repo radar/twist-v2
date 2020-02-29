@@ -145,9 +145,14 @@ module Twist
 
       def process_language_block(element)
         code = element.css("pre code").first
-        highlighted_code = Pygments.highlight(code.text, lexer: code['data-lang'])
+        lang = case code['data-lang']
+               when 'yml' then 'yaml'
+               else code['data-lang']
+               end
+
+        highlighted_code = Pygments.highlight(code.text, lexer: lang)
         title = element.css(".title").text
-        html = %{<div class="listingblock highlighted lang-#{code['data-lang']}">}
+        html = %{<div class="listingblock highlighted lang-#{lang}">}
         html << %{<div class="title">#{title}</div>} unless title.empty?
         html << %{<div class="content">#{highlighted_code}</div>}
         html << %{</div>}
