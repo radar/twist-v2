@@ -1,2 +1,2 @@
 web:  bundle exec rackup config.ru -p $PORT
-sidekiq: bundle exec sidekiq -r ./config/environment.rb
+sidekiq: bundle exec sidekiq -r ./config/sidekiq_env.rb
