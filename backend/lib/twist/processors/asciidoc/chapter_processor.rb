@@ -161,13 +161,18 @@ module Twist
       def process_imageblock(element)
         src = element.css("img").first["src"]
         candidates = Dir[book.path + "**/#{src}"]
-        raise "Couldn't find image for #{src}" if candidates.none?
-        # TODO: what if more than one image matches the path?
-        image_path = candidates.first
-        if File.exist?(image_path)
-          caption = element.css("div.title").text.strip
-          image = image_repo.find_or_create_image(chapter.id, File.basename(image_path), image_path, caption)
+        if candidates.any?
+          # TODO: what if more than one image matches the path?
+          image_path = candidates.first
+          if File.exist?(image_path)
+            caption = element.css("div.title").text.strip
+          end
+        else
+          image_path = Twist::Container.root + "public/images/image_missing.png"
+          caption = "Image missing: #{src}"
         end
+
+        image = image_repo.find_or_create_image(chapter.id, File.basename(image_path), image_path, caption)
 
         create_element(
           tag: "img",

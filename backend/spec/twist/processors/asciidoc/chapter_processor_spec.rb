@@ -195,28 +195,55 @@ module Twist
         end
 
         context "div.imageblock" do
-          let(:content) do
-            <<-HTML.strip
-            <div class="imageblock">
-              <div class="content">
-                <img src="ch01/images/welcome_aboard.png" alt="welcome aboard">
+          context "when the image exists" do
+            let(:content) do
+              <<-HTML.strip
+              <div class="imageblock">
+                <div class="content">
+                  <img src="ch01/images/welcome_aboard.png" alt="welcome aboard">
+                </div>
+                <div class="title">
+                  Figure 1. Welcome aboard!
+                </div>
               </div>
-              <div class="title">
-                Figure 1. Welcome aboard!
-              </div>
-            </div>
-            HTML
+              HTML
+            end
+
+            it "adds the imageblock element to the chapter" do
+              element = elements_by_tag("img").first
+              expect(element.content).to eq("ch01/images/welcome_aboard.png")
+
+              image = image_repo.by_chapter(chapter.id).last
+              expect(element.image_id).to eq(image.id)
+              expect(image.filename).to eq("welcome_aboard.png")
+
+              expect(image.caption).to eq("Figure 1. Welcome aboard!")
+            end
           end
 
-          it "adds the imageblock element to the chapter" do
-            element = elements_by_tag("img").first
-            expect(element.content).to eq("ch01/images/welcome_aboard.png")
+          context "when the image is missing" do
+            let(:content) do
+              <<-HTML.strip
+              <div class="imageblock">
+                <div class="content">
+                  <img src="ch01/images/image-has-gone-walkabouts.png" alt="welcome aboard">
+                </div>
+                <div class="title">
+                  Figure 1. Welcome aboard!
+                </div>
+              </div>
+              HTML
+            end
 
-            image = image_repo.by_chapter(chapter.id).last
-            expect(element.image_id).to eq(image.id)
-            expect(image.filename).to eq("welcome_aboard.png")
+            it "adds the imageblock element to the chapter" do
+              element = elements_by_tag("img").first
+              expect(element.content).to eq("ch01/images/image-has-gone-walkabouts.png")
 
-            expect(image.caption).to eq("Figure 1. Welcome aboard!")
+              image = image_repo.by_chapter(chapter.id).last
+              expect(element.image_id).to eq(image.id)
+              expect(image.filename).to eq("image_missing.png")
+              expect(image.caption).to eq("Image missing: ch01/images/image-has-gone-walkabouts.png")
+            end
           end
         end
 
