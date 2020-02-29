@@ -3,6 +3,8 @@ module Twist
     class ChapterProcessor
       include Sidekiq::Worker
 
+      sidekiq_options retry: 0
+
       include Import[
         "repositories.image_repo",
         "repositories.element_repo",
