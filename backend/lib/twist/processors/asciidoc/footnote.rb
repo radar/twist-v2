@@ -12,10 +12,10 @@ module Twist
       end
 
       def process
-        footnote_repo.create(
+        footnote_repo.find_or_create(
           identifier: element["id"],
           content: element.to_html,
-          commit_id: commit.id
+          commit_id: commit.id,
         )
       end
     end

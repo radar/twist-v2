@@ -20,6 +20,17 @@ module Twist
       def for_commit(commit_id)
         footnotes.where(commit_id: commit_id).to_a
       end
+
+      def find_or_create(fields)
+        footnote = footnotes.where(
+          commit_id: fields[:commit_id],
+          identifier: fields[:identifier],
+        ).first
+
+        return footnote if footnote
+
+        create(fields)
+      end
     end
   end
 end
