@@ -29,8 +29,6 @@ module Twist
 
     def clone
       log_info "Cloning #{source_path} to #{local_path}"
-      p source_path
-      p local_path
 
       Rugged::Repository.clone_at(
         source_path.to_s,
