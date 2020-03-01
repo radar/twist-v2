@@ -40,3 +40,12 @@ set :chruby_ruby, 'ruby-2.6.2'
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
+
+namespace :deploy do
+  after :published, :notify do
+    on roles(:all) do |host|
+      execute :sudo, "service puma restart"
+      execute :sudo, "service twist-sidekiq restart"
+    end
+  end
+end
