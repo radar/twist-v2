@@ -173,6 +173,8 @@ module Twist
       end
 
       def process_imageblock(element)
+        puts "*" * 50
+        puts "Started processing image block - #{Time.now.to_f}"
         src = element.css("img").first["src"]
         candidates = Dir[book.path + "**/#{src}"]
         if candidates.any?
@@ -188,11 +190,13 @@ module Twist
 
         image = image_repo.find_or_create_image(chapter.id, File.basename(image_path), image_path, caption)
 
-        create_element(
+        element = create_element(
           tag: "img",
           content: src,
           extra: { image_id: image.id },
         )
+        puts "Finished processing image block - #{Time.now.to_f}"
+        element
       end
 
       def process_ulist(element)
