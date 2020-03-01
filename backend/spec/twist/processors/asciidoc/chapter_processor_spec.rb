@@ -112,6 +112,22 @@ module Twist
           end
         end
 
+        context "div.literalblock" do
+          let(:content) do
+            <<~CONTENT
+              <div class="literalblock">
+                <div class="content">
+                  <pre>The test then fills in the "Name" and "Cost" fields by using the `fill_in` method. Then, it clicks the "Create Purchase" button with `click_button`. These methods all come from the Capybara gem.</pre>
+                </div>
+              </div>
+            CONTENT
+          end
+
+          it "adds element to the chapter" do
+            expect(elements_by_tag("div").count).to eq(1)
+          end
+        end
+
         context "div.listingblock, with pre + code" do
           let(:content) do
             <<-HTML.strip

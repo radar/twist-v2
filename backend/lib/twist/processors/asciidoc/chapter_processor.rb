@@ -93,6 +93,8 @@ module Twist
           process_content(element.children)
         when "paragraph"
           process_paragraph(element)
+        when "literalblock"
+          process_literalblock(element)
         when "listingblock"
           process_listingblock(element)
         when "imageblock"
@@ -129,6 +131,13 @@ module Twist
       def process_footnote(footnote)
         identifier = footnote["href"][1..-1]
         footnote_repo.link_to_chapter(identifier, chapter.id)
+      end
+
+      def process_literalblock(element)
+        create_element(
+          tag: "div",
+          content: element.to_html,
+        )
       end
 
       def process_listingblock(element)
