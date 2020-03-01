@@ -13,7 +13,8 @@ module Twist
         ).limit(1).one
 
         if image
-          updated_image = update_image(image, image_path, caption)
+          updated_image = update_caption(image.id, caption)
+          upload_image(image.id, image_path)
           return updated_image
         end
 
@@ -28,26 +29,30 @@ module Twist
         images.where(id: ids).to_a
       end
 
+      def update_image_data(image_id, image_data)
+        update(image_id, image_data: image_data)
+      end
+
       private
 
-      def update_image(image, image_path, caption)
-        upload = upload_image(image_path)
-        update(image.id, caption: caption, image_data: upload.to_json)
+      def update_caption(image_id, caption)
+        update(image_id, caption: caption)
       end
 
       def create_image(chapter_id, filename, image_path, caption)
-        upload = upload_image(image_path)
-        create(
+        image = create(
           caption: caption,
           chapter_id: chapter_id,
           filename: filename,
-          image_data: upload.to_json,
         )
+
+        upload_image(image.id, image_path)
+
+        image
       end
 
-      def upload_image(image_path)
-        uploader = ImageUploader.new(:store)
-        uploader.upload(File.open(image_path))
+      def upload_image(image_id, image_path)
+        ImageWorker.perform_async(image_id, image_path)
       end
     end
   end
