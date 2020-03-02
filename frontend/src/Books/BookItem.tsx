@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "@reach/router";
 
-import styles from "./BookItem.module.scss";
-
 export interface Book {
   id: number;
   title: string;
@@ -14,11 +12,11 @@ export default class BookItem extends Component<Book> {
   render() {
     const { permalink, title, blurb } = this.props;
     return (
-      <div className={styles.bookItem}>
+      <div className="mb-4">
         <h2>
           <Link to={`/books/${permalink}`}>{title}</Link>
         </h2>
-        <span className="blurb">{blurb}</span>
+        <span className="text-gray-800">{blurb}</span>
       </div>
     );
   }

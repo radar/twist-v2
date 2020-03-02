@@ -84,10 +84,10 @@ export class Chapter extends Component<ChapterProps> {
 
   renderChapterLinks() {
     return (
-      <div className="row">
-        <div className="col-12">
-          <div className="float-left">{this.renderPreviousChapterLink()}</div>
-          <div className="float-right">{this.renderNextChapterLink()}</div>
+      <div>
+        <div className="grid grid-cols-2">
+          <div className="">{this.renderPreviousChapterLink()}</div>
+          <div className="text-right">{this.renderNextChapterLink()}</div>
         </div>
       </div>
     );
@@ -126,46 +126,44 @@ export class Chapter extends Component<ChapterProps> {
     );
 
     return (
-      <div className="col-md-12">
-        <div className="row">
-          <div className="col-md-1">&nbsp;</div>
-          <div className={`main col-md-7 col-xl-8 ${styles.chapter}`}>
-            <header>
-              <h1>
-                <Link id="top" to={`/books/${bookPermalink}`}>
-                  {bookTitle}
-                </Link>
-              </h1>
-              <small>
-                <em>
-                  {branchName}@{commit.sha}
-                </em>
-              </small>
-            </header>
-            {this.renderChapterLinks()}
-            <h2>{positionAndTitle}</h2>
-            {elements.map(element => (
-              <Element {...element} bookId={bookId} key={element.id} />
-            ))}
+      <div className="flex flex-wrap lg:flex-no-wrap">
+        <div className="w-1/12"></div>
+        <div className="main w-full lg:w-3/4 flex-grow mr-4">
+          <header className="mb-4">
+            <h1>
+              <Link id="top" to={`/books/${bookPermalink}`}>
+                {bookTitle}
+              </Link>
+            </h1>
+            <small>
+              <em className="text-gray-500">
+                {branchName}@{commit.sha.slice(0, 8)}
+              </em>
+            </small>
+          </header>
+          {this.renderChapterLinks()}
+          <h2 className="mt-3">{positionAndTitle}</h2>
+          {elements.map(element => (
+            <Element {...element} bookId={bookId} key={element.id} />
+          ))}
 
-            {this.renderFootnotes()}
-            {this.renderChapterLinks()}
-          </div>
+          {this.renderFootnotes()}
+          {this.renderChapterLinks()}
+        </div>
 
-          <div className="col-md-4 col-lg-4 col-xl-2">
-            <div id="sidebar">
-              {this.renderPreviousChapterLink()}
-              <hr />
+        <div className="w-full lg:w-1/4">
+          <div id="sidebar">
+            {this.renderPreviousChapterLink()}
+            <hr className="my-2" />
 
-              <h4>
-                <a href="#top">{positionAndTitle}</a>
-              </h4>
+            <h4 className="text-xl font-bold">
+              <a href="#top">{positionAndTitle}</a>
+            </h4>
 
-              <SectionList sections={sections} />
+            <SectionList sections={sections} />
 
-              <hr />
-              {this.renderNextChapterLink()}
-            </div>
+            <hr className="my-2" />
+            {this.renderNextChapterLink()}
           </div>
         </div>
       </div>

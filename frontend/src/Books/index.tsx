@@ -5,8 +5,6 @@ import QueryWrapper from "../QueryWrapper";
 import booksQuery from "./booksQuery";
 import BookItem, { Book } from "./BookItem";
 
-import * as styles from "./Books.module.scss";
-
 interface BooksProps {
   books: Book[];
 }
@@ -14,7 +12,7 @@ interface BooksProps {
 export class Books extends React.Component<BooksProps> {
   render() {
     return (
-      <div className={`${styles.main} col-md-7`} id="books">
+      <div className="main md:w-1/2" id="books">
         <h1>Your Books</h1>
 
         {this.props.books.map(book => (

@@ -26,7 +26,7 @@ class Note extends React.Component<NoteProps> {
   render() {
     const { number, bookPermalink, element } = this.props;
     return (
-      <div className="main col-md-10">
+      <div className="main md:w-3/4">
         <div className={styles.noteContainer}>
           <Header permalink={bookPermalink} noteNumber={number} />
           <ElementWithInfo {...element} />

@@ -1,35 +1,6 @@
-@import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css");
 @import "css/_common.scss";
 @import "./chapter";
 
-$black-and-blue: #282a36;
-
 body {
-  margin: 1% 2.5% 1% 2.5%;
   font: 12pt "Roboto", 'Helvetica Neue';
-  color: #444;
-  background: #efefef;
-}
-
-pre {
-  font-family: 'Fira Mono';
-}
-
-menu {
-  padding-left: 0;
-}
-
-hr {
-  border-top: 1px solid #ddd;
-}
-
-.main {
-  background: white;
-  border: 1px solid #dadada;
-  border-radius: 3px;
-  padding: 2.5rem 1.5rem;
-}
-
-#sidebar {
-  font-size: 85%;
 }

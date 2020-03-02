@@ -47,14 +47,14 @@ export default class ElementNote extends React.Component<
 
     return (
       <div className={styles.note}>
-        <div className="row">
-          <div className={`${styles.avatar} col-md-1`}>
+        <div className="flex">
+          <div className={`${styles.avatar} w-34 p-4`}>
             <Gravatar email={user.email} />
           </div>
 
-          <div className={`${styles.noteContainer} col-md-11`}>
+          <div className={`${styles.noteContainer} w-full`}>
             <div className="row">
-              <div className={`${styles.noteHeader} col-md-12`}>
+              <div className={`${styles.noteHeader} px-4`}>
                 <Link to={`/books/${bookPermalink}/notes/${number}`}>
                   {user.name} left note #{number}
                 </Link>{" "}
@@ -65,7 +65,7 @@ export default class ElementNote extends React.Component<
               </div>
             </div>
             <div className="row">
-              <div className={`${styles.noteBody} col-md-12`}>
+              <div className="pt-4 px-4 border">
                 <ReactMarkdown source={text} />
                 <div className={styles.buttons}>
                   <CloseButton id={id} updateState={this.updateState} />

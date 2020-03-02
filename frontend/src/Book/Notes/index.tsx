@@ -29,14 +29,14 @@ export class Notes extends React.Component<NotesProps, NotesState> {
   render() {
     const { bookPermalink } = this.props;
     return (
-      <div className="main col-md-10">
+      <div className="main md:w-2/3">
         <Header permalink={bookPermalink} />
-        <div className="notes">
+        <div className="notes mt-4">
           <div className={styles.buttons}>
-            <button className="btn btn-success" onClick={this.showOpenNotes}>
+            <button className="btn btn-green" onClick={this.showOpenNotes}>
               Open Notes
             </button>
-            <button className="btn btn-danger" onClick={this.showClosedNotes}>
+            <button className="btn btn-red" onClick={this.showClosedNotes}>
               Closed Notes
             </button>
           </div>

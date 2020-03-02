@@ -6,7 +6,6 @@ import CurrentUserContext from "../../../CurrentUser/context";
 
 import { CommentProps } from "./Comment";
 import commentsQuery from "./CommentsQuery";
-import * as styles from "./Comment.module.scss";
 import addCommentMutation from "./AddCommentMutation";
 
 type CommentFormProps = {
@@ -61,43 +60,39 @@ export default class CommentForm extends React.Component<
       <AddCommentMutation mutation={addCommentMutation}>
         {(addComment, { data }) => {
           return (
-            <div className={styles.comment}>
-              <div className="row">
-                <div className={`${styles.avatar} col-md-1`}>
-                  <CurrentUserContext.Consumer>
-                    {user => (user ? <Gravatar email={user.email} /> : null)}
-                  </CurrentUserContext.Consumer>
+            <div className="mb-10">
+              <div className="w-full">
+                <div>
+                  <strong>Add a comment</strong>
                 </div>
+                <form
+                  onSubmit={e => {
+                    e.preventDefault();
+                    this.submit(addComment);
+                  }}
+                  className="my-4"
+                >
+                  <div className="flex">
+                    <div className="w-34 p-4">
+                      <CurrentUserContext.Consumer>
+                        {user =>
+                          user ? <Gravatar email={user.email} /> : null
+                        }
+                      </CurrentUserContext.Consumer>
+                    </div>
+                    <textarea
+                      className="w-full p-4"
+                      placeholder="Leave a comment"
+                      onChange={e => this.setState({ text: e.target.value })}
+                    ></textarea>
+                  </div>
 
-                <div className={`${styles.commentContainer} col-md-11`}>
-                  <div className="row">
-                    <div className={`${styles.commentHeader} col-md-12`}>
-                      <strong>Add a comment</strong>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className={`${styles.commentBody} col-md-12`}>
-                      <form
-                        onSubmit={e => {
-                          e.preventDefault();
-                          this.submit(addComment);
-                        }}
-                      >
-                        <textarea
-                          placeholder="Leave a comment"
-                          onChange={e =>
-                            this.setState({ text: e.target.value })
-                          }
-                        ></textarea>
-                        <input
-                          className="btn btn-success"
-                          type="submit"
-                          value="Comment"
-                        />
-                      </form>
-                    </div>
-                  </div>
-                </div>
+                  <input
+                    className="btn btn-blue float-right mt-2"
+                    type="submit"
+                    value="Comment"
+                  />
+                </form>
               </div>
             </div>
           );

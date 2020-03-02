@@ -15,10 +15,13 @@
     "apollo-boost": "^0.3.1",
     "apollo-client": "^2.5.1",
     "apollo-link-context": "^1.0.17",
+    "autoprefixer": "^9.7.4",
     "axios": "^0.18.0",
     "graphql": "^14.1.1",
     "moment": "^2.24.0",
     "node-sass": "^4.11.0",
+    "postcss-cli": "^7.1.0",
+    "postcss-preset-env": "^6.7.0",
     "query-string": "^6.4.2",
     "react": "^16.8.4",
     "react-apollo": "^2.5.2",
@@ -26,6 +29,7 @@
     "react-gravatar": "^2.6.3",
     "react-markdown": "^4.0.6",
     "react-scripts": "2.1.8",
+    "tailwindcss": "^1.2.0",
     "typescript": "3.3.3333"
   },
   "scripts": {
@@ -35,7 +39,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "build:styles": "postcss src/tailwind.css -o src/styles.css",
+    "prebuild": "yarn build:styles",
+    "prestart": "yarn build:styles"
   },
   "eslintConfig": {
     "extends": "react-app"

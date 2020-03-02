@@ -28,9 +28,9 @@ export class Book extends Component<BookProps> {
     }
 
     return (
-      <div>
+      <div className="mt-3">
         <h3>{title}</h3>
-        <ol className="{{title.toLowerCase()}}">
+        <ol className="{{title.toLowerCase()}} list-decimal list-inside">
           {chapters.map(chapter => (
             <ChapterLink
               {...chapter}
@@ -51,9 +51,11 @@ export class Book extends Component<BookProps> {
     } = this.props;
 
     return (
-      <div className="col-md-7 main">
+      <div className={`bg-white p-4 border-gray-400 border rounded md:w-1/2`}>
         <h1>{title}</h1>
-        <Link to={`/books/${permalink}/notes`}>Notes for this book</Link>
+        <Link to={`/books/${permalink}/notes`} className="mb-4 inline-block">
+          Notes for this book
+        </Link>
         <hr />
         {this.renderPart("Frontmatter", frontmatter)}
         {this.renderPart("Mainmatter", mainmatter)}

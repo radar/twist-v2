@@ -11,7 +11,7 @@
 
   button {
     img {
-      max-height: 40px;
+      max-height: 30px;
       margin-right: 0.5rem;
     }
 
@@ -22,5 +22,10 @@
     font-weight: bold;
     font-size: 85%;
     padding: 1rem 0.5rem;
+
+    span {
+      position: relative;
+      top: 4px;
+    }
   }
 }

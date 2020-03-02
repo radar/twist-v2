@@ -1,69 +1,75 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 // import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-import submitNoteMutation from './SubmitNoteMutation'
-import { Mutation, MutationFn } from 'react-apollo'
+import submitNoteMutation from "./SubmitNoteMutation";
+import { Mutation, MutationFn } from "react-apollo";
 
 type FormProps = {
-  bookId: string,
-  elementId: string,
-  submitNote?: MutationFn,
-  noteSubmitted: Function,
-}
+  bookId: string;
+  elementId: string;
+  submitNote?: MutationFn;
+  noteSubmitted: Function;
+};
 
 type FormState = {
-  showThanks: boolean,
-  text: string
-}
+  showThanks: boolean;
+  text: string;
+};
 
-interface SubmitNoteMutationData {
-}
+interface SubmitNoteMutationData {}
 
 class SubmitNoteMutation extends Mutation<SubmitNoteMutationData, {}> {}
 
 export class Form extends Component<FormProps, FormState> {
   state = {
     showThanks: false,
-    text: ''
-  }
+    text: ""
+  };
 
   submit = () => {
-    const {submitNote, bookId, elementId, noteSubmitted} = this.props
+    const { submitNote, bookId, elementId, noteSubmitted } = this.props;
     // This is not passed in during storybook, but is everywhere else
     if (submitNote) {
       submitNote({
         variables: { bookId, elementId, text: this.state.text },
-        update: (store, data) => { noteSubmitted() }
-      })
+        update: (store, data) => {
+          noteSubmitted();
+        }
+      });
     }
-  }
+  };
 
   render() {
-    const {elementId} = this.props
+    const { elementId } = this.props;
     return (
       <div>
-        <form className="simple_form note_form">
+        <form className="border rounded bg-gray-100 p-2 mb-2">
           <p>
-            <label htmlFor={`element_${elementId}_note`}>Leave a note (Markdown enabled)</label>
+            <label
+              htmlFor={`element_${elementId}_note`}
+              className="block font-bold mb-2"
+            >
+              Leave a note (Markdown enabled)
+            </label>
             <textarea
-              className="text required form-control"
+              className="w-full border p-2"
               id={`element_${elementId}_note`}
               onChange={e => this.setState({ text: e.target.value })}
             />
           </p>
 
-          <div className="btn btn-primary" onClick={this.submit}>
+          <div className="btn btn-blue" onClick={this.submit}>
             Leave Note
           </div>
         </form>
         {this.renderThanks()}
       </div>
-    )
+    );
   }
 
   renderThanks() {
     if (!this.state.showThanks) {
-      return
+      return;
     }
     return (
       // <ReactCSSTransitionGroup
@@ -71,30 +77,30 @@ export class Form extends Component<FormProps, FormState> {
       //   transitionEnterTimeout={500}
       //   transitionLeaveTimeout={3000}
       // >
-        <div key="thanks">Thank you for submitting a note!</div>
+      <div key="thanks">Thank you for submitting a note!</div>
       // </ReactCSSTransitionGroup>
-    )
+    );
   }
 
   showThanks() {
-    this.setState({ showThanks: true })
+    this.setState({ showThanks: true });
   }
 }
 
 type WrappedFormProps = {
-  bookId: string,
-  elementId: string,
-  noteSubmitted: Function,
-}
+  bookId: string;
+  elementId: string;
+  noteSubmitted: Function;
+};
 
 export default class WrappedForm extends React.Component<WrappedFormProps> {
   render() {
     return (
       <SubmitNoteMutation mutation={submitNoteMutation}>
-          {(submitNote, { data }) => (
-            <Form {...this.props} submitNote={submitNote} />
-          )}
+        {(submitNote, { data }) => (
+          <Form {...this.props} submitNote={submitNote} />
+        )}
       </SubmitNoteMutation>
-    )
+    );
   }
 }

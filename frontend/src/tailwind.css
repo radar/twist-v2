@@ -1,0 +1,94 @@
+@tailwind base;
+
+
+h1 {
+  @apply text-3xl;
+}
+
+h2 {
+  @apply text-2xl;
+}
+
+h3 {
+  @apply text-xl;
+}
+
+a {
+  @apply text-blue-600 underline;
+}
+
+menu {
+  @apply px-4
+}
+
+p {
+  @apply mb-4;
+}
+
+textarea {
+  @apply border;
+}
+
+.main {
+  @apply bg-white p-4 border-gray-400 border rounded;
+}
+
+.listingblock {
+  @apply mb-4 rounded;
+}
+
+.listingblock .title {
+  @apply bg-gray-300 p-2 font-bold;
+}
+
+.listingblock .content pre {
+  @apply p-2;
+}
+
+.admonitionblock {
+  @apply border rounded my-4 p-2 border-blue-200;
+}
+
+.admonitionblock p {
+  @apply mb-2;
+}
+
+.admonitionblock.note {
+  @apply bg-blue-100;
+}
+
+.admonitionblock.note .title {
+  @apply text-blue-600 font-bold;
+}
+
+.btn {
+  @apply text-white font-bold py-2 px-4 rounded inline-block
+}
+
+.btn-blue {
+  @apply bg-blue-500
+}
+
+.btn-blue:hover {
+  @apply bg-blue-700
+}
+
+.btn-green {
+  @apply bg-green-500
+}
+
+.btn-green:hover {
+  @apply bg-green-700
+}
+
+.btn-red {
+  @apply bg-red-500
+}
+
+.btn-red:hover {
+  @apply bg-red-700
+}
+
+
+@tailwind components;
+@tailwind utilities;

@@ -105,7 +105,7 @@ export default class Element extends Component<ElementProps, ElementState> {
   render() {
     const { id, tag } = this.props;
     return (
-      <div>
+      <div className="relative">
         <a id={id} />
         <span
           className={`${styles.note_button} note_button_${tag}`}

@@ -15,6 +15,7 @@
   border: 1px solid $black-and-blue;
   border-radius: 3px;
   background: white;
+  font-size: 110%;
 
   .title {
     padding: 0.5rem;
@@ -42,6 +43,7 @@
 
   .listingblock {
     margin-top: 1rem;
+    margin-bottom: 1rem;
     background: white;
 
     pre {
@@ -50,9 +52,26 @@
     }
   }
 
-  &.note {
+  .paragraph > p > code {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 2px;
+  }
+
+  &.note, &.tip {
     background: rgb(222, 253, 255);
-    border: 1px solid darken(rgb(222, 253, 255), 60);
+    border: 1px solid darken(rgba(222, 253, 255, 0.2), 60);
+    border-radius: 3px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &.warning {
+    background: rgb(253, 243, 243);
+    border: 1px solid darken(rgba(255, 243, 243, 0.2), 60);
     border-radius: 3px;
     padding: 1rem;
     margin-bottom: 1rem;
@@ -74,4 +93,30 @@ figure {
 
     background: $black-and-blue;
   }
+}
+
+table.tableblock {
+  margin-bottom: 1rem;
+
+  th {
+    background: lighten($black-and-blue, 40);
+    color: #ddd;
+  }
+
+  th, td {
+    border: 1px solid #bbb;
+    padding: 0.5rem;
+  }
+
+  border-collapse: collapse;
+
+  caption {
+    background: $black-and-blue;
+    padding-left: 0.5rem;
+    color: #ddd;
+  }
+}
+
+ul li p {
+  margin-bottom: 0;
 }

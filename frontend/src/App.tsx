@@ -15,7 +15,7 @@ import Chapter from "./Book/Chapter";
 import Notes from "./Book/Notes";
 import Note from "./Book/Note";
 
-import "./App.scss";
+import "./styles.css";
 
 type UserInfoProps = {
   user: {
@@ -75,18 +75,14 @@ class Root extends Component<{}> {
   render() {
     return (
       <ApolloProvider client={ApolloClient}>
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-md-12">
-              <menu>
-                <Link to="/">
-                  <strong>Twist</strong>
-                </Link>{" "}
-                &nbsp; | &nbsp;
-                <CurrentUser>{this.renderUserInfo()}</CurrentUser>
-              </menu>
-            </div>
-          </div>
+        <div className="my-4 mx-auto px-4">
+          <menu>
+            <Link to="/">
+              <strong>Twist</strong>
+            </Link>{" "}
+            &nbsp; | &nbsp;
+            <CurrentUser>{this.renderUserInfo()}</CurrentUser>
+          </menu>
           <CurrentUser>
             <CurrentUserContext.Consumer>
               {user => {

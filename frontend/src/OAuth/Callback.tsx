@@ -32,6 +32,9 @@ export default class OAuthCallback extends React.Component<
 
       const onFailure = ({ response: { data } }: any) => {
         console.log("FAILURE");
+        console.log(data);
+        console.log("Error:", data.error);
+        console.log("Error Description:", data.error_description);
         this.setState({
           error: data.error,
           errorDescription: data.error_description
