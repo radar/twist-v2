@@ -44,6 +44,7 @@ textarea {
 .listingblock .content pre {
   @apply p-2;
   overflow: auto;
+  font-size: 90%;
 }
 
 .admonitionblock {

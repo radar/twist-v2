@@ -639,6 +639,7 @@ textarea {
 .listingblock .content pre {
   padding: 0.5rem;
   overflow: auto;
+  font-size: 90%;
 }
 
 .admonitionblock {
