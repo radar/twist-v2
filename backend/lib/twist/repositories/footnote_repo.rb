@@ -7,8 +7,8 @@ module Twist
         footnotes.where(identifier: identifier).first
       end
 
-      def by_chapter(chapter_id)
-        footnotes.where(chapter_id: chapter_id)
+      def by_chapter_and_commit(chapter_id, commit_id)
+        footnotes.where(chapter_id: chapter_id, commit_id: commit_id).to_a
       end
 
       def link_to_chapter(identifier, chapter_id)

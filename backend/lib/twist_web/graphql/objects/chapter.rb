@@ -39,7 +39,7 @@ module Twist
         end
 
         def footnotes
-          context[:footnote_repo].by_chapter(object.id)
+          context[:footnote_repo].by_chapter_and_commit(object.id. object.commit_id)
         end
 
         def commit
