@@ -625,9 +625,23 @@ textarea {
   border-radius: 0.25rem;
 }
 
+.main table {
+  table-layout: auto;
+}
+
+.main table tbody td {
+  border-width: 1px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .listingblock {
   margin-bottom: 1rem;
   border-radius: 0.25rem;
+  border-width: 1px;
+  background-color: #f7fafc;
 }
 
 .listingblock .title {

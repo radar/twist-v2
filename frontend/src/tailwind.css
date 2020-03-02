@@ -33,8 +33,16 @@ textarea {
   @apply bg-white p-4 border-gray-400 border rounded;
 }
 
+.main table {
+  @apply table-auto;
+}
+
+.main table tbody td {
+  @apply border px-4 py-2;
+}
+
 .listingblock {
-  @apply mb-4 rounded;
+  @apply mb-4 rounded border bg-gray-100;
 }
 
 .listingblock .title {
