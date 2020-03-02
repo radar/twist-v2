@@ -45,7 +45,7 @@ textarea {
   @apply border px-4 py-2;
 }
 
-.main table tbody tr(nth-child:even) td {
+.main table tbody tr:nth-child(even) td {
   @apply bg-gray-100;
 }
 

@@ -645,7 +645,7 @@ textarea {
   padding-bottom: 0.5rem;
 }
 
-.main table tbody tr(nth-child:even) td {
+.main table tbody tr:nth-child(even) td {
   background-color: #f7fafc;
 }
 
