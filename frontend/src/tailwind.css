@@ -34,7 +34,7 @@ textarea {
 }
 
 .main table {
-  @apply table-auto;
+  @apply table-auto mb-4;
 }
 
 .main table thead th {
@@ -114,6 +114,14 @@ textarea {
 
 .btn-red:hover {
   @apply bg-red-700
+}
+
+.section_listing .major {
+  @apply ml-4;
+}
+
+.section_listing .minor {
+  @apply ml-4;
 }
 
 
