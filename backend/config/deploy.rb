@@ -1,5 +1,5 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.11.0"
+lock "~> 3.12.0"
 
 set :application, "twist"
 set :repo_url, "git@github.com:radar/twist-v2.git"
