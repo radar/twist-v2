@@ -43,6 +43,7 @@ textarea {
 
 .listingblock .content pre {
   @apply p-2;
+  overflow: auto;
 }
 
 .admonitionblock {
@@ -53,13 +54,22 @@ textarea {
   @apply mb-2;
 }
 
-.admonitionblock.note {
+.admonitionblock.note, .admonitionblock.tip {
   @apply bg-blue-100;
 }
 
-.admonitionblock.note .title {
+.admonitionblock.note .title, .admonitionblock.tip .title {
   @apply text-blue-600 font-bold;
 }
+
+.admonitionblock.warning {
+  @apply bg-red-100;
+}
+
+.admonitionblock.warning {
+  @apply text-red-600 font-bold;
+}
+
 
 .btn {
   @apply text-white font-bold py-2 px-4 rounded inline-block

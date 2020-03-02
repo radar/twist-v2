@@ -654,12 +654,21 @@ textarea {
   margin-bottom: 0.5rem;
 }
 
-.admonitionblock.note {
+.admonitionblock.note, .admonitionblock.tip {
   background-color: #ebf8ff;
 }
 
-.admonitionblock.note .title {
+.admonitionblock.note .title, .admonitionblock.tip .title {
   color: #3182ce;
+  font-weight: 700;
+}
+
+.admonitionblock.warning {
+  background-color: #fff5f5;
+}
+
+.admonitionblock.warning {
+  color: #e53e3e;
   font-weight: 700;
 }
 
