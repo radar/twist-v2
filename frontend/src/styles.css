@@ -629,6 +629,14 @@ textarea {
   table-layout: auto;
 }
 
+.main table thead th {
+  background-color: #edf2f7;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .main table tbody td {
   border-width: 1px;
   padding-left: 1rem;

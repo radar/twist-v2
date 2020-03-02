@@ -37,6 +37,10 @@ textarea {
   @apply table-auto;
 }
 
+.main table thead th {
+  @apply bg-gray-200 px-4 py-2;
+}
+
 .main table tbody td {
   @apply border px-4 py-2;
 }

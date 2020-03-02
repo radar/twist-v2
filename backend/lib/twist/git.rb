@@ -32,7 +32,7 @@ module Twist
 
       Rugged::Repository.clone_at(
         source_path.to_s,
-        local_path,
+        local_path.to_s,
         credentials: @creds,
       )
     end
