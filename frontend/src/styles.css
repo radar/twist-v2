@@ -645,6 +645,10 @@ textarea {
   padding-bottom: 0.5rem;
 }
 
+.main table tbody tr(nth-child:even) td {
+  background-color: #f7fafc;
+}
+
 .listingblock {
   margin-bottom: 1rem;
   border-radius: 0.25rem;
