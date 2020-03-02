@@ -75,7 +75,7 @@ textarea {
   @apply bg-red-100;
 }
 
-.admonitionblock.warning {
+.admonitionblock.warning .title {
   @apply text-red-600 font-bold;
 }
 

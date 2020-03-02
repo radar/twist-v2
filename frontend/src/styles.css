@@ -682,7 +682,7 @@ textarea {
   background-color: #fff5f5;
 }
 
-.admonitionblock.warning {
+.admonitionblock.warning .title {
   color: #e53e3e;
   font-weight: 700;
 }
