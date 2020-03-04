@@ -288,6 +288,22 @@ module Twist
           end
         end
 
+        context "div.sect2 w/ blank para" do
+          let(:content) do
+            <<-HTML
+            <div class="sect2">
+              <div class="paragraph">
+                <p></p>
+              </div>
+            </div>
+            HTML
+          end
+
+          it "does not add the paragraph to the chapter" do
+            expect(elements_by_tag("p")).to be_empty
+          end
+        end
+
         context "div.sect2 w/ h3 & div.para" do
           let(:content) do
             <<-HTML

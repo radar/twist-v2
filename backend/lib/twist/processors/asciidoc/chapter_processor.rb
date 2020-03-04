@@ -118,6 +118,10 @@ module Twist
       end
 
       def process_paragraph(element)
+        p_tag = element.css("p")
+
+        return if p_tag.text.empty?
+
         create_element(
           tag: "p",
           content: element.css("p").to_html,
