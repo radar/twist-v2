@@ -609,10 +609,6 @@ menu {
   padding-right: 1rem
 }
 
-p {
-  margin-bottom: 1rem;
-}
-
 textarea {
   border-width: 1px;
 }
@@ -741,6 +737,32 @@ textarea {
 
 .section_listing .minor {
   margin-left: 1rem;
+}
+
+.chapter ol, .chapter ul {
+  margin-bottom: 1rem;
+}
+
+.chapter ol {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.chapter ol li p, .chapter ul li p {
+  display: inline-block;
+}
+
+.chapter ul {
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+
+.element > p {
+  margin-bottom: 1rem;
+}
+
+#sidebar {
+  font-size: 0.875rem;
 }
 
 .container {

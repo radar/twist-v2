@@ -128,7 +128,7 @@ export class Chapter extends Component<ChapterProps> {
     return (
       <div className="flex flex-wrap lg:flex-no-wrap">
         <div className="w-1/12"></div>
-        <div className="main w-full lg:w-3/4 flex-grow mr-4">
+        <div className="main w-full lg:w-3/4 flex-grow mr-4 chapter">
           <header className="mb-4">
             <h1>
               <Link id="top" to={`/books/${bookPermalink}`}>

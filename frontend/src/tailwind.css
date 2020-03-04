@@ -21,10 +21,6 @@ menu {
   @apply px-4
 }
 
-p {
-  @apply mb-4;
-}
-
 textarea {
   @apply border;
 }
@@ -122,6 +118,30 @@ textarea {
 
 .section_listing .minor {
   @apply ml-4;
+}
+
+.chapter ol, .chapter ul {
+  @apply mb-4;
+}
+
+.chapter ol {
+  @apply list-disc list-inside;
+}
+
+.chapter ol li p, .chapter ul li p {
+  @apply inline-block;
+}
+
+.chapter ul {
+  @apply list-decimal list-inside;
+}
+
+.element > p {
+  @apply mb-4;
+}
+
+#sidebar {
+  @apply text-sm;
 }
 
 
