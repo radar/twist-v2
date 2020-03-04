@@ -748,7 +748,7 @@ textarea {
 }
 
 .chapter ol {
-  list-style-type: disc;
+  list-style-type: decimal;
   list-style-position: inside;
 }
 
@@ -757,7 +757,7 @@ textarea {
 }
 
 .chapter ul {
-  list-style-type: decimal;
+  list-style-type: disc;
   list-style-position: inside;
 }
 

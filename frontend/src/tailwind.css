@@ -129,7 +129,7 @@ textarea {
 }
 
 .chapter ol {
-  @apply list-disc list-inside;
+  @apply list-decimal list-inside;
 }
 
 .chapter ol li p, .chapter ul li p {
@@ -137,7 +137,7 @@ textarea {
 }
 
 .chapter ul {
-  @apply list-decimal list-inside;
+  @apply list-disc list-inside;
 }
 
 .element > p {
