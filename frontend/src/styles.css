@@ -753,7 +753,7 @@ textarea {
 }
 
 .chapter ol li p, .chapter ul li p {
-  display: inline-block;
+  display: inline;
 }
 
 .chapter ul {

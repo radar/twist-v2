@@ -133,7 +133,7 @@ textarea {
 }
 
 .chapter ol li p, .chapter ul li p {
-  @apply inline-block;
+  @apply inline;
 }
 
 .chapter ul {
