@@ -74,7 +74,7 @@ module Twist
 
         def user_loader
           Dataloader.new do |ids|
-            ids.empty? ? [] : repo(:user).by_ids(ids)
+            ids.empty? ? [] : repo(:user).by_ids(ids).map { |user| [user.id, user] }.to_h
           end
         end
       end
