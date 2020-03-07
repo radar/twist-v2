@@ -12,7 +12,6 @@ module Twist
       end
 
       def link_to_chapter(identifier, chapter_id)
-        puts "Linking footnote #{identifier} to chapter ID=#{chapter_id}"
         footnotes
           .where(identifier: identifier)
           .update(chapter_id: chapter_id)
