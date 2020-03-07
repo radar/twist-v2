@@ -128,6 +128,7 @@ module Twist
         )
 
         element.css("sup.footnote a").each do |footnote|
+          puts "Processing footnote: #{footnote["href"]}"
           process_footnote(footnote)
         end
       end
