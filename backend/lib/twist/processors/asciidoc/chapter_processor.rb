@@ -24,6 +24,7 @@ module Twist
         content = fragment.children.first.children
 
         content.css("sup.footnote a").each do |footnote|
+          puts "Processing footnote: #{footnote["href"]}"
           process_footnote(footnote)
         end
 
