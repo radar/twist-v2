@@ -20,7 +20,14 @@ module Twist
         @chapter = chapter_repo.by_id(chapter_id)
         @commit = commit_repo.by_id(@chapter.commit_id)
         element_repo.delete_all_chapter_elements(chapter_id)
-        process_content(fragment.children.first.children)
+
+        content = fragment.children.first.children
+
+        content.css("sup.footnote a").each do |footnote|
+          process_footnote(footnote)
+        end
+
+        process_content(content)
       end
 
       private
@@ -126,11 +133,6 @@ module Twist
           tag: "p",
           content: element.css("p").to_html,
         )
-
-        element.css("sup.footnote a").each do |footnote|
-          puts "Processing footnote: #{footnote["href"]}"
-          process_footnote(footnote)
-        end
       end
 
       def process_footnote(footnote)

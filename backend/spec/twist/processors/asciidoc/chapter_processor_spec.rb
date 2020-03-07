@@ -542,6 +542,38 @@ module Twist
           expect(footnote_2.chapter_id).to eq(chapter.id)
         end
       end
+
+      context "li containing a footnote" do
+        let(:identifier) { "_footnotedef_1" }
+        before do
+          footnote_repo.create(
+            commit_id: commit.id,
+            identifier: identifier,
+            content: "Nothing to see here.",
+          )
+        end
+
+        let(:content) do
+          <<~HTML
+          <div class="sect2">
+            <h3 id="_sect_2_title">Sect2 title</h3>
+            <div class="ulist">
+              <ul>
+                <li><p>Some content<sup class="footnote">[<a id="_footnoteref_24" class="footnote" href="##{identifier}" title="View footnote.">24</a>]</sup></p></li>
+              </ul>
+            </div>
+          </div>
+          HTML
+        end
+
+        it "links footnotes to this chapter" do
+          # Call perform again, as it is called _before_ footnotes are created otherwise
+          perform
+
+          footnote_1 = footnote_repo.by_identifier(identifier)
+          expect(footnote_1.chapter_id).to eq(chapter.id)
+        end
+      end
     end
   end
 end
