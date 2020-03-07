@@ -46,7 +46,7 @@ export default class ElementNote extends React.Component<
     const time = moment(createdAt).fromNow();
 
     return (
-      <div className={styles.note}>
+      <div className={`${styles.note} note`}>
         <div className="flex">
           <div className={`${styles.avatar} w-34 p-4`}>
             <Gravatar email={user.email} />

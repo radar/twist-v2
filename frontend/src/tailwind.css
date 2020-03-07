@@ -148,6 +148,9 @@ textarea {
   @apply text-sm;
 }
 
+.note pre {
+  overflow: auto;
+}
 
 @tailwind components;
 @tailwind utilities;
