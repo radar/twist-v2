@@ -65,7 +65,7 @@ export default class ElementNote extends React.Component<
               </div>
             </div>
             <div className="row">
-              <div className="pt-4 px-4 border">
+              <div className="py-4 border">
                 <ReactMarkdown source={text} />
                 <div className={styles.buttons}>
                   <CloseButton id={id} updateState={this.updateState} />
