@@ -4,7 +4,7 @@ import { Mutation, MutationFn } from "react-apollo";
 
 import CurrentUserContext from "../../../CurrentUser/context";
 
-import { CommentProps } from "./Comment";
+import { Comment as CommentProps } from "../../Notes/types";
 import commentsQuery from "./CommentsQuery";
 import addCommentMutation from "./AddCommentMutation";
 
@@ -32,6 +32,9 @@ export default class CommentForm extends React.Component<
   CommentFormProps,
   CommentFormState
 > {
+  state = {
+    text: ""
+  };
   submit(addComment: MutationFn) {
     addComment({
       variables: { noteId: this.props.noteId, text: this.state.text },
@@ -49,6 +52,7 @@ export default class CommentForm extends React.Component<
             data: { comments: comments }
           });
 
+          this.setState({ text: "" });
           this.props.updateComments(comments);
         }
       }
@@ -83,6 +87,7 @@ export default class CommentForm extends React.Component<
                     <textarea
                       className="w-full p-4"
                       placeholder="Leave a comment"
+                      value={this.state.text}
                       onChange={e => this.setState({ text: e.target.value })}
                     ></textarea>
                   </div>

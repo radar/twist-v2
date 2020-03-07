@@ -1,51 +1,59 @@
-import * as React from "react"
+import * as React from "react";
 
-import QueryWrapper from "../../../QueryWrapper"
-import commentsQuery from "./CommentsQuery"
-import CommentForm from "./CommentForm"
-import Comment, { CommentProps } from "./Comment"
+import QueryWrapper from "../../../QueryWrapper";
+import commentsQuery from "./CommentsQuery";
+import CommentForm from "./CommentForm";
+import { Comment as CommentType } from "../../Notes/types";
+import Comment from "./Comment";
 
 type CommentsProps = {
-  noteId: string,
-  comments: CommentProps[]
-}
+  noteId: string;
+  comments: CommentType[];
+};
 
 type CommentsState = {
-  comments: CommentProps[]
-}
+  comments: CommentType[];
+};
 
 class Comments extends React.Component<CommentsProps, CommentsState> {
-  state = { comments: this.props.comments }
+  state = { comments: this.props.comments };
 
   renderComments() {
-    return this.state.comments.map((comment) => <Comment {...comment} key={comment.id}  />)
+    return this.state.comments.map(comment => (
+      <Comment {...comment} key={comment.id} />
+    ));
   }
 
-  updateComments = (comments: CommentProps[]) => {
-    this.setState({comments: comments})
-  }
+  updateComments = (comments: CommentType[]) => {
+    this.setState({ comments: comments });
+  };
 
   render() {
     return (
       <div>
         {this.renderComments()}
-        <CommentForm noteId={this.props.noteId} updateComments={this.updateComments} />
+        <CommentForm
+          noteId={this.props.noteId}
+          updateComments={this.updateComments}
+        />
       </div>
-    )
+    );
   }
 }
 
 type WrappedCommentsProps = {
-  noteId: string,
-}
+  noteId: string;
+};
 
-export default class WrappedComments extends React.Component<WrappedCommentsProps> {
+export default class WrappedComments extends React.Component<
+  WrappedCommentsProps
+> {
   render() {
-    const {noteId} = this.props
+    const { noteId } = this.props;
     return (
-      <QueryWrapper query={commentsQuery} variables={{noteId}}>
-        {({comments}) => <Comments noteId={noteId} comments={comments} /> }
+      <QueryWrapper query={commentsQuery} variables={{ noteId }}>
+        {({ comments }) => <Comments noteId={noteId} comments={comments} />}
       </QueryWrapper>
-    )
+    );
   }
 }

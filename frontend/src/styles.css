@@ -769,6 +769,10 @@ textarea {
   font-size: 0.875rem;
 }
 
+.note pre {
+  overflow: auto;
+}
+
 .container {
   width: 100%;
 }

@@ -4,7 +4,9 @@ import Gravatar from "react-gravatar";
 import moment from "moment";
 import { Link } from "@reach/router";
 
-import { Note } from "../Notes/types";
+import Comment from "./Comments/Comment";
+import Comments from "./Comments";
+import { Note, Comment as CommentType } from "../Notes/types";
 import CloseButton from "./CloseButton";
 import OpenButton from "./OpenButton";
 import * as styles from "./Note.module.scss";
@@ -14,6 +16,7 @@ type ElementNoteProps = Note & {
 };
 
 type ElementNoteState = {
+  comments: CommentType[];
   state: string;
 };
 
@@ -22,7 +25,8 @@ export default class ElementNote extends React.Component<
   ElementNoteState
 > {
   state = {
-    state: this.props.state
+    state: this.props.state,
+    comments: this.props.comments
   };
 
   updateState = (state: string) => {
@@ -32,6 +36,16 @@ export default class ElementNote extends React.Component<
   stateClass() {
     return this.props.state == "open" ? styles.openState : styles.closedState;
   }
+
+  renderComments() {
+    const { comments } = this.state;
+
+    return comments.map(comment => <Comment {...comment} />);
+  }
+
+  updateComments = (comments: CommentType[]) => {
+    this.setState({ comments: comments });
+  };
 
   render() {
     const {
@@ -64,15 +78,15 @@ export default class ElementNote extends React.Component<
                 </div>
               </div>
             </div>
-            <div className="row">
-              <div className="py-4 border">
-                <ReactMarkdown source={text} />
-                <div className={styles.buttons}>
-                  <CloseButton id={id} updateState={this.updateState} />
-                  <OpenButton id={id} updateState={this.updateState} />
-                </div>
+            <div className="p-4 b-4 border">
+              <ReactMarkdown source={text} />
+              <div className={`${styles.buttons} mt-4`}>
+                <CloseButton id={id} updateState={this.updateState} />
+                <OpenButton id={id} updateState={this.updateState} />
               </div>
             </div>
+
+            <Comments noteId={this.props.id} />
           </div>
         </div>
       </div>

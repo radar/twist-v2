@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 
 export default gql`
   fragment note on Note {
@@ -12,5 +12,16 @@ export default gql`
       email
       name
     }
+
+    comments {
+      id
+      text
+      createdAt
+      user {
+        id
+        email
+        name
+      }
+    }
   }
-`
+`;

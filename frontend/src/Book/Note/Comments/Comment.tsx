@@ -3,15 +3,8 @@ import ReactMarkdown from "react-markdown";
 import Gravatar from "react-gravatar";
 import moment from "moment";
 
-import { User } from "../../Notes/types";
+import { Comment as CommentProps } from "../../Notes/types";
 import * as styles from "./Comment.module.scss";
-
-export type CommentProps = {
-  id: string;
-  createdAt: string;
-  text: string;
-  user: User;
-};
 
 export default class Comment extends React.Component<CommentProps> {
   render() {
