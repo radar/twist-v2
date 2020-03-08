@@ -15,9 +15,10 @@ module Twist
       end
 
       def link_to_commit_chapter(identifier, commit_id, chapter_id)
-        footnotes
+        updated_records = footnotes
           .where(identifier: identifier, commit_id: commit_id)
           .update(chapter_id: chapter_id)
+        puts "Updated #{updated_records} where identifier=#{identifier}"
       end
 
       def for_commit(commit_id)
