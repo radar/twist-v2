@@ -14,6 +14,7 @@ module Twist
       def process
         footnote_repo.find_or_create(
           identifier: element["id"],
+          number: element.css("a").text.to_i,
           content: element.to_html,
           commit_id: commit.id,
         )

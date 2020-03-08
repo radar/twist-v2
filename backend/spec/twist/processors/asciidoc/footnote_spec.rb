@@ -33,6 +33,7 @@ module Twist
       describe "process" do
         it "creates a new footnote" do
           expect(footnote_repo).to receive(:find_or_create).with(
+            number: 2,
             commit_id: commit.id,
             identifier: identifier,
             content: content.strip,

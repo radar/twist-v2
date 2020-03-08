@@ -170,6 +170,7 @@ module Twist
                   }
 
                   footnotes {
+                    number
                     identifier
                   }
                 }
@@ -266,6 +267,7 @@ module Twist
 
         footnote = footnotes.first
         expect(footnote["identifier"]).to eq("_footnotedef_1")
+        expect(footnote["number"]).to eq(1)
       end
     end
   end
