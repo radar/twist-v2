@@ -33,7 +33,7 @@ module Twist
 
       private
 
-      attr_reader :book, :chapter, :chapter_element
+      attr_reader :book, :chapter, :commit, :chapter_element
 
       def process_content(elements)
         elements.each do |element|
@@ -138,7 +138,7 @@ module Twist
 
       def process_footnote(footnote)
         identifier = footnote["href"][1..-1]
-        footnote_repo.link_to_chapter(identifier, chapter.id)
+        footnote_repo.link_to_commit_chapter(identifier, commit.id, chapter.id)
       end
 
       def process_literalblock(element)

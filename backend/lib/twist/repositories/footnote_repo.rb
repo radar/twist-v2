@@ -11,9 +11,9 @@ module Twist
         footnotes.where(chapter_id: chapter_id, commit_id: commit_id).to_a
       end
 
-      def link_to_chapter(identifier, chapter_id)
+      def link_to_commit_chapter(identifier, commit_id, chapter_id)
         footnotes
-          .where(identifier: identifier)
+          .where(identifier: identifier, commit_id: commit_id)
           .update(chapter_id: chapter_id)
       end
 
