@@ -26,7 +26,7 @@ module Twist
           end
 
           it "finds that commit" do
-            expect(chapter_repo).to receive(:wipe)
+            expect(chapter_repo).to receive(:mark_as_superseded)
             commit = subject.find_and_clean_or_create(branch.id, sha, chapter_repo)
             expect(commit.id).to eq(existing_commit.id)
           end
