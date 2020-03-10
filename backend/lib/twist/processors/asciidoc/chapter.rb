@@ -24,7 +24,7 @@ module Twist
         )
 
         footnotes.each do |footnote|
-          link_footnote(footnote)
+          link_footnote(footnote, chapter)
         end
 
         ChapterProcessor.perform_async(book.permalink, chapter.id, element.to_s)
@@ -53,9 +53,9 @@ module Twist
         element.css("sup.footnote a")
       end
 
-      def link_footnote(footnote)
+      def link_footnote(footnote, chapter)
         identifier = footnote["href"][1..-1]
-        Repositories::FootnoteRepo.new.link_to_chapter(identifier, chapter.id)
+        Repositories::FootnoteRepo.new.link_to_commit_chapter(identifier, commit.id, chapter.id)
       end
     end
   end
