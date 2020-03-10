@@ -23,6 +23,10 @@ module Twist
           permalink: title_without_number.to_slug.normalize.to_s,
         )
 
+        footnotes.each do |footnote|
+          link_footnote(footnote)
+        end
+
         ChapterProcessor.perform_async(book.permalink, chapter.id, element.to_s)
       end
 
@@ -43,6 +47,15 @@ module Twist
 
       def title
         element.css("h2").first.text
+      end
+
+      def footnotes
+        element.css("sup.footnote a")
+      end
+
+      def link_footnote(footnote)
+        identifier = footnote["href"][1..-1]
+        Repositories::FootnoteRepo.new.link_to_chapter(identifier, chapter.id)
       end
     end
   end

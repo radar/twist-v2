@@ -24,7 +24,7 @@ module Twist
 
     def fetch!
       File.exist?(local_path) ? update : clone
-      head
+      head.oid
     end
 
     def clone

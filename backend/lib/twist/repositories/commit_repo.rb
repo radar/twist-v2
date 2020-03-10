@@ -23,7 +23,7 @@ module Twist
 
         commit = commits.where(fields).limit(1).one
         if commit
-          chapter_repo.wipe(commit.id)
+          chapter_repo.mark_as_superseded(commit.id)
           commit
         else
           create(fields)

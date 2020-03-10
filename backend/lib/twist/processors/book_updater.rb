@@ -28,7 +28,7 @@ module Twist
       )
 
       latest_commit = git.fetch!
-      commit = find_and_clean_or_create_commit(branch.id, latest_commit.oid)
+      commit = find_and_clean_or_create_commit(branch.id, latest_commit)
       [git, commit]
     end
 
