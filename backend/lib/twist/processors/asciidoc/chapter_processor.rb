@@ -80,7 +80,7 @@ module Twist
         element.name = tag
         create_element(
           tag: tag,
-          identifier: element.text.to_slug.normalize.to_s,
+          identifier: element.text.gsub(/^[\d|.]+/, "").to_slug.normalize.to_s,
           content: element.to_html,
         )
       end

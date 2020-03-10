@@ -308,7 +308,7 @@ module Twist
           let(:content) do
             <<-HTML
             <div class="sect2">
-              <h3 id="_sect_2_title">Sect2 title</h3>
+              <h3 id="_sect_2_title">1.1. Sect2 title</h3>
               <div class="paragraph">
                 <p>Simple para inside of a sect2</p>
               </div>
@@ -318,7 +318,7 @@ module Twist
 
           it "adds the h3 and para elements to the chapter" do
             h2_element = elements_by_tag("h2").first
-            expect(h2_element.content).to eq(%q{<h2 id="_sect_2_title">Sect2 title</h2>})
+            expect(h2_element.content).to eq(%q{<h2 id="_sect_2_title">1.1. Sect2 title</h2>})
             expect(h2_element.identifier).to eq("sect2-title")
 
             para_element = elements_by_tag("p").first
