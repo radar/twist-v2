@@ -105,6 +105,20 @@ export class Chapter extends Component<ChapterProps> {
     );
   }
 
+  scrollToHeading(hash: string) {
+    const el = document.getElementById(hash);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+
+  componentDidMount() {
+    const hash = window.location.hash.replace("#", "");
+    if (hash) {
+      setTimeout(this.scrollToHeading, 750, hash);
+    }
+  }
+
   render() {
     const {
       bookId,
