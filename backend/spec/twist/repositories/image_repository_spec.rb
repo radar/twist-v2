@@ -23,7 +23,6 @@ module Twist
             expect(image.chapter_id).to eq(chapter.id)
             expect(image.filename).to eq(filename)
             expect(image.caption).to eq("Hello World")
-            expect(image.image_data).not_to be_nil
           end
         end
 
@@ -41,7 +40,6 @@ module Twist
             expect(image.chapter_id).to eq(chapter.id)
             expect(image.filename).to eq(filename)
             expect(image.caption).to eq("Hello World")
-            expect(image.image_data).not_to be_nil
           end
         end
       end
