@@ -65,7 +65,7 @@ module Twist
 
     def source
       if self.class.test
-        path = Pathname.new(File.expand_path(File.join(__dir__, "../../spec/twist/repos")))
+        Pathname.new(File.expand_path(File.join(__dir__, "../../spec/twist/repos")))
       else
         "git@github.com:"
       end
