@@ -20,7 +20,7 @@ module Twist
       end
 
       def for_commit_and_permalink(commit_id, permalink)
-        _for_commit(commit_id).where(permalink: permalink).limit(1).one
+        _current_for_commit(commit_id).where(permalink: permalink).limit(1).one
       end
 
       def mark_as_superseded(commit_id)
