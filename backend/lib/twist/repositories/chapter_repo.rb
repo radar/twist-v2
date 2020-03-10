@@ -12,7 +12,7 @@ module Twist
       end
 
       def for_commit(commit_id)
-        _for_commit(commit_id).to_a
+        _current_for_commit(commit_id).to_a
       end
 
       def for_commit_and_part(commit_id, part)
