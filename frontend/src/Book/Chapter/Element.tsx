@@ -12,6 +12,7 @@ export type BareElementProps = {
   id: string;
   content: string;
   tag: string;
+  identifier: string;
   image?: Image;
 };
 
@@ -103,10 +104,10 @@ export default class Element extends Component<ElementProps, ElementState> {
   }
 
   render() {
-    const { id, tag } = this.props;
+    const { identifier, id, tag } = this.props;
     return (
       <div className="relative element">
-        <a id={id} />
+        <a id={identifier || id} />
         <span
           className={`${styles.note_button} note_button_${tag}`}
           id={`note_button_${id}`}

@@ -100,6 +100,7 @@ module Twist
           Element,
           id: 2,
           content: "<p>Hello World</p>",
+          identifier: "hello-world",
           tag: "p",
           notes_count: 1,
           image_id: 1,
@@ -109,6 +110,7 @@ module Twist
       let(:footnote) do
         double(
           Footnote,
+          number: "1",
           identifier: "_footnotedef_1",
         )
       end
@@ -164,6 +166,7 @@ module Twist
                     content
                     tag
                     noteCount
+                    identifier
                     image {
                       path
                     }
@@ -200,7 +203,7 @@ module Twist
         expect(chapter_repo).to receive(:previous_chapter) { previous_chapter }
         expect(chapter_repo).to receive(:next_chapter) { next_chapter }
         expect(element_repo).to receive(:by_chapter) { [element] }
-        expect(footnote_repo).to receive(:by_chapter) { [footnote] }
+        expect(footnote_repo).to receive(:by_chapter_and_commit) { [footnote] }
         expect(element_repo).to receive(:sections_for_chapter) { [section, sub_section] }
         expect(image_repo).to receive(:by_ids) { [image] }
         expect(note_repo).to receive(:count) { [0] }
@@ -259,6 +262,7 @@ module Twist
         expect(element["id"]).to eq("2")
         expect(element["tag"]).to eq("p")
         expect(element["content"]).to eq("<p>Hello World</p>")
+        expect(element["identifier"]).to eq("hello-world")
         expect(element["noteCount"]).to eq(0)
         expect(element["image"]["path"]).to eq("img.jpg")
 

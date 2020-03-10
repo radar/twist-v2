@@ -17,6 +17,7 @@ module Twist
         description "An element"
 
         field :id, ID, null: false
+        field :identifier, String, null: true
         field :content, String, null: true
         field :tag, String, null: false
         field :note_count, Integer, null: false

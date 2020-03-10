@@ -31,11 +31,11 @@ class Section extends React.Component<SectionProps> {
   }
 
   render() {
-    const { title, id } = this.props;
+    const { title, link } = this.props;
 
     return (
       <li className="major">
-        <a href={`#${id}`}>{title}</a>
+        <a href={`#${link}`}>{title}</a>
         {this.renderSubsections()}
       </li>
     );
@@ -44,11 +44,11 @@ class Section extends React.Component<SectionProps> {
 
 class Subsection extends React.Component<SubsectionProps> {
   render() {
-    const { title, id } = this.props;
+    const { title, link } = this.props;
 
     return (
       <li className="minor">
-        <a href={`#${id}`}>{title}</a>
+        <a href={`#${link}`}>{title}</a>
       </li>
     );
   }

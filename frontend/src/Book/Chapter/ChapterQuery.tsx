@@ -41,6 +41,7 @@ export default gql`
             content
             tag
             noteCount
+            identifier
             image {
               caption
               path

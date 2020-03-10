@@ -80,6 +80,7 @@ module Twist
         element.name = tag
         create_element(
           tag: tag,
+          identifier: element.text.to_slug.normalize.to_s,
           content: element.to_html,
         )
       end
@@ -243,12 +244,13 @@ module Twist
         )
       end
 
-      def create_element(tag:, content:, extra: {})
+      def create_element(tag:, content:, identifier: nil, extra: {})
         raise "Stringify content before passing it to this method!" unless content.is_a?(String)
 
         element_repo.create({
           chapter_id: chapter.id,
           tag: tag,
+          identifier: identifier,
           content: content,
         }.merge(extra))
       end
