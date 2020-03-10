@@ -18,7 +18,6 @@ module Twist
         updated_records = footnotes
           .where(identifier: identifier, commit_id: commit_id)
           .update(chapter_id: chapter_id)
-        puts "Updated #{updated_records} where identifier=#{identifier}"
       end
 
       def for_commit(commit_id)

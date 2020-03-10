@@ -24,7 +24,6 @@ module Twist
         content = fragment.children.first.children
 
         content.css("sup.footnote a").each do |footnote|
-          puts "Processing footnote: #{footnote["href"]}"
           process_footnote(footnote)
         end
 
@@ -139,7 +138,6 @@ module Twist
 
       def process_footnote(footnote)
         identifier = footnote["href"][1..-1]
-        puts "Linking footnote #{identifier} to commit=#{commit.id}, chapter=#{chapter.id}"
         footnote_repo.link_to_commit_chapter(identifier, commit.id, chapter.id)
       end
 
