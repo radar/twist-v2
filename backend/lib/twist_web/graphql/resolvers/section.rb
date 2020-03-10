@@ -66,7 +66,7 @@ module Twist
             end
 
             def slugify(title)
-              title.to_slug.gsub(/^[\d|.]+/, "").normalize.to_s
+              title.gsub(/^[\d|.]+/, "").to_slug.normalize.to_s
             end
           end
         end
