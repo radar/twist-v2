@@ -771,6 +771,14 @@ textarea {
 
 .note pre {
   overflow: auto;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  background-color: #f7fafc;
+  overflow: auto;
+  font-size: 90%;
 }
 
 .container {

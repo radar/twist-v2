@@ -108,7 +108,7 @@ export class Chapter extends Component<ChapterProps> {
   scrollToHeading(hash: string) {
     const el = document.getElementById(hash);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }
 

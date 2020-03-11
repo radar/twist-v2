@@ -150,6 +150,9 @@ textarea {
 
 .note pre {
   overflow: auto;
+  @apply p-2 my-4 rounded border bg-gray-100;
+  overflow: auto;
+  font-size: 90%;
 }
 
 @tailwind components;
