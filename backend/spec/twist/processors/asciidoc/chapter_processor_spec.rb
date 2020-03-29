@@ -79,6 +79,15 @@ module Twist
           end
         end
 
+        context "hr" do
+          let(:content) { "<hr />" }
+
+          it "adds a horizontal rule" do
+            element = elements_by_tag("hr").first
+            expect(element).not_to be_nil
+          end
+        end
+
         context "table" do
           let(:content) do
             <<-HTML.strip

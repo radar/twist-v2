@@ -91,6 +91,12 @@ module Twist
         )
       end
 
+      def process_hr(_element)
+        create_element(
+          tag: "hr",
+        )
+      end
+
       # Div-ified elements after this point.
 
       def process_div(element)
@@ -242,7 +248,7 @@ module Twist
         )
       end
 
-      def create_element(tag:, content:, identifier: nil, extra: {})
+      def create_element(tag:, content: "", identifier: nil, extra: {})
         raise "Stringify content before passing it to this method!" unless content.is_a?(String)
 
         element_repo.create({
