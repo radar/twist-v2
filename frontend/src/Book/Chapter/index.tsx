@@ -33,7 +33,6 @@ export type NavigationalChapter = {
 };
 
 interface ChapterProps extends RouteComponentProps {
-  bookId: string;
   bookTitle: string;
   bookPermalink: string;
   branchName: string;
@@ -121,7 +120,6 @@ export class Chapter extends Component<ChapterProps> {
 
   render() {
     const {
-      bookId,
       bookTitle,
       bookPermalink,
       branchName,
@@ -158,7 +156,11 @@ export class Chapter extends Component<ChapterProps> {
           {this.renderChapterLinks()}
           <h2 className="mt-3">{positionAndTitle}</h2>
           {elements.map(element => (
-            <Element {...element} bookId={bookId} key={element.id} />
+            <Element
+              {...element}
+              bookPermalink={bookPermalink}
+              key={element.id}
+            />
           ))}
 
           {this.renderFootnotes()}
@@ -205,7 +207,6 @@ class WrappedChapter extends React.Component<WrappedChapterProps> {
           const { book } = data;
           return (
             <Chapter
-              bookId={book.id}
               bookTitle={book.title}
               bookPermalink={bookPermalink}
               branchName={book.defaultBranch.name}

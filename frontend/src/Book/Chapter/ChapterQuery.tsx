@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import NoteFragment from "../Notes/NoteFragment";
 
 export default gql`
   query chapterQuery($bookPermalink: String!, $chapterPermalink: String!) {
@@ -42,6 +43,9 @@ export default gql`
             tag
             noteCount
             identifier
+            notes(state: OPEN) {
+              ...note
+            }
             image {
               caption
               path
@@ -65,4 +69,6 @@ export default gql`
     part
     permalink
   }
+
+  ${NoteFragment}
 `;

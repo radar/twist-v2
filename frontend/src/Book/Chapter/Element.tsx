@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import NoteForm from "./Note/Form";
+import Notes from "./Notes";
 import * as styles from "./Element.module.scss";
+import { Note } from "../Notes/types";
 
 type Image = {
   path: string;
@@ -8,12 +9,13 @@ type Image = {
 };
 
 export type BareElementProps = {
-  bookId: string;
+  bookPermalink: string;
   id: string;
   content: string;
   tag: string;
   identifier: string;
   image?: Image;
+  notes: Array<Note>;
 };
 
 type ImageElementProps = {
@@ -61,6 +63,7 @@ export class BareElement extends Component<BareElementProps> {
 type ElementState = {
   showForm: boolean;
   noteCount: number;
+  notes: Array<Note>;
 };
 
 export type ElementProps = BareElementProps & {
@@ -70,6 +73,7 @@ export type ElementProps = BareElementProps & {
 export default class Element extends Component<ElementProps, ElementState> {
   state = {
     showForm: false,
+    notes: this.props.notes,
     noteCount: this.props.noteCount
   };
 
@@ -85,20 +89,24 @@ export default class Element extends Component<ElementProps, ElementState> {
     this.setState({ showForm: !this.state.showForm });
   };
 
-  noteSubmitted = () => {
+  noteSubmitted = (note: Note) => {
     this.toggleForm();
-    this.setState({ noteCount: this.state.noteCount + 1 });
+    let notes = this.state.notes;
+    notes = notes.concat(note);
+    this.setState({ notes: notes, noteCount: this.state.noteCount + 1 });
   };
 
-  renderForm() {
+  renderNotes() {
     if (!this.state.showForm) {
       return;
     }
+    const { bookPermalink, id } = this.props;
     return (
-      <NoteForm
-        bookId={this.props.bookId}
+      <Notes
+        notes={this.state.notes}
+        bookPermalink={bookPermalink}
         noteSubmitted={this.noteSubmitted}
-        elementId={this.props.id}
+        elementId={id}
       />
     );
   }
@@ -117,7 +125,7 @@ export default class Element extends Component<ElementProps, ElementState> {
           </a>
         </span>
         <BareElement {...this.props} />
-        {this.renderForm()}
+        {this.renderNotes()}
       </div>
     );
   }

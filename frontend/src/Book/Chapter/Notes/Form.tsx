@@ -4,11 +4,13 @@ import React, { Component } from "react";
 import submitNoteMutation from "./SubmitNoteMutation";
 import { Mutation, MutationFn } from "react-apollo";
 
+import { Note } from "../../Notes/types";
+
 type FormProps = {
-  bookId: string;
+  bookPermalink: string;
   elementId: string;
   submitNote?: MutationFn;
-  noteSubmitted: Function;
+  noteSubmitted: (note: Note) => void;
 };
 
 type FormState = {
@@ -16,7 +18,9 @@ type FormState = {
   text: string;
 };
 
-interface SubmitNoteMutationData {}
+interface SubmitNoteMutationData {
+  submitNote: Note;
+}
 
 class SubmitNoteMutation extends Mutation<SubmitNoteMutationData, {}> {}
 
@@ -26,14 +30,15 @@ export class Form extends Component<FormProps, FormState> {
     text: ""
   };
 
-  submit = () => {
-    const { submitNote, bookId, elementId, noteSubmitted } = this.props;
+  submit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { submitNote, bookPermalink, elementId, noteSubmitted } = this.props;
     // This is not passed in during storybook, but is everywhere else
     if (submitNote) {
       submitNote({
-        variables: { bookId, elementId, text: this.state.text },
-        update: (store, data) => {
-          noteSubmitted();
+        variables: { bookPermalink, elementId, text: this.state.text },
+        update: (store, { data }) => {
+          noteSubmitted((data as SubmitNoteMutationData).submitNote);
         }
       });
     }
@@ -43,7 +48,7 @@ export class Form extends Component<FormProps, FormState> {
     const { elementId } = this.props;
     return (
       <div>
-        <form className="border rounded bg-gray-100 p-2 mb-2">
+        <form onSubmit={this.submit}>
           <p>
             <label
               htmlFor={`element_${elementId}_note`}
@@ -52,45 +57,27 @@ export class Form extends Component<FormProps, FormState> {
               Leave a note (Markdown enabled)
             </label>
             <textarea
-              className="w-full border p-2"
+              className="w-full border p-2 mb-2"
               id={`element_${elementId}_note`}
               onChange={e => this.setState({ text: e.target.value })}
             />
           </p>
 
-          <div className="btn btn-blue" onClick={this.submit}>
-            Leave Note
-          </div>
+          <input
+            type="submit"
+            className="btn btn-blue mb-2"
+            value="Submit Note"
+          />
         </form>
-        {this.renderThanks()}
       </div>
     );
-  }
-
-  renderThanks() {
-    if (!this.state.showThanks) {
-      return;
-    }
-    return (
-      // <ReactCSSTransitionGroup
-      //   transitionName="example"
-      //   transitionEnterTimeout={500}
-      //   transitionLeaveTimeout={3000}
-      // >
-      <div key="thanks">Thank you for submitting a note!</div>
-      // </ReactCSSTransitionGroup>
-    );
-  }
-
-  showThanks() {
-    this.setState({ showThanks: true });
   }
 }
 
 type WrappedFormProps = {
-  bookId: string;
+  bookPermalink: string;
   elementId: string;
-  noteSubmitted: Function;
+  noteSubmitted: (note: Note) => void;
 };
 
 export default class WrappedForm extends React.Component<WrappedFormProps> {

@@ -17,7 +17,7 @@ addDecorator(
 import { Book } from "../Book";
 import { Books } from "../Books";
 import { Chapter } from "../Book/Chapter";
-import { Form as NoteForm } from "../Book/Chapter/Note/Form";
+import { Form as NoteForm } from "../Book/Chapter/Notes/Form";
 import { NoteList } from "../Book/Notes/List";
 
 import { ElementWithNotesProps } from "../Book/Notes/types";

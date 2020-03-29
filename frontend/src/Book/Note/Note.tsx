@@ -34,7 +34,7 @@ export default class ElementNote extends React.Component<
   };
 
   stateClass() {
-    return this.props.state == "open" ? styles.openState : styles.closedState;
+    return this.state.state == "open" ? styles.openState : styles.closedState;
   }
 
   renderComments() {
@@ -48,15 +48,8 @@ export default class ElementNote extends React.Component<
   };
 
   render() {
-    const {
-      user,
-      text,
-      createdAt,
-      bookPermalink,
-      state,
-      id,
-      number
-    } = this.props;
+    const { state } = this.state;
+    const { user, text, createdAt, bookPermalink, id, number } = this.props;
     const time = moment(createdAt).fromNow();
 
     return (

@@ -5,12 +5,20 @@ module Twist
     context 'submitNote mutation' do
       let(:current_user) { double(User, id: 1) }
       let(:note_repo) { double }
+      let(:book_repo) { double(Repositories::BookRepo) }
       subject do
         described_class.new(
           repos: {
+            book: book_repo,
             note: note_repo,
           },
         )
+      end
+
+      let(:book) { double(Book, id: 1) }
+
+      before do
+        expect(book_repo).to receive(:find_by_permalink) { book }
       end
 
       context "when text is provided" do
@@ -18,7 +26,7 @@ module Twist
           query = %|
             mutation submitNoteMutation {
               submitNote(
-                bookId: "1",
+                bookPermalink: "example-book",
                 elementId: "1",
                 text: "Just a note."
               ) {

@@ -68,7 +68,7 @@ module Twist
 
         def note_count_loader
           Dataloader.new do |element_ids|
-            element_ids.empty? ? [] : repo(:note).count(element_ids)
+            element_ids.empty? ? [] : repo(:note).count(element_ids, "open")
           end
         end
 

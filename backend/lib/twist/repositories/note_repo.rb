@@ -5,8 +5,8 @@ module Twist
       commands update: :by_pk
 
       # rubocop:disable Metrics/AbcSize
-      def count(element_ids)
-        counts = notes.counts_for_elements(element_ids)
+      def count(element_ids, state)
+        counts = notes.counts_for_elements(element_ids, state)
 
         missing = element_ids.select { |id| counts.none? { |c| c.element_id == id } }
         counts += missing.map { |m| NoteCount.new(element_id: m, count: 0) }

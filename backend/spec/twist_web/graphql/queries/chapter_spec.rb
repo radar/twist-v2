@@ -12,6 +12,9 @@ module Twist
       let(:footnote_repo) { double(Repositories::FootnoteRepo) }
       let(:image_repo) { double(Repositories::ImageRepo) }
       let(:note_repo) { double(Repositories::NoteRepo) }
+      let(:book_note_repo) { double(Repositories::BookNoteRepo) }
+      let(:user_repo) { double(Repositories::UserRepo) }
+
       let(:book) do
         double(
           Book,
@@ -122,6 +125,27 @@ module Twist
         )
       end
 
+      let(:other_user) do
+        double(
+          User,
+          id: 2,
+          email: "other@example.com",
+          name: "Other User"
+        )
+      end
+
+      let(:note) do
+        double(
+          Note,
+          id: 1,
+          number: 1,
+          created_at: Time.now,
+          state: "open",
+          text: "A simple note",
+          user_id: other_user.id,
+        )
+      end
+
       subject do
         described_class.new(
           repos: {
@@ -133,7 +157,8 @@ module Twist
             footnote: footnote_repo,
             image: image_repo,
             note: note_repo,
-
+            book_note: book_note_repo,
+            user: user_repo,
           },
         )
       end
@@ -166,6 +191,17 @@ module Twist
                     content
                     tag
                     noteCount
+                    notes(state: OPEN) {
+                      id
+                      number
+                      createdAt
+                      state
+                      text
+                      user {
+                        name
+                        email
+                      }
+                    }
                     identifier
                     image {
                       path
@@ -206,7 +242,9 @@ module Twist
         expect(footnote_repo).to receive(:by_chapter_and_commit) { [footnote] }
         expect(element_repo).to receive(:sections_for_chapter) { [section, sub_section] }
         expect(image_repo).to receive(:by_ids) { [image] }
-        expect(note_repo).to receive(:count) { [0] }
+        expect(note_repo).to receive(:count) { [1] }
+        expect(book_note_repo).to receive(:by_element_and_state) { [note] }
+        expect(user_repo).to receive(:by_ids) { [other_user] }
 
         result = subject.run(
           query: query,
@@ -263,8 +301,19 @@ module Twist
         expect(element["tag"]).to eq("p")
         expect(element["content"]).to eq("<p>Hello World</p>")
         expect(element["identifier"]).to eq("hello-world")
-        expect(element["noteCount"]).to eq(0)
+        expect(element["noteCount"]).to eq(1)
         expect(element["image"]["path"]).to eq("img.jpg")
+
+        note = element["notes"].first
+        expect(note["id"]).to eq("1")
+        expect(note["number"]).to eq(1)
+        expect(note["user"]).to eq(
+          "name" => "Other User",
+          "email" => "other@example.com",
+        )
+        expect(note["state"]).to eq("open")
+        expect(note["createdAt"]).to_not be_nil
+        expect(note["text"]).to eq("A simple note")
 
         footnotes = chapter["footnotes"]
         expect(footnotes.count).to eq(1)
