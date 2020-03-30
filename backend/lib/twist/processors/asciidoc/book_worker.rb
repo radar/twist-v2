@@ -26,14 +26,14 @@ module Twist
         path = htmlify_book(git.local_path, username, repo)
         content = Nokogiri::HTML.parse(File.read(path))
 
-        chapter_elements = content.css(".sect1")
-        chapter_elements.each_with_index do |chapter_element, index|
-          Chapter.new(book, commit, git.local_path, chapter_element, index + 1).process
-        end
-
         footnote_elements = content.css("#footnotes .footnote")
         footnote_elements.each do |footnote_element|
           Footnote.new(element: footnote_element, commit: commit).process
+        end
+
+        chapter_elements = content.css(".sect1")
+        chapter_elements.each_with_index do |chapter_element, index|
+          Chapter.new(book, commit, git.local_path, chapter_element, index + 1).process
         end
       end
 
