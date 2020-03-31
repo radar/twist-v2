@@ -29,7 +29,7 @@ class Note extends React.Component<NoteProps> {
       <div className="main md:w-3/4">
         <div className={styles.noteContainer}>
           <Header permalink={bookPermalink} noteNumber={number} />
-          <ElementWithInfo {...element} />
+          <ElementWithInfo bookPermalink={bookPermalink} {...element} />
           <NoteBox {...this.props} />
           {this.renderComments()}
         </div>
