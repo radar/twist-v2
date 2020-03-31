@@ -60,18 +60,28 @@ module Twist
         let(:book_repo) { BookRepo.new }
         let(:chapter_repo) { double }
 
-        let(:book) { book_repo.create(permalink: "markdown_book_test") }
-        let(:default_branch) { book_repo.add_branch(book, name: "master", default: true) }
-        let(:other_branch) { book_repo.add_branch(book, name: "master", default: false) }
+        let(:markdown_book) { book_repo.create(permalink: "markdown_book_test") }
+        let(:md_default_branch) { book_repo.add_branch(markdown_book, name: "master", default: true) }
+        let(:md_other_branch) { book_repo.add_branch(markdown_book, name: "master", default: false) }
+
+        let(:asciidoc_book) { book_repo.create(permalink: "asciidoc_book_test") }
+        let(:ad_default_branch) { book_repo.add_branch(asciidoc_book, name: "master", default: true) }
+        let(:ad_other_branch) { book_repo.add_branch(asciidoc_book, name: "master", default: false) }
 
         before do
-          subject.create(branch_id: default_branch.id, sha: "abc123")
-          subject.create(branch_id: other_branch.id, sha: "def345")
+          subject.create(branch_id: md_default_branch.id, sha: "abc123")
+          subject.create(branch_id: md_other_branch.id, sha: "def345")
+
+          subject.create(branch_id: ad_default_branch.id, sha: "cba123")
+          subject.create(branch_id: ad_other_branch.id, sha: "fed345")
         end
 
         it "finds the latest commit" do
-          latest_commit = subject.latest_for_default_branch(book.id)
+          latest_commit = subject.latest_for_default_branch(markdown_book.id)
           expect(latest_commit.sha).to eq("abc123")
+
+          latest_commit = subject.latest_for_default_branch(asciidoc_book.id)
+          expect(latest_commit.sha).to eq("cba123")
         end
       end
     end
