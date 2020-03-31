@@ -70,18 +70,20 @@ module Twist
 
         before do
           subject.create(branch_id: md_default_branch.id, sha: "abc123")
+          subject.create(branch_id: md_default_branch.id, sha: "bca123")
           subject.create(branch_id: md_other_branch.id, sha: "def345")
 
           subject.create(branch_id: ad_default_branch.id, sha: "cba123")
+          subject.create(branch_id: ad_default_branch.id, sha: "def123")
           subject.create(branch_id: ad_other_branch.id, sha: "fed345")
         end
 
         it "finds the latest commit" do
           latest_commit = subject.latest_for_default_branch(markdown_book.id)
-          expect(latest_commit.sha).to eq("abc123")
+          expect(latest_commit.sha).to eq("bca123")
 
           latest_commit = subject.latest_for_default_branch(asciidoc_book.id)
-          expect(latest_commit.sha).to eq("cba123")
+          expect(latest_commit.sha).to eq("def123")
         end
       end
     end
