@@ -6,8 +6,13 @@ export default gql`
       title
       id
       permalink
+      latestCommit {
+        sha
+      }
       commit(sha: $commitSHA) {
         id
+        sha
+        createdAt
         branch {
           name
         }

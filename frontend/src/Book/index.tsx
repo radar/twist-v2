@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import moment from "moment";
+
 import QueryWrapper from "../QueryWrapper";
 import { Link, RouteComponentProps } from "@reach/router";
 
@@ -15,7 +17,12 @@ interface BookProps extends RouteComponentProps {
   commitSHA: string;
   title: string;
   permalink: string;
+  latestCommit: {
+    sha: string;
+  };
   commit: {
+    sha: string;
+    createdAt: string;
     frontmatter: ChapterProps[];
     mainmatter: ChapterProps[];
     backmatter: ChapterProps[];
@@ -48,17 +55,25 @@ export class Book extends Component<BookProps> {
   }
 
   renderCommitSHA() {
-    const { commitSHA, permalink } = this.props;
-    if (commitSHA) {
-      return (
-        <div className="text-gray-600 mb-4">
-          <small>
-            Commit: {commitSHA} -{" "}
-            <Link to={`/books/${permalink}`}> Go to latest revision </Link>
-          </small>
-        </div>
-      );
+    const {
+      permalink,
+      commit: { sha, createdAt },
+      latestCommit
+    } = this.props;
+    let latest;
+    if (sha != latestCommit.sha) {
+      latest = <Link to={`/books/${permalink}`}> Go to latest revision </Link>;
+    } else {
+      latest = "Latest commit";
     }
+    return (
+      <div className="text-gray-600 mb-4">
+        <small>
+          Commit: {sha.slice(0, 8)} &middot; {moment(createdAt).fromNow()}{" "}
+          &middot; {latest}
+        </small>
+      </div>
+    );
   }
 
   render() {
