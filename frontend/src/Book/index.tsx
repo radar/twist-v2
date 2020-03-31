@@ -21,6 +21,9 @@ interface BookProps extends RouteComponentProps {
     sha: string;
   };
   commit: {
+    branch: {
+      name: string;
+    };
     sha: string;
     createdAt: string;
     frontmatter: ChapterProps[];
@@ -57,7 +60,7 @@ export class Book extends Component<BookProps> {
   renderCommitSHA() {
     const {
       permalink,
-      commit: { sha, createdAt },
+      commit: { sha, createdAt, branch },
       latestCommit
     } = this.props;
     let latest;
@@ -69,7 +72,7 @@ export class Book extends Component<BookProps> {
     return (
       <div className="text-gray-600 mb-4">
         <small>
-          Commit: {sha.slice(0, 8)} &middot; {moment(createdAt).fromNow()}{" "}
+          {branch.name}@{sha.slice(0, 8)} &middot; {moment(createdAt).fromNow()}{" "}
           &middot; {latest}
         </small>
       </div>
