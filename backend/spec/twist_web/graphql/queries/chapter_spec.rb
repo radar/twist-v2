@@ -163,14 +163,14 @@ module Twist
         )
       end
 
-      it "fetches chapter data" do
+      it "fetches chapter data -- no commit specified" do
         query = %|
-          query chapterQuery($bookPermalink: String!, $chapterPermalink: String!) {
+          query chapterQuery($bookPermalink: String!, $chapterPermalink: String!, $commitSHA: String) {
             book(permalink: $bookPermalink) {
               title
               id
               permalink
-              defaultBranch {
+              commit(sha: $commitSHA) {
                 id
                 chapter(permalink: $chapterPermalink) {
                   ...chapterFragment
@@ -233,8 +233,7 @@ module Twist
         |
 
         expect(book_repo).to receive(:find_by_permalink) { book }
-        expect(branch_repo).to receive(:by_book) { [branch] }
-        expect(commit_repo).to receive(:latest_for_branch) { commit }
+        expect(commit_repo).to receive(:latest_for_default_branch) { commit }
         expect(chapter_repo).to receive(:for_commit_and_permalink) { chapter }
         expect(chapter_repo).to receive(:previous_chapter) { previous_chapter }
         expect(chapter_repo).to receive(:next_chapter) { next_chapter }
@@ -259,7 +258,7 @@ module Twist
         expect(book["id"]).to eq("1")
         expect(book["title"]).to eq("Exploding Rails")
 
-        chapter = book.dig("defaultBranch", "chapter")
+        chapter = book.dig("commit", "chapter")
 
         expect(chapter["id"]).to eq("2")
         expect(chapter["title"]).to eq("Introduction")

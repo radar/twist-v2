@@ -10,6 +10,7 @@ export type CommitProps = {
 export type ChapterProps = {
   part: string;
   position: string;
+  permalink: string;
   title: string;
   commit: CommitProps;
 };

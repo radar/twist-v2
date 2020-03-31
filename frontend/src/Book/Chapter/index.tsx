@@ -7,6 +7,7 @@ import Element, { ElementProps } from "./Element";
 import Footnote, { FootnoteProps } from "./Footnote";
 import { PreviousChapterLink, NextChapterLink } from "./Link";
 import SectionList from "./SectionList";
+import bookLink from "../../Book/link";
 
 import styles from "./Chapter.module.scss";
 
@@ -30,11 +31,13 @@ export type NavigationalChapter = {
   title: string;
   position: number;
   bookPermalink: string;
+  commitSHA: string;
 };
 
 interface ChapterProps extends RouteComponentProps {
   bookTitle: string;
   bookPermalink: string;
+  commitSHA: string;
   branchName: string;
   title: string;
   position: number;
@@ -63,21 +66,28 @@ export const chapterPositionAndTitle = (
 
 export class Chapter extends Component<ChapterProps> {
   renderPreviousChapterLink() {
-    const { bookPermalink, previousChapter } = this.props;
+    const { bookPermalink, previousChapter, commitSHA } = this.props;
     if (previousChapter) {
       return (
         <PreviousChapterLink
           {...previousChapter}
           bookPermalink={bookPermalink}
+          commitSHA={commitSHA}
         />
       );
     }
   }
 
   renderNextChapterLink() {
-    const { bookPermalink, nextChapter } = this.props;
+    const { bookPermalink, nextChapter, commitSHA } = this.props;
     if (nextChapter) {
-      return <NextChapterLink {...nextChapter} bookPermalink={bookPermalink} />;
+      return (
+        <NextChapterLink
+          commitSHA={commitSHA}
+          {...nextChapter}
+          bookPermalink={bookPermalink}
+        />
+      );
     }
   }
 
@@ -128,7 +138,8 @@ export class Chapter extends Component<ChapterProps> {
       position,
       elements,
       sections,
-      commit
+      commit,
+      commitSHA
     } = this.props;
 
     const positionAndTitle = chapterPositionAndTitle(
@@ -137,13 +148,15 @@ export class Chapter extends Component<ChapterProps> {
       chapterTitle
     );
 
+    const bookPath = bookLink(bookPermalink, commitSHA);
+
     return (
       <div className="flex flex-wrap lg:flex-no-wrap">
         <div className="w-1/12"></div>
         <div className="main w-full lg:w-3/4 flex-grow mr-4 chapter">
           <header className="mb-4">
             <h1>
-              <Link id="top" to={`/books/${bookPermalink}`}>
+              <Link id="top" to={bookPath}>
                 {bookTitle}
               </Link>
             </h1>
@@ -190,18 +203,20 @@ export class Chapter extends Component<ChapterProps> {
 interface WrappedChapterMatchParams {
   bookPermalink: string;
   chapterPermalink: string;
+  commitSHA: string;
 }
 
 interface WrappedChapterProps
   extends RouteComponentProps<WrappedChapterMatchParams> {}
 
 class WrappedChapter extends React.Component<WrappedChapterProps> {
+  renderChapter() {}
   render() {
-    const { bookPermalink, chapterPermalink } = this.props;
+    const { bookPermalink, chapterPermalink, commitSHA } = this.props;
     return (
       <QueryWrapper
         query={chapterQuery}
-        variables={{ bookPermalink, chapterPermalink }}
+        variables={{ bookPermalink, chapterPermalink, commitSHA }}
       >
         {data => {
           const { book } = data;
@@ -209,8 +224,9 @@ class WrappedChapter extends React.Component<WrappedChapterProps> {
             <Chapter
               bookTitle={book.title}
               bookPermalink={bookPermalink}
-              branchName={book.defaultBranch.name}
-              {...data.book.defaultBranch.chapter}
+              commitSHA={commitSHA}
+              branchName={book.commit.branch.name}
+              {...data.book.commit.chapter}
             />
           );
         }}

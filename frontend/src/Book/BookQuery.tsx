@@ -1,14 +1,16 @@
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 
 export default gql`
-  query bookQuery($permalink: String!) {
+  query bookQuery($permalink: String!, $commitSHA: String) {
     book(permalink: $permalink) {
       title
       id
       permalink
-      defaultBranch {
+      commit(sha: $commitSHA) {
         id
-        name
+        branch {
+          name
+        }
         frontmatter: chapters(part: FRONTMATTER) {
           ...chapterFields
         }
@@ -28,4 +30,4 @@ export default gql`
     position
     permalink
   }
-`
+`;

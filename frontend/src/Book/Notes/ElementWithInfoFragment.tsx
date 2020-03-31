@@ -13,6 +13,7 @@ export default gql`
       title
       part
       position
+      permalink
       commit {
         sha
         branch {

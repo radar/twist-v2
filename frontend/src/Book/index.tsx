@@ -12,9 +12,10 @@ type ChapterProps = {
 };
 
 interface BookProps extends RouteComponentProps {
+  commitSHA: string;
   title: string;
   permalink: string;
-  defaultBranch: {
+  commit: {
     frontmatter: ChapterProps[];
     mainmatter: ChapterProps[];
     backmatter: ChapterProps[];
@@ -27,6 +28,8 @@ export class Book extends Component<BookProps> {
       return null;
     }
 
+    const { permalink, commitSHA } = this.props;
+
     return (
       <div className="mt-3">
         <h3>{title}</h3>
@@ -34,7 +37,8 @@ export class Book extends Component<BookProps> {
           {chapters.map(chapter => (
             <ChapterLink
               {...chapter}
-              bookPermalink={this.props.permalink}
+              commitSHA={commitSHA}
+              bookPermalink={permalink}
               key={chapter.id}
             />
           ))}
@@ -43,16 +47,31 @@ export class Book extends Component<BookProps> {
     );
   }
 
+  renderCommitSHA() {
+    const { commitSHA, permalink } = this.props;
+    if (commitSHA) {
+      return (
+        <div className="text-gray-600 mb-4">
+          <small>
+            Commit: {commitSHA} -{" "}
+            <Link to={`/books/${permalink}`}> Go to latest revision </Link>
+          </small>
+        </div>
+      );
+    }
+  }
+
   render() {
     const {
       title,
       permalink,
-      defaultBranch: { frontmatter, mainmatter, backmatter }
+      commit: { frontmatter, mainmatter, backmatter }
     } = this.props;
 
     return (
       <div className={`bg-white p-4 border-gray-400 border rounded md:w-1/2`}>
         <h1>{title}</h1>
+        {this.renderCommitSHA()}
         <Link to={`/books/${permalink}/notes`} className="mb-4 inline-block">
           Notes for this book
         </Link>
@@ -67,6 +86,7 @@ export class Book extends Component<BookProps> {
 
 interface WrappedBookMatchParams {
   bookPermalink: string;
+  commitSHA: string;
 }
 
 interface WrappedBookProps
@@ -74,13 +94,14 @@ interface WrappedBookProps
 
 export default class WrappedBook extends Component<WrappedBookProps> {
   render() {
+    const { bookPermalink, commitSHA } = this.props;
     return (
       <QueryWrapper
         query={bookQuery}
-        variables={{ permalink: this.props.bookPermalink }}
+        variables={{ permalink: bookPermalink, commitSHA: commitSHA }}
       >
         {data => {
-          return <Book {...data.book} />;
+          return <Book commitSHA={commitSHA} {...data.book} />;
         }}
       </QueryWrapper>
     );

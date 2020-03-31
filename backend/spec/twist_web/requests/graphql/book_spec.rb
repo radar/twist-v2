@@ -28,97 +28,206 @@ module Twist
 
     let!(:note) do
       submit_note.(
-        book_id: book.id,
+        book_permalink: book.permalink,
         user_id: user.id,
         element_id: element.id,
         text: "This is a note"
       ).success
     end
 
-    it "gets a book, chapter and notes" do
-      query = <<~QUERY
-      query chapterQuery($bookPermalink: String!, $chapterPermalink: String!) {
-        book(permalink: $bookPermalink) {
-          title
-          id
-          permalink
-          defaultBranch {
-            id
-            chapter(permalink: $chapterPermalink) {
-              id
+    context "all chapters" do
+      let(:book_query) do
+        <<~QUERY
+          query bookQuery($permalink: String!, $commitSHA: String) {
+            book(permalink: $permalink) {
               title
-              position
+              id
               permalink
-              part
-              sections {
-                ...sectionFragment
-                subsections {
-                  ...sectionFragment
-                  __typename
-                }
-                __typename
-              }
-              previousChapter {
-                ...chapterFragment
-                __typename
-              }
-              nextChapter {
-                ...chapterFragment
-                __typename
-              }
-              elements {
+              commit(sha: $commitSHA) {
                 id
-                content
-                tag
-                noteCount
-                image {
-                  path
+                branch {
+                  name
+                }
+                frontmatter: chapters(part: FRONTMATTER) {
+                  ...chapterFields
+                }
+                mainmatter: chapters(part: MAINMATTER) {
+                  ...chapterFields
+                }
+                backmatter: chapters(part: BACKMATTER) {
+                  ...chapterFields
+                }
+              }
+            }
+          }
+
+          fragment chapterFields on Chapter {
+            id
+            title
+            position
+            permalink
+          }
+        QUERY
+      end
+
+      it "gets all of a book's chapters" do
+        variables = {
+          permalink: "markdown-book-test",
+        }
+
+        post "/graphql", query: book_query, variables: variables
+
+        p json_body
+
+        chapter = json_body
+          .dig(
+            "data",
+            "book",
+            "commit",
+            "frontmatter",
+          )
+          .first
+
+        expect(chapter["permalink"]).to eq("introduction")
+      end
+
+      it "gets all of a book's chapters at a particular commit" do
+        commit_repo = Twist::Container["repositories.commit_repo"]
+        commit = commit_repo.latest_for_default_branch(book.id)
+        variables = {
+          permalink: "markdown-book-test",
+          commitSHA: commit.sha[0..8],
+        }
+
+        post "/graphql", query: book_query, variables: variables
+
+        chapter = json_body
+          .dig(
+            "data",
+            "book",
+            "commit",
+            "frontmatter",
+          )
+          .first
+
+
+        expect(chapter["permalink"]).to eq("introduction")
+      end
+    end
+
+    context "a particular chapter" do
+      let(:chapter_query) do
+        <<~QUERY
+          query chapterQuery($bookPermalink: String!, $chapterPermalink: String!, $commitSHA: String) {
+            book(permalink: $bookPermalink) {
+              title
+              id
+              permalink
+              commit(sha: $commitSHA) {
+                id
+                chapter(permalink: $chapterPermalink) {
+                  id
+                  title
+                  position
+                  permalink
+                  part
+                  sections {
+                    ...sectionFragment
+                    subsections {
+                      ...sectionFragment
+                      __typename
+                    }
+                    __typename
+                  }
+                  previousChapter {
+                    ...chapterFragment
+                    __typename
+                  }
+                  nextChapter {
+                    ...chapterFragment
+                    __typename
+                  }
+                  elements {
+                    id
+                    content
+                    tag
+                    noteCount
+                    image {
+                      path
+                      __typename
+                    }
+                    __typename
+                  }
                   __typename
                 }
                 __typename
               }
               __typename
             }
+          }
+
+          fragment sectionFragment on Section {
+            id
+            title
+            link
             __typename
           }
-          __typename
+
+          fragment chapterFragment on Chapter {
+            id
+            title
+            position
+            part
+            permalink
+            __typename
+          }
+        QUERY
+      end
+
+      it "gets a book, chapter and notes" do
+        variables = {
+          bookPermalink: "markdown-book-test",
+          chapterPermalink: "introduction",
         }
-      }
 
-      fragment sectionFragment on Section {
-        id
-        title
-        link
-        __typename
-      }
+        post "/graphql", query: chapter_query, variables: variables
 
-      fragment chapterFragment on Chapter {
-        id
-        title
-        position
-        part
-        permalink
-        __typename
-      }
-      QUERY
+        element = json_body
+          .dig(
+            "data",
+            "book",
+            "commit",
+            "chapter",
+            "elements",
+          )
+          .first
 
-      variables = {
-        bookPermalink: "markdown-book-test",
-        chapterPermalink: "introduction",
-      }
+        expect(element["noteCount"]).to eq(1)
+      end
 
-      post "/graphql", query: query, variables: variables
-      element = json_body
-        .dig(
-          "data",
-          "book",
-          "defaultBranch",
-          "chapter",
-          "elements"
-        )
-        .first
+      it "gets a book, chapter and notes within a commit, for a short commit" do
+        commit_repo = Twist::Container["repositories.commit_repo"]
+        commit = commit_repo.latest_for_default_branch(book.id)
+        variables = {
+          bookPermalink: "markdown-book-test",
+          chapterPermalink: "introduction",
+          commitSHA: commit.sha[0..8],
+        }
 
-      expect(element["noteCount"]).to eq(1)
+        post "/graphql", query: chapter_query, variables: variables
+
+        element = json_body
+          .dig(
+            "data",
+            "book",
+            "commit",
+            "chapter",
+            "elements",
+          )
+          .first
+
+        expect(element["noteCount"]).to eq(1)
+      end
     end
   end
 end

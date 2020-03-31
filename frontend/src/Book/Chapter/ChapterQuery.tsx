@@ -2,14 +2,21 @@ import gql from "graphql-tag";
 import NoteFragment from "../Notes/NoteFragment";
 
 export default gql`
-  query chapterQuery($bookPermalink: String!, $chapterPermalink: String!) {
+  query chapterQuery(
+    $bookPermalink: String!
+    $chapterPermalink: String!
+    $commitSHA: String
+  ) {
     book(permalink: $bookPermalink) {
       title
       id
       permalink
-      defaultBranch {
-        name
+      commit(sha: $commitSHA) {
         id
+        sha
+        branch {
+          name
+        }
         chapter(permalink: $chapterPermalink) {
           id
           title

@@ -10,6 +10,14 @@ module Twist
           .one!
       end
 
+      def latest_for_default_branch(book_id)
+        commits.latest_for_default_branch(book_id)
+      end
+
+      def by_sha(short_sha)
+        commits.where { sha.ilike("#{short_sha}%") }.first
+      end
+
       def by_id(id)
         commits.by_pk(id).one
       end
