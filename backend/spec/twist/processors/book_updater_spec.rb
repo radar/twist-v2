@@ -41,7 +41,7 @@ module Twist
 
       let!(:note) do
         note_repo.create(
-          element_id: element.id, user_id: user.id
+          element_id: element.id, user_id: user.id, state: "open"
         )
       end
 
@@ -64,7 +64,7 @@ module Twist
       it "does not delete that note" do
         subject.update!
 
-        notes = note_repo.count([element.id])
+        notes = note_repo.count([element.id], "open")
         expect(notes).to eq({ element.id => 1})
       end
     end
