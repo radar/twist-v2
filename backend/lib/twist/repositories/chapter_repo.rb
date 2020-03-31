@@ -46,7 +46,7 @@ module Twist
 
         return next_chapter_in_part if next_chapter_in_part
 
-        chapters.where(part: next_part(chapter.part), position: 1).limit(1).one
+        _current_for_commit(commit_id).where(part: next_part(chapter.part), position: 1).limit(1).one
       end
 
       def next_position(commit_id, part)
