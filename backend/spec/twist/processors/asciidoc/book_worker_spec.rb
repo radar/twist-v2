@@ -71,25 +71,7 @@ module Twist
           expect(frontmatter_titles).to eq(["Preface", "Acknowledgements", "About this book"])
 
           mainmatter_titles = chapter_repo.for_commit_and_part(commit.id, "mainmatter").map(&:title)
-          expect(mainmatter_titles).to eq(
-            [
-              "Ruby on Rails, the framework",
-              "Testing saves your bacon",
-              "Developing a real Rails application",
-              "Oh, CRUD!",
-              "Nested resources",
-              "Authentication",
-              "Basic access control",
-              "Fine-grained access control",
-              "File uploading",
-              "Tracking state",
-              "Tagging",
-              "Sending email",
-              "Deployment",
-              "Designing an API",
-              "Rack-based applications",
-            ]
-          )
+          expect(mainmatter_titles).to include("Ruby on Rails, the framework")
 
           backmatter_titles = chapter_repo.for_commit_and_part(commit.id, "backmatter").map(&:title)
           expect(backmatter_titles).to eq(["Appendix A: Installation Guide", "Appendix B: Why Rails?"])
