@@ -1,6 +1,5 @@
 @tailwind base;
 
-
 h1 {
   @apply text-4xl;
 }
@@ -22,7 +21,7 @@ a {
 }
 
 menu {
-  @apply px-4
+  @apply px-4;
 }
 
 textarea {
@@ -71,11 +70,13 @@ textarea {
   @apply mb-2;
 }
 
-.admonitionblock.note, .admonitionblock.tip {
+.admonitionblock.note,
+.admonitionblock.tip {
   @apply bg-blue-100;
 }
 
-.admonitionblock.note .title, .admonitionblock.tip .title {
+.admonitionblock.note .title,
+.admonitionblock.tip .title {
   @apply text-blue-600 font-bold;
 }
 
@@ -87,33 +88,32 @@ textarea {
   @apply text-red-600 font-bold;
 }
 
-
 .btn {
-  @apply text-white font-bold py-2 px-4 rounded inline-block
+  @apply text-white font-bold py-2 px-4 rounded inline-block;
 }
 
 .btn-blue {
-  @apply bg-blue-500
+  @apply bg-blue-500;
 }
 
 .btn-blue:hover {
-  @apply bg-blue-700
+  @apply bg-blue-700;
 }
 
 .btn-green {
-  @apply bg-green-500
+  @apply bg-green-500;
 }
 
 .btn-green:hover {
-  @apply bg-green-700
+  @apply bg-green-700;
 }
 
 .btn-red {
-  @apply bg-red-500
+  @apply bg-red-500;
 }
 
 .btn-red:hover {
-  @apply bg-red-700
+  @apply bg-red-700;
 }
 
 .section_listing .major {
@@ -124,7 +124,8 @@ textarea {
   @apply ml-4;
 }
 
-.chapter ol, .chapter ul {
+.chapter ol,
+.chapter ul {
   @apply mb-4;
 }
 
@@ -132,7 +133,8 @@ textarea {
   @apply list-decimal list-inside;
 }
 
-.chapter ol li p, .chapter ul li p {
+.chapter ol li p,
+.chapter ul li p {
   @apply inline;
 }
 
@@ -141,6 +143,10 @@ textarea {
 }
 
 .element > p {
+  @apply mb-4;
+}
+
+.chapter figure {
   @apply mb-4;
 }
 

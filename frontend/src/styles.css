@@ -610,7 +610,7 @@ a {
 
 menu {
   padding-left: 1rem;
-  padding-right: 1rem
+  padding-right: 1rem;
 }
 
 textarea {
@@ -682,11 +682,13 @@ textarea {
   margin-bottom: 0.5rem;
 }
 
-.admonitionblock.note, .admonitionblock.tip {
+.admonitionblock.note,
+.admonitionblock.tip {
   background-color: #ebf8ff;
 }
 
-.admonitionblock.note .title, .admonitionblock.tip .title {
+.admonitionblock.note .title,
+.admonitionblock.tip .title {
   color: #3182ce;
   font-weight: 700;
 }
@@ -708,31 +710,31 @@ textarea {
   padding-left: 1rem;
   padding-right: 1rem;
   border-radius: 0.25rem;
-  display: inline-block
+  display: inline-block;
 }
 
 .btn-blue {
-  background-color: #4299e1
+  background-color: #4299e1;
 }
 
 .btn-blue:hover {
-  background-color: #2b6cb0
+  background-color: #2b6cb0;
 }
 
 .btn-green {
-  background-color: #48bb78
+  background-color: #48bb78;
 }
 
 .btn-green:hover {
-  background-color: #2f855a
+  background-color: #2f855a;
 }
 
 .btn-red {
-  background-color: #f56565
+  background-color: #f56565;
 }
 
 .btn-red:hover {
-  background-color: #c53030
+  background-color: #c53030;
 }
 
 .section_listing .major {
@@ -743,7 +745,8 @@ textarea {
   margin-left: 1rem;
 }
 
-.chapter ol, .chapter ul {
+.chapter ol,
+.chapter ul {
   margin-bottom: 1rem;
 }
 
@@ -752,7 +755,8 @@ textarea {
   list-style-position: inside;
 }
 
-.chapter ol li p, .chapter ul li p {
+.chapter ol li p,
+.chapter ul li p {
   display: inline;
 }
 
@@ -762,6 +766,10 @@ textarea {
 }
 
 .element > p {
+  margin-bottom: 1rem;
+}
+
+.chapter figure {
   margin-bottom: 1rem;
 }
 
