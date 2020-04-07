@@ -33,6 +33,10 @@ module Twist
         update(image_id, image_data: image_data)
       end
 
+      def processed(image_id)
+        update(image_id, status: 'processed')
+      end
+
       private
 
       def update_caption(image_id, caption)
@@ -44,6 +48,7 @@ module Twist
           caption: caption,
           chapter_id: chapter_id,
           filename: filename,
+          status: 'processing',
         )
 
         upload_image(image.id, image_path)

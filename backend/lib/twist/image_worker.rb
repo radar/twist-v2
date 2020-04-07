@@ -9,6 +9,7 @@ module Twist
       upload = uploader.upload(File.open(image_path))
 
       image_repo.update_image_data(image_id, upload.to_json)
+      image_repo.processed(image_id)
     end
   end
 end

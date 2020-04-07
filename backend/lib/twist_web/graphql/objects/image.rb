@@ -10,7 +10,11 @@ module Twist
         field :caption, String, null: true
 
         def path
-          object.image.url
+          return '/images/image_processing.png' if object.status == 'processing'
+
+          return object.image.url if object.image.url
+
+          '/images/image_missing.png'
         end
       end
     end
