@@ -695,6 +695,7 @@ textarea {
 
 .admonitionblock.warning {
   background-color: #fff5f5;
+  border-color: #fed7d7;
 }
 
 .admonitionblock.warning .title {

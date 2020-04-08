@@ -81,7 +81,7 @@ textarea {
 }
 
 .admonitionblock.warning {
-  @apply bg-red-100;
+  @apply bg-red-100 border-red-200;
 }
 
 .admonitionblock.warning .title {
