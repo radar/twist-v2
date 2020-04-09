@@ -31,7 +31,6 @@ class Note extends React.Component<NoteProps> {
           <Header permalink={bookPermalink} noteNumber={number} />
           <ElementWithInfo bookPermalink={bookPermalink} {...element} />
           <NoteBox {...this.props} />
-          {this.renderComments()}
         </div>
       </div>
     );
@@ -55,7 +54,7 @@ export default class WrappedNote extends React.Component<WrappedNoteProps> {
         query={NoteQuery}
         variables={{
           number: parseInt(number as string),
-          bookPermalink: bookPermalink
+          bookPermalink: bookPermalink,
         }}
       >
         {({ note }) => {
