@@ -147,18 +147,15 @@ textarea {
 }
 
 .chapter figure {
-  @apply mb-4;
+  @apply mb-4 w-2/3 mx-auto rounded border;
+}
+
+.chapter figure figcaption {
+  @apply p-2 bg-gray-200;
 }
 
 #sidebar {
   @apply text-sm;
-}
-
-.note pre {
-  overflow: auto;
-  @apply p-2 my-4 rounded border bg-gray-100;
-  overflow: auto;
-  font-size: 90%;
 }
 
 @tailwind components;
