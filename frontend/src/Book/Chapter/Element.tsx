@@ -15,7 +15,6 @@ export type BareElementProps = {
   tag: string;
   identifier: string;
   image?: Image;
-  notes: Array<Note>;
 };
 
 type ImageElementProps = {
@@ -26,7 +25,7 @@ type ImageElementProps = {
 const Image = (props: ImageElementProps) => {
   const {
     id,
-    image: { path, caption }
+    image: { path, caption },
   } = props;
 
   const fullPath =
@@ -61,9 +60,8 @@ export class BareElement extends Component<BareElementProps> {
 }
 
 type ElementState = {
-  showForm: boolean;
+  showNotes: boolean;
   noteCount: number;
-  notes: Array<Note>;
 };
 
 export type ElementProps = BareElementProps & {
@@ -72,9 +70,8 @@ export type ElementProps = BareElementProps & {
 
 export default class Element extends Component<ElementProps, ElementState> {
   state = {
-    showForm: false,
-    notes: this.props.notes,
-    noteCount: this.props.noteCount
+    showNotes: false,
+    noteCount: this.props.noteCount,
   };
 
   renderNotesCount() {
@@ -82,28 +79,25 @@ export default class Element extends Component<ElementProps, ElementState> {
     return count === 1 ? "1 note +" : `${count} notes +`;
   }
 
-  toggleForm = (event?: React.MouseEvent) => {
+  toggleNotes = (event?: React.MouseEvent) => {
     if (event) {
       event.preventDefault();
     }
-    this.setState({ showForm: !this.state.showForm });
+    this.setState({ showNotes: !this.state.showNotes });
   };
 
-  noteSubmitted = (note: Note) => {
-    this.toggleForm();
-    let notes = this.state.notes;
-    notes = notes.concat(note);
-    this.setState({ notes: notes, noteCount: this.state.noteCount + 1 });
+  noteSubmitted = () => {
+    this.toggleNotes();
+    this.setState({ noteCount: this.state.noteCount + 1 });
   };
 
   renderNotes() {
-    if (!this.state.showForm) {
+    if (!this.state.showNotes) {
       return;
     }
     const { bookPermalink, id } = this.props;
     return (
       <Notes
-        notes={this.state.notes}
         bookPermalink={bookPermalink}
         noteSubmitted={this.noteSubmitted}
         elementId={id}
@@ -120,7 +114,7 @@ export default class Element extends Component<ElementProps, ElementState> {
           className={`${styles.note_button} note_button_${tag}`}
           id={`note_button_${id}`}
         >
-          <a href="#" onClick={this.toggleForm}>
+          <a href="#" onClick={this.toggleNotes}>
             {this.renderNotesCount()}
           </a>
         </span>

@@ -210,7 +210,6 @@ interface WrappedChapterProps
   extends RouteComponentProps<WrappedChapterMatchParams> {}
 
 class WrappedChapter extends React.Component<WrappedChapterProps> {
-  renderChapter() {}
   render() {
     const { bookPermalink, chapterPermalink, commitSHA } = this.props;
     return (

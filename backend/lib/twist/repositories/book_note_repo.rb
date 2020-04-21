@@ -5,6 +5,15 @@ module Twist
         book_notes.where(book_id: book_id)
       end
 
+      def by_book_and_element(book_id, element_id)
+        by_book(book_id)
+          .where(
+            element_id: element_id,
+            state: "open",
+          )
+          .to_a
+      end
+
       def count_for_book(book_id)
         by_book(book_id).count
       end

@@ -17,6 +17,14 @@ module Twist
           argument :sha, String, required: false
         end
 
+        field :notes, [NoteType], null: false do
+          argument :elementId, String, required: true
+        end
+
+        def notes(element_id:)
+          context[:book_note_repo].by_book_and_element(object.id, element_id)
+        end
+
         def latest_commit
           context[:commit_repo].latest_for_default_branch(object.id)
         end
