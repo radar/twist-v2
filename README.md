@@ -3,7 +3,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/5de873eaf015ddf9f465/maintainability)](https://codeclimate.com/github/radar/twist-v2/maintainability)
 
 This is a rewrite of my [Rails-based book review
-app](https://github.com/radar/twist) in [ROM](https://rom-rb.org), [dry-rb](https://dry-rb.org), (some parts of) Hanami, GraphQL, React, Apollo, TypeScript and whatever other Cool Hipster Tech™ I can get my grubby hands on.
+app](https://github.com/radar/twist) in [ROM](https://rom-rb.org), [dry-rb](https://dry-rb.org), (some parts of) Hanami, Sidekiq, GraphQL, React, Apollo, TypeScript and whatever other Cool Hipster Tech™ I can get my grubby hands on.
 
 I am currently using this application to let early reviewers read my books and to leave comments on them.
 
