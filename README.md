@@ -2,13 +2,12 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/5de873eaf015ddf9f465/maintainability)](https://codeclimate.com/github/radar/twist-v2/maintainability)
 
-This is an attempt to rewrite my [Rails-based book review
-app](https://github.com/radar/twist) in Hanami, GraphQL, React, Apollo, Flow and whatever other Cool Hipster Tech™ I can get my grubby hands on.
+This is a rewrite of my [Rails-based book review
+app](https://github.com/radar/twist) in [ROM](https://rom-rb.org), [dry-rb](https://dry-rb.org), (some parts of) Hanami, GraphQL, React, Apollo, TypeScript and whatever other Cool Hipster Tech™ I can get my grubby hands on.
 
-It is a work-in-progress and quite experimental.
+I am currently using this application to let early reviewers read my books and to leave comments on them.
 
-My goal is to have this fully developed enough so that I can use it for
-reviewing my [Leanpub books](https://leanpub.com/u/ryanbigg).
+![Preview](preview.png)
 
 # Structure / Philosophy
 
