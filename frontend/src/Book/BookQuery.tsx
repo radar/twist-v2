@@ -3,27 +3,33 @@ import gql from "graphql-tag";
 export default gql`
   query bookQuery($permalink: String!, $commitSHA: String) {
     book(permalink: $permalink) {
-      title
-      id
-      permalink
-      latestCommit {
-        sha
+      ... on PermissionDenied {
+        error
       }
-      commit(sha: $commitSHA) {
+
+      ... on Book {
+        title
         id
-        sha
-        createdAt
-        branch {
-          name
+        permalink
+        latestCommit {
+          sha
         }
-        frontmatter: chapters(part: FRONTMATTER) {
-          ...chapterFields
-        }
-        mainmatter: chapters(part: MAINMATTER) {
-          ...chapterFields
-        }
-        backmatter: chapters(part: BACKMATTER) {
-          ...chapterFields
+        commit(sha: $commitSHA) {
+          id
+          sha
+          createdAt
+          branch {
+            name
+          }
+          frontmatter: chapters(part: FRONTMATTER) {
+            ...chapterFields
+          }
+          mainmatter: chapters(part: MAINMATTER) {
+            ...chapterFields
+          }
+          backmatter: chapters(part: BACKMATTER) {
+            ...chapterFields
+          }
         }
       }
     }

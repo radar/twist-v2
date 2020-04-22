@@ -8,6 +8,7 @@ export default gql`
     createdAt
     state
     user {
+      __typename
       id
       email
       name
@@ -18,6 +19,7 @@ export default gql`
       text
       createdAt
       user {
+        __typename
         id
         email
         name

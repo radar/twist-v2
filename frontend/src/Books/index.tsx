@@ -10,14 +10,25 @@ interface BooksProps {
 }
 
 export class Books extends React.Component<BooksProps> {
+  renderBooks() {
+    const { books } = this.props;
+    if (books.length > 0) {
+      return books.map((book) => <BookItem {...book} key={book.id} />);
+    }
+
+    return (
+      <div className="text-gray-600 italic">
+        There are no books that you can see. Perhaps you need to ask someone
+        nicely?
+      </div>
+    );
+  }
   render() {
     return (
       <div className="main md:w-1/2" id="books">
-        <h1>Your Books</h1>
+        <h1>Books</h1>
 
-        {this.props.books.map(book => (
-          <BookItem {...book} key={book.id} />
-        ))}
+        {this.renderBooks()}
       </div>
     );
   }

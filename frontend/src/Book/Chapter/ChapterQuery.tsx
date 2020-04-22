@@ -7,51 +7,56 @@ export default gql`
     $commitSHA: String
   ) {
     book(permalink: $bookPermalink) {
-      title
-      id
-      permalink
-      commit(sha: $commitSHA) {
+      ... on PermissionDenied {
+        error
+      }
+      ... on Book {
+        title
         id
-        sha
-        branch {
-          name
-        }
-        chapter(permalink: $chapterPermalink) {
+        permalink
+        commit(sha: $commitSHA) {
           id
-          title
-          position
-          permalink
-          part
-          commit {
-            sha
+          sha
+          branch {
+            name
           }
-          sections {
-            ...sectionFragment
-            subsections {
-              ...sectionFragment
-            }
-          }
-          previousChapter {
-            ...chapterFragment
-          }
-          nextChapter {
-            ...chapterFragment
-          }
-
-          footnotes {
-            identifier
-            content
-          }
-
-          elements {
+          chapter(permalink: $chapterPermalink) {
             id
-            content
-            tag
-            noteCount
-            identifier
-            image {
-              caption
-              path
+            title
+            position
+            permalink
+            part
+            commit {
+              sha
+            }
+            sections {
+              ...sectionFragment
+              subsections {
+                ...sectionFragment
+              }
+            }
+            previousChapter {
+              ...chapterFragment
+            }
+            nextChapter {
+              ...chapterFragment
+            }
+
+            footnotes {
+              identifier
+              content
+            }
+
+            elements {
+              id
+              content
+              tag
+              noteCount
+              identifier
+              image {
+                caption
+                path
+              }
             }
           }
         }

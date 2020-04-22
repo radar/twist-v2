@@ -6,6 +6,7 @@ import { Link, RouteComponentProps } from "@reach/router";
 
 import ChapterLink from "./ChapterLink";
 import bookQuery from "./BookQuery";
+import PermissionDenied from "../PermissionDenied";
 
 type ChapterProps = {
   id: string;
@@ -32,6 +33,11 @@ interface BookProps extends RouteComponentProps {
     sha: string;
   };
   commit: Commit;
+  error?: string;
+}
+
+interface PermissionDenied {
+  error: string;
 }
 
 export class Book extends Component<BookProps> {
@@ -82,6 +88,12 @@ export class Book extends Component<BookProps> {
   }
 
   render() {
+    const { error } = this.props;
+
+    if (error) {
+      return <PermissionDenied />;
+    }
+
     const {
       title,
       permalink,

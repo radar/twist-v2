@@ -1,3 +1,5 @@
+require 'twist/authorization/book'
+
 module Twist
   module Web
     module GraphQL
@@ -7,7 +9,7 @@ module Twist
 
         field :books, [BookType], null: false
 
-        field :book, BookType, null: false do
+        field :book, BookPermissionCheckResult, null: false do
           argument :permalink, String, required: true
         end
 
@@ -28,11 +30,27 @@ module Twist
         end
 
         def books
-          context[:book_repo].all
+          books = context[:book_repo].all
+          books.select do |book|
+            authorization = Authorization::Book.new(
+              book: book,
+              user: current_user,
+              permission_repo: context[:permission_repo],
+            )
+            authorization.success?
+          end
         end
 
         def book(permalink:)
-          context[:book_repo].find_by_permalink(permalink)
+          book = context[:book_repo].find_by_permalink(permalink)
+          authorization = Authorization::Book.new(
+            book: book,
+            user: current_user,
+            permission_repo: context[:permission_repo],
+          )
+          return book if authorization.success?
+
+          authorization
         end
 
         def elements_with_notes(book_permalink:, state:)

@@ -9,7 +9,7 @@ module Twist
           include Web::Controllers::CORS
 
           %w(
-            book book_note branch chapter comment commit element footnote image note user
+            book book_note branch chapter comment commit element footnote image note permission user
           ).each do |repo|
             include Twist::Import["repositories.#{repo}_repo"]
           end
@@ -32,6 +32,7 @@ module Twist
                 note: note_repo,
                 user: user_repo,
                 image: image_repo,
+                permission: permission_repo,
               },
             )
 

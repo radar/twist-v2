@@ -10,6 +10,7 @@ import SectionList from "./SectionList";
 import bookLink from "../../Book/link";
 
 import styles from "./Chapter.module.scss";
+import PermissionDenied from "../../PermissionDenied";
 
 type SubsectionProps = {
   id: string;
@@ -219,6 +220,13 @@ class WrappedChapter extends React.Component<WrappedChapterProps> {
       >
         {(data) => {
           const { book } = data;
+
+          const { error } = book;
+
+          if (error) {
+            return <PermissionDenied />;
+          }
+
           return (
             <Chapter
               bookTitle={book.title}

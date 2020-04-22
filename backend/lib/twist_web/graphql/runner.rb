@@ -27,6 +27,7 @@ module Twist
               element_repo: repo(:element),
               footnote_repo: repo(:footnote),
               image_repo: repo(:image),
+              permission_repo: repo(:permission),
               note_repo: repo(:note),
               user_repo: repo(:user),
             ),
