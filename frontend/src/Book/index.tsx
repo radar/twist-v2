@@ -13,6 +13,17 @@ type ChapterProps = {
   permalink: string;
 };
 
+export type Commit = {
+  branch: {
+    name: string;
+  };
+  sha: string;
+  createdAt: string;
+  frontmatter: ChapterProps[];
+  mainmatter: ChapterProps[];
+  backmatter: ChapterProps[];
+};
+
 interface BookProps extends RouteComponentProps {
   commitSHA: string;
   title: string;
@@ -20,16 +31,7 @@ interface BookProps extends RouteComponentProps {
   latestCommit: {
     sha: string;
   };
-  commit: {
-    branch: {
-      name: string;
-    };
-    sha: string;
-    createdAt: string;
-    frontmatter: ChapterProps[];
-    mainmatter: ChapterProps[];
-    backmatter: ChapterProps[];
-  };
+  commit: Commit;
 }
 
 export class Book extends Component<BookProps> {
@@ -44,7 +46,7 @@ export class Book extends Component<BookProps> {
       <div className="mt-3">
         <h3>{title}</h3>
         <ol className="{{title.toLowerCase()}} list-decimal list-inside">
-          {chapters.map(chapter => (
+          {chapters.map((chapter) => (
             <ChapterLink
               {...chapter}
               commitSHA={commitSHA}
@@ -61,7 +63,7 @@ export class Book extends Component<BookProps> {
     const {
       permalink,
       commit: { sha, createdAt, branch },
-      latestCommit
+      latestCommit,
     } = this.props;
     let latest;
     if (sha != latestCommit.sha) {
@@ -83,7 +85,7 @@ export class Book extends Component<BookProps> {
     const {
       title,
       permalink,
-      commit: { frontmatter, mainmatter, backmatter }
+      commit: { frontmatter, mainmatter, backmatter },
     } = this.props;
 
     return (
@@ -118,7 +120,7 @@ export default class WrappedBook extends Component<WrappedBookProps> {
         query={bookQuery}
         variables={{ permalink: bookPermalink, commitSHA: commitSHA }}
       >
-        {data => {
+        {(data) => {
           return <Book commitSHA={commitSHA} {...data.book} />;
         }}
       </QueryWrapper>

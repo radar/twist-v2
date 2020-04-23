@@ -34,7 +34,7 @@ export type NavigationalChapter = {
   commitSHA: string;
 };
 
-interface ChapterProps extends RouteComponentProps {
+export interface ChapterProps extends RouteComponentProps {
   bookTitle: string;
   bookPermalink: string;
   commitSHA: string;
@@ -107,7 +107,7 @@ export class Chapter extends Component<ChapterProps> {
     return (
       <div className={styles.footnotes}>
         <h3>Footnotes</h3>
-        {footnotes.map(footnote => (
+        {footnotes.map((footnote) => (
           <Footnote {...footnote} key={footnote.identifier} />
         ))}
       </div>
@@ -139,7 +139,7 @@ export class Chapter extends Component<ChapterProps> {
       elements,
       sections,
       commit,
-      commitSHA
+      commitSHA,
     } = this.props;
 
     const positionAndTitle = chapterPositionAndTitle(
@@ -168,7 +168,7 @@ export class Chapter extends Component<ChapterProps> {
           </header>
           {this.renderChapterLinks()}
           <h2 className="mt-3">{positionAndTitle}</h2>
-          {elements.map(element => (
+          {elements.map((element) => (
             <Element
               {...element}
               bookPermalink={bookPermalink}
@@ -218,7 +218,7 @@ class WrappedChapter extends React.Component<WrappedChapterProps> {
         query={chapterQuery}
         variables={{ bookPermalink, chapterPermalink, commitSHA }}
       >
-        {data => {
+        {(data) => {
           const { book } = data;
           return (
             <Chapter
