@@ -772,22 +772,20 @@ textarea {
 
 .chapter figure {
   margin-bottom: 1rem;
+  width: 66.666667%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 0.25rem;
+  border-width: 1px;
+}
+
+.chapter figure figcaption {
+  padding: 0.5rem;
+  background-color: #edf2f7;
 }
 
 #sidebar {
   font-size: 0.875rem;
-}
-
-.note pre {
-  overflow: auto;
-  padding: 0.5rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 0.25rem;
-  border-width: 1px;
-  background-color: #f7fafc;
-  overflow: auto;
-  font-size: 90%;
 }
 
 .container {
