@@ -32,7 +32,7 @@ class Root extends Component<{}> {
   renderUserInfo() {
     return (
       <CurrentUserContext.Consumer>
-        {user =>
+        {(user) =>
           user ? <UserInfo user={user} /> : <Link to="#">Sign in</Link>
         }
       </CurrentUserContext.Consumer>
@@ -88,7 +88,7 @@ class Root extends Component<{}> {
           </menu>
           <CurrentUser>
             <CurrentUserContext.Consumer>
-              {user => {
+              {(user) => {
                 return this.renderAuthenticatedAreaOrRedirect(user);
               }}
             </CurrentUserContext.Consumer>
