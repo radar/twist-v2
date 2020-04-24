@@ -67,16 +67,16 @@ export default class ElementNote extends React.Component<
           <div className={`${styles.avatar} w-34 p-4`}>
             <Gravatar email={user.email} />
           </div>
-
-          <div className={`${styles.noteContainer} w-full`}>
+          <div className={`w-full`}>
             <div className="row">
-              <div className={`${styles.noteHeader} px-4`}>
-                <Link to={`/books/${bookPermalink}/notes/${number}`}>
-                  {user.name} left note #{number}
-                </Link>{" "}
-                <small>{time}</small>
-                <div className={`${styles.state} ${this.stateClass()}`}>
-                  {state}
+              <div className={`bg-gray-200 px-4 py-2 rounded-t-md`}>
+                <div>
+                  <Link to={`/books/${bookPermalink}/notes/${number}`}>
+                    {user.name} left note #{number}
+                  </Link>
+                </div>
+                <div>
+                  <small>{time}</small>
                 </div>
               </div>
             </div>

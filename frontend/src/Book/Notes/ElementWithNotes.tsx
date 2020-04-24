@@ -17,11 +17,11 @@ export default class ElementWithNotes extends React.Component<
 
   render() {
     return (
-      <div className="flex border-2 mb-8">
-        <div className="w-1/3 bg-gray-100">
+      <div className="grid grid-cols-1 lg:grid-cols-2 border-2 mb-8">
+        <div className="w-full bg-gray-100 border-r-2 border-gray-200">
           <ElementWithInfo className="element p-4" {...this.props} />
         </div>
-        <div className="w-2/3">{this.renderNotes()}</div>
+        <div className="w-full">{this.renderNotes()}</div>
       </div>
     );
   }

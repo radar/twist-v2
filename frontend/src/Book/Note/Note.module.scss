@@ -15,31 +15,6 @@
   }
 }
 
-.noteHeader {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  background: #e8f1f9;
-  padding-top: 0.6rem;
-  height: 44px;
-
-  .state {
-    float: right;
-    color: white;
-    position: relative;
-    top: -2px;
-    border-radius: 4px;
-    padding: 0.2rem 0.5rem;
-
-    &.openState {
-      background: rgb(84, 189, 84);
-    }
-
-    &.closedState {
-      background: rgb(255, 88, 88);
-    }
-  }
-}
-
 .noteBody {
   border: 1px solid #efefef;
   padding: 0.6rem;
