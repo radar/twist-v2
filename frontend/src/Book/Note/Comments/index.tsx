@@ -19,7 +19,7 @@ class Comments extends React.Component<CommentsProps, CommentsState> {
   state = { comments: this.props.comments };
 
   renderComments() {
-    return this.state.comments.map(comment => (
+    return this.state.comments.map((comment) => (
       <Comment {...comment} key={comment.id} />
     ));
   }
@@ -30,7 +30,7 @@ class Comments extends React.Component<CommentsProps, CommentsState> {
 
   render() {
     return (
-      <div>
+      <div className="mt-4">
         {this.renderComments()}
         <CommentForm
           noteId={this.props.noteId}

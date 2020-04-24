@@ -26,7 +26,7 @@ export default class ElementNote extends React.Component<
 > {
   state = {
     state: this.props.state,
-    comments: this.props.comments
+    comments: this.props.comments,
   };
 
   updateState = (state: string) => {
@@ -40,12 +40,21 @@ export default class ElementNote extends React.Component<
   renderComments() {
     const { comments } = this.state;
 
-    return comments.map(comment => <Comment {...comment} />);
+    return comments.map((comment) => <Comment {...comment} />);
   }
 
   updateComments = (comments: CommentType[]) => {
     this.setState({ comments: comments });
   };
+
+  renderToggleStateButton() {
+    const { id, state } = this.props;
+    if (state == "open") {
+      return <CloseButton id={id} updateState={this.updateState} />;
+    }
+
+    return <OpenButton id={id} updateState={this.updateState} />;
+  }
 
   render() {
     const { state } = this.state;
@@ -73,9 +82,8 @@ export default class ElementNote extends React.Component<
             </div>
             <div className="p-4 b-4 border">
               <ReactMarkdown source={text} />
-              <div className={`${styles.buttons} mt-4`}>
-                <CloseButton id={id} updateState={this.updateState} />
-                <OpenButton id={id} updateState={this.updateState} />
+              <div className={`${styles.buttons} mt-4 text-sm`}>
+                {this.renderToggleStateButton()}
               </div>
             </div>
 

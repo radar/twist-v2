@@ -704,8 +704,9 @@ textarea {
 }
 
 .btn {
-  color: #fff;
+  background-color: #fff;
   font-weight: 700;
+  border-width: 2px;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
@@ -714,28 +715,38 @@ textarea {
   display: inline-block;
 }
 
+.btn:hover {
+  color: #fff;
+}
+
 .btn-blue {
-  background-color: #4299e1;
+  color: #4299e1;
+  border-color: #4299e1;
 }
 
 .btn-blue:hover {
   background-color: #2b6cb0;
+  border-color: #3182ce;
 }
 
 .btn-green {
-  background-color: #48bb78;
+  color: #48bb78;
+  border-color: #48bb78;
 }
 
 .btn-green:hover {
   background-color: #2f855a;
+  border-color: #38a169;
 }
 
 .btn-red {
-  background-color: #f56565;
+  color: #f56565;
+  border-color: #f56565;
 }
 
 .btn-red:hover {
   background-color: #c53030;
+  border-color: #e53e3e;
 }
 
 .section_listing .major {

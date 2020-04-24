@@ -16,12 +16,12 @@ class OpenNoteMutation extends Mutation<OpenNoteMutationData, {}> {}
 
 export default class extends React.Component<ButtonProps> {
   open(openNoteMut: MutationFn) {
-    openNoteMut({ variables: { id: this.props.id } }).then(result => {
+    openNoteMut({ variables: { id: this.props.id } }).then((result) => {
       if (result) {
         const {
           data: {
-            openNote: { state }
-          }
+            openNote: { state },
+          },
         } = result;
         this.props.updateState(state);
       }
@@ -33,7 +33,7 @@ export default class extends React.Component<ButtonProps> {
       <OpenNoteMutation mutation={openNoteMutation}>
         {(openNote, { data }) => (
           <button
-            className="btn btn-green mt-4"
+            className="btn btn-green"
             onClick={() => {
               this.open(openNote);
             }}
