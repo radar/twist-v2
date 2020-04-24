@@ -1,11 +1,13 @@
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 
 export default gql`
   query bookQuery($bookPermalink: String!) {
     book(permalink: $bookPermalink) {
-      id
-      permalink
-      title
+      ... on Book {
+        id
+        permalink
+        title
+      }
     }
   }
-`
+`;
