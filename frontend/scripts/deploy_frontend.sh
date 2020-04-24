@@ -1,1 +1,0 @@
-/Users/ryanbigg/code/twist-v2/frontend/../scripts/deploy_frontend.sh
