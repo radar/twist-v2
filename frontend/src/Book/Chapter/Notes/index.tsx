@@ -71,7 +71,7 @@ class WrappedNotes extends React.Component<WrappedNotesProps> {
     const { bookPermalink, elementId, noteSubmitted } = this.props;
     return (
       <QueryWrapper
-        fetchPolicy="no-cache"
+        fetchPolicy="network-only"
         query={notesQuery}
         variables={{ elementId, bookPermalink }}
       >
