@@ -297,6 +297,34 @@ module Twist
           end
         end
 
+        context "div.imageblock.right" do
+          context "when the image exists" do
+            let(:content) do
+              <<-HTML.strip
+              <div class="imageblock right">
+                <div class="content">
+                  <img src="ch01/images/welcome_aboard.png" alt="welcome aboard">
+                </div>
+                <div class="title">
+                  Figure 1. Welcome aboard!
+                </div>
+              </div>
+              HTML
+            end
+
+            it "adds the imageblock element to the chapter" do
+              element = elements_by_tag("img").first
+              expect(element.content).to eq("ch01/images/welcome_aboard.png")
+
+              image = image_repo.by_chapter(chapter.id).last
+              expect(element.image_id).to eq(image.id)
+              expect(image.filename).to eq("welcome_aboard.png")
+
+              expect(image.caption).to eq("Figure 1. Welcome aboard!")
+            end
+          end
+        end
+
         context "div.sect2 w/ blank para" do
           let(:content) do
             <<-HTML

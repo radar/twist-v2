@@ -102,31 +102,23 @@ module Twist
       def process_div(element)
         return unless element["class"]
 
+        classes = element["class"].split(" ")
+
+        processed = false
+
+        classes.each do |klass|
+          if respond_to?("process_#{klass}", true)
+            send("process_#{klass}", element)
+            processed = true
+          end
+        end
+
+        return if processed
+
         case element["class"]
-        when "sectionbody"
-          process_content(element.children)
-        when "paragraph"
-          process_paragraph(element)
-        when "literalblock"
-          process_literalblock(element)
-        when "listingblock"
-          process_listingblock(element)
-        when "imageblock"
-          process_imageblock(element)
-        when "ulist"
-          process_ulist(element)
-        when /^olist/
-          process_olist(element)
-        when "quoteblock"
-          process_quoteblock(element)
-        when "sidebarblock"
-          process_sidebarblock(element)
-        when /^admonitionblock/
-          process_admonitionblock(element)
-        when "sect2", "sect3", "sect4"
+        when "sectionbody", "sect2", "sect3", "sect4"
           process_content(element.children)
         else
-          puts element.to_html
           raise "Unknown div #{element["class"]}!"
         end
       end
