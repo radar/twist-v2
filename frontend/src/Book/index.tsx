@@ -7,6 +7,7 @@ import { Link, RouteComponentProps } from "@reach/router";
 import ChapterLink from "./ChapterLink";
 import bookQuery from "./BookQuery";
 import PermissionDenied from "../PermissionDenied";
+import CommitInfo from "./Commit";
 
 type ChapterProps = {
   id: string;
@@ -26,7 +27,7 @@ export type Commit = {
 };
 
 interface BookProps extends RouteComponentProps {
-  commitSHA: string;
+  gitRef: string;
   title: string;
   permalink: string;
   latestCommit: {
@@ -46,7 +47,7 @@ export class Book extends Component<BookProps> {
       return null;
     }
 
-    const { permalink, commitSHA } = this.props;
+    const { permalink, gitRef } = this.props;
 
     return (
       <div className="mt-3">
@@ -55,34 +56,12 @@ export class Book extends Component<BookProps> {
           {chapters.map((chapter) => (
             <ChapterLink
               {...chapter}
-              commitSHA={commitSHA}
+              gitRef={gitRef}
               bookPermalink={permalink}
               key={chapter.id}
             />
           ))}
         </ol>
-      </div>
-    );
-  }
-
-  renderCommitSHA() {
-    const {
-      permalink,
-      commit: { sha, createdAt, branch },
-      latestCommit,
-    } = this.props;
-    let latest;
-    if (sha != latestCommit.sha) {
-      latest = <Link to={`/books/${permalink}`}> Go to latest revision </Link>;
-    } else {
-      latest = "Latest commit";
-    }
-    return (
-      <div className="text-gray-600 mb-4">
-        <small>
-          {branch.name}@{sha.slice(0, 8)} &middot; {moment(createdAt).fromNow()}{" "}
-          &middot; {latest}
-        </small>
       </div>
     );
   }
@@ -98,12 +77,18 @@ export class Book extends Component<BookProps> {
       title,
       permalink,
       commit: { frontmatter, mainmatter, backmatter },
+      latestCommit,
     } = this.props;
 
     return (
       <div className={`bg-white p-4 border-gray-400 border rounded md:w-1/2`}>
         <h1>{title}</h1>
-        {this.renderCommitSHA()}
+
+        <CommitInfo
+          permalink={permalink}
+          commit={this.props.commit}
+          latestCommit={latestCommit}
+        />
         <Link to={`/books/${permalink}/notes`} className="mb-4 inline-block">
           Notes for this book
         </Link>
@@ -118,7 +103,7 @@ export class Book extends Component<BookProps> {
 
 interface WrappedBookMatchParams {
   bookPermalink: string;
-  commitSHA: string;
+  gitRef: string;
 }
 
 interface WrappedBookProps
@@ -126,14 +111,15 @@ interface WrappedBookProps
 
 export default class WrappedBook extends Component<WrappedBookProps> {
   render() {
-    const { bookPermalink, commitSHA } = this.props;
+    const { bookPermalink, gitRef } = this.props;
+
     return (
       <QueryWrapper
         query={bookQuery}
-        variables={{ permalink: bookPermalink, commitSHA: commitSHA }}
+        variables={{ permalink: bookPermalink, gitRef: gitRef }}
       >
         {(data) => {
-          return <Book commitSHA={commitSHA} {...data.book} />;
+          return <Book gitRef={gitRef} {...data.book} />;
         }}
       </QueryWrapper>
     );

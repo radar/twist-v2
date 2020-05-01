@@ -29,7 +29,10 @@ module Twist
       let(:commit) do
         double(
           Commit,
+          sha: "abc123",
           id: 1,
+          created_at: Time.now,
+          branch_id: branch.id,
         )
       end
 
@@ -109,6 +112,82 @@ module Twist
           expect(chapters.count).to eq(1)
 
           chapter = chapters.first
+          expect(chapter["id"]).to eq("1")
+          expect(chapter["title"]).to eq("Introduction")
+          expect(chapter["position"]).to eq(1)
+          expect(chapter["permalink"]).to eq("introduction")
+        end
+
+        it "latest commit for a branch (using ref)" do
+          query = %|
+            query bookQuery($permalink: String!, $ref: String) {
+              book(permalink: $permalink) {
+                ... on PermissionDenied {
+                  error
+                }
+
+                ... on Book {
+                  title
+                  id
+                  permalink
+                  latestCommit(ref: $ref) {
+                    sha
+                  }
+                  commit(ref: $ref) {
+                    id
+                    sha
+                    createdAt
+                    branch {
+                      name
+                    }
+                    frontmatter: chapters(part: FRONTMATTER) {
+                      ...chapterFields
+                    }
+                    mainmatter: chapters(part: MAINMATTER) {
+                      ...chapterFields
+                    }
+                    backmatter: chapters(part: BACKMATTER) {
+                      ...chapterFields
+                    }
+                  }
+                }
+              }
+            }
+
+            fragment chapterFields on Chapter {
+              id
+              title
+              position
+              permalink
+            }
+          |
+
+          expect(book_repo).to receive(:find_by_permalink) { book }
+          expect(branch_repo).to receive(:by_ids) { [branch] }
+          expect(commit_repo).to receive(:by_sha) { nil }
+          expect(commit_repo).to receive(:by_ref) { commit }
+          expect(commit_repo).to receive(:latest_for_default_branch) { commit }
+          expect(chapter_repo).to receive(:for_commit_and_part).at_least(3).times { [chapter] }
+
+          result = subject.run(
+            query: query,
+            variables: {
+              permalink: "exploding-rails",
+              ref: "master",
+            },
+            context: { current_user: current_user },
+          )
+
+          book = result.dig("data", "book")
+          expect(book["id"]).to eq("1")
+          expect(book["title"]).to eq("Exploding Rails")
+          commit = book["commit"]
+          expect(commit["sha"]).to eq("abc123")
+
+          frontmatter_chapters = commit["frontmatter"]
+          expect(frontmatter_chapters.count).to eq(1)
+
+          chapter = frontmatter_chapters.first
           expect(chapter["id"]).to eq("1")
           expect(chapter["title"]).to eq("Introduction")
           expect(chapter["position"]).to eq(1)

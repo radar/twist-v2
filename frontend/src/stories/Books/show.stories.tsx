@@ -31,7 +31,7 @@ export const BooksShow = () => {
   return (
     <Layout>
       <Book
-        commitSHA={"abc123"}
+        gitRef={"abc123"}
         latestCommit={latestCommit}
         commit={commit}
         title="Markdown Book Test"

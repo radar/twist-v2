@@ -86,6 +86,59 @@ module Twist
           expect(latest_commit.sha).to eq("def123")
         end
       end
+
+      context "by_book_and_sha" do
+        let(:book_repo) { BookRepo.new }
+        let(:chapter_repo) { double }
+
+        let(:markdown_book) { book_repo.create(permalink: "markdown_book_test") }
+        let(:md_default_branch) { book_repo.add_branch(markdown_book, name: "master", default: true) }
+
+        let(:asciidoc_book) { book_repo.create(permalink: "asciidoc_book_test") }
+        let(:ad_default_branch) { book_repo.add_branch(asciidoc_book, name: "master", default: true) }
+
+        before do
+          subject.create(branch_id: md_default_branch.id, sha: "abc123")
+          subject.create(branch_id: md_default_branch.id, sha: "bca123")
+
+          subject.create(branch_id: ad_default_branch.id, sha: "fff123")
+          subject.create(branch_id: ad_default_branch.id, sha: "eee123")
+        end
+
+        it "finds the specified commit" do
+          commit = subject.by_book_and_sha(markdown_book.id, "abc123")
+          expect(commit.sha).to eq("abc123")
+        end
+
+        it "does not find a commit from another book" do
+          commit = subject.by_book_and_sha(markdown_book.id, "fff123")
+          expect(commit).to be_nil
+        end
+      end
+
+      context "for_ref" do
+        let(:book_repo) { BookRepo.new }
+        let(:chapter_repo) { double }
+
+        let(:markdown_book) { book_repo.create(permalink: "markdown_book_test") }
+        let(:md_default_branch) { book_repo.add_branch(markdown_book, name: "master", default: true) }
+
+        let(:asciidoc_book) { book_repo.create(permalink: "asciidoc_book_test") }
+        let(:ad_default_branch) { book_repo.add_branch(asciidoc_book, name: "master", default: true) }
+
+        before do
+          subject.create(branch_id: md_default_branch.id, sha: "abc123")
+          subject.create(branch_id: md_default_branch.id, sha: "bca123")
+
+          subject.create(branch_id: ad_default_branch.id, sha: "fff123")
+          subject.create(branch_id: ad_default_branch.id, sha: "eee123")
+        end
+
+        it "finds the latest commit" do
+          commit = subject.latest_for_book_and_ref(markdown_book.id, "master")
+          expect(commit.sha).to eq("bca123")
+        end
+      end
     end
   end
 end

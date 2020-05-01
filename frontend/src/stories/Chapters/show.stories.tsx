@@ -16,6 +16,13 @@ export const ChapterShow = () => {
     part: "frontmatter",
     position: 1,
     commit: {
+      createdAt: "2020-05-01 09:00:00",
+      branch: {
+        name: "master",
+      },
+      sha: "abc123",
+    },
+    latestCommit: {
       sha: "abc123",
     },
     footnotes: [],
@@ -70,7 +77,7 @@ export const ChapterShow = () => {
     ],
     nextChapter: null,
     previousChapter: null,
-    commitSHA: "abc123",
+    gitRef: "abc123",
     branchName: "master",
   };
   return (

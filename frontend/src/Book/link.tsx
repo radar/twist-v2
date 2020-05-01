@@ -1,7 +1,7 @@
-export default (permalink: string, sha: string) => {
+export default (permalink: string, ref: string) => {
   let link;
-  if (sha) {
-    link = `/books/${permalink}/commits/${sha}`;
+  if (ref) {
+    link = `/books/${permalink}/tree/${ref}`;
   } else {
     link = `/books/${permalink}`;
   }

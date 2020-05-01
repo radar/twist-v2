@@ -43,11 +43,11 @@ class Root extends Component<{}> {
     return (
       <Router>
         <OAuthCallback path="/oauth/callback" />
-        <Chapter path="/books/:bookPermalink/commits/:commitSHA/chapters/:chapterPermalink" />
+        <Chapter path="/books/:bookPermalink/tree/:gitRef/chapters/:chapterPermalink" />
         <Chapter path="/books/:bookPermalink/chapters/:chapterPermalink" />
         <Note path="/books/:bookPermalink/notes/:number" />
         <Notes path="/books/:bookPermalink/notes" />
-        <Book path="/books/:bookPermalink/commits/:commitSHA" />
+        <Book path="/books/:bookPermalink/tree/:gitRef" />
         <Book path="/books/:bookPermalink" />
 
         <Books path="/" />

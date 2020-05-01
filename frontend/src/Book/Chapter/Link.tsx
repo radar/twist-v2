@@ -17,14 +17,14 @@ class ChapterLink extends Component<ChapterLinkProps> {
       title,
       permalink,
       bookPermalink,
-      commitSHA
+      gitRef,
     } = this.props;
     if (id === undefined) {
       return null;
     }
 
     const text = chapterPositionAndTitle(part, position, title);
-    const path = `${bookLink(bookPermalink, commitSHA)}/chapters/${permalink}`;
+    const path = `${bookLink(bookPermalink, gitRef)}/chapters/${permalink}`;
 
     if (direction == "back") {
       return (

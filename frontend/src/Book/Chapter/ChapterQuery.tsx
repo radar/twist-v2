@@ -4,7 +4,7 @@ export default gql`
   query chapterQuery(
     $bookPermalink: String!
     $chapterPermalink: String!
-    $commitSHA: String
+    $gitRef: String
   ) {
     book(permalink: $bookPermalink) {
       ... on PermissionDenied {
@@ -14,9 +14,13 @@ export default gql`
         title
         id
         permalink
-        commit(sha: $commitSHA) {
+        latestCommit(gitRef: $gitRef) {
+          sha
+        }
+        commit(gitRef: $gitRef) {
           id
           sha
+          createdAt
           branch {
             name
           }
@@ -26,9 +30,6 @@ export default gql`
             position
             permalink
             part
-            commit {
-              sha
-            }
             sections {
               ...sectionFragment
               subsections {

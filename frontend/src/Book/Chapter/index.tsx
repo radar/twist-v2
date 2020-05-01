@@ -11,6 +11,7 @@ import bookLink from "../../Book/link";
 
 import styles from "./Chapter.module.scss";
 import PermissionDenied from "../../PermissionDenied";
+import Commit from "../Commit";
 
 type SubsectionProps = {
   id: string;
@@ -32,13 +33,21 @@ export type NavigationalChapter = {
   title: string;
   position: number;
   bookPermalink: string;
-  commitSHA: string;
+  gitRef: string;
+};
+
+export type CommitProps = {
+  sha: string;
+  createdAt: string;
+  branch: {
+    name: string;
+  };
 };
 
 export interface ChapterProps extends RouteComponentProps {
   bookTitle: string;
   bookPermalink: string;
-  commitSHA: string;
+  gitRef: string;
   branchName: string;
   title: string;
   position: number;
@@ -46,7 +55,8 @@ export interface ChapterProps extends RouteComponentProps {
   elements: Array<ElementProps>;
   footnotes: Array<FootnoteProps>;
   sections: Array<SectionProps>;
-  commit: {
+  commit: CommitProps;
+  latestCommit: {
     sha: string;
   };
   previousChapter: NavigationalChapter | null;
@@ -67,24 +77,24 @@ export const chapterPositionAndTitle = (
 
 export class Chapter extends Component<ChapterProps> {
   renderPreviousChapterLink() {
-    const { bookPermalink, previousChapter, commitSHA } = this.props;
+    const { bookPermalink, previousChapter, gitRef } = this.props;
     if (previousChapter) {
       return (
         <PreviousChapterLink
           {...previousChapter}
           bookPermalink={bookPermalink}
-          commitSHA={commitSHA}
+          gitRef={gitRef}
         />
       );
     }
   }
 
   renderNextChapterLink() {
-    const { bookPermalink, nextChapter, commitSHA } = this.props;
+    const { bookPermalink, nextChapter, gitRef } = this.props;
     if (nextChapter) {
       return (
         <NextChapterLink
-          commitSHA={commitSHA}
+          gitRef={gitRef}
           {...nextChapter}
           bookPermalink={bookPermalink}
         />
@@ -133,15 +143,17 @@ export class Chapter extends Component<ChapterProps> {
     const {
       bookTitle,
       bookPermalink,
-      branchName,
       part,
       title: chapterTitle,
       position,
       elements,
       sections,
       commit,
-      commitSHA,
+      gitRef,
+      latestCommit,
     } = this.props;
+
+    console.log(commit);
 
     const positionAndTitle = chapterPositionAndTitle(
       part,
@@ -149,7 +161,7 @@ export class Chapter extends Component<ChapterProps> {
       chapterTitle
     );
 
-    const bookPath = bookLink(bookPermalink, commitSHA);
+    const bookPath = bookLink(bookPermalink, gitRef);
 
     return (
       <div className="flex flex-wrap lg:flex-no-wrap">
@@ -161,11 +173,12 @@ export class Chapter extends Component<ChapterProps> {
                 {bookTitle}
               </Link>
             </h1>
-            <small>
-              <em className="text-gray-500">
-                {branchName}@{commit.sha.slice(0, 8)}
-              </em>
-            </small>
+
+            <Commit
+              permalink={bookPermalink}
+              commit={commit}
+              latestCommit={latestCommit}
+            />
           </header>
           {this.renderChapterLinks()}
           <h2 className="mt-3">{positionAndTitle}</h2>
@@ -204,7 +217,7 @@ export class Chapter extends Component<ChapterProps> {
 interface WrappedChapterMatchParams {
   bookPermalink: string;
   chapterPermalink: string;
-  commitSHA: string;
+  gitRef: string;
 }
 
 interface WrappedChapterProps
@@ -212,11 +225,11 @@ interface WrappedChapterProps
 
 class WrappedChapter extends React.Component<WrappedChapterProps> {
   render() {
-    const { bookPermalink, chapterPermalink, commitSHA } = this.props;
+    const { bookPermalink, chapterPermalink, gitRef } = this.props;
     return (
       <QueryWrapper
         query={chapterQuery}
-        variables={{ bookPermalink, chapterPermalink, commitSHA }}
+        variables={{ bookPermalink, chapterPermalink, gitRef }}
       >
         {(data) => {
           const { book } = data;
@@ -227,12 +240,16 @@ class WrappedChapter extends React.Component<WrappedChapterProps> {
             return <PermissionDenied />;
           }
 
+          console.log(data.book.commit);
+
           return (
             <Chapter
               bookTitle={book.title}
               bookPermalink={bookPermalink}
-              commitSHA={commitSHA}
+              gitRef={gitRef}
               branchName={book.commit.branch.name}
+              latestCommit={data.book.latestCommit}
+              commit={data.book.commit}
               {...data.book.commit.chapter}
             />
           );
