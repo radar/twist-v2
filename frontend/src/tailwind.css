@@ -150,6 +150,10 @@ textarea {
   @apply mb-4;
 }
 
+.element p code {
+  @apply text-red-700 text-sm p-1;
+}
+
 .chapter figure {
   @apply mb-4 w-2/3 mx-auto rounded border;
 }

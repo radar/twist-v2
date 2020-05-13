@@ -781,6 +781,12 @@ textarea {
   margin-bottom: 1rem;
 }
 
+.element p code {
+  color: #c53030;
+  font-size: 0.875rem;
+  padding: 0.25rem;
+}
+
 .chapter figure {
   margin-bottom: 1rem;
   width: 66.666667%;
