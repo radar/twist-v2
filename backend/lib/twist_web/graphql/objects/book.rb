@@ -16,6 +16,8 @@ module Twist
           argument :git_ref, String, required: false
         end
 
+        field :branches, [BranchType], null: false
+
         field :commit, CommitType, null: false do
           argument :git_ref, String, required: false
         end
@@ -48,6 +50,10 @@ module Twist
 
         def commit_repo
           context[:commit_repo]
+        end
+
+        def branches
+          context[:branch_repo].by_book(object.id)
         end
       end
     end

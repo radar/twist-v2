@@ -6,7 +6,6 @@ module Twist
         possible_types BookType, PermissionDeniedType
 
         def self.resolve_type(object, _context)
-          p object.class
           if object.is_a?(Twist::Book)
             BookType
           else

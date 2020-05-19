@@ -48,6 +48,7 @@ module Twist
             user: current_user,
             permission_repo: context[:permission_repo],
           )
+
           return book if authorization.success?
 
           authorization
