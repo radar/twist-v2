@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# Pedantic thing
+gem 'rubocop'
+
 # Web
 gem 'rake'
 gem 'rack'
