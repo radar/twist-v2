@@ -25,7 +25,7 @@ const QueryWrapper: FunctionComponent<QueryWrapperProps> = (props) => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error! ${error.message}</div>;
 
-  return <div>{children(data)}</div>;
+  return <span>{children(data)}</span>;
 };
 
 export default QueryWrapper;

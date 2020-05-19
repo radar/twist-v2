@@ -13,7 +13,7 @@ const CloseButton: FunctionComponent<ButtonProps> = (props) => {
             closeNote: { state },
           },
         } = result;
-        props.updateState(state);
+        props.setState(state);
       }
     });
   };

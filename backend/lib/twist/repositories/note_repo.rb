@@ -4,6 +4,10 @@ module Twist
       commands :create, use: :timestamps, plugins_options: { timestamps: { timestamps: %i(created_at updated_at) } }
       commands update: :by_pk
 
+      def find(id)
+        notes.by_pk(id)
+      end
+
       # rubocop:disable Metrics/AbcSize
       def count(element_ids, state)
         counts = notes.counts_for_elements(element_ids, state)
@@ -20,6 +24,10 @@ module Twist
 
       def open(id)
         update(id, state: "open")
+      end
+
+      def update_text(id, text:)
+        update(id, text: text)
       end
     end
   end

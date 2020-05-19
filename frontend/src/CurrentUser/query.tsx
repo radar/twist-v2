@@ -4,6 +4,7 @@ export default gql`
   query currentUser {
     currentUser {
       __typename
+      id
       githubLogin
       email
     }

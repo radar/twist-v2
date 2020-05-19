@@ -1,6 +1,6 @@
 type ButtonProps = {
-  id: string,
-  updateState(state: string): void
-}
+  id: string;
+  setState(state: string): void;
+};
 
-export default ButtonProps
+export default ButtonProps;

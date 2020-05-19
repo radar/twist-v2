@@ -167,8 +167,6 @@ export class Chapter extends Component<ChapterProps> {
       latestCommit,
     } = this.props;
 
-    console.log(commit);
-
     const positionAndTitle = chapterPositionAndTitle(
       part,
       position,
