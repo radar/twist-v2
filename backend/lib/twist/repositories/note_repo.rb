@@ -5,7 +5,7 @@ module Twist
       commands update: :by_pk
 
       def find(id)
-        notes.by_pk(id)
+        notes.by_pk(id).first
       end
 
       # rubocop:disable Metrics/AbcSize
