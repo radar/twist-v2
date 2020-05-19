@@ -10,6 +10,10 @@ module Twist
           .one!
       end
 
+      def by_branch(branch_id)
+        by_branch(branch_id).to_a
+      end
+
       def latest_for_default_branch(book_id)
         commits.latest_for_default_branch(book_id)
       end

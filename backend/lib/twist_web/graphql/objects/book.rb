@@ -17,6 +17,9 @@ module Twist
         end
 
         field :branches, [BranchType], null: false
+        field :branch, BranchType, null: false do
+          argument :name, String, required: true
+        end
 
         field :commit, CommitType, null: false do
           argument :git_ref, String, required: false
@@ -54,6 +57,10 @@ module Twist
 
         def branches
           context[:branch_repo].by_book(object.id)
+        end
+
+        def branch(name:)
+          context[:branch_repo].find_by_book_id_and_name(object.id, name)
         end
       end
     end

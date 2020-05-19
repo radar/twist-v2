@@ -6,6 +6,7 @@ module Twist
       let(:current_user) { double(User, id: 1) }
       let(:book_repo) { double(Repositories::BookRepo) }
       let(:branch_repo) { double(Repositories::BranchRepo) }
+      let(:commit_repo) { double(Repositories::CommitRepo) }
       let(:permission_repo) { double(Repositories::PermissionRepo) }
       let(:book) do
         Twist::Book.new(
@@ -14,6 +15,7 @@ module Twist
           permalink: "exploding-rails",
         )
       end
+
       let(:branch) do
         Twist::Branch.new(
           id: 1,
@@ -22,18 +24,34 @@ module Twist
         )
       end
 
+      let(:commit) do
+        double(Twist::Commit,
+          id: 1,
+          sha: "abc123",
+          created_at: Time.now,
+        )
+      end
+
       let(:query) do
         %|
-          query branchesQuery($bookPermalink: String!) {
+          query branchQuery($bookPermalink: String!, $name: String!) {
             book(permalink: $bookPermalink) {
-              ... on Book {
-                branches {
-                  name
-                  default
-                }
-              }
               ... on PermissionDenied {
                 error
+              }
+
+              ... on Book {
+                title
+
+                branch(name: $name) {
+                  default
+                  name
+
+                  commits {
+                    sha
+                    createdAt
+                  }
+                }
               }
             }
           }
@@ -45,6 +63,7 @@ module Twist
           repos: {
             book: book_repo,
             branch: branch_repo,
+            commit: commit_repo,
             permission: permission_repo,
           }
         )
@@ -62,7 +81,7 @@ module Twist
         it "returns an error" do
           result = subject.run(
             query: query,
-            variables: { bookPermalink: "exploding-rails" },
+            variables: { bookPermalink: "exploding-rails", name: "master" },
             context: { current_user: current_user },
           )
           expect(result["data"]["book"]["error"]).not_to be_nil
@@ -74,19 +93,23 @@ module Twist
           allow(permission_repo).to receive(:user_authorized_for_book?) { true }
         end
 
-        it "fetches all the branches for a book" do
-          expect(branch_repo).to receive(:by_book) { [branch] }
+        it "fetches the named branch and commits" do
+          expect(branch_repo).to receive(:find_by_book_id_and_name) { branch }
+          expect(commit_repo).to receive(:by_branch) { [commit] }
           result = subject.run(
             query: query,
-            variables: { bookPermalink: "exploding-rails" },
+            variables: { bookPermalink: "exploding-rails", name: "master" },
             context: { current_user: current_user },
           )
 
-          branches = result.dig("data", "book", "branches")
-          branch = branches.first
+          branch = result.dig("data", "book", "branch")
 
           expect(branch["name"]).to eq("master")
           expect(branch["default"]).to eq(true)
+
+          commit = branch["commits"].first
+
+          expect(commit["sha"]).to eq("abc123")
         end
       end
     end

@@ -19,6 +19,12 @@ module Twist
           argument :permalink, String, required: true
         end
 
+        field :commits, [CommitType], null: false
+
+        def default
+          !!object.default
+        end
+
         def chapters(part:)
           return [] unless latest_commit
 
@@ -29,6 +35,10 @@ module Twist
           return [] unless latest_commit
 
           context[:chapter_repo].for_commit_and_permalink(latest_commit.id, permalink)
+        end
+
+        def commits
+          context[:commit_repo].by_branch(object.id)
         end
 
         private
