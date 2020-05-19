@@ -66,6 +66,12 @@ interface WrappedNotesProps {
   noteSubmitted: () => void;
 }
 
+interface NotesQueryData {
+  book: {
+    notes: Array<NoteType>;
+  };
+}
+
 class WrappedNotes extends React.Component<WrappedNotesProps> {
   render() {
     const { bookPermalink, elementId, noteSubmitted } = this.props;
@@ -75,7 +81,7 @@ class WrappedNotes extends React.Component<WrappedNotesProps> {
         query={notesQuery}
         variables={{ elementId, bookPermalink }}
       >
-        {(data) => {
+        {(data: NotesQueryData) => {
           const {
             book: { notes },
           } = data;

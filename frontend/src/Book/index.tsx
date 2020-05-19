@@ -118,7 +118,7 @@ export default class WrappedBook extends Component<WrappedBookProps> {
         query={bookQuery}
         variables={{ permalink: bookPermalink, gitRef: gitRef }}
       >
-        {(data) => {
+        {(data: { book: BookProps }) => {
           return <Book gitRef={gitRef} {...data.book} />;
         }}
       </QueryWrapper>

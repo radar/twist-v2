@@ -52,7 +52,9 @@ export default class WrappedComments extends React.Component<
     const { noteId } = this.props;
     return (
       <QueryWrapper query={commentsQuery} variables={{ noteId }}>
-        {({ comments }) => <Comments noteId={noteId} comments={comments} />}
+        {({ comments }: { comments: CommentType[] }) => (
+          <Comments noteId={noteId} comments={comments} />
+        )}
       </QueryWrapper>
     );
   }

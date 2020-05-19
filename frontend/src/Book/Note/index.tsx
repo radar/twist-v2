@@ -57,7 +57,7 @@ export default class WrappedNote extends React.Component<WrappedNoteProps> {
           bookPermalink: bookPermalink,
         }}
       >
-        {({ note }) => {
+        {({ note }: { note: NoteProps }) => {
           return <Note bookPermalink={bookPermalink} {...note} />;
         }}
       </QueryWrapper>

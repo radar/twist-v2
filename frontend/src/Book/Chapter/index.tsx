@@ -26,6 +26,22 @@ type SectionProps = {
   subsections: Array<SubsectionProps>;
 };
 
+type LatestCommit = {
+  sha: string;
+};
+
+type Book = {
+  error: string;
+  title: string;
+  commit: {
+    branch: {
+      name: string;
+    };
+    chapter: ChapterProps;
+  };
+  latestCommit: LatestCommit;
+};
+
 export type NavigationalChapter = {
   id: string;
   permalink: string;
@@ -56,9 +72,7 @@ export interface ChapterProps extends RouteComponentProps {
   footnotes: Array<FootnoteProps>;
   sections: Array<SectionProps>;
   commit: CommitProps;
-  latestCommit: {
-    sha: string;
-  };
+  latestCommit: LatestCommit;
   previousChapter: NavigationalChapter | null;
   nextChapter: NavigationalChapter | null;
 }
@@ -223,6 +237,10 @@ interface WrappedChapterMatchParams {
 interface WrappedChapterProps
   extends RouteComponentProps<WrappedChapterMatchParams> {}
 
+interface ChapterQueryData {
+  book: Book;
+}
+
 class WrappedChapter extends React.Component<WrappedChapterProps> {
   render() {
     const { bookPermalink, chapterPermalink, gitRef } = this.props;
@@ -231,7 +249,7 @@ class WrappedChapter extends React.Component<WrappedChapterProps> {
         query={chapterQuery}
         variables={{ bookPermalink, chapterPermalink, gitRef }}
       >
-        {(data) => {
+        {(data: ChapterQueryData) => {
           const { book } = data;
 
           const { error } = book;
@@ -239,8 +257,6 @@ class WrappedChapter extends React.Component<WrappedChapterProps> {
           if (error) {
             return <PermissionDenied />;
           }
-
-          console.log(data.book.commit);
 
           return (
             <Chapter

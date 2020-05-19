@@ -32,7 +32,7 @@ export default class Header extends React.Component<HeaderProps> {
     const { permalink } = this.props;
     return (
       <QueryWrapper query={BookQuery} variables={{ bookPermalink: permalink }}>
-        {({ book }) => {
+        {({ book }: { book: Book }) => {
           return (
             <h1>
               <Link to={`/books/${permalink}`}>{book.title}</Link>{" "}

@@ -1,8 +1,9 @@
-import * as React from "react";
-import { Query } from "react-apollo";
+import React, { FunctionComponent } from "react";
+
+import { useQuery } from "@apollo/react-hooks";
 
 type QueryWrapperProps = {
-  query: Query;
+  query: {};
   variables?: {};
   fetchPolicy?:
     | "cache-first"
@@ -14,18 +15,17 @@ type QueryWrapperProps = {
   children(data: any): React.ReactNode;
 };
 
-export default class QueryWrapper extends React.Component<QueryWrapperProps> {
-  render() {
-    const { query, variables, fetchPolicy } = this.props;
-    return (
-      <Query query={query} variables={variables} fetchPolicy={fetchPolicy}>
-        {({ loading, error, data }) => {
-          if (loading) return "Loading...";
-          if (error) return `Error! ${error.message}`;
+const QueryWrapper: FunctionComponent<QueryWrapperProps> = (props) => {
+  const { query, variables, fetchPolicy, children } = props;
+  const { loading, error, data } = useQuery(query, {
+    variables: variables,
+    fetchPolicy: fetchPolicy,
+  });
 
-          return this.props.children(data);
-        }}
-      </Query>
-    );
-  }
-}
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error! ${error.message}</div>;
+
+  return <div>{children(data)}</div>;
+};
+
+export default QueryWrapper;

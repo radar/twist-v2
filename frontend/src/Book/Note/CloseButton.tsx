@@ -1,47 +1,28 @@
-import * as React from "react";
-import { Mutation, MutationFn } from "react-apollo";
+import React, { FunctionComponent } from "react";
 import closeNoteMutation from "./CloseNoteMutation";
+import { useMutation } from "@apollo/react-hooks";
 import ButtonProps from "./ButtonProps";
 
-interface CloseNoteMutationData {
-  data: {
-    closeNote: {
-      id: string;
-      state: string;
-    };
-  };
-}
-
-class CloseNoteMutation extends Mutation<CloseNoteMutationData, {}> {}
-
-export default class extends React.Component<ButtonProps> {
-  close(closeNoteMut: MutationFn) {
-    closeNoteMut({ variables: { id: this.props.id } }).then(result => {
+const CloseButton: FunctionComponent<ButtonProps> = (props) => {
+  const [closeNote, { data }] = useMutation(closeNoteMutation);
+  const close = () => {
+    closeNote({ variables: { id: props.id } }).then((result) => {
       if (result) {
         const {
           data: {
-            closeNote: { state }
-          }
+            closeNote: { state },
+          },
         } = result;
-        this.props.updateState(state);
+        props.updateState(state);
       }
     });
-  }
+  };
 
-  render() {
-    return (
-      <CloseNoteMutation mutation={closeNoteMutation}>
-        {(closeNote, { data }) => (
-          <button
-            className="btn btn-red"
-            onClick={() => {
-              this.close(closeNote);
-            }}
-          >
-            Close
-          </button>
-        )}
-      </CloseNoteMutation>
-    );
-  }
-}
+  return (
+    <button className="btn btn-red" onClick={close}>
+      Close
+    </button>
+  );
+};
+
+export default CloseButton;
