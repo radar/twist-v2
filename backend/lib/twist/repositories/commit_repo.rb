@@ -10,8 +10,8 @@ module Twist
           .one!
       end
 
-      def by_branch(branch_id)
-        by_branch(branch_id).to_a
+      def for_branch(branch_id)
+        by_branch(branch_id).order { created_at.desc }.to_a
       end
 
       def latest_for_default_branch(book_id)
