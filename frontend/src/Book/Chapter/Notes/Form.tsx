@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
-
 import submitNoteMutation from "./SubmitNoteMutation";
+
 import { useMutation } from "@apollo/react-hooks";
 
 import { Note } from "../../Notes/types";
@@ -11,22 +11,21 @@ type FormProps = {
   noteSubmitted: (note: Note) => void;
 };
 
-type FormState = {
-  showThanks: boolean;
-  text: string;
-};
-
-interface SubmitNoteMutationData {
-  submitNote: Note;
-}
-
 const Form: FunctionComponent<FormProps> = (props) => {
+  const { elementId, bookPermalink, noteSubmitted } = props;
   const [text, setText] = useState<string>("");
+  const [submitNote, { data }] = useMutation(submitNoteMutation);
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    submitNote({
+      variables: { bookPermalink, elementId, text: text },
+      update: (store, { data }) => {
+        noteSubmitted(data.submitNote);
+      },
+    });
   };
 
-  const { elementId } = props;
   return (
     <div>
       <form onSubmit={submit}>
