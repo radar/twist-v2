@@ -8,6 +8,7 @@ import branchQuery from "./branchQuery";
 interface CommitType {
   sha: string;
   createdAt: string;
+  message: string;
 }
 
 interface BranchType {
@@ -26,11 +27,18 @@ interface CommitProps extends CommitType {
 }
 
 const Commit: FunctionComponent<CommitProps> = (props) => {
-  const { bookPermalink, sha, createdAt } = props;
+  const { bookPermalink, sha, createdAt, message } = props;
+  let dots;
+  if (message) {
+    dots = <span>&middot; {message} &middot; </span>;
+  } else {
+    dots = <span>&middot; </span>;
+  }
   return (
     <li>
       <Link to={`/books/${bookPermalink}/tree/${sha}`}>
-        <code>{sha.slice(0, 8)}</code> &middot; {moment(createdAt).fromNow()}
+        <code>{sha.slice(0, 8)}</code> {dots}
+        {moment(createdAt).fromNow()}
       </Link>
     </li>
   );
@@ -40,9 +48,11 @@ const Branch: FunctionComponent<BranchProps> = (props) => {
   const { bookPermalink, bookTitle, name, commits } = props;
 
   const renderCommits = () => {
-    return commits.map((commit) => (
-      <Commit bookPermalink={bookPermalink} key={commit.sha} {...commit} />
-    ));
+    return commits
+      .slice(0, 50)
+      .map((commit) => (
+        <Commit bookPermalink={bookPermalink} key={commit.sha} {...commit} />
+      ));
   };
 
   return (
@@ -50,6 +60,11 @@ const Branch: FunctionComponent<BranchProps> = (props) => {
       <h1>
         <Link to={`/books/${bookPermalink}`}>{bookTitle}</Link> - {name} branch
       </h1>
+      <Link to={`/books/${bookPermalink}/tree/${name}`}>
+        Go to latest revision
+      </Link>
+      <hr className="my-4" />
+      <h2>Recent commits</h2>
       <ul className="list-inside list-disc">{renderCommits()}</ul>
     </div>
   );
