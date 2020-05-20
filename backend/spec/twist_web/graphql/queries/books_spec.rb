@@ -5,6 +5,7 @@ module Twist
     context 'books' do
       let(:current_user) { double(User, id: 1) }
       let(:book_repo) { double(Repositories::BookRepo) }
+      let(:permission_repo) { double(Repositories::PermissionRepo) }
       let(:book) do
         double(
           Book,
@@ -14,7 +15,11 @@ module Twist
         )
       end
 
-      subject { described_class.new(repos: { book: book_repo }) }
+      subject { described_class.new(repos: { book: book_repo, permission: permission_repo }) }
+
+      before do
+        allow(permission_repo).to receive(:user_authorized_for_book?) { true }
+      end
 
       it "fetches all the books" do
         query = %|

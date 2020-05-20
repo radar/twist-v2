@@ -14,10 +14,10 @@ module Twist
       let(:note_repo) { double(Repositories::NoteRepo) }
       let(:book_note_repo) { double(Repositories::BookNoteRepo) }
       let(:user_repo) { double(Repositories::UserRepo) }
+      let(:permission_repo) { double(Repositories::PermissionRepo) }
 
       let(:book) do
-        double(
-          Book,
+        Twist::Book.new(
           id: 1,
           title: "Exploding Rails",
           permalink: "exploding-rails",
@@ -122,6 +122,7 @@ module Twist
         double(
           Image,
           image: double(url: "img.jpg"),
+          status: 'completed',
         )
       end
 
@@ -159,58 +160,68 @@ module Twist
             note: note_repo,
             book_note: book_note_repo,
             user: user_repo,
+            permission: permission_repo,
           },
         )
+      end
+
+      before do
+        allow(permission_repo).to receive(:user_authorized_for_book?) { true }
       end
 
       it "fetches chapter data -- no commit specified" do
         query = %|
           query chapterQuery($bookPermalink: String!, $chapterPermalink: String!, $commitSHA: String) {
             book(permalink: $bookPermalink) {
-              title
-              id
-              permalink
-              commit(sha: $commitSHA) {
+              ... on PermissionDenied {
+                error
+              }
+              ... on Book {
+                title
                 id
-                chapter(permalink: $chapterPermalink) {
-                  ...chapterFragment
-                  sections {
-                    ...sectionFragment
-                    subsections {
+                permalink
+                commit(gitRef: $commitSHA) {
+                  id
+                  chapter(permalink: $chapterPermalink) {
+                    ...chapterFragment
+                    sections {
                       ...sectionFragment
-                    }
-                  }
-                  previousChapter {
-                    ...chapterFragment
-                  }
-                  nextChapter {
-                    ...chapterFragment
-                  }
-                  elements {
-                    id
-                    content
-                    tag
-                    noteCount
-                    notes(state: OPEN) {
-                      id
-                      number
-                      createdAt
-                      state
-                      text
-                      user {
-                        name
-                        email
+                      subsections {
+                        ...sectionFragment
                       }
                     }
-                    identifier
-                    image {
-                      path
+                    previousChapter {
+                      ...chapterFragment
                     }
-                  }
+                    nextChapter {
+                      ...chapterFragment
+                    }
+                    elements {
+                      id
+                      content
+                      tag
+                      noteCount
+                      notes(state: OPEN) {
+                        id
+                        number
+                        createdAt
+                        state
+                        text
+                        user {
+                          name
+                          email
+                        }
+                      }
+                      identifier
+                      image {
+                        path
+                      }
+                    }
 
-                  footnotes {
-                    number
-                    identifier
+                    footnotes {
+                      number
+                      identifier
+                    }
                   }
                 }
               }

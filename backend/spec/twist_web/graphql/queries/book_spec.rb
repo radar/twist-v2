@@ -120,7 +120,7 @@ module Twist
 
         it "latest commit for a branch (using ref)" do
           query = %|
-            query bookQuery($permalink: String!, $ref: String) {
+            query bookQuery($permalink: String!, $gitRef: String) {
               book(permalink: $permalink) {
                 ... on PermissionDenied {
                   error
@@ -130,10 +130,10 @@ module Twist
                   title
                   id
                   permalink
-                  latestCommit(ref: $ref) {
+                  latestCommit(gitRef: $gitRef) {
                     sha
                   }
-                  commit(ref: $ref) {
+                  commit(gitRef: $gitRef) {
                     id
                     sha
                     createdAt
@@ -164,16 +164,15 @@ module Twist
 
           expect(book_repo).to receive(:find_by_permalink) { book }
           expect(branch_repo).to receive(:by_ids) { [branch] }
-          expect(commit_repo).to receive(:by_sha) { nil }
-          expect(commit_repo).to receive(:by_ref) { commit }
-          expect(commit_repo).to receive(:latest_for_default_branch) { commit }
+          expect(commit_repo).to receive(:latest_for_book_and_ref).twice { commit }
+          expect(commit_repo).to receive(:by_book_and_sha) { nil }
           expect(chapter_repo).to receive(:for_commit_and_part).at_least(3).times { [chapter] }
 
           result = subject.run(
             query: query,
             variables: {
               permalink: "exploding-rails",
-              ref: "master",
+              gitRef: "master",
             },
             context: { current_user: current_user },
           )
