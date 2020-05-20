@@ -24,7 +24,7 @@ module Twist
 
     def fetch!
       File.exist?(local_path) ? update : clone
-      head.oid
+      { sha: head.oid, message: head.message }
     end
 
     def clone

@@ -34,8 +34,8 @@ module Twist
         commits.where(id: ids).to_a
       end
 
-      def find_and_clean_or_create(branch_id, sha, chapter_repo)
-        fields = { branch_id: branch_id, sha: sha }
+      def find_and_clean_or_create(branch_id, sha, message, chapter_repo)
+        fields = { branch_id: branch_id, sha: sha, message: message }
 
         commit = commits.where(fields).limit(1).one
         if commit

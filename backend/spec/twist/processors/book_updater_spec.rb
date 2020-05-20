@@ -58,7 +58,7 @@ module Twist
 
       before do
         allow(Git).to receive(:new) { git }
-        allow(git).to receive(:fetch!) { commit.sha }
+        allow(git).to receive(:fetch!) { { sha: commit.sha, message: "yolo" } }
       end
 
       it "does not delete that note" do

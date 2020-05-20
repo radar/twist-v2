@@ -28,7 +28,7 @@ module Twist
       )
 
       latest_commit = git.fetch!
-      commit = find_and_clean_or_create_commit(branch.id, latest_commit)
+      commit = find_and_clean_or_create_commit(branch.id, latest_commit[:sha], latest_commit[:message])
       [git, commit]
     end
 
@@ -45,8 +45,8 @@ module Twist
       branch
     end
 
-    def find_and_clean_or_create_commit(branch_id, commit)
-      commit_repo.find_and_clean_or_create(branch_id, commit, chapter_repo)
+    def find_and_clean_or_create_commit(branch_id, sha, message)
+      commit_repo.find_and_clean_or_create(branch_id, sha, message, chapter_repo)
     end
   end
 end

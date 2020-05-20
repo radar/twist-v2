@@ -28,6 +28,7 @@ module Twist
           )
 
           commit = commit_repo.latest_for_branch(branch.id)
+          expect(commit.message).not_to be_nil
           frontmatter_titles = chapter_repo.for_commit_and_part(commit.id, "frontmatter").map(&:title)
 
           expect(frontmatter_titles).to eq(["Preface / Introduction"])

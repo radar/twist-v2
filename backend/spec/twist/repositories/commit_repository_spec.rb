@@ -14,7 +14,7 @@ module Twist
 
         context "when the commit does not exist" do
           it "creates the commit" do
-            commit = subject.find_and_clean_or_create(default_branch.id, sha, chapter_repo)
+            commit = subject.find_and_clean_or_create(default_branch.id, sha, "initial commit", chapter_repo)
             expect(commit.sha).to eq("abc123")
             expect(commit.branch_id).to eq(default_branch.id)
           end
@@ -22,12 +22,12 @@ module Twist
 
         context "when the commit exists" do
           let!(:existing_commit) do
-            subject.create(sha: sha, branch_id: default_branch.id)
+            subject.create(sha: sha, message: "initial commit", branch_id: default_branch.id)
           end
 
           it "finds that commit" do
             expect(chapter_repo).to receive(:mark_as_superseded)
-            commit = subject.find_and_clean_or_create(default_branch.id, sha, chapter_repo)
+            commit = subject.find_and_clean_or_create(default_branch.id, sha, "initial commit", chapter_repo)
             expect(commit.id).to eq(existing_commit.id)
           end
 
@@ -48,7 +48,7 @@ module Twist
             it "deletes the chapter" do
               expect(chapters.count).to eq(1)
 
-              subject.find_and_clean_or_create(default_branch.id, sha, chapter_repo)
+              subject.find_and_clean_or_create(default_branch.id, sha, "initial commit", chapter_repo)
 
               expect(chapters.count).to eq(0)
             end
