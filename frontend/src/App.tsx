@@ -11,6 +11,8 @@ import User from "./CurrentUser/user";
 import Login from "./Login";
 import Books from "./Books";
 import Book from "./Book";
+import Branches from "./Book/Branches";
+import Branch from "./Book/Branches/Branch";
 import Chapter from "./Book/Chapter";
 import Notes from "./Book/Notes";
 import Note from "./Book/Note";
@@ -49,6 +51,8 @@ class Root extends Component<{}> {
         <Notes path="/books/:bookPermalink/notes" />
         <Book path="/books/:bookPermalink/tree/:gitRef" />
         <Book path="/books/:bookPermalink" />
+        <Branches path="/books/:bookPermalink/branches" />
+        <Branch path="/books/:bookPermalink/branches/:name" />
 
         <Books path="/" />
 

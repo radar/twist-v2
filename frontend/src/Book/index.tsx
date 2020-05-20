@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import moment from "moment";
 
 import QueryWrapper from "../QueryWrapper";
 import { Link, RouteComponentProps } from "@reach/router";
@@ -83,7 +82,6 @@ export class Book extends Component<BookProps> {
     return (
       <div className={`bg-white p-4 border-gray-400 border rounded md:w-1/2`}>
         <h1>{title}</h1>
-
         <CommitInfo
           permalink={permalink}
           commit={this.props.commit}
@@ -91,6 +89,10 @@ export class Book extends Component<BookProps> {
         />
         <Link to={`/books/${permalink}/notes`} className="mb-4 inline-block">
           Notes for this book
+        </Link>{" "}
+        &middot;{" "}
+        <Link to={`/books/${permalink}/branches`} className="mb-4 inline-block">
+          Branches
         </Link>
         <hr />
         {this.renderPart("Frontmatter", frontmatter)}
