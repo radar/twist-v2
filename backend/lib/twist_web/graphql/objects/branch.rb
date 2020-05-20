@@ -38,7 +38,7 @@ module Twist
         end
 
         def commits
-          context[:commit_repo].by_branch(object.id)
+          context[:commit_repo].for_branch(object.id)
         end
 
         private
