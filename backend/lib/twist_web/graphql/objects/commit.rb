@@ -11,6 +11,7 @@ module Twist
         field :id, ID, null: false
         field :sha, String, null: false
         field :created_at, String, null: false
+        field :message, String, null: true
         field :branch, BranchType, null: false
         field :chapter, ChapterType, null: false do
           argument :permalink, String, required: true

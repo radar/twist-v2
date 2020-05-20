@@ -28,6 +28,7 @@ module Twist
         double(Twist::Commit,
           id: 1,
           sha: "abc123",
+          message: "initial commit",
           created_at: Time.now,
         )
       end
@@ -49,6 +50,7 @@ module Twist
 
                   commits {
                     sha
+                    message
                     createdAt
                   }
                 }
@@ -87,7 +89,7 @@ module Twist
           expect(result["data"]["book"]["error"]).not_to be_nil
         end
       end
-
+†
       context "when user has permission to see the book" do
         before do
           allow(permission_repo).to receive(:user_authorized_for_book?) { true }
@@ -95,7 +97,7 @@ module Twist
 
         it "fetches the named branch and commits" do
           expect(branch_repo).to receive(:find_by_book_id_and_name) { branch }
-          expect(commit_repo).to receive(:by_branch) { [commit] }
+          expect(commit_repo).to receive(:for_branch) { [commit] }
           result = subject.run(
             query: query,
             variables: { bookPermalink: "exploding-rails", name: "master" },
@@ -110,6 +112,7 @@ module Twist
           commit = branch["commits"].first
 
           expect(commit["sha"]).to eq("abc123")
+          expect(commit["message"]).to eq("initial commit")
         end
       end
     end
