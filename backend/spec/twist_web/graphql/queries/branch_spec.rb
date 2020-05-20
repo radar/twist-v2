@@ -89,7 +89,7 @@ module Twist
           expect(result["data"]["book"]["error"]).not_to be_nil
         end
       end
-†
+
       context "when user has permission to see the book" do
         before do
           allow(permission_repo).to receive(:user_authorized_for_book?) { true }
