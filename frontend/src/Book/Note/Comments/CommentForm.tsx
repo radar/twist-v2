@@ -70,7 +70,7 @@ const CommentForm: FunctionComponent<CommentFormProps> = (props) => {
               className="w-full p-4"
               placeholder="Leave a comment"
               value={text}
-              onChange={(e) => setText("text")}
+              onChange={(e) => setText(e.target.value)}
             ></textarea>
           </div>
 
