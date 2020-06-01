@@ -22,7 +22,7 @@ export default class ElementWithInfo extends React.Component<
   renderCommitInfo(commit: CommitProps) {
     const {
       sha,
-      branch: { name }
+      branch: { name },
     } = commit;
 
     return (
@@ -38,15 +38,15 @@ export default class ElementWithInfo extends React.Component<
       bookPermalink,
       chapter: {
         permalink,
-        commit: { sha }
-      }
+        commit: { sha },
+      },
     } = this.props;
 
     const shortSha = sha.slice(0, 8);
 
     return (
       <Link
-        to={`/books/${bookPermalink}/commits/${shortSha}/chapters/${permalink}#${id}`}
+        to={`/books/${bookPermalink}/tree/${shortSha}/chapters/${permalink}#${id}`}
       >
         Permalink
       </Link>
