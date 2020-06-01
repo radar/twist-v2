@@ -8,29 +8,33 @@ module Twist
 
         # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
         def run(query:, variables: {}, context: {})
+          context = context.merge(
+            branch_loader: branch_loader,
+            commit_loader: commit_loader,
+            element_loader: element_loader,
+            image_loader: image_loader,
+            note_count_loader: note_count_loader,
+            user_loader: user_loader,
+            book_repo: repo(:book),
+            branch_repo: repo(:branch),
+            chapter_repo: repo(:chapter),
+            comment_repo: repo(:comment),
+            commit_repo: repo(:commit),
+            book_note_repo: repo(:book_note),
+            element_repo: repo(:element),
+            footnote_repo: repo(:footnote),
+            image_repo: repo(:image),
+            permission_repo: repo(:permission),
+            note_repo: repo(:note),
+            user_repo: repo(:user),
+          )
+
+          context[:current_user] = repo(:user).first if ENV['BYPASS_PERMISSIONS']
+
           Web::GraphQL::Schema.execute(
             query,
             variables: variables,
-            context: context.merge(
-              branch_loader: branch_loader,
-              commit_loader: commit_loader,
-              element_loader: element_loader,
-              image_loader: image_loader,
-              note_count_loader: note_count_loader,
-              user_loader: user_loader,
-              book_repo: repo(:book),
-              branch_repo: repo(:branch),
-              chapter_repo: repo(:chapter),
-              comment_repo: repo(:comment),
-              commit_repo: repo(:commit),
-              book_note_repo: repo(:book_note),
-              element_repo: repo(:element),
-              footnote_repo: repo(:footnote),
-              image_repo: repo(:image),
-              permission_repo: repo(:permission),
-              note_repo: repo(:note),
-              user_repo: repo(:user),
-            ),
+            context: context,
           )
         end
         # rubocop:enable Metrics/MethodLength, Metrics/AbcSize

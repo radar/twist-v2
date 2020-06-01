@@ -3,6 +3,10 @@ module Twist
     class UserRepo < Twist::Repository[:users]
       commands :create, use: :timestamps, plugins_options: { timestamps: { timestamps: %i(created_at updated_at) } }
 
+      def first
+        users.one
+      end
+
       def by_pk(id)
         users.by_pk(id).one
       end

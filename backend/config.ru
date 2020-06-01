@@ -14,5 +14,4 @@ if ENV['APP_ENV'] == "development"
 end
 
 use Rack::CommonLogger
-use Hanami::Middleware::BodyParser, :json
-run Twist::Web::Router
+run Twist::Web.app

@@ -72,7 +72,7 @@ class Root extends Component<{}> {
   }
 
   renderAuthenticatedAreaOrRedirect = (user: User | null) => {
-    if (user) {
+    if (user || process.env.REACT_APP_ALLOW_ANYONE) {
       return this.renderAuthenticatedArea();
     } else {
       return this.renderLogin();
