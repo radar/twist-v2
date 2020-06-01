@@ -25,7 +25,7 @@ const CommentForm: FunctionComponent<CommentFormProps> = (props) => {
 
   const submit = () => {
     addComment({
-      variables: { noteId: noteId, text: text },
+      variables: { noteId, text },
       update: (store, { data: { addComment } }) => {
         const cacheData = store.readQuery({
           query: commentsQuery,
@@ -56,7 +56,7 @@ const CommentForm: FunctionComponent<CommentFormProps> = (props) => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            addComment();
+            submit();
           }}
           className="my-4"
         >

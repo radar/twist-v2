@@ -12,7 +12,7 @@ export default class Comment extends React.Component<CommentProps> {
     const time = moment(createdAt).fromNow();
 
     return (
-      <div className={styles.comment}>
+      <div className={styles.comment} data-test-class="comment">
         <div className="flex">
           <div className={`${styles.avatar} w-34 p-4`}>
             <Gravatar email={user.email} />

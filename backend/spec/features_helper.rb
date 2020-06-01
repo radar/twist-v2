@@ -39,4 +39,4 @@ Capybara.app = Twist::Web.app
 Capybara.server = :puma
 Capybara.server_host = '127.0.0.1'
 Capybara.server_port = 3030
-Capybara.app_host = ENV['FRONTEND_APP_URL']
+Capybara.app_host = "http://localhost:3001"
