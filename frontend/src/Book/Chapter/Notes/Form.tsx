@@ -26,6 +26,16 @@ const Form: FunctionComponent<FormProps> = (props) => {
     });
   };
 
+  const handleChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    setText(e.currentTarget.value);
+  };
+
+  const checkForSubmit = (e: any) => {
+    if (e.metaKey && e.key == "Enter") {
+      submit(e);
+    }
+  };
+
   return (
     <div>
       <form onSubmit={submit}>
@@ -39,7 +49,8 @@ const Form: FunctionComponent<FormProps> = (props) => {
           <textarea
             className="w-full border p-2 mb-2"
             id={`element_${elementId}_note`}
-            onChange={(e) => setText(e.target.value)}
+            onKeyDown={checkForSubmit}
+            onChange={handleChange}
           />
         </p>
 
