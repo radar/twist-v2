@@ -5,6 +5,8 @@ module Twist
     let(:create_book) { Twist::Container["transactions.books.create"] }
     let!(:book) { create_book.(title: "Markdown Book Test", default_branch: "master").success }
     let!(:create_user) { Twist::Container["transactions.users.create"] }
+    let!(:generate_jwt) { Twist::Container["transactions.users.generate_jwt"] }
+    let!(:grant_permission) { Twist::Container["transactions.users.grant_permission"] }
     let!(:submit_note) { Twist::Container["transactions.notes.submit"] }
 
     before do
@@ -19,8 +21,12 @@ module Twist
       create_user.(
         email: "me@ryanbigg.com",
         password: "password",
-        name: "Ryan Bigg"
+        name: "Ryan Bigg",
       ).success
+    end
+
+    before do
+      grant_permission.(user: user, book: book)
     end
 
     let!(:element_repo) { Twist::Container["repositories.element_repo"]  }
@@ -31,7 +37,7 @@ module Twist
         book_permalink: book.permalink,
         user_id: user.id,
         element_id: element.id,
-        text: "This is a note"
+        text: "This is a note",
       ).success
     end
 
@@ -40,22 +46,24 @@ module Twist
         <<~QUERY
           query bookQuery($permalink: String!, $commitSHA: String) {
             book(permalink: $permalink) {
-              title
-              id
-              permalink
-              commit(sha: $commitSHA) {
+              ... on Book {
+                title
                 id
-                branch {
-                  name
-                }
-                frontmatter: chapters(part: FRONTMATTER) {
-                  ...chapterFields
-                }
-                mainmatter: chapters(part: MAINMATTER) {
-                  ...chapterFields
-                }
-                backmatter: chapters(part: BACKMATTER) {
-                  ...chapterFields
+                permalink
+                commit(gitRef: $commitSHA) {
+                  id
+                  branch {
+                    name
+                  }
+                  frontmatter: chapters(part: FRONTMATTER) {
+                    ...chapterFields
+                  }
+                  mainmatter: chapters(part: MAINMATTER) {
+                    ...chapterFields
+                  }
+                  backmatter: chapters(part: BACKMATTER) {
+                    ...chapterFields
+                  }
                 }
               }
             }
@@ -75,9 +83,7 @@ module Twist
           permalink: "markdown-book-test",
         }
 
-        post "/graphql", query: book_query, variables: variables
-
-        p json_body
+        query!(query: book_query, variables: variables, user: user)
 
         chapter = json_body
           .dig(
@@ -99,7 +105,7 @@ module Twist
           commitSHA: commit.sha[0..8],
         }
 
-        post "/graphql", query: book_query, variables: variables
+        query!(query: book_query, variables: variables, user: user)
 
         chapter = json_body
           .dig(
@@ -120,49 +126,42 @@ module Twist
         <<~QUERY
           query chapterQuery($bookPermalink: String!, $chapterPermalink: String!, $commitSHA: String) {
             book(permalink: $bookPermalink) {
-              title
-              id
-              permalink
-              commit(sha: $commitSHA) {
+              ... on Book {
+                title
                 id
-                chapter(permalink: $chapterPermalink) {
+                permalink
+                commit(gitRef: $commitSHA) {
                   id
-                  title
-                  position
-                  permalink
-                  part
-                  sections {
-                    ...sectionFragment
-                    subsections {
-                      ...sectionFragment
-                      __typename
-                    }
-                    __typename
-                  }
-                  previousChapter {
-                    ...chapterFragment
-                    __typename
-                  }
-                  nextChapter {
-                    ...chapterFragment
-                    __typename
-                  }
-                  elements {
+                  chapter(permalink: $chapterPermalink) {
                     id
-                    content
-                    tag
-                    noteCount
-                    image {
-                      path
-                      __typename
+                    title
+                    position
+                    permalink
+                    part
+                    sections {
+                      ...sectionFragment
+                      subsections {
+                        ...sectionFragment
+                      }
                     }
-                    __typename
+                    previousChapter {
+                      ...chapterFragment
+                    }
+                    nextChapter {
+                      ...chapterFragment
+                    }
+                    elements {
+                      id
+                      content
+                      tag
+                      noteCount
+                      image {
+                        path
+                      }
+                    }
                   }
-                  __typename
                 }
-                __typename
               }
-              __typename
             }
           }
 
@@ -190,7 +189,7 @@ module Twist
           chapterPermalink: "introduction",
         }
 
-        post "/graphql", query: chapter_query, variables: variables
+        query!(query: chapter_query, variables: variables, user: user)
 
         element = json_body
           .dig(
@@ -214,7 +213,7 @@ module Twist
           commitSHA: commit.sha[0..8],
         }
 
-        post "/graphql", query: chapter_query, variables: variables
+        query!(query: chapter_query, variables: variables, user: user)
 
         element = json_body
           .dig(

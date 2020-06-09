@@ -1,6 +1,8 @@
 module Twist
   module Repositories
     class PermissionRepo < Twist::Repository[:permissions]
+      commands :create
+
       def user_authorized_for_book?(user, book)
         return true if ENV['BYPASS_PERMISSIONS']
         permissions.where(

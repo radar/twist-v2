@@ -19,6 +19,12 @@ module RequestHelpers
   def json_body
     JSON.parse(response.body)
   end
+
+  def query!(query:, variables: {}, user: nil)
+    header 'Authorization', Twist::Transactions::Users::GenerateJwt.new.(email: user.email) if user
+
+    post "/graphql", query: query, variables: variables
+  end
 end
 
 RSpec.configure do |config|

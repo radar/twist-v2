@@ -44,7 +44,7 @@ module Twist
               result.success
             end
 
-            generate_jwt = Transactions::Users::GenerateJWT.new
+            generate_jwt = Transactions::Users::GenerateJwt.new
 
             jwt_token = generate_jwt.(email: user.email)
 

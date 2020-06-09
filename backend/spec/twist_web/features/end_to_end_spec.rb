@@ -58,7 +58,5 @@ RSpec.describe "Submit Note", type: :feature do
     within(comment) do
       expect(page).to have_content("I am writing a comment on this note")
     end
-
-    binding.pry
   end
 end

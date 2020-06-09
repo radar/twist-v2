@@ -1,7 +1,7 @@
 module Twist
   module Transactions
     module Users
-      class GenerateJWT
+      class GenerateJwt
         def call(email:)
           hmac_secret = ENV.fetch("AUTH_TOKEN_SECRET")
           payload = { email: email }

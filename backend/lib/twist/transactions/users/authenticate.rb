@@ -25,7 +25,7 @@ module Twist
         end
 
         def encode_token(user)
-          generate_jwt = GenerateJWT.new
+          generate_jwt = GenerateJwt.new
           token = generate_jwt.(email: user.email)
 
           Success(email: user.email, token: token)
