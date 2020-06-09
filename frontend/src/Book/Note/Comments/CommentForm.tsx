@@ -5,45 +5,39 @@ import { useMutation } from "@apollo/react-hooks";
 import CurrentUserContext from "../../../CurrentUser/context";
 
 import { Comment as CommentProps } from "../../Notes/types";
-import commentsQuery from "./CommentsQuery";
-import addCommentMutation from "./AddCommentMutation";
+import createCommentMutation from "./AddCommentMutation";
 
 type CommentFormProps = {
-  updateComments(comments: CommentProps[]): void;
+  addComment(comment: CommentProps): void;
   noteId: string;
 };
 
-type CacheData = {
-  comments: CommentProps[];
+type CreateCommentVariables = {
+  noteId: string;
+  text: string;
 };
 
-const CommentForm: FunctionComponent<CommentFormProps> = (props) => {
-  const { noteId, updateComments } = props;
+type CreateCommentData = {
+  addComment: CommentProps;
+};
+
+const CommentForm: FunctionComponent<CommentFormProps> = ({
+  noteId,
+  addComment,
+}) => {
   const [text, setText] = useState<string>("");
 
-  const [addComment, { data }] = useMutation(addCommentMutation);
+  const [createComment, { data }] = useMutation<
+    CreateCommentData,
+    CreateCommentVariables
+  >(createCommentMutation);
 
   const submit = () => {
-    addComment({
-      variables: { noteId, text },
-      update: (store, { data: { addComment } }) => {
-        const cacheData = store.readQuery({
-          query: commentsQuery,
-          variables: { noteId: noteId },
-        });
-        if (cacheData) {
-          const comments = (cacheData as CacheData).comments.concat([
-            addComment,
-          ]);
-          store.writeQuery({
-            query: commentsQuery,
-            data: { comments: comments },
-          });
-
-          setText("");
-          updateComments(comments);
-        }
-      },
+    createComment({ variables: { noteId, text } }).then((response) => {
+      if (response.data) {
+        setText("");
+        addComment(response.data.addComment);
+      }
     });
   };
 

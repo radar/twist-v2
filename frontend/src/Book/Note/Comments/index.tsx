@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { FunctionComponent, useState } from "react";
 
 import QueryWrapper from "../../../QueryWrapper";
 import commentsQuery from "./CommentsQuery";
@@ -11,51 +11,23 @@ type CommentsProps = {
   comments: CommentType[];
 };
 
-type CommentsState = {
-  comments: CommentType[];
-};
+const Comments: FunctionComponent<CommentsProps> = (props) => {
+  const [comments, setComments] = useState<CommentType[]>(props.comments);
 
-class Comments extends React.Component<CommentsProps, CommentsState> {
-  state = { comments: this.props.comments };
-
-  renderComments() {
-    return this.state.comments.map((comment) => (
-      <Comment {...comment} key={comment.id} />
-    ));
-  }
-
-  updateComments = (comments: CommentType[]) => {
-    this.setState({ comments: comments });
+  const renderComments = () => {
+    return comments.map((comment) => <Comment {...comment} key={comment.id} />);
   };
 
-  render() {
-    return (
-      <div className="mt-4">
-        {this.renderComments()}
-        <CommentForm
-          noteId={this.props.noteId}
-          updateComments={this.updateComments}
-        />
-      </div>
-    );
-  }
-}
+  const addComment = (comment: CommentType) => {
+    setComments(comments.concat(comment));
+  };
 
-type WrappedCommentsProps = {
-  noteId: string;
+  return (
+    <div className="mt-4">
+      {renderComments()}
+      <CommentForm noteId={props.noteId} addComment={addComment} />
+    </div>
+  );
 };
 
-export default class WrappedComments extends React.Component<
-  WrappedCommentsProps
-> {
-  render() {
-    const { noteId } = this.props;
-    return (
-      <QueryWrapper query={commentsQuery} variables={{ noteId }}>
-        {({ comments }: { comments: CommentType[] }) => (
-          <Comments noteId={noteId} comments={comments} />
-        )}
-      </QueryWrapper>
-    );
-  }
-}
+export default Comments;

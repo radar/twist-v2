@@ -18,7 +18,7 @@ type ElementNoteProps = Note & {
 };
 
 const ElementNote: FunctionComponent<ElementNoteProps> = (props) => {
-  const { user, createdAt, bookPermalink, number, id, text } = props;
+  const { user, createdAt, bookPermalink, number, id, text, comments } = props;
   const [state, setState] = useState<string>(props.state);
   const [showForm, setShowForm] = useState<boolean>(false);
 
@@ -98,7 +98,7 @@ const ElementNote: FunctionComponent<ElementNoteProps> = (props) => {
             </div>
           </div>
 
-          <Comments noteId={id} />
+          <Comments comments={comments} noteId={id} />
         </div>
       </div>
     </div>

@@ -9,8 +9,6 @@ import { ElementWithInfoProps, Note as NoteType } from "../Notes/types";
 import ElementWithInfo from "../Notes/ElementWithInfo";
 import NoteBox from "./Note";
 
-import Comments from "./Comments";
-
 import styles from "./NoteContainer.module.scss";
 
 type NoteProps = NoteType & {
@@ -19,10 +17,6 @@ type NoteProps = NoteType & {
 };
 
 class Note extends React.Component<NoteProps> {
-  renderComments() {
-    return <Comments noteId={this.props.id} />;
-  }
-
   render() {
     const { number, bookPermalink, element } = this.props;
     return (
