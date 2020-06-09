@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+require 'bundler'
+Bundler.setup
+
 require 'pry'
 require_relative '../config/environment'
 
