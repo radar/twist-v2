@@ -8,7 +8,6 @@ import Comments from "./Comments";
 import { Note } from "../Notes/types";
 import CloseButton from "./CloseButton";
 import OpenButton from "./OpenButton";
-import * as styles from "./Note.module.scss";
 import EditForm from "./EditForm";
 
 import CurrentUserContext from "../../CurrentUser/context";
@@ -70,12 +69,12 @@ const ElementNote: FunctionComponent<ElementNoteProps> = (props) => {
   const time = moment(createdAt).fromNow();
 
   return (
-    <div className={`${styles.note} note`}>
+    <div className="p-4 note">
       <div className="flex">
-        <div className={`${styles.avatar} w-34 p-4`}>
-          <Gravatar email={user.email} />
+        <div className="w-34 p-4">
+          <Gravatar email={user.email} className="rounded-full" />
         </div>
-        <div className={`w-full`}>
+        <div className="w-full">
           <div className="row">
             <div className={`bg-gray-200 px-4 py-2 rounded-t-md`}>
               <div>
@@ -90,11 +89,9 @@ const ElementNote: FunctionComponent<ElementNoteProps> = (props) => {
           </div>
           <div className="p-4 b-4 border">
             {renderFormOrText()}
-            <div className={`${styles.buttons} mt-4 text-sm`}>
-              {renderEditButton()}
-            </div>
-            <div className={`${styles.buttons} mt-4 text-sm`}>
-              {renderToggleStateButton()}
+            <div className="mt-4">
+              <span className="text-sm mr-2">{renderToggleStateButton()}</span>
+              <span className="text-sm">{renderEditButton()}</span>
             </div>
           </div>
 

@@ -2,6 +2,8 @@ require_relative 'objects/book'
 require_relative 'objects/note'
 
 require_relative 'mutations/comments/add'
+require_relative 'mutations/comments/update'
+require_relative 'mutations/comments/delete'
 
 require_relative 'mutations/notes/close'
 require_relative 'mutations/notes/open'
@@ -24,6 +26,8 @@ module Twist
         field :update_note, mutation: Mutations::Notes::Update
 
         field :add_comment, mutation: Mutations::Comments::Add
+        field :update_comment, mutation: Mutations::Comments::Update
+        field :delete_comment, mutation: Mutations::Comments::Delete
       end
     end
   end

@@ -1,6 +1,6 @@
 require 'features_helper'
 
-RSpec.describe "Submit Note", type: :feature do
+RSpec.describe "Submit Note", type: :feature, integration: true do
   let(:create_book) { Twist::Transactions::Books::Create.new }
   let(:create_user) { Twist::Transactions::Users::Create.new }
   let(:grant_permission) { Twist::Transactions::Permissions::Grant.new }

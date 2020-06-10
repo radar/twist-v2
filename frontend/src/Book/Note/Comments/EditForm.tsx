@@ -1,24 +1,26 @@
 import React, { FunctionComponent, useState } from "react";
-import updateNoteMutation from "./updateNoteMutation";
+import updateCommentMutation from "./updateCommentMutation";
 
 import { useMutation } from "@apollo/react-hooks";
 
 interface EditFormProps {
   toggleForm: () => void;
+  updateText: (text: string) => void;
   originalText: string;
-  noteId: string;
+  id: string;
 }
 
 const EditForm: FunctionComponent<EditFormProps> = (props) => {
-  const { noteId, originalText, toggleForm } = props;
+  const { id, originalText, toggleForm } = props;
   const [text, setText] = useState<string>(props.originalText);
-  const [updateNote, { data }] = useMutation(updateNoteMutation);
+  const [updateComment, { data }] = useMutation(updateCommentMutation);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    updateNote({ variables: { id: noteId, text: text } }).then((response) => {
+    updateComment({ variables: { id: id, text: text } }).then((response) => {
       toggleForm();
+      props.updateText(text);
     });
   };
 
@@ -33,14 +35,14 @@ const EditForm: FunctionComponent<EditFormProps> = (props) => {
       <form onSubmit={submit}>
         <p>
           <label
-            htmlFor={`note_${noteId}_text`}
+            htmlFor={`comment_${id}_text`}
             className="block font-bold mb-2"
           >
             Note
           </label>
           <textarea
             className="h-32 w-full border p-2 mb-2"
-            id={`note_${noteId}_text`}
+            id={`comment_${id}_text`}
             defaultValue={originalText}
             onKeyDown={checkForSubmit}
             onChange={(e) => setText(e.target.value)}
@@ -49,7 +51,7 @@ const EditForm: FunctionComponent<EditFormProps> = (props) => {
         <input
           type="submit"
           className="btn btn-blue mb-2"
-          value="Update Note"
+          value="Update Comment"
         />
       </form>
     </div>

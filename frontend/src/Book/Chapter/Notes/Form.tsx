@@ -58,9 +58,6 @@ const Form: FunctionComponent<FormProps> = (props) => {
           className="btn btn-blue mb-2 mr-4"
           value="Submit Note"
         />
-        <span className="text-sm text-gray-600 font-italic">
-          Press Cmd+Enter to submit note
-        </span>
       </form>
     </div>
   );
