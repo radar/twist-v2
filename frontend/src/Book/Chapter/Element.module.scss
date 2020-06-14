@@ -2,6 +2,14 @@
   min-width: 200px;
   float: left;
   position: absolute;
-  left: -6rem;
-  font-size: 90%;
+  left: -4rem;
+  top: -1rem;
+
+  a {
+    color: #3182ce;
+    font-weight: bold;
+    font-size: 85%;
+    margin-top: 3px;
+    text-decoration: none;
+  }
 }

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Notes from "./Notes";
 import * as styles from "./Element.module.scss";
-import { Note } from "../Notes/types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComment } from "@fortawesome/free-regular-svg-icons";
 
 type Image = {
   path: string;
@@ -76,7 +77,7 @@ export default class Element extends Component<ElementProps, ElementState> {
 
   renderNotesCount() {
     const count = this.state.noteCount;
-    return count === 1 ? "1 note +" : `${count} notes +`;
+    return count === 1 ? "1" : `${count}`;
   }
 
   toggleNotes = (event?: React.MouseEvent) => {
@@ -114,9 +115,17 @@ export default class Element extends Component<ElementProps, ElementState> {
           className={`${styles.note_button} note_button_${tag}`}
           id={`note_button_${id}`}
         >
-          <a href="#" onClick={this.toggleNotes}>
-            {this.renderNotesCount()}
-          </a>
+          <span className="fa-stack fa-fw">
+            <FontAwesomeIcon
+              icon={faComment}
+              size="2x"
+              color="#3182ce"
+              flip="horizontal"
+            />
+            <a href="#" onClick={this.toggleNotes} className="fa-stack-1x">
+              {this.renderNotesCount()}
+            </a>
+          </span>
         </span>
         <BareElement {...this.props} />
         {this.renderNotes()}
