@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Notes from "./Notes";
-import * as styles from "./Element.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment } from "@fortawesome/free-regular-svg-icons";
 
@@ -107,12 +106,13 @@ export default class Element extends Component<ElementProps, ElementState> {
   }
 
   render() {
-    const { identifier, id, tag } = this.props;
+    const { identifier, id } = this.props;
     return (
       <div className="relative element">
         <a id={identifier || id} />
         <span
-          className={`${styles.note_button} note_button_${tag}`}
+          className={`absolute`}
+          style={{ left: "-4rem", top: "-1rem" }}
           id={`note_button_${id}`}
         >
           <span className="fa-stack fa-fw">
@@ -122,7 +122,11 @@ export default class Element extends Component<ElementProps, ElementState> {
               color="#3182ce"
               flip="horizontal"
             />
-            <a href="#" onClick={this.toggleNotes} className="fa-stack-1x">
+            <a
+              href="#"
+              onClick={this.toggleNotes}
+              className="text-blue-600 mt-1 text-sm font-bold fa-stack-1x no-underline"
+            >
               {this.renderNotesCount()}
             </a>
           </span>
