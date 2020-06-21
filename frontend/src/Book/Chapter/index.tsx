@@ -9,7 +9,6 @@ import { PreviousChapterLink, NextChapterLink } from "./Link";
 import SectionList from "./SectionList";
 import bookLink from "../../Book/link";
 
-import styles from "./Chapter.module.scss";
 import PermissionDenied from "../../PermissionDenied";
 import Commit from "../Commit";
 
@@ -130,7 +129,7 @@ export class Chapter extends Component<ChapterProps> {
   renderFootnotes() {
     const { footnotes } = this.props;
     return (
-      <div className={styles.footnotes}>
+      <div>
         <h3>Footnotes</h3>
         {footnotes.map((footnote) => (
           <Footnote {...footnote} key={footnote.identifier} />

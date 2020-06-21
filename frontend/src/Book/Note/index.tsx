@@ -5,14 +5,11 @@ import QueryWrapper from "../../QueryWrapper";
 
 import Header from "../Notes/Header";
 import NoteQuery from "./NoteQuery";
-import { ElementWithInfoProps, Note as NoteType } from "../Notes/types";
+import { Note as NoteType } from "../Notes/types";
 import ElementWithInfo from "../Notes/ElementWithInfo";
 import NoteBox from "./Note";
 
-import styles from "./NoteContainer.module.scss";
-
 type NoteProps = NoteType & {
-  element: ElementWithInfoProps;
   bookPermalink: string;
 };
 
@@ -21,9 +18,9 @@ class Note extends React.Component<NoteProps> {
     const { number, bookPermalink, element } = this.props;
     return (
       <div className="main md:w-3/4">
-        <div className={styles.noteContainer}>
+        <div>
           <Header permalink={bookPermalink} noteNumber={number} />
-          <ElementWithInfo bookPermalink={bookPermalink} {...element} />
+          <ElementWithInfo {...element} />
           <NoteBox {...this.props} />
         </div>
       </div>
@@ -51,8 +48,8 @@ export default class WrappedNote extends React.Component<WrappedNoteProps> {
           bookPermalink: bookPermalink,
         }}
       >
-        {({ note }: { note: NoteProps }) => {
-          return <Note bookPermalink={bookPermalink} {...note} />;
+        {({ note }: { note: NoteType }) => {
+          return <Note bookPermalink={bookPermalink!} {...note} />;
         }}
       </QueryWrapper>
     );

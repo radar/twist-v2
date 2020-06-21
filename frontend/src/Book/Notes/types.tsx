@@ -29,6 +29,7 @@ export type Comment = {
 };
 
 export type Note = {
+  element: ElementWithInfoProps;
   state: string;
   id: string;
   number: number;

@@ -1,7 +1,5 @@
 import React, { FunctionComponent, useState } from "react";
 
-import QueryWrapper from "../../../QueryWrapper";
-import commentsQuery from "./CommentsQuery";
 import CommentForm from "./CommentForm";
 import { Comment as CommentType } from "../../Notes/types";
 import Comment from "./Comment";

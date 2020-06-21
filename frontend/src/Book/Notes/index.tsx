@@ -3,7 +3,6 @@ import { RouteComponentProps } from "@reach/router";
 
 import Header from "./Header";
 import List from "./List";
-import * as styles from "./Notes.module.scss";
 
 type NotesProps = {
   bookPermalink: string;
@@ -32,8 +31,8 @@ export class Notes extends React.Component<NotesProps, NotesState> {
       <div className="main">
         <Header permalink={bookPermalink} />
         <div className="notes mt-4">
-          <div className={styles.buttons}>
-            <button className="btn btn-green" onClick={this.showOpenNotes}>
+          <div className="mb-4">
+            <button className="btn btn-green mr-2" onClick={this.showOpenNotes}>
               Open Notes
             </button>
             <button className="btn btn-red" onClick={this.showClosedNotes}>

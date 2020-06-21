@@ -59,7 +59,7 @@ export default class ElementWithInfo extends React.Component<
     return (
       <div className={className}>
         <BareElement {...this.props} />
-        <span className={styles.chapterInfo}>
+        <span className="text-sm italic">
           From {this.renderChapterTitle(chapter)}
           {this.renderCommitInfo(chapter.commit)} - {this.renderPermalink()}
         </span>
