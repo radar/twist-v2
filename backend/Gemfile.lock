@@ -165,7 +165,7 @@ GEM
     puma (3.12.4)
     pygments.rb (1.2.1)
       multi_json (>= 1.0.0)
-    rack (2.1.2)
+    rack (2.1.4)
     rack-protection (2.0.5)
       rack
     rack-test (1.1.0)
