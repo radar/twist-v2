@@ -1,4 +1,3 @@
-require 'bundler/setup'
 require 'babosa'
 
 require_relative './boot'
