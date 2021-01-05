@@ -16,3 +16,11 @@ end
 task :environment do
   require './config/environment'
 end
+
+require "graphql/rake_task"
+
+GraphQL::RakeTask.new(
+  schema_name: "Twist::Web::GraphQL::Schema",
+  directory: "../graphql",
+  dependencies: [:environment]
+)
