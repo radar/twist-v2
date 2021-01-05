@@ -1,0 +1,217 @@
+schema {
+  query: Query
+  mutation: Mutations
+}
+
+"""
+A book
+"""
+type Book {
+  blurb: String!
+  branch(name: String!): Branch!
+  branches: [Branch!]!
+  commit(gitRef: String): Commit!
+  defaultBranch: Branch!
+  id: ID!
+  latestCommit(gitRef: String): Commit!
+  notes(elementId: String!): [Note!]!
+  permalink: String!
+  title: String!
+}
+
+"""
+Parts of the book
+"""
+enum BookParts {
+  """
+  The back of the book, appendixes, etc.
+  """
+  BACKMATTER
+
+  """
+  The front of the book, introductions, prefaces, etc.
+  """
+  FRONTMATTER
+
+  """
+  The main content of the book
+  """
+  MAINMATTER
+}
+
+"""
+The result from attempting a login
+"""
+union BookPermissionCheckResult = Book | PermissionDenied
+
+"""
+A branch
+"""
+type Branch {
+  chapter(permalink: String!): Chapter!
+  chapters(part: BookParts!): [Chapter!]!
+  commits: [Commit!]!
+  default: Boolean!
+  id: ID!
+  name: String!
+}
+
+"""
+A chapter
+"""
+type Chapter {
+  commit: Commit
+  elements: [Element!]
+  footnotes: [Footnote!]
+  id: ID!
+  nextChapter: Chapter
+  part: String!
+  permalink: String!
+  position: Int!
+  previousChapter: Chapter
+  sections: [Section!]!
+  title: String!
+}
+
+"""
+A comment
+"""
+type Comment {
+  createdAt: String!
+  id: ID!
+  text: String!
+  user: User!
+}
+
+"""
+A commit
+"""
+type Commit {
+  branch: Branch!
+  chapter(permalink: String!): Chapter!
+  chapters(part: BookParts!): [Chapter!]!
+  createdAt: String!
+  id: ID!
+  message: String
+  sha: String!
+}
+
+"""
+An element
+"""
+type Element {
+  chapter: Chapter!
+  content: String
+  id: ID!
+  identifier: String
+  image: Image
+  noteCount: Int!
+  notes(state: NoteState!): [Note!]!
+  tag: String!
+}
+
+type FailedLoginResult {
+  error: String!
+}
+
+type Footnote {
+  content: String!
+  identifier: String!
+  number: Int!
+}
+
+"""
+An image
+"""
+type Image {
+  caption: String
+  id: ID!
+  path: String!
+}
+
+"""
+The result from attempting a login
+"""
+union LoginResult = FailedLoginResult | SuccessfulLoginResult
+
+type Mutations {
+  addComment(noteId: ID!, text: String!): Comment!
+  closeNote(id: ID!): Note!
+  deleteComment(id: ID!): Comment!
+
+  """
+  Attempt a login
+  """
+  login(email: String!, password: String!): LoginResult!
+  openNote(id: ID!): Note!
+  submitNote(bookPermalink: ID!, elementId: ID!, text: String!): Note!
+  updateComment(id: ID!, text: String!): Comment!
+  updateNote(id: ID!, text: String!): Note!
+}
+
+"""
+A note
+"""
+type Note {
+  comments: [Comment!]!
+  createdAt: String!
+  element: Element!
+  id: ID!
+  number: Int!
+  state: String!
+  text: String!
+  user: User!
+}
+
+enum NoteState {
+  """
+  Closed notes
+  """
+  CLOSED
+
+  """
+  Open notes
+  """
+  OPEN
+}
+
+type PermissionDenied {
+  error: String!
+}
+
+"""
+The query root of this schema
+"""
+type Query {
+  book(permalink: String!): BookPermissionCheckResult!
+  books: [Book!]!
+  comments(noteId: ID!): [Comment!]!
+  currentUser: User
+  elementsWithNotes(bookPermalink: String!, state: NoteState!): [Element!]!
+  note(bookPermalink: String!, number: Int!): Note!
+}
+
+"""
+A section
+"""
+type Section {
+  id: ID!
+  link: String!
+  subsections: [Section!]
+  title: String!
+}
+
+type SuccessfulLoginResult {
+  email: String!
+  token: String!
+}
+
+"""
+A user
+"""
+type User {
+  email: String!
+  githubLogin: String
+  id: ID!
+  name: String!
+}
