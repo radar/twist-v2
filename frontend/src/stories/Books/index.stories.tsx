@@ -1,5 +1,6 @@
 import React from "react";
 import { Books } from "../../Books";
+import { BooksQuery } from "../../graphql/types";
 import Layout from "../../layout";
 import "../../styles.css";
 
@@ -9,9 +10,10 @@ export default {
 };
 
 export const BooksIndex = () => {
-  const books = [
+  const books: BooksQuery["books"] = [
     {
-      id: 1,
+      __typename: "Book",
+      id: "1",
       title: "Markdown Book Test",
       permalink: "markdown-book-test",
       blurb: "For testing Markdown books",

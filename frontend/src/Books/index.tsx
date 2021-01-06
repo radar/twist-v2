@@ -1,19 +1,31 @@
 import React from "react";
-import { RouteComponentProps } from "@reach/router";
+import { Link, RouteComponentProps } from "@reach/router";
 
-import BookItem from "./BookItem";
 import { useBooksQuery, BooksQuery } from "../graphql/types";
 import QueryWrapper from "../QueryWrapper";
 
+type Book = BooksQuery["books"][0];
+
+const BookItem: React.FC<Book> = ({ permalink, title, blurb }) => {
+  return (
+    <div className="mb-4">
+      <h2>
+        <Link to={`/books/${permalink}`}>{title}</Link>
+      </h2>
+      <span className="text-gray-800">{blurb}</span>
+    </div>
+  );
+};
+
 type BooksProps = {
-  books: any;
+  books: BooksQuery["books"];
 };
 
 export class Books extends React.Component<BooksProps> {
   renderBooks() {
     const { books } = this.props;
     if (books.length > 0) {
-      return books.map((book: any) => <BookItem {...book} key={book.id} />);
+      return books.map((book) => <BookItem {...book} key={book.id} />);
     }
 
     return (
