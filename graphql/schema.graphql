@@ -60,9 +60,9 @@ type Branch {
 A chapter
 """
 type Chapter {
-  commit: Commit
-  elements: [Element!]
-  footnotes: [Footnote!]
+  commit: Commit!
+  elements: [Element!]!
+  footnotes: [Footnote!]!
   id: ID!
   nextChapter: Chapter
   part: String!
@@ -197,7 +197,7 @@ A section
 type Section {
   id: ID!
   link: String!
-  subsections: [Section!]
+  subsections: [Section!]!
   title: String!
 }
 

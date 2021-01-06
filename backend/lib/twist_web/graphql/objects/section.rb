@@ -8,7 +8,7 @@ module Twist
         field :id, ID, null: false
         field :title, String, null: false
         field :link, String, null: false
-        field :subsections, [SectionType], null: true
+        field :subsections, [SectionType], null: false
       end
     end
   end

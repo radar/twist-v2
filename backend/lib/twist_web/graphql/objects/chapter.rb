@@ -21,10 +21,10 @@ module Twist
         field :previous_chapter, ChapterType, null: true
         field :next_chapter, ChapterType, null: true
 
-        field :elements, [ElementType], null: true
-        field :footnotes, [FootnoteType], null: true
-        field :sections, resolver: Resolvers::Section::ByChapter
-        field :commit, CommitType, null: true
+        field :elements, [ElementType], null: false
+        field :footnotes, [FootnoteType], null: false
+        field :sections, resolver: Resolvers::Section::ByChapter, null: false
+        field :commit, CommitType, null: false
 
         def previous_chapter
           context[:chapter_repo].previous_chapter(object.commit_id, object)
