@@ -4,12 +4,13 @@ import { RouteComponentProps } from "@reach/router";
 import QueryWrapper from "../../QueryWrapper";
 
 import Header from "../Notes/Header";
-import NoteQuery from "./NoteQuery";
-import { Note as NoteType } from "../Notes/types";
 import ElementWithInfo from "../Notes/ElementWithInfo";
 import NoteBox from "./Note";
+import { NoteQuery, useNoteQuery } from "../../graphql/types";
 
-type NoteProps = NoteType & {
+type NoteData = NoteQuery["note"];
+
+type NoteProps = NoteData & {
   bookPermalink: string;
 };
 
@@ -20,7 +21,7 @@ class Note extends React.Component<NoteProps> {
       <div className="main md:w-3/4">
         <div>
           <Header permalink={bookPermalink} noteNumber={number} />
-          <ElementWithInfo {...element} />
+          <ElementWithInfo {...element} bookPermalink={bookPermalink} />
           <NoteBox {...this.props} />
         </div>
       </div>
@@ -40,17 +41,20 @@ export default class WrappedNote extends React.Component<WrappedNoteProps> {
   render() {
     const { number, bookPermalink } = this.props;
 
+    const { data, loading, error } = useNoteQuery({
+      variables: {
+        number: parseInt(number as string),
+        bookPermalink: bookPermalink as string,
+      },
+    });
+
+    const renderNote = (data: NoteQuery) => {
+      return <Note {...data.note} bookPermalink={bookPermalink as string} />;
+    };
+
     return (
-      <QueryWrapper
-        query={NoteQuery}
-        variables={{
-          number: parseInt(number as string),
-          bookPermalink: bookPermalink,
-        }}
-      >
-        {({ note }: { note: NoteType }) => {
-          return <Note bookPermalink={bookPermalink!} {...note} />;
-        }}
+      <QueryWrapper loading={loading} error={error}>
+        {data && renderNote(data)}
       </QueryWrapper>
     );
   }

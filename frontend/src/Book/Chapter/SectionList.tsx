@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Section as SectionType } from "../../graphql/types";
 
 type SubsectionProps = {
   id: string;
@@ -6,14 +7,7 @@ type SubsectionProps = {
   link: string;
 };
 
-type SectionProps = {
-  id: string;
-  title: string;
-  link: string;
-  subsections: Array<SubsectionProps>;
-};
-
-class Section extends React.Component<SectionProps> {
+class Section extends React.Component<SectionType> {
   renderSubsections() {
     const { subsections } = this.props;
 
@@ -23,7 +17,7 @@ class Section extends React.Component<SectionProps> {
 
     return (
       <ul className="section_listing">
-        {subsections.map(section => (
+        {subsections.map((section) => (
           <Subsection {...section} key={section.id} />
         ))}
       </ul>
@@ -55,7 +49,7 @@ class Subsection extends React.Component<SubsectionProps> {
 }
 
 type SectionListProps = {
-  sections: Array<SectionProps>;
+  sections: Array<SectionType>;
 };
 
 export default class SectionList extends React.Component<SectionListProps> {
@@ -64,7 +58,7 @@ export default class SectionList extends React.Component<SectionListProps> {
 
     return (
       <ul className="section_listing">
-        {sections.map(section => (
+        {sections.map((section) => (
           <Section {...section} key={section.id} />
         ))}
       </ul>

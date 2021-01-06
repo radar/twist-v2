@@ -1,29 +1,35 @@
-import React from "react";
-import { Note as NoteType } from "../../Notes/types";
+import React, { useState } from "react";
 import Note from "../../Note/Note";
 import Form from "./Form";
+import {
+  ChapterNotesQuery,
+  useChapterNotesQuery,
+} from "../../../graphql/types";
+import PermissionDenied from "../../../PermissionDenied";
 import QueryWrapper from "../../../QueryWrapper";
-import notesQuery from "./notesQuery";
+
+export type NotesType = ChapterNotesBook["notes"];
 
 interface NotesProps {
   bookPermalink: string;
-  notes: Array<NoteType>;
+  notes: NotesType;
   noteSubmitted: () => void;
   elementId: string;
 }
 
-interface NotesState {
-  notes: Array<NoteType>;
-}
+type ChapterNotesBook = Extract<
+  ChapterNotesQuery["book"],
+  { __typename?: "Book" }
+>;
 
-class Notes extends React.Component<NotesProps, NotesState> {
-  state = {
-    notes: this.props.notes,
-  };
-
-  renderNotes() {
-    const { bookPermalink } = this.props;
-    const { notes } = this.state;
+const Notes: React.FC<NotesProps> = ({
+  bookPermalink,
+  elementId,
+  notes: initialNotes,
+  noteSubmitted,
+}) => {
+  const [notes, setNotes] = useState<NotesType>(initialNotes);
+  const renderNotes = () => {
     if (notes.length == 0) {
       return null;
     }
@@ -36,29 +42,25 @@ class Notes extends React.Component<NotesProps, NotesState> {
         ))}
       </div>
     );
-  }
-
-  noteSubmitted = (note: NoteType) => {
-    let notes = this.state.notes;
-    notes = notes.concat(note);
-    this.setState({ notes: notes });
-    this.props.noteSubmitted();
   };
 
-  render() {
-    const { bookPermalink, elementId } = this.props;
-    return (
-      <div className="border-2 rounded p-2 mb-4" key={`notes-${elementId}`}>
-        {this.renderNotes()}
-        <Form
-          bookPermalink={bookPermalink}
-          elementId={elementId}
-          noteSubmitted={this.noteSubmitted}
-        />
-      </div>
-    );
-  }
-}
+  const noteSubmitted2 = (note: NotesType[0]) => {
+    let newNotes = [...notes];
+    setNotes(newNotes.concat(note));
+    noteSubmitted();
+  };
+
+  return (
+    <div className="border-2 rounded p-2 mb-4" key={`notes-${elementId}`}>
+      {renderNotes()}
+      <Form
+        bookPermalink={bookPermalink}
+        elementId={elementId}
+        noteSubmitted={noteSubmitted2}
+      />
+    </div>
+  );
+};
 
 interface WrappedNotesProps {
   bookPermalink: string;
@@ -66,37 +68,36 @@ interface WrappedNotesProps {
   noteSubmitted: () => void;
 }
 
-interface NotesQueryData {
-  book: {
-    notes: Array<NoteType>;
-  };
-}
+const WrappedNotes: React.FC<WrappedNotesProps> = ({
+  bookPermalink,
+  elementId,
+  noteSubmitted,
+}) => {
+  const { data, loading, error } = useChapterNotesQuery({
+    variables: { elementId, bookPermalink },
+  });
 
-class WrappedNotes extends React.Component<WrappedNotesProps> {
-  render() {
-    const { bookPermalink, elementId, noteSubmitted } = this.props;
+  const renderNotes = (data: ChapterNotesQuery) => {
+    const { book } = data;
+    if (book.__typename === "PermissionDenied") {
+      return <PermissionDenied />;
+    }
+
     return (
-      <QueryWrapper
-        fetchPolicy="network-only"
-        query={notesQuery}
-        variables={{ elementId, bookPermalink }}
-      >
-        {(data: NotesQueryData) => {
-          const {
-            book: { notes },
-          } = data;
-          return (
-            <Notes
-              notes={notes}
-              bookPermalink={bookPermalink}
-              elementId={elementId}
-              noteSubmitted={noteSubmitted}
-            />
-          );
-        }}
-      </QueryWrapper>
+      <Notes
+        notes={book.notes}
+        bookPermalink={bookPermalink}
+        elementId={elementId}
+        noteSubmitted={noteSubmitted}
+      />
     );
-  }
-}
+  };
+
+  return (
+    <QueryWrapper loading={loading} error={error}>
+      {data && renderNotes(data)}
+    </QueryWrapper>
+  );
+};
 
 export default WrappedNotes;

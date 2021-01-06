@@ -1,13 +1,14 @@
 import * as React from "react";
 
-import { ElementWithNotesProps } from "./types";
-
 import ElementWithInfo from "./ElementWithInfo";
 import Note from "../Note/Note";
+import { BookNotesQuery } from "../../graphql/types";
 
-export default class ElementWithNotes extends React.Component<
-  ElementWithNotesProps
-> {
+type ElementWithNotesProps = BookNotesQuery["elementsWithNotes"][0] & {
+  bookPermalink: string;
+};
+
+export default class ElementWithNotes extends React.Component<ElementWithNotesProps> {
   renderNotes() {
     const { bookPermalink, notes } = this.props;
     return notes.map((note) => (

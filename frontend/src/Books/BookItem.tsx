@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "@reach/router";
-
-export interface Book {
-  id: number;
-  title: string;
-  permalink: string;
-  blurb: string;
-}
+import { Book } from "../graphql/types";
 
 export default class BookItem extends Component<Book> {
   render() {

@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { Router, Link, Redirect } from "@reach/router";
-import { ApolloProvider } from "react-apollo";
+import { ApolloProvider } from "@apollo/client";
 
 import ApolloClient from "./ApolloClient";
 
-import CurrentUser from "./CurrentUser";
-import CurrentUserContext from "./CurrentUser/context";
+import CurrentUserContext, { CurrentUserType } from "./CurrentUser/context";
 import OAuthCallback from "./OAuth/Callback";
-import User from "./CurrentUser/user";
 import Login from "./Login";
 import Books from "./Books";
 import Book from "./Book";
@@ -18,24 +16,20 @@ import Notes from "./Book/Notes";
 import Note from "./Book/Note";
 
 import "./styles.css";
+import CurrentUser from "./CurrentUser";
 
-type UserInfoProps = {
-  user: {
-    email: string;
-    githubLogin: string;
-  };
-};
+type User = Exclude<CurrentUserType, null | undefined>;
 
-function UserInfo(props: UserInfoProps) {
-  return <span>Signed in as {props.user.githubLogin || props.user.email}</span>;
+function UserInfo({ githubLogin, email }: User) {
+  return <span>Signed in as {githubLogin || email}</span>;
 }
 
 class Root extends Component<{}> {
   renderUserInfo() {
     return (
       <CurrentUserContext.Consumer>
-        {(user) =>
-          user ? <UserInfo user={user} /> : <Link to="#">Sign in</Link>
+        {(user: CurrentUserType) =>
+          user ? <UserInfo {...user} /> : <Link to="#">Sign in</Link>
         }
       </CurrentUserContext.Consumer>
     );
@@ -71,7 +65,7 @@ class Root extends Component<{}> {
     );
   }
 
-  renderAuthenticatedAreaOrRedirect = (user: User | null) => {
+  renderAuthenticatedAreaOrRedirect = (user: CurrentUserType) => {
     if (user || process.env.REACT_APP_ALLOW_ANYONE) {
       return this.renderAuthenticatedArea();
     } else {

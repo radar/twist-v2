@@ -3,13 +3,13 @@ import ReactMarkdown from "react-markdown";
 import Gravatar from "react-gravatar";
 import moment from "moment";
 
-import { Comment as CommentProps } from "../../Notes/types";
+import { Comment as CommentType } from "../../../graphql/types";
 
 import EditButton from "./EditButton";
 import EditForm from "./EditForm";
 import Delete from "./Delete";
 
-const Comment: FunctionComponent<CommentProps> = (props) => {
+const Comment: FunctionComponent<CommentType> = (props) => {
   const { id, user, createdAt } = props;
   const [text, setText] = useState<string>(props.text);
   const [showForm, setShowForm] = useState<boolean>(false);

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 
 import CurrentUserContext from "../../../CurrentUser/context";
-import { User } from "../../Notes/types";
+import { User } from "../../../graphql/types";
 
 type EditButtonProps = {
   showForm: boolean;

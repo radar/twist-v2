@@ -2,13 +2,12 @@ import React, { FunctionComponent, useState } from "react";
 import submitNoteMutation from "./SubmitNoteMutation";
 
 import { useMutation } from "@apollo/react-hooks";
-
-import { Note } from "../../Notes/types";
+import { NotesType } from ".";
 
 type FormProps = {
   bookPermalink: string;
   elementId: string;
-  noteSubmitted: (note: Note) => void;
+  noteSubmitted: (note: NotesType[0]) => void;
 };
 
 const Form: FunctionComponent<FormProps> = (props) => {

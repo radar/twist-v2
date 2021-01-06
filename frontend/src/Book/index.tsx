@@ -4,49 +4,33 @@ import QueryWrapper from "../QueryWrapper";
 import { Link, RouteComponentProps } from "@reach/router";
 
 import ChapterLink from "./ChapterLink";
-import bookQuery from "./BookQuery";
 import PermissionDenied from "../PermissionDenied";
 import CommitInfo from "./Commit";
+import {
+  BookQuery,
+  ChapterFieldsFragment,
+  useBookQuery,
+} from "../graphql/types";
 
-type ChapterProps = {
-  id: string;
-  title: string;
-  permalink: string;
-};
+export type BookData = Extract<BookQuery["book"], { __typename?: "Book" }>;
+type Chapters = readonly ChapterFieldsFragment[];
 
-export type Commit = {
-  branch: {
-    name: string;
+type BookProps = RouteComponentProps &
+  BookData & {
+    gitRef: string;
   };
-  sha: string;
-  createdAt: string;
-  frontmatter: ChapterProps[];
-  mainmatter: ChapterProps[];
-  backmatter: ChapterProps[];
-};
 
-interface BookProps extends RouteComponentProps {
-  gitRef: string;
-  title: string;
-  permalink: string;
-  latestCommit: {
-    sha: string;
-  };
-  commit: Commit;
-  error?: string;
-}
-
-interface PermissionDenied {
-  error: string;
-}
-
-export class Book extends Component<BookProps> {
-  renderPart(title: string, chapters: ChapterProps[]) {
+export const Book: React.FC<BookProps> = ({
+  title,
+  commit,
+  latestCommit,
+  permalink,
+  gitRef,
+}) => {
+  const renderPart = (title: string, chapters: Chapters) => {
     if (chapters.length === 0) {
       return null;
     }
-
-    const { permalink, gitRef } = this.props;
 
     return (
       <div className="mt-3">
@@ -63,67 +47,59 @@ export class Book extends Component<BookProps> {
         </ol>
       </div>
     );
-  }
+  };
 
-  render() {
-    const { error } = this.props;
+  const { frontmatter, mainmatter, backmatter } = commit;
 
-    if (error) {
+  return (
+    <div className={`bg-white p-4 border-gray-400 border rounded md:w-1/2`}>
+      <h1>{title}</h1>
+      <CommitInfo
+        permalink={permalink}
+        commit={commit}
+        latestCommit={latestCommit}
+      />
+      <Link to={`/books/${permalink}/notes`} className="mb-4 inline-block">
+        Notes for this book
+      </Link>{" "}
+      &middot;{" "}
+      <Link to={`/books/${permalink}/branches`} className="mb-4 inline-block">
+        Branches
+      </Link>
+      <hr />
+      {renderPart("Frontmatter", frontmatter)}
+      {renderPart("Mainmatter", mainmatter)}
+      {renderPart("Backmatter", backmatter)}
+    </div>
+  );
+};
+
+type WrappedBookProps = {
+  bookPermalink: string;
+  gitRef: string;
+};
+
+const WrappedBook: React.FC<RouteComponentProps<WrappedBookProps>> = ({
+  bookPermalink,
+  gitRef,
+}) => {
+  const { data, loading, error } = useBookQuery({
+    variables: { permalink: bookPermalink as string, gitRef: gitRef },
+  });
+
+  const renderBook = (data: BookQuery) => {
+    if (data.book.__typename === "PermissionDenied") {
       return <PermissionDenied />;
     }
 
-    const {
-      title,
-      permalink,
-      commit: { frontmatter, mainmatter, backmatter },
-      latestCommit,
-    } = this.props;
+    return <Book {...data.book} gitRef={gitRef as string} />;
+  };
 
-    return (
-      <div className={`bg-white p-4 border-gray-400 border rounded md:w-1/2`}>
-        <h1>{title}</h1>
-        <CommitInfo
-          permalink={permalink}
-          commit={this.props.commit}
-          latestCommit={latestCommit}
-        />
-        <Link to={`/books/${permalink}/notes`} className="mb-4 inline-block">
-          Notes for this book
-        </Link>{" "}
-        &middot;{" "}
-        <Link to={`/books/${permalink}/branches`} className="mb-4 inline-block">
-          Branches
-        </Link>
-        <hr />
-        {this.renderPart("Frontmatter", frontmatter)}
-        {this.renderPart("Mainmatter", mainmatter)}
-        {this.renderPart("Backmatter", backmatter)}
-      </div>
-    );
-  }
-}
+  return (
+    <QueryWrapper loading={loading} error={error}>
+      {data && renderBook(data)}
+    </QueryWrapper>
+  );
+};
 
-interface WrappedBookMatchParams {
-  bookPermalink: string;
-  gitRef: string;
-}
-
-interface WrappedBookProps
-  extends RouteComponentProps<WrappedBookMatchParams> {}
-
-export default class WrappedBook extends Component<WrappedBookProps> {
-  render() {
-    const { bookPermalink, gitRef } = this.props;
-
-    return (
-      <QueryWrapper
-        query={bookQuery}
-        variables={{ permalink: bookPermalink, gitRef: gitRef }}
-      >
-        {(data: { book: BookProps }) => {
-          return <Book gitRef={gitRef} {...data.book} />;
-        }}
-      </QueryWrapper>
-    );
-  }
-}
+export default WrappedBook;

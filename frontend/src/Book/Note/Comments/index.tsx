@@ -1,16 +1,18 @@
 import React, { FunctionComponent, useState } from "react";
 
 import CommentForm from "./CommentForm";
-import { Comment as CommentType } from "../../Notes/types";
 import Comment from "./Comment";
+import { Comment as CommentType, Note } from "../../../graphql/types";
+
+type Comments = Note["comments"];
 
 type CommentsProps = {
   noteId: string;
-  comments: CommentType[];
+  comments: Comments;
 };
 
 const Comments: FunctionComponent<CommentsProps> = (props) => {
-  const [comments, setComments] = useState<CommentType[]>(props.comments);
+  const [comments, setComments] = useState<Comments>(props.comments);
 
   const renderComments = () => {
     return comments.map((comment) => <Comment {...comment} key={comment.id} />);

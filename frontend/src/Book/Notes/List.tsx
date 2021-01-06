@@ -1,14 +1,19 @@
-import * as React from "react";
+import React from "react";
 
 import QueryWrapper from "../../QueryWrapper";
 
-import { ElementWithNotesProps } from "./types";
 import ElementWithNotes from "./ElementWithNotes";
-import NotesQuery from "./NotesQuery";
+import {
+  BookNotesQuery,
+  NoteState,
+  useBookNotesQuery,
+} from "../../graphql/types";
+
+type ElementsWithNotes = BookNotesQuery["elementsWithNotes"];
 
 type NoteListProps = {
   bookPermalink: string;
-  elementsWithNotes: ElementWithNotesProps[];
+  elementsWithNotes: ElementsWithNotes;
 };
 
 export class NoteList extends React.Component<NoteListProps> {
@@ -17,8 +22,8 @@ export class NoteList extends React.Component<NoteListProps> {
     return elementsWithNotes.map((element) => (
       <ElementWithNotes
         key={element.id}
-        bookPermalink={bookPermalink}
         {...element}
+        bookPermalink={bookPermalink}
       />
     ));
   }
@@ -33,34 +38,31 @@ type WrappedNoteListProps = {
   state: string;
 };
 
-export default class WrappedNoteList extends React.Component<
-  WrappedNoteListProps
-> {
-  render() {
-    const variables = {
-      bookPermalink: this.props.bookPermalink,
-      state: this.props.state,
-    };
+const WrappedNoteList: React.FC<WrappedNoteListProps> = ({
+  bookPermalink,
+  state,
+}) => {
+  const variables = {
+    bookPermalink: bookPermalink,
+    state: state as NoteState,
+  };
 
+  const { data, loading, error } = useBookNotesQuery({ variables });
+
+  const renderNotes = (data: BookNotesQuery) => {
     return (
-      <QueryWrapper
-        query={NotesQuery}
-        variables={variables}
-        fetchPolicy="network-only"
-      >
-        {({
-          elementsWithNotes,
-        }: {
-          elementsWithNotes: ElementWithNotesProps[];
-        }) => {
-          return (
-            <NoteList
-              bookPermalink={this.props.bookPermalink}
-              elementsWithNotes={elementsWithNotes}
-            />
-          );
-        }}
-      </QueryWrapper>
+      <NoteList
+        bookPermalink={bookPermalink}
+        elementsWithNotes={data.elementsWithNotes}
+      />
     );
-  }
-}
+  };
+
+  return (
+    <QueryWrapper loading={loading} error={error}>
+      {data && renderNotes(data)}
+    </QueryWrapper>
+  );
+};
+
+export default WrappedNoteList;

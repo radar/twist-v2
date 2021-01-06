@@ -1,19 +1,19 @@
 import React from "react";
 import { RouteComponentProps } from "@reach/router";
+
+import BookItem from "./BookItem";
+import { useBooksQuery, BooksQuery } from "../graphql/types";
 import QueryWrapper from "../QueryWrapper";
 
-import booksQuery from "./booksQuery";
-import BookItem, { Book } from "./BookItem";
-
-interface BooksProps {
-  books: Book[];
-}
+type BooksProps = {
+  books: any;
+};
 
 export class Books extends React.Component<BooksProps> {
   renderBooks() {
     const { books } = this.props;
     if (books.length > 0) {
-      return books.map((book) => <BookItem {...book} key={book.id} />);
+      return books.map((book: any) => <BookItem {...book} key={book.id} />);
     }
 
     return (
@@ -34,19 +34,17 @@ export class Books extends React.Component<BooksProps> {
   }
 }
 
-interface WrappedBooksProps extends RouteComponentProps {}
+const WrappedBooks: React.FC<RouteComponentProps> = () => {
+  const { data, loading, error } = useBooksQuery();
 
-export default class WrappedBooks extends React.Component<
-  WrappedBooksProps,
-  {}
-> {
-  render() {
-    return (
-      <QueryWrapper query={booksQuery}>
-        {({ books }: BooksProps) => {
-          return <Books books={books} />;
-        }}
-      </QueryWrapper>
-    );
-  }
-}
+  const renderBooks = (data: BooksQuery) => {
+    return <Books books={data.books}></Books>;
+  };
+  return (
+    <QueryWrapper loading={loading} error={error}>
+      {data && renderBooks(data)}
+    </QueryWrapper>
+  );
+};
+
+export default WrappedBooks;

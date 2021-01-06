@@ -1,31 +1,20 @@
-import React, { FunctionComponent } from "react";
-
-import { useQuery } from "@apollo/react-hooks";
+import { ApolloError } from "@apollo/client";
+import React from "react";
 
 type QueryWrapperProps = {
-  query: {};
-  variables?: {};
-  fetchPolicy?:
-    | "cache-first"
-    | "network-only"
-    | "cache-only"
-    | "no-cache"
-    | "standby"
-    | undefined;
-  children(data: any): React.ReactNode;
+  loading: boolean;
+  error: ApolloError | undefined;
 };
 
-const QueryWrapper: FunctionComponent<QueryWrapperProps> = (props) => {
-  const { query, variables, fetchPolicy, children } = props;
-  const { loading, error, data } = useQuery(query, {
-    variables: variables,
-    fetchPolicy: fetchPolicy,
-  });
-
+const QueryWrapper: React.FC<QueryWrapperProps> = ({
+  loading,
+  error,
+  children,
+}) => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error! ${error.message}</div>;
 
-  return <span>{children(data)}</span>;
+  return <>{children}</>;
 };
 
 export default QueryWrapper;

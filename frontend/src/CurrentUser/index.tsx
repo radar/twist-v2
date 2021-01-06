@@ -1,30 +1,25 @@
 import * as React from "react";
 
 import QueryWrapper from "../QueryWrapper";
-import currentUserQuery from "./query";
 import CurrentUserContext from "./context";
-import User from "./user";
+import { useCurrentUserQuery, CurrentUserQuery } from "../graphql/types";
 
-type CurrentUserProps = {
-  children: React.ReactNode;
-};
+const CurrentUser: React.FC = ({ children }) => {
+  const { data, loading, error } = useCurrentUserQuery();
 
-type CurrentUserData = {
-  currentUser: User | null;
-};
-
-export default class CurrentUser extends React.Component<CurrentUserProps> {
-  render() {
+  const renderCurrentUser = (data: CurrentUserQuery) => {
     return (
-      <QueryWrapper query={currentUserQuery} fetchPolicy="network-only">
-        {(data: CurrentUserData) => {
-          return (
-            <CurrentUserContext.Provider value={data.currentUser}>
-              {this.props.children}
-            </CurrentUserContext.Provider>
-          );
-        }}
-      </QueryWrapper>
+      <CurrentUserContext.Provider value={data.currentUser}>
+        {children}
+      </CurrentUserContext.Provider>
     );
-  }
-}
+  };
+
+  return (
+    <QueryWrapper loading={loading} error={error}>
+      {data && renderCurrentUser(data)}
+    </QueryWrapper>
+  );
+};
+
+export default CurrentUser;

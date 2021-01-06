@@ -1,5 +1,7 @@
 import * as React from "react";
 
-import User from "./user";
+import { CurrentUserQuery } from "../graphql/types";
 
-export default React.createContext<User | null>(null);
+export type CurrentUserType = CurrentUserQuery["currentUser"];
+
+export default React.createContext<CurrentUserType>(null);

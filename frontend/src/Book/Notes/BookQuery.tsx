@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export default gql`
-  query bookQuery($bookPermalink: String!) {
+  query noteBook($bookPermalink: String!) {
     book(permalink: $bookPermalink) {
       ... on Book {
         id

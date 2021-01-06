@@ -1,25 +1,15 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import Notes from "./Notes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment } from "@fortawesome/free-regular-svg-icons";
-
-type Image = {
-  path: string;
-  caption: string;
-};
-
-export type BareElementProps = {
-  bookPermalink: string;
-  id: string;
-  content: string;
-  tag: string;
-  identifier: string;
-  image?: Image;
-};
+import {
+  ElementWithInfoFragment,
+  Image as ImageType,
+} from "../../graphql/types";
 
 type ImageElementProps = {
   id: string;
-  image: Image;
+  image: ImageType;
 };
 
 const Image = (props: ImageElementProps) => {
@@ -29,7 +19,7 @@ const Image = (props: ImageElementProps) => {
   } = props;
 
   const fullPath =
-    process.env.NODE_ENV == "development"
+    process.env.NODE_ENV === "development"
       ? process.env.REACT_APP_API_HOST + path
       : path;
   return (
@@ -42,9 +32,11 @@ const Image = (props: ImageElementProps) => {
   );
 };
 
+type BareElementProps = Omit<ElementWithInfoFragment, "chapter" | "notes">;
+
 export class BareElement extends Component<BareElementProps> {
   createMarkup() {
-    return { __html: this.props.content };
+    return { __html: this.props.content as string };
   }
 
   render() {
@@ -59,81 +51,70 @@ export class BareElement extends Component<BareElementProps> {
   }
 }
 
-type ElementState = {
-  showNotes: boolean;
-  noteCount: number;
-};
-
 export type ElementProps = BareElementProps & {
+  bookPermalink: string;
+  id: string;
   noteCount: number;
 };
 
-export default class Element extends Component<ElementProps, ElementState> {
-  state = {
-    showNotes: false,
-    noteCount: this.props.noteCount,
+const Element: React.FC<ElementProps> = (props) => {
+  const { noteCount: initialNoteCount, id, bookPermalink } = props;
+  const [noteCount, setNoteCount] = useState<number>(initialNoteCount);
+  const [showNotes, setShowNotes] = useState<boolean>(false);
+
+  const renderNotesCount = () => {
+    return noteCount === 1 ? "1" : `${noteCount}`;
   };
 
-  renderNotesCount() {
-    const count = this.state.noteCount;
-    return count === 1 ? "1" : `${count}`;
-  }
-
-  toggleNotes = (event?: React.MouseEvent) => {
+  const toggleNotes = (event?: React.MouseEvent) => {
     if (event) {
       event.preventDefault();
     }
-    this.setState({ showNotes: !this.state.showNotes });
+    setShowNotes(!showNotes);
   };
 
-  noteSubmitted = () => {
-    this.toggleNotes();
-    this.setState({ noteCount: this.state.noteCount + 1 });
+  const noteSubmitted = () => {
+    toggleNotes();
+    setNoteCount(noteCount + 1);
   };
 
-  renderNotes() {
-    if (!this.state.showNotes) {
+  const renderNotes = () => {
+    if (!showNotes) {
       return;
     }
-    const { bookPermalink, id } = this.props;
     return (
       <Notes
         bookPermalink={bookPermalink}
-        noteSubmitted={this.noteSubmitted}
+        noteSubmitted={noteSubmitted}
         elementId={id}
       />
     );
-  }
+  };
 
-  render() {
-    const { identifier, id } = this.props;
-    return (
-      <div className="relative element">
-        <a id={identifier || id} />
-        <span
-          className={`absolute`}
-          style={{ left: "-4rem", top: "-1rem" }}
-          id={`note_button_${id}`}
-        >
-          <span className="fa-stack fa-fw">
-            <FontAwesomeIcon
-              icon={faComment}
-              size="2x"
-              color="#3182ce"
-              flip="horizontal"
-            />
-            <a
-              href="#"
-              onClick={this.toggleNotes}
-              className="text-blue-600 mt-1 text-sm font-bold fa-stack-1x no-underline"
-            >
-              {this.renderNotesCount()}
-            </a>
+  return (
+    <div className="relative element">
+      <a id={id} />
+      <span
+        className={`absolute`}
+        style={{ left: "-4rem", top: "-1rem" }}
+        id={`note_button_${id}`}
+      >
+        <button type="button" className="fa-stack fa-fw" onClick={toggleNotes}>
+          <FontAwesomeIcon
+            icon={faComment}
+            size="2x"
+            color="#3182ce"
+            flip="horizontal"
+          />
+          <span className="text-blue-600 mt-1 text-sm font-bold fa-stack-1x no-underline">
+            {renderNotesCount()}
           </span>
-        </span>
-        <BareElement {...this.props} />
-        {this.renderNotes()}
-      </div>
-    );
-  }
-}
+        </button>
+      </span>
+      <BareElement {...props} />
+      {renderNotes()}
+    </div>
+  );
+};
+
+export default Element;

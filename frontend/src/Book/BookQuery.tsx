@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export default gql`
-  query bookQuery($permalink: String!, $gitRef: String) {
+  query book($permalink: String!, $gitRef: String) {
     book(permalink: $permalink) {
       ... on PermissionDenied {
         error
@@ -9,13 +9,11 @@ export default gql`
 
       ... on Book {
         title
-        id
         permalink
         latestCommit(gitRef: $gitRef) {
           sha
         }
         commit(gitRef: $gitRef) {
-          id
           sha
           createdAt
           branch {

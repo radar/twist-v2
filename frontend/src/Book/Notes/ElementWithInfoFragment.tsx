@@ -6,6 +6,7 @@ export default gql`
     content
     tag
     image {
+      id
       path
       caption
     }

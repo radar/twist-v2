@@ -3,30 +3,21 @@ import { RouteComponentProps, Link } from "@reach/router";
 import moment from "moment";
 
 import QueryWrapper from "../../QueryWrapper";
-import branchQuery from "./branchQuery";
+import { BranchQuery, useBranchQuery } from "../../graphql/types";
+import PermissionDenied from "../../PermissionDenied";
 
-interface CommitType {
-  sha: string;
-  createdAt: string;
-  message: string;
-}
+type Book = Extract<BranchQuery["book"], { __typename?: "Book" }>;
+type BranchData = Book["branch"];
+type CommitData = BranchData["commits"][0] & {
+  bookPermalink: string;
+};
 
-interface BranchType {
-  name: string;
-  default: boolean;
-  commits: CommitType[];
-}
-
-interface BranchProps extends BranchType {
+interface BranchProps extends BranchData {
   bookTitle: string;
   bookPermalink: string;
 }
 
-interface CommitProps extends CommitType {
-  bookPermalink: string;
-}
-
-const Commit: FunctionComponent<CommitProps> = (props) => {
+const Commit: FunctionComponent<CommitData> = (props) => {
   const { bookPermalink, sha, createdAt, message } = props;
   let dots;
   if (message) {
@@ -75,31 +66,32 @@ type WrappedBranchProps = RouteComponentProps<{
   name: string;
 }>;
 
-interface BranchesQueryData {
-  book: {
-    branch: BranchType;
-    title: string;
-  };
-}
-
 const WrappedBranch: FunctionComponent<WrappedBranchProps> = (props) => {
   const { bookPermalink, name } = props;
 
-  return (
-    <QueryWrapper query={branchQuery} variables={{ bookPermalink, name }}>
-      {(data: BranchesQueryData) => {
-        const {
-          book: { title, branch },
-        } = data;
+  const { data, loading, error } = useBranchQuery({
+    variables: { bookPermalink: bookPermalink as string, name: name as string },
+  });
 
-        return (
-          <Branch
-            bookTitle={title}
-            bookPermalink={bookPermalink!}
-            {...branch}
-          />
-        );
-      }}
+  const renderBranches = (data: BranchQuery) => {
+    const { book } = data;
+
+    if (book.__typename === "PermissionDenied") {
+      return <PermissionDenied />;
+    }
+
+    return (
+      <Branch
+        bookTitle={book.title}
+        bookPermalink={bookPermalink!}
+        {...book.branch}
+      />
+    );
+  };
+
+  return (
+    <QueryWrapper loading={loading} error={error}>
+      {data && renderBranches(data)}
     </QueryWrapper>
   );
 };

@@ -9,16 +9,19 @@ type ChapterLinkProps = {
   permalink: string;
 };
 
-export default class ChapterLink extends React.Component<ChapterLinkProps> {
-  render() {
-    const { bookPermalink, gitRef, title, permalink } = this.props;
+const ChapterLink: React.FC<ChapterLinkProps> = ({
+  bookPermalink,
+  gitRef,
+  title,
+  permalink,
+}) => {
+  const link = `${bookLink(bookPermalink, gitRef)}/chapters/${permalink}`;
 
-    const link = `${bookLink(bookPermalink, gitRef)}/chapters/${permalink}`;
+  return (
+    <li>
+      <Link to={link}>{title}</Link>
+    </li>
+  );
+};
 
-    return (
-      <li>
-        <Link to={link}>{title}</Link>
-      </li>
-    );
-  }
-}
+export default ChapterLink;

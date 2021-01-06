@@ -1,7 +1,7 @@
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 
 export default gql`
-  query BooksQuery {
+  query Books {
     books {
       id
       title
@@ -9,4 +9,4 @@ export default gql`
       blurb
     }
   }
-`
+`;

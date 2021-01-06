@@ -1,17 +1,14 @@
 import React, { FunctionComponent } from "react";
 import { RouteComponentProps, Link } from "@reach/router";
 import QueryWrapper from "../../QueryWrapper";
-import branchesQuery from "./branchesQuery";
+import { Branch, BranchesQuery, useBranchesQuery } from "../../graphql/types";
 
-interface Branch {
-  name: string;
-  default: string;
-}
+type BranchesData = ReadonlyArray<Branch>;
 
 interface BranchesProps {
   bookTitle: string;
   bookPermalink: string;
-  branches: Branch[];
+  branches: BranchesData;
 }
 
 interface BranchItemProps extends Branch {
@@ -55,34 +52,30 @@ const Branches: FunctionComponent<BranchesProps> = (props) => {
 
 type WrappedBranchesProps = RouteComponentProps<{ bookPermalink: string }>;
 
-interface BranchesQueryData {
-  book: {
-    branches: Branch[];
-    title: string;
-  };
-}
-
 const WrappedBranches: FunctionComponent<WrappedBranchesProps> = (props) => {
   const { bookPermalink } = props;
 
-  return (
-    <QueryWrapper
-      query={branchesQuery}
-      variables={{ bookPermalink: bookPermalink }}
-    >
-      {(data: BranchesQueryData) => {
-        const {
-          book: { title, branches },
-        } = data;
+  const { data, loading, error } = useBranchesQuery({
+    variables: { bookPermalink: bookPermalink as string },
+  });
 
-        return (
-          <Branches
-            bookTitle={title}
-            bookPermalink={bookPermalink!}
-            branches={branches}
-          />
-        );
-      }}
+  const renderBranches = (data: BranchesQuery) => {
+    const { book } = data;
+
+    if (book.__typename === "Book") {
+      return (
+        <Branches
+          bookTitle={book.title}
+          bookPermalink={bookPermalink!}
+          branches={book.branches as BranchesData}
+        />
+      );
+    }
+  };
+
+  return (
+    <QueryWrapper loading={loading} error={error}>
+      {data && renderBranches(data)}
     </QueryWrapper>
   );
 };

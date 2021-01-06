@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export default gql`
-  query chapterQuery(
+  query chapter(
     $bookPermalink: String!
     $chapterPermalink: String!
     $gitRef: String
@@ -55,6 +55,7 @@ export default gql`
               noteCount
               identifier
               image {
+                id
                 caption
                 path
               }

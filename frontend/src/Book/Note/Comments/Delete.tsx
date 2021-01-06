@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from "react";
 import { useMutation } from "react-apollo";
 
 import CurrentUserContext from "../../../CurrentUser/context";
-import { User } from "../../Notes/types";
+import { User } from "../../../graphql/types";
 
 import deleteCommentMutation from "./DeleteCommentMutation";
 

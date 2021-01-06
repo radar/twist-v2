@@ -5,10 +5,8 @@ export interface FootnoteProps {
   content: string;
 }
 
-export default class Footnote extends React.Component<FootnoteProps> {
-  render() {
-    const { identifier, content } = this.props;
+const Footnote: React.FC<FootnoteProps> = ({ identifier, content }) => {
+  return <div dangerouslySetInnerHTML={{ __html: content }} />;
+};
 
-    return <div dangerouslySetInnerHTML={{ __html: content }} />;
-  }
-}
+export default Footnote;

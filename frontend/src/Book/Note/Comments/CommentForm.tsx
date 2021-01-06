@@ -4,11 +4,11 @@ import { useMutation } from "@apollo/react-hooks";
 
 import CurrentUserContext from "../../../CurrentUser/context";
 
-import { Comment as CommentProps } from "../../Notes/types";
+import { Comment as CommentType } from "../../../graphql/types";
 import createCommentMutation from "./AddCommentMutation";
 
 type CommentFormProps = {
-  addComment(comment: CommentProps): void;
+  addComment(comment: CommentType): void;
   noteId: string;
 };
 
@@ -18,7 +18,7 @@ type CreateCommentVariables = {
 };
 
 type CreateCommentData = {
-  addComment: CommentProps;
+  addComment: CommentType;
 };
 
 const CommentForm: FunctionComponent<CommentFormProps> = ({

@@ -3,7 +3,7 @@ import ElementWithInfoFragment from "./ElementWithInfoFragment";
 import NoteFragment from "../Notes/NoteFragment";
 
 export default gql`
-  query bookQuery($bookPermalink: String!, $state: NoteState!) {
+  query bookNotes($bookPermalink: String!, $state: NoteState!) {
     elementsWithNotes(bookPermalink: $bookPermalink, state: $state) {
       ...elementWithInfo
 

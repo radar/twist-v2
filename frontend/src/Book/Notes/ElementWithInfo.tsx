@@ -1,15 +1,19 @@
 import * as React from "react";
 
-import { ElementWithInfoProps, ChapterProps, CommitProps } from "./types";
-
 import { BareElement } from "../Chapter/Element";
 import * as styles from "./ElementWithInfo.module.scss";
 import { Link } from "@reach/router";
+import { Commit, ElementWithInfoFragment } from "../../graphql/types";
 
-export default class ElementWithInfo extends React.Component<
-  ElementWithInfoProps
-> {
-  renderChapterTitle(chapter: ChapterProps) {
+type ElementWithInfoProps = Omit<ElementWithInfoFragment, "notes"> & {
+  bookPermalink: string;
+  className?: string;
+};
+
+type CommitInfo = ElementWithInfoFragment["chapter"]["commit"];
+
+export default class ElementWithInfo extends React.Component<ElementWithInfoProps> {
+  renderChapterTitle(chapter: ElementWithInfoProps["chapter"]) {
     const { part, position, title } = chapter;
 
     if (part === "mainmatter") {
@@ -19,7 +23,7 @@ export default class ElementWithInfo extends React.Component<
     }
   }
 
-  renderCommitInfo(commit: CommitProps) {
+  renderCommitInfo(commit: CommitInfo) {
     const {
       sha,
       branch: { name },

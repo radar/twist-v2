@@ -1,7 +1,9 @@
 import React from "react";
-import { Book, Commit } from "../../Book";
+import { Book, BookData } from "../../Book";
 import Layout from "../../layout";
 import "../../styles.css";
+
+type Commit = BookData["commit"];
 
 export default {
   title: "Books",
@@ -17,6 +19,7 @@ export const BooksShow = () => {
     },
     frontmatter: [
       {
+        position: 1,
         id: "1",
         title: "Introduction",
         permalink: "introduction",

@@ -1,80 +1,28 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link, RouteComponentProps } from "@reach/router";
 
 import QueryWrapper from "../../QueryWrapper";
-import chapterQuery from "./ChapterQuery";
-import Element, { ElementProps } from "./Element";
-import Footnote, { FootnoteProps } from "./Footnote";
+import Element from "./Element";
+import Footnote from "./Footnote";
 import { PreviousChapterLink, NextChapterLink } from "./Link";
 import SectionList from "./SectionList";
 import bookLink from "../../Book/link";
 
 import PermissionDenied from "../../PermissionDenied";
 import Commit from "../Commit";
+import { ChapterQuery, Section, useChapterQuery } from "../../graphql/types";
 
-type SubsectionProps = {
-  id: string;
-  title: string;
-  link: string;
-};
+type ChapterQueryBook = Extract<ChapterQuery["book"], { __typename: "Book" }>;
 
-type SectionProps = {
-  id: string;
-  title: string;
-  link: string;
-  subsections: Array<SubsectionProps>;
-};
+type LatestCommit = ChapterQueryBook["latestCommit"];
 
-type LatestCommit = {
-  sha: string;
-};
-
-type Book = {
-  error: string;
-  title: string;
-  commit: {
-    branch: {
-      name: string;
-    };
-    chapter: ChapterProps;
+export type ChapterAtCommitProps = RouteComponentProps &
+  ChapterQueryBook["commit"] & {
+    bookTitle: string;
+    bookPermalink: string;
+    gitRef: string;
+    latestCommit: LatestCommit;
   };
-  latestCommit: LatestCommit;
-};
-
-export type NavigationalChapter = {
-  id: string;
-  permalink: string;
-  part: string;
-  title: string;
-  position: number;
-  bookPermalink: string;
-  gitRef: string;
-};
-
-export type CommitProps = {
-  sha: string;
-  createdAt: string;
-  branch: {
-    name: string;
-  };
-};
-
-export interface ChapterProps extends RouteComponentProps {
-  bookTitle: string;
-  bookPermalink: string;
-  gitRef: string;
-  branchName: string;
-  title: string;
-  position: number;
-  part: string;
-  elements: Array<ElementProps>;
-  footnotes: Array<FootnoteProps>;
-  sections: Array<SectionProps>;
-  commit: CommitProps;
-  latestCommit: LatestCommit;
-  previousChapter: NavigationalChapter | null;
-  nextChapter: NavigationalChapter | null;
-}
 
 export const chapterPositionAndTitle = (
   part: string,
@@ -88,9 +36,23 @@ export const chapterPositionAndTitle = (
   }
 };
 
-export class Chapter extends Component<ChapterProps> {
-  renderPreviousChapterLink() {
-    const { bookPermalink, previousChapter, gitRef } = this.props;
+const ChapterAtCommit: React.FC<ChapterAtCommitProps> = ({
+  // Params
+  bookPermalink,
+  bookTitle,
+  gitRef,
+  // Commit props
+  sha,
+  createdAt,
+  branch,
+  // Latest commit props
+  latestCommit,
+  // Chapter props
+  chapter,
+}) => {
+  const { previousChapter, nextChapter } = chapter;
+
+  const renderPreviousChapterLink = () => {
     if (previousChapter) {
       return (
         <PreviousChapterLink
@@ -100,34 +62,41 @@ export class Chapter extends Component<ChapterProps> {
         />
       );
     }
-  }
+  };
 
-  renderNextChapterLink() {
-    const { bookPermalink, nextChapter, gitRef } = this.props;
+  const renderNextChapterLink = () => {
     if (nextChapter) {
       return (
         <NextChapterLink
-          gitRef={gitRef}
           {...nextChapter}
+          gitRef={gitRef}
           bookPermalink={bookPermalink}
         />
       );
     }
-  }
+  };
 
-  renderChapterLinks() {
+  const renderChapterLinks = () => {
     return (
       <div>
         <div className="grid grid-cols-2">
-          <div className="">{this.renderPreviousChapterLink()}</div>
-          <div className="text-right">{this.renderNextChapterLink()}</div>
+          <div>{renderPreviousChapterLink()}</div>
+          <div className="text-right">{renderNextChapterLink()}</div>
         </div>
       </div>
     );
-  }
+  };
 
-  renderFootnotes() {
-    const { footnotes } = this.props;
+  const {
+    part,
+    position,
+    title: chapterTitle,
+    elements,
+    footnotes,
+    sections,
+  } = chapter;
+
+  const renderFootnotes = () => {
     return (
       <div>
         <h3>Footnotes</h3>
@@ -136,64 +105,39 @@ export class Chapter extends Component<ChapterProps> {
         ))}
       </div>
     );
-  }
+  };
 
-  scrollToHeading(hash: string) {
-    const el = document.getElementById(hash);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }
+  const positionAndTitle = chapterPositionAndTitle(
+    part,
+    position,
+    chapterTitle
+  );
 
-  componentDidMount() {
-    const hash = window.location.hash.replace("#", "");
-    if (hash) {
-      setTimeout(this.scrollToHeading, 750, hash);
-    }
-  }
+  const bookPath = bookLink(bookPermalink, gitRef);
 
-  render() {
-    const {
-      bookTitle,
-      bookPermalink,
-      part,
-      title: chapterTitle,
-      position,
-      elements,
-      sections,
-      commit,
-      gitRef,
-      latestCommit,
-    } = this.props;
+  const commit = { sha, createdAt, branch };
 
-    const positionAndTitle = chapterPositionAndTitle(
-      part,
-      position,
-      chapterTitle
-    );
+  return (
+    <div className="flex flex-wrap lg:flex-no-wrap">
+      <div className="w-1/12"></div>
+      <div className="main w-full lg:w-3/4 flex-grow mr-4 chapter">
+        <header className="mb-4">
+          <h1>
+            <Link id="top" to={bookPath}>
+              {bookTitle}
+            </Link>
+          </h1>
 
-    const bookPath = bookLink(bookPermalink, gitRef);
-
-    return (
-      <div className="flex flex-wrap lg:flex-no-wrap">
-        <div className="w-1/12"></div>
-        <div className="main w-full lg:w-3/4 flex-grow mr-4 chapter">
-          <header className="mb-4">
-            <h1>
-              <Link id="top" to={bookPath}>
-                {bookTitle}
-              </Link>
-            </h1>
-
-            <Commit
-              permalink={bookPermalink}
-              commit={commit}
-              latestCommit={latestCommit}
-            />
-          </header>
-          {this.renderChapterLinks()}
-          <h2 className="mt-3">{positionAndTitle}</h2>
-          {elements.map((element) => (
+          <Commit
+            permalink={bookPermalink}
+            commit={commit}
+            latestCommit={latestCommit}
+          />
+        </header>
+        {renderChapterLinks()}
+        <h2 className="mt-3">{positionAndTitle}</h2>
+        {elements &&
+          elements.map((element) => (
             <Element
               {...element}
               bookPermalink={bookPermalink}
@@ -201,29 +145,28 @@ export class Chapter extends Component<ChapterProps> {
             />
           ))}
 
-          {this.renderFootnotes()}
-          {this.renderChapterLinks()}
-        </div>
+        {renderFootnotes()}
+        {renderChapterLinks()}
+      </div>
 
-        <div className="w-full lg:w-1/4">
-          <div id="sidebar">
-            {this.renderPreviousChapterLink()}
-            <hr className="my-2" />
+      <div className="w-full lg:w-1/4">
+        <div id="sidebar">
+          {renderPreviousChapterLink()}
+          <hr className="my-2" />
 
-            <h4 className="text-xl font-bold">
-              <a href="#top">{positionAndTitle}</a>
-            </h4>
+          <h4 className="text-xl font-bold">
+            <a href="#top">{positionAndTitle}</a>
+          </h4>
 
-            <SectionList sections={sections} />
+          <SectionList sections={sections as Array<Section>} />
 
-            <hr className="my-2" />
-            {this.renderNextChapterLink()}
-          </div>
+          <hr className="my-2" />
+          {renderNextChapterLink()}
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 interface WrappedChapterMatchParams {
   bookPermalink: string;
@@ -231,45 +174,40 @@ interface WrappedChapterMatchParams {
   gitRef: string;
 }
 
-interface WrappedChapterProps
-  extends RouteComponentProps<WrappedChapterMatchParams> {}
+const WrappedChapter: React.FC<
+  RouteComponentProps<WrappedChapterMatchParams>
+> = ({ bookPermalink, chapterPermalink, gitRef }) => {
+  const { data, loading, error } = useChapterQuery({
+    variables: {
+      bookPermalink: bookPermalink as string,
+      chapterPermalink: chapterPermalink as string,
+      gitRef: gitRef,
+    },
+  });
 
-interface ChapterQueryData {
-  book: Book;
-}
+  const renderChapter = (data: ChapterQuery) => {
+    const { book } = data;
 
-class WrappedChapter extends React.Component<WrappedChapterProps> {
-  render() {
-    const { bookPermalink, chapterPermalink, gitRef } = this.props;
+    if (book.__typename === "PermissionDenied") {
+      return <PermissionDenied />;
+    }
+
     return (
-      <QueryWrapper
-        query={chapterQuery}
-        variables={{ bookPermalink, chapterPermalink, gitRef }}
-      >
-        {(data: ChapterQueryData) => {
-          const { book } = data;
-
-          const { error } = book;
-
-          if (error) {
-            return <PermissionDenied />;
-          }
-
-          return (
-            <Chapter
-              bookTitle={book.title}
-              bookPermalink={bookPermalink}
-              gitRef={gitRef}
-              branchName={book.commit.branch.name}
-              latestCommit={data.book.latestCommit}
-              commit={data.book.commit}
-              {...data.book.commit.chapter}
-            />
-          );
-        }}
-      </QueryWrapper>
+      <ChapterAtCommit
+        {...book.commit}
+        bookTitle={book.title}
+        bookPermalink={bookPermalink as string}
+        gitRef={gitRef as string}
+        latestCommit={book.latestCommit}
+      />
     );
-  }
-}
+  };
 
+  return (
+    <QueryWrapper loading={loading} error={error}>
+      {data && renderChapter(data)}
+    </QueryWrapper>
+  );
+};
+export { ChapterAtCommit };
 export default WrappedChapter;

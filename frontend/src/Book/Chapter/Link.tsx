@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "@reach/router";
-import { NavigationalChapter, chapterPositionAndTitle } from "./index";
+import { chapterPositionAndTitle } from "./index";
 import bookLink from "../../Book/link";
+import { Chapter } from "../../graphql/types";
 
-type ChapterLinkProps = NavigationalChapter & {
+type ChapterLinkProps = Pick<
+  Chapter,
+  "id" | "part" | "position" | "title" | "permalink"
+> & {
   direction: "back" | "forward";
+  bookPermalink: string;
+  gitRef: string;
 };
 
 class ChapterLink extends Component<ChapterLinkProps> {
@@ -42,13 +48,17 @@ class ChapterLink extends Component<ChapterLinkProps> {
   }
 }
 
-export class PreviousChapterLink extends Component<NavigationalChapter> {
+export class PreviousChapterLink extends Component<
+  Omit<ChapterLinkProps, "direction">
+> {
   render() {
     return <ChapterLink {...this.props} direction="back" />;
   }
 }
 
-export class NextChapterLink extends Component<NavigationalChapter> {
+export class NextChapterLink extends Component<
+  Omit<ChapterLinkProps, "direction">
+> {
   render() {
     return <ChapterLink {...this.props} direction="forward" />;
   }

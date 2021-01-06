@@ -1,0 +1,14 @@
+overwrite: true
+schema: "../graphql/schema.json"
+documents: "src/**/*.tsx"
+generates:
+  src/graphql/types.ts:
+    config:
+      immutableTypes: true
+      preResolveTypes: true
+      nonOptionalTypename: true
+    plugins:
+      - "fragment-matcher"
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"

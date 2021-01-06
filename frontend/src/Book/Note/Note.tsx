@@ -5,14 +5,14 @@ import moment from "moment";
 import { Link } from "@reach/router";
 
 import Comments from "./Comments";
-import { Note } from "../Notes/types";
 import CloseButton from "./CloseButton";
 import OpenButton from "./OpenButton";
 import EditForm from "./EditForm";
 
 import CurrentUserContext from "../../CurrentUser/context";
+import { Note } from "../../graphql/types";
 
-type ElementNoteProps = Note & {
+type ElementNoteProps = Omit<Note, "element"> & {
   bookPermalink: string;
 };
 

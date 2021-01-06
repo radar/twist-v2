@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export default gql`
-  query branchQuery($bookPermalink: String!, $name: String!) {
+  query branch($bookPermalink: String!, $name: String!) {
     book(permalink: $bookPermalink) {
       ... on Book {
         id

@@ -3,20 +3,18 @@ import { Link } from "@reach/router";
 
 import QueryWrapper from "../../QueryWrapper";
 
-import BookQuery from "./BookQuery";
+import { NoteBookQuery, useNoteBookQuery } from "../../graphql/types";
+import PermissionDenied from "../../PermissionDenied";
 
 type HeaderProps = {
   permalink: string;
   noteNumber?: number;
 };
 
-type Book = {
-  permalink: string;
-  title: string;
-};
+type Book = Extract<NoteBookQuery["book"], { __typename?: "Book" }>;
 
-export default class Header extends React.Component<HeaderProps> {
-  renderSuffix(book: Book, noteNumber?: number) {
+const Header: React.FC<HeaderProps> = ({ permalink, noteNumber }) => {
+  const renderSuffix = (book: Book, noteNumber?: number) => {
     const bookRoot = `/books/${book.permalink}`;
     if (noteNumber) {
       return (
@@ -27,20 +25,29 @@ export default class Header extends React.Component<HeaderProps> {
     } else {
       return <span>- Notes</span>;
     }
-  }
-  render() {
-    const { permalink } = this.props;
+  };
+
+  const { data, loading, error } = useNoteBookQuery({
+    variables: { bookPermalink: permalink },
+  });
+
+  const renderBookHeader = ({ book }: NoteBookQuery) => {
+    if (book.__typename === "PermissionDenied") {
+      return <PermissionDenied />;
+    }
+
     return (
-      <QueryWrapper query={BookQuery} variables={{ bookPermalink: permalink }}>
-        {({ book }: { book: Book }) => {
-          return (
-            <h1>
-              <Link to={`/books/${permalink}`}>{book.title}</Link>{" "}
-              {this.renderSuffix(book, this.props.noteNumber)}
-            </h1>
-          );
-        }}
-      </QueryWrapper>
+      <h1>
+        <Link to={`/books/${permalink}`}>{book.title}</Link>{" "}
+        {renderSuffix(book, noteNumber)}
+      </h1>
     );
-  }
-}
+  };
+
+  return (
+    <QueryWrapper loading={loading} error={error}>
+      {data && renderBookHeader(data)}
+    </QueryWrapper>
+  );
+};
+export default Header;
