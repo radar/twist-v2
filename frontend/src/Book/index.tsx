@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import QueryWrapper from "../QueryWrapper";
 import { Link, RouteComponentProps } from "@reach/router";
@@ -12,7 +12,10 @@ import {
   useBookQuery,
 } from "../graphql/types";
 
-export type BookData = Extract<BookQuery["book"], { __typename?: "Book" }>;
+export type BookData = Omit<
+  Extract<BookQuery["book"], { __typename?: "Book" }>,
+  "__typename"
+>;
 type Chapters = readonly ChapterFieldsFragment[];
 
 type BookProps = RouteComponentProps &

@@ -37,25 +37,23 @@ interface WrappedNoteMatchParams {
 interface WrappedNoteProps
   extends RouteComponentProps<WrappedNoteMatchParams> {}
 
-export default class WrappedNote extends React.Component<WrappedNoteProps> {
-  render() {
-    const { number, bookPermalink } = this.props;
+const WrappedNote: React.FC<WrappedNoteProps> = ({ number, bookPermalink }) => {
+  const { data, loading, error } = useNoteQuery({
+    variables: {
+      number: parseInt(number as string),
+      bookPermalink: bookPermalink as string,
+    },
+  });
 
-    const { data, loading, error } = useNoteQuery({
-      variables: {
-        number: parseInt(number as string),
-        bookPermalink: bookPermalink as string,
-      },
-    });
+  const renderNote = (data: NoteQuery) => {
+    return <Note {...data.note} bookPermalink={bookPermalink as string} />;
+  };
 
-    const renderNote = (data: NoteQuery) => {
-      return <Note {...data.note} bookPermalink={bookPermalink as string} />;
-    };
+  return (
+    <QueryWrapper loading={loading} error={error}>
+      {data && renderNote(data)}
+    </QueryWrapper>
+  );
+};
 
-    return (
-      <QueryWrapper loading={loading} error={error}>
-        {data && renderNote(data)}
-      </QueryWrapper>
-    );
-  }
-}
+export default WrappedNote;

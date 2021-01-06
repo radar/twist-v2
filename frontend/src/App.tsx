@@ -51,7 +51,6 @@ class Root extends Component<{}> {
         <Books path="/" />
 
         <Redirect from="/books" to="/" />
-        {/* <PrivateRoute component={NotFound} /> */}
       </Router>
     );
   }

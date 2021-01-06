@@ -10,19 +10,23 @@ export default {
 
 export const ChapterShow = () => {
   const commit: ChapterAtCommitProps = {
+    __typename: "Commit",
     bookPermalink: "markdown-book-test",
     bookTitle: "Markdown Book Test",
     gitRef: "abc123",
     latestCommit: {
+      __typename: "Commit",
       sha: "abc123",
     },
     id: "1",
     sha: "abc123",
     createdAt: "2020-01-01 10:00:00",
     branch: {
+      __typename: "Branch",
       name: "master",
     },
     chapter: {
+      __typename: "Chapter",
       id: "1",
       permalink: "In the beginning",
       title: "Introduction",
@@ -31,6 +35,7 @@ export const ChapterShow = () => {
       footnotes: [],
       elements: [
         {
+          __typename: "Element",
           id: "1",
           identifier: "1",
           content: "<h1>In the beginning</h1>",
@@ -38,6 +43,7 @@ export const ChapterShow = () => {
           noteCount: 0,
         },
         {
+          __typename: "Element",
           id: "2",
           identifier: "2",
           content:
@@ -46,6 +52,7 @@ export const ChapterShow = () => {
           noteCount: 0,
         },
         {
+          __typename: "Element",
           id: "3",
           identifier: "3",
           content: "<h2>This is a new section</h2>",
@@ -53,6 +60,7 @@ export const ChapterShow = () => {
           noteCount: 0,
         },
         {
+          __typename: "Element",
           id: "4",
           identifier: "4",
           content: "<p>And here's some text for that section.</p>",
@@ -62,11 +70,13 @@ export const ChapterShow = () => {
       ],
       sections: [
         {
+          __typename: "Section",
           id: "1",
           link: "#in-the-beginning",
           title: "In the beginning",
           subsections: [
             {
+              __typename: "Section",
               id: "2",
               link: "#this-is-a-new-section",
               title: "This is a new section",

@@ -4,21 +4,27 @@ import Layout from "../../layout";
 import "../../styles.css";
 
 type Commit = BookData["commit"];
+type LatestCommit = BookData["latestCommit"];
 
-export default {
+const story = {
   title: "Books",
   component: Book,
 };
 
+export default story;
+
 export const BooksShow = () => {
   const commit: Commit = {
+    __typename: "Commit",
     sha: "abc123",
     createdAt: "2020-04-15 10:10:10",
     branch: {
+      __typename: "Branch",
       name: "master",
     },
     frontmatter: [
       {
+        __typename: "Chapter",
         position: 1,
         id: "1",
         title: "Introduction",
@@ -28,7 +34,8 @@ export const BooksShow = () => {
     mainmatter: [],
     backmatter: [],
   };
-  const latestCommit = {
+  const latestCommit: LatestCommit = {
+    __typename: "Commit",
     sha: "def123",
   };
   return (
