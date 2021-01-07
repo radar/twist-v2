@@ -62,13 +62,19 @@ export const Book: React.FC<BookProps> = ({
         commit={commit}
         latestCommit={latestCommit}
       />
-      <Link to={`/books/${permalink}/notes`} className="mb-4 inline-block">
-        Notes for this book
-      </Link>{" "}
-      &middot;{" "}
-      <Link to={`/books/${permalink}/branches`} className="mb-4 inline-block">
-        Branches
-      </Link>
+      <div className="mb-4">
+        <Link to={`/books/${permalink}/notes`} className="inline-block">
+          Notes for this book
+        </Link>{" "}
+        &middot;{" "}
+        <Link to={`/books/${permalink}/branches`} className="inline-block">
+          Branches
+        </Link>{" "}
+        &middot;{" "}
+        <Link to={`/books/${permalink}/invite`} className="inline-block">
+          Invite a user
+        </Link>
+      </div>
       <hr />
       {renderPart("Frontmatter", frontmatter)}
       {renderPart("Mainmatter", mainmatter)}

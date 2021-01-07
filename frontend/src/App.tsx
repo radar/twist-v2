@@ -12,6 +12,7 @@ import Book from "./Book";
 import Branches from "./Book/Branches";
 import Branch from "./Book/Branches/Branch";
 import Chapter from "./Book/Chapter";
+import Invite from "./Book/Invitations/Invite";
 import Notes from "./Book/Notes";
 import Note from "./Book/Note";
 
@@ -49,6 +50,7 @@ class Root extends Component<{}> {
         <Branch path="/books/:bookPermalink/branches/:name" />
 
         <Books path="/" />
+        <Invite path="/books/:bookPermalink/invite" />
 
         <Redirect from="/books" to="/" />
       </Router>

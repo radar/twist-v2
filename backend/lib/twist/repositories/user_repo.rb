@@ -15,6 +15,10 @@ module Twist
         users.where(id: ids).to_a
       end
 
+      def by_github_login(github_login)
+        users.by_github_login(github_login).to_a
+      end
+
       def find_by_github_login(login)
         users.where(github_login: login).one
       end

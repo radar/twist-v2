@@ -29,6 +29,10 @@ module Twist
           argument :note_id, ID, required: true
         end
 
+        field :users, [UserType], null: false do
+          argument :github_login, String, required: true
+        end
+
         def books
           books = context[:book_repo].all
           books.select do |book|
@@ -72,6 +76,10 @@ module Twist
 
         def comments(note_id:)
           context[:comment_repo].by_note_id(note_id)
+        end
+
+        def users(github_login:)
+          context[:user_repo].by_github_login(github_login)
         end
       end
     end

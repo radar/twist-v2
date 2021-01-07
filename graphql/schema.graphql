@@ -189,6 +189,7 @@ type Query {
   currentUser: User
   elementsWithNotes(bookPermalink: String!, state: NoteState!): [Element!]!
   note(bookPermalink: String!, number: Int!): Note!
+  users(githubLogin: String!): [User!]!
 }
 
 """
