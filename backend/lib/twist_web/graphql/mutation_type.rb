@@ -1,5 +1,6 @@
 require_relative 'objects/book'
 require_relative 'objects/note'
+require_relative 'objects/invitation'
 
 require_relative 'mutations/comments/add'
 require_relative 'mutations/comments/update'
@@ -11,6 +12,8 @@ require_relative 'mutations/notes/submit'
 require_relative 'mutations/notes/update'
 
 require_relative 'mutations/users/authenticate'
+
+require_relative 'mutations/invitations/invite'
 
 module Twist
   module Web
@@ -28,6 +31,8 @@ module Twist
         field :add_comment, mutation: Mutations::Comments::Add
         field :update_comment, mutation: Mutations::Comments::Update
         field :delete_comment, mutation: Mutations::Comments::Delete
+
+        field :invite_user, mutation: Mutations::Invitations::Invite
       end
     end
   end
