@@ -8,7 +8,7 @@ module Twist
         description "A comment"
 
         field :id, ID, null: false
-        field :createdAt, String, null: false
+        field :created_at, String, null: false
         field :text, String, null: false
         field :user, UserType, null: false
 
