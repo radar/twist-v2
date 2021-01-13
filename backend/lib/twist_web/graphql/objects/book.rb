@@ -12,7 +12,7 @@ module Twist
         field :blurb, String, null: false
         field :permalink, String, null: false
         field :defaultBranch, BranchType, null: false
-        field :latestCommit, CommitType, null: false do
+        field :latest_commit, CommitType, null: false do
           argument :git_ref, String, required: false
         end
 
