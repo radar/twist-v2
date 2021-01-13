@@ -37,18 +37,41 @@ module Twist
       |
     end
 
-    it "finds all users matching login" do
-      variables = {
-        bookId: book.id,
-        userId: ghost.id,
-      }
+    context "when the user is not already invited" do
+      it "invites a user" do
+        variables = {
+          bookId: book.id,
+          userId: ghost.id,
+        }
 
-      query!(query: query, variables: variables, user: radar)
+        query!(query: query, variables: variables, user: radar)
 
-      invite_user = json_body.dig("data", "inviteUser")
+        invite_user = json_body.dig("data", "inviteUser")
 
-      expect(invite_user["bookId"]).to eq(book.id.to_s)
-      expect(invite_user["userId"]).to eq(ghost.id.to_s)
+        expect(invite_user["bookId"]).to eq(book.id.to_s)
+        expect(invite_user["userId"]).to eq(ghost.id.to_s)
+      end
+    end
+
+    context "when the user is already invited" do
+      let(:invite_user) { Twist::Container["transactions.invitations.invite"] }
+      before do
+        invite_user.(book_id: book.id, user_id: ghost.id).success
+      end
+
+      it "shows an error" do
+        variables = {
+          bookId: book.id,
+          userId: ghost.id,
+        }
+
+        query!(query: query, variables: variables, user: radar)
+
+        invite_user = json_body.dig("data", "inviteUser")
+
+        expect(invite_user["bookId"]).to eq(book.id.to_s)
+        expect(invite_user["userId"]).to eq(ghost.id.to_s)
+      end
     end
   end
 end

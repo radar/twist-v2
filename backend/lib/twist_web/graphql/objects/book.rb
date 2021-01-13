@@ -29,6 +29,8 @@ module Twist
           argument :elementId, String, required: true
         end
 
+        field :readers, [UserType], null: false
+
         def notes(element_id:)
           context[:book_note_repo].by_book_and_element(object.id, element_id)
         end
@@ -61,6 +63,10 @@ module Twist
 
         def branch(name:)
           context[:branch_repo].find_by_book_id_and_name(object.id, name)
+        end
+
+        def readers
+          context[:user_repo].by_book(object.id)
         end
       end
     end

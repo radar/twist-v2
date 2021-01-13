@@ -26,6 +26,10 @@ module Twist
       def find_by_email(email)
         users.where(email: email).one
       end
+
+      def by_book(book_id)
+        users.by_book(book_id)
+      end
     end
   end
 end
