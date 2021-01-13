@@ -72,7 +72,7 @@ export const Book: React.FC<BookProps> = ({
         </Link>{" "}
         &middot;{" "}
         <Link to={`/books/${permalink}/invite`} className="inline-block">
-          Invite a user
+          Invite a reader
         </Link>
       </div>
       <hr />
