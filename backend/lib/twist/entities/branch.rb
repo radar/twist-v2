@@ -1,8 +1,8 @@
 module Twist
   class Branch < ROM::Struct
-    attribute :id, 'integer'
-    attribute :name, 'string'
-    attribute :default, 'bool'
-
+    puts "HELLO"
+    attribute :id, Types::Integer
+    attribute :name, Types::String
+    attribute :default, Types::Bool
   end
 end

@@ -1,8 +1,8 @@
 module Twist
   class Book < ROM::Struct
-    attribute :id, 'integer'
-    attribute :title, 'string'
-    attribute :permalink, 'string'
+    attribute :id, Types::Integer
+    attribute :title, Types::String
+    attribute :permalink, Types::String
 
     def path
       git = Git.new(
