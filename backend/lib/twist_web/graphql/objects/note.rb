@@ -11,7 +11,7 @@ module Twist
 
         field :id, ID, null: false
         field :number, Integer, null: false
-        field :createdAt, String, null: false
+        field :created_at, String, null: false
         field :state, String, null: false
         field :text, String, null: false
         field :user, UserType, null: false
