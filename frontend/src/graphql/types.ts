@@ -45,6 +45,7 @@ export type Book = {
   readonly latestCommit: Commit;
   readonly notes: ReadonlyArray<Note>;
   readonly permalink: Scalars['String'];
+  readonly readers: ReadonlyArray<User>;
   readonly title: Scalars['String'];
 };
 
@@ -196,6 +197,12 @@ export type Image = {
   readonly path: Scalars['String'];
 };
 
+export type Invitation = {
+  readonly __typename: 'Invitation';
+  readonly bookId: Scalars['String'];
+  readonly userId: Scalars['String'];
+};
+
 /** The result from attempting a login */
 export type LoginResult = FailedLoginResult | SuccessfulLoginResult;
 
@@ -204,6 +211,7 @@ export type Mutations = {
   readonly addComment: Comment;
   readonly closeNote: Note;
   readonly deleteComment: Comment;
+  readonly inviteUser: Invitation;
   /** Attempt a login */
   readonly login: LoginResult;
   readonly openNote: Note;
@@ -226,6 +234,12 @@ export type MutationsCloseNoteArgs = {
 
 export type MutationsDeleteCommentArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationsInviteUserArgs = {
+  bookId: Scalars['ID'];
+  userId: Scalars['ID'];
 };
 
 
@@ -433,12 +447,12 @@ export type ChapterNotesQuery = { readonly __typename: 'Query', readonly book: {
       & NoteFragment
     )> } | { readonly __typename: 'PermissionDenied' } };
 
-export type BookTitleQueryVariables = Exact<{
+export type BookIdAndTitleQueryVariables = Exact<{
   permalink: Scalars['String'];
 }>;
 
 
-export type BookTitleQuery = { readonly __typename: 'Query', readonly book: { readonly __typename: 'Book', readonly title: string } | { readonly __typename: 'PermissionDenied', readonly error: string } };
+export type BookIdAndTitleQuery = { readonly __typename: 'Query', readonly book: { readonly __typename: 'Book', readonly id: string, readonly title: string } | { readonly __typename: 'PermissionDenied', readonly error: string } };
 
 export type UsersQueryVariables = Exact<{
   githubLogin: Scalars['String'];
@@ -446,6 +460,21 @@ export type UsersQueryVariables = Exact<{
 
 
 export type UsersQuery = { readonly __typename: 'Query', readonly users: ReadonlyArray<{ readonly __typename: 'User', readonly id: string, readonly githubLogin?: Maybe<string>, readonly name: string }> };
+
+export type InviteUserMutationVariables = Exact<{
+  bookId: Scalars['ID'];
+  userId: Scalars['ID'];
+}>;
+
+
+export type InviteUserMutation = { readonly __typename: 'Mutations', readonly inviteUser: { readonly __typename: 'Invitation', readonly bookId: string, readonly userId: string } };
+
+export type ReadersQueryVariables = Exact<{
+  permalink: Scalars['String'];
+}>;
+
+
+export type ReadersQuery = { readonly __typename: 'Query', readonly book: { readonly __typename: 'Book', readonly readers: ReadonlyArray<{ readonly __typename: 'User', readonly githubLogin?: Maybe<string>, readonly name: string }> } | { readonly __typename: 'PermissionDenied', readonly error: string } };
 
 export type CloseNoteMutationMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -959,13 +988,14 @@ export function useChapterNotesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type ChapterNotesQueryHookResult = ReturnType<typeof useChapterNotesQuery>;
 export type ChapterNotesLazyQueryHookResult = ReturnType<typeof useChapterNotesLazyQuery>;
 export type ChapterNotesQueryResult = Apollo.QueryResult<ChapterNotesQuery, ChapterNotesQueryVariables>;
-export const BookTitleDocument = gql`
-    query bookTitle($permalink: String!) {
+export const BookIdAndTitleDocument = gql`
+    query bookIDAndTitle($permalink: String!) {
   book(permalink: $permalink) {
     ... on PermissionDenied {
       error
     }
     ... on Book {
+      id
       title
     }
   }
@@ -973,30 +1003,30 @@ export const BookTitleDocument = gql`
     `;
 
 /**
- * __useBookTitleQuery__
+ * __useBookIdAndTitleQuery__
  *
- * To run a query within a React component, call `useBookTitleQuery` and pass it any options that fit your needs.
- * When your component renders, `useBookTitleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useBookIdAndTitleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBookIdAndTitleQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useBookTitleQuery({
+ * const { data, loading, error } = useBookIdAndTitleQuery({
  *   variables: {
  *      permalink: // value for 'permalink'
  *   },
  * });
  */
-export function useBookTitleQuery(baseOptions: Apollo.QueryHookOptions<BookTitleQuery, BookTitleQueryVariables>) {
-        return Apollo.useQuery<BookTitleQuery, BookTitleQueryVariables>(BookTitleDocument, baseOptions);
+export function useBookIdAndTitleQuery(baseOptions: Apollo.QueryHookOptions<BookIdAndTitleQuery, BookIdAndTitleQueryVariables>) {
+        return Apollo.useQuery<BookIdAndTitleQuery, BookIdAndTitleQueryVariables>(BookIdAndTitleDocument, baseOptions);
       }
-export function useBookTitleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BookTitleQuery, BookTitleQueryVariables>) {
-          return Apollo.useLazyQuery<BookTitleQuery, BookTitleQueryVariables>(BookTitleDocument, baseOptions);
+export function useBookIdAndTitleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BookIdAndTitleQuery, BookIdAndTitleQueryVariables>) {
+          return Apollo.useLazyQuery<BookIdAndTitleQuery, BookIdAndTitleQueryVariables>(BookIdAndTitleDocument, baseOptions);
         }
-export type BookTitleQueryHookResult = ReturnType<typeof useBookTitleQuery>;
-export type BookTitleLazyQueryHookResult = ReturnType<typeof useBookTitleLazyQuery>;
-export type BookTitleQueryResult = Apollo.QueryResult<BookTitleQuery, BookTitleQueryVariables>;
+export type BookIdAndTitleQueryHookResult = ReturnType<typeof useBookIdAndTitleQuery>;
+export type BookIdAndTitleLazyQueryHookResult = ReturnType<typeof useBookIdAndTitleLazyQuery>;
+export type BookIdAndTitleQueryResult = Apollo.QueryResult<BookIdAndTitleQuery, BookIdAndTitleQueryVariables>;
 export const UsersDocument = gql`
     query users($githubLogin: String!) {
   users(githubLogin: $githubLogin) {
@@ -1032,6 +1062,81 @@ export function useUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<User
 export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>;
 export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
 export type UsersQueryResult = Apollo.QueryResult<UsersQuery, UsersQueryVariables>;
+export const InviteUserDocument = gql`
+    mutation inviteUser($bookId: ID!, $userId: ID!) {
+  inviteUser(bookId: $bookId, userId: $userId) {
+    bookId
+    userId
+  }
+}
+    `;
+export type InviteUserMutationFn = Apollo.MutationFunction<InviteUserMutation, InviteUserMutationVariables>;
+
+/**
+ * __useInviteUserMutation__
+ *
+ * To run a mutation, you first call `useInviteUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInviteUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [inviteUserMutation, { data, loading, error }] = useInviteUserMutation({
+ *   variables: {
+ *      bookId: // value for 'bookId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useInviteUserMutation(baseOptions?: Apollo.MutationHookOptions<InviteUserMutation, InviteUserMutationVariables>) {
+        return Apollo.useMutation<InviteUserMutation, InviteUserMutationVariables>(InviteUserDocument, baseOptions);
+      }
+export type InviteUserMutationHookResult = ReturnType<typeof useInviteUserMutation>;
+export type InviteUserMutationResult = Apollo.MutationResult<InviteUserMutation>;
+export type InviteUserMutationOptions = Apollo.BaseMutationOptions<InviteUserMutation, InviteUserMutationVariables>;
+export const ReadersDocument = gql`
+    query readers($permalink: String!) {
+  book(permalink: $permalink) {
+    ... on PermissionDenied {
+      error
+    }
+    ... on Book {
+      readers {
+        githubLogin
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useReadersQuery__
+ *
+ * To run a query within a React component, call `useReadersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReadersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReadersQuery({
+ *   variables: {
+ *      permalink: // value for 'permalink'
+ *   },
+ * });
+ */
+export function useReadersQuery(baseOptions: Apollo.QueryHookOptions<ReadersQuery, ReadersQueryVariables>) {
+        return Apollo.useQuery<ReadersQuery, ReadersQueryVariables>(ReadersDocument, baseOptions);
+      }
+export function useReadersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReadersQuery, ReadersQueryVariables>) {
+          return Apollo.useLazyQuery<ReadersQuery, ReadersQueryVariables>(ReadersDocument, baseOptions);
+        }
+export type ReadersQueryHookResult = ReturnType<typeof useReadersQuery>;
+export type ReadersLazyQueryHookResult = ReturnType<typeof useReadersLazyQuery>;
+export type ReadersQueryResult = Apollo.QueryResult<ReadersQuery, ReadersQueryVariables>;
 export const CloseNoteMutationDocument = gql`
     mutation closeNoteMutation($id: ID!) {
   closeNote(id: $id) {
