@@ -92,7 +92,7 @@ textarea {
   @apply bg-white font-bold border-2 py-2 px-4 rounded inline-block;
 }
 
-.btn:hover {
+.btn:enabled:hover {
   @apply text-white;
 }
 
@@ -100,7 +100,7 @@ textarea {
   @apply text-blue-500 border-blue-500;
 }
 
-.btn-blue:hover {
+.btn-blue:enabled:hover {
   @apply bg-blue-700 border-blue-600;
 }
 
@@ -108,7 +108,7 @@ textarea {
   @apply text-green-500 border-green-500;
 }
 
-.btn-green:hover {
+.btn-green:enabled:hover {
   @apply bg-green-700 border-green-600;
 }
 
@@ -116,8 +116,12 @@ textarea {
   @apply text-red-500 border-red-500;
 }
 
-.btn-red:hover {
+.btn-red:enabled:hover {
   @apply bg-red-700 border-red-600;
+}
+
+.btn:disabled {
+  @apply opacity-50;
 }
 
 .section_listing .major {

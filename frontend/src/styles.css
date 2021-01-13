@@ -715,7 +715,7 @@ textarea {
   display: inline-block;
 }
 
-.btn:hover {
+.btn:enabled:hover {
   color: #fff;
 }
 
@@ -724,7 +724,7 @@ textarea {
   border-color: #4299e1;
 }
 
-.btn-blue:hover {
+.btn-blue:enabled:hover {
   background-color: #2b6cb0;
   border-color: #3182ce;
 }
@@ -734,7 +734,7 @@ textarea {
   border-color: #48bb78;
 }
 
-.btn-green:hover {
+.btn-green:enabled:hover {
   background-color: #2f855a;
   border-color: #38a169;
 }
@@ -744,9 +744,13 @@ textarea {
   border-color: #f56565;
 }
 
-.btn-red:hover {
+.btn-red:enabled:hover {
   background-color: #c53030;
   border-color: #e53e3e;
+}
+
+.btn:disabled {
+  opacity: 0.5;
 }
 
 .section_listing .major {

@@ -12,7 +12,7 @@ import Book from "./Book";
 import Branches from "./Book/Branches";
 import Branch from "./Book/Branches/Branch";
 import Chapter from "./Book/Chapter";
-import Invite from "./Book/Invitations/Invite";
+import Invite from "./Book/Invitations";
 import Notes from "./Book/Notes";
 import Note from "./Book/Note";
 
