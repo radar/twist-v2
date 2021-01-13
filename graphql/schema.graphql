@@ -16,6 +16,7 @@ type Book {
   latestCommit(gitRef: String): Commit!
   notes(elementId: String!): [Note!]!
   permalink: String!
+  readers: [User!]!
   title: String!
 }
 
@@ -129,6 +130,11 @@ type Image {
   path: String!
 }
 
+type Invitation {
+  bookId: String!
+  userId: String!
+}
+
 """
 The result from attempting a login
 """
@@ -138,6 +144,7 @@ type Mutations {
   addComment(noteId: ID!, text: String!): Comment!
   closeNote(id: ID!): Note!
   deleteComment(id: ID!): Comment!
+  inviteUser(bookId: ID!, userId: ID!): Invitation!
 
   """
   Attempt a login
