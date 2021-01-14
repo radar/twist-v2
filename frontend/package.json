@@ -26,7 +26,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link-context": "^1.0.17",
     "autoprefixer": "^9.7.4",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "framer": "^1.2.2",
     "framer-motion": "^1.11.0",
     "graphql": "^15.4.0",
