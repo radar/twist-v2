@@ -17,13 +17,13 @@ const Delete: FunctionComponent<DeleteProps> = ({ user, id, hideComment }) => {
     false
   );
 
-  const [deleteComment, { data }] = useMutation(deleteCommentMutation);
+  const [deleteComment] = useMutation(deleteCommentMutation);
 
   const renderDeleteButton = () => {
     return (
       <CurrentUserContext.Consumer>
         {(currentUser) => {
-          if (user.id != currentUser!.id) {
+          if (user.id !== currentUser!.id) {
             return;
           }
 

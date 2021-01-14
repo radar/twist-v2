@@ -1,4 +1,4 @@
-export default (permalink: string, ref: string) => {
+const bookLink = (permalink: string, ref: string) => {
   let link;
   if (ref) {
     link = `/books/${permalink}/tree/${ref}`;
@@ -7,3 +7,5 @@ export default (permalink: string, ref: string) => {
   }
   return link;
 };
+
+export default bookLink;

@@ -32,19 +32,19 @@ class ChapterLink extends Component<ChapterLinkProps> {
     const text = chapterPositionAndTitle(part, position, title);
     const path = `${bookLink(bookPermalink, gitRef)}/chapters/${permalink}`;
 
-    if (direction == "back") {
+    if (direction === "back") {
       return (
         <Link to={path} className="font-bold">
           « {text}
         </Link>
       );
-    } else {
-      return (
-        <Link to={path} className="font-bold">
-          {text} »
-        </Link>
-      );
     }
+
+    return (
+      <Link to={path} className="font-bold">
+        {text} »
+      </Link>
+    );
   }
 }
 

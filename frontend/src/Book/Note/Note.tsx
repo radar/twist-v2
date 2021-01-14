@@ -33,7 +33,7 @@ const ElementNote: FunctionComponent<ElementNoteProps> = (props) => {
     return (
       <CurrentUserContext.Consumer>
         {(currentUser) => {
-          if (user.id != currentUser!.id) {
+          if (user.id !== currentUser!.id) {
             return;
           }
 
@@ -48,8 +48,8 @@ const ElementNote: FunctionComponent<ElementNoteProps> = (props) => {
   };
 
   const renderToggleStateButton = () => {
-    const { id, state } = props;
-    if (state == "open") {
+    const { id } = props;
+    if (state === "open") {
       return <CloseButton id={id} setState={setState} />;
     }
 

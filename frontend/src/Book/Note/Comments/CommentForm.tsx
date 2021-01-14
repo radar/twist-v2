@@ -27,7 +27,7 @@ const CommentForm: FunctionComponent<CommentFormProps> = ({
 }) => {
   const [text, setText] = useState<string>("");
 
-  const [createComment, { data }] = useMutation<
+  const [createComment] = useMutation<
     CreateCommentData,
     CreateCommentVariables
   >(createCommentMutation);

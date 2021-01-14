@@ -25,7 +25,7 @@ const Image = (props: ImageElementProps) => {
   return (
     <div className="element image" id={id}>
       <figure>
-        <img src={fullPath} />
+        <img src={fullPath} alt={caption as string} />
         <figcaption>{caption}</figcaption>
       </figure>
     </div>
@@ -93,7 +93,6 @@ const Element: React.FC<ElementProps> = (props) => {
 
   return (
     <div className="relative element">
-      <a id={id} />
       <span
         className={`absolute`}
         style={{ left: "-4rem", top: "-1rem" }}
@@ -111,7 +110,9 @@ const Element: React.FC<ElementProps> = (props) => {
           </span>
         </button>
       </span>
-      <BareElement {...props} />
+      <div id={id}>
+        <BareElement {...props} />
+      </div>
       {renderNotes()}
     </div>
   );

@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/react-hooks";
 import ButtonProps from "./ButtonProps";
 
 const CloseButton: FunctionComponent<ButtonProps> = (props) => {
-  const [closeNote, { data }] = useMutation(closeNoteMutation);
+  const [closeNote] = useMutation(closeNoteMutation);
   const close = () => {
     closeNote({ variables: { id: props.id } }).then((result) => {
       if (result) {

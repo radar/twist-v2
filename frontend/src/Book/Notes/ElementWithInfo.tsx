@@ -1,9 +1,8 @@
 import * as React from "react";
 
 import { BareElement } from "../Chapter/Element";
-import * as styles from "./ElementWithInfo.module.scss";
 import { Link } from "@reach/router";
-import { Commit, ElementWithInfoFragment } from "../../graphql/types";
+import { ElementWithInfoFragment } from "../../graphql/types";
 
 type ElementWithInfoProps = Omit<ElementWithInfoFragment, "notes"> & {
   bookPermalink: string;

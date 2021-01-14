@@ -21,7 +21,7 @@ const EditButton: FunctionComponent<EditButtonProps> = ({
   return (
     <CurrentUserContext.Consumer>
       {(currentUser) => {
-        if (user.id != currentUser!.id) {
+        if (user.id !== currentUser!.id) {
           return;
         }
 

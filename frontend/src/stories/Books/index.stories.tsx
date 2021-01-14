@@ -4,10 +4,12 @@ import { BooksQuery } from "../../graphql/types";
 import Layout from "../../layout";
 import "../../styles.css";
 
-export default {
+const story = {
   title: "Books",
   component: Books,
 };
+
+export default story;
 
 export const BooksIndex = () => {
   const books: BooksQuery["books"] = [

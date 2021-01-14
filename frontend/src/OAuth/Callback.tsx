@@ -17,7 +17,7 @@ export default class OAuthCallback extends React.Component<
 > {
   state = {
     error: "",
-    errorDescription: ""
+    errorDescription: "",
   };
 
   componentDidMount() {
@@ -32,7 +32,7 @@ export default class OAuthCallback extends React.Component<
       const onFailure = ({ response: { data } }: any) => {
         this.setState({
           error: data.error,
-          errorDescription: data.error_description
+          errorDescription: data.error_description,
         });
       };
       api.finishOAuth(code as string, state as string, onSuccess, onFailure);
@@ -46,7 +46,7 @@ export default class OAuthCallback extends React.Component<
       return (
         <div className={styles.error}>
           <h3>Authentication failed: {this.state.error}</h3>
-          <p>{this.state.errorDescription}</p>
+          <p>{errorDescription}</p>
 
           <p>
             Go back to <Link to="/login">the login page</Link> and try again.

@@ -13,7 +13,7 @@ interface EditFormProps {
 const EditForm: FunctionComponent<EditFormProps> = (props) => {
   const { id, originalText, toggleForm } = props;
   const [text, setText] = useState<string>(props.originalText);
-  const [updateComment, { data }] = useMutation(updateCommentMutation);
+  const [updateComment] = useMutation(updateCommentMutation);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +25,7 @@ const EditForm: FunctionComponent<EditFormProps> = (props) => {
   };
 
   const checkForSubmit = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.metaKey && e.key == "Enter") {
+    if (e.metaKey && e.key === "Enter") {
       submit(e);
     }
   };

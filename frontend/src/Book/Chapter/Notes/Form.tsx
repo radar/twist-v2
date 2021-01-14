@@ -13,7 +13,7 @@ type FormProps = {
 const Form: FunctionComponent<FormProps> = (props) => {
   const { elementId, bookPermalink, noteSubmitted } = props;
   const [text, setText] = useState<string>("");
-  const [submitNote, { data }] = useMutation(submitNoteMutation);
+  const [submitNote] = useMutation(submitNoteMutation);
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -30,7 +30,7 @@ const Form: FunctionComponent<FormProps> = (props) => {
   };
 
   const checkForSubmit = (e: any) => {
-    if (e.metaKey && e.key == "Enter") {
+    if (e.metaKey && e.key === "Enter") {
       submit(e);
     }
   };

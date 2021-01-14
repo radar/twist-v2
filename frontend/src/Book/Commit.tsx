@@ -22,7 +22,7 @@ const Commit: React.FC<CommitProps> = ({
   latestCommit,
 }) => {
   let latest;
-  if (sha != latestCommit.sha) {
+  if (sha !== latestCommit.sha) {
     latest = <Link to={`/books/${permalink}`}> Go to latest revision </Link>;
   } else {
     latest = "Latest commit";

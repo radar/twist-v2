@@ -3,10 +3,12 @@ import { ChapterAtCommit, ChapterAtCommitProps } from "../../Book/Chapter";
 import Layout from "../../layout";
 import "../../styles.css";
 
-export default {
+const story = {
   title: "Chapter",
   component: ChapterAtCommit,
 };
+
+export default story;
 
 export const ChapterShow = () => {
   const commit: ChapterAtCommitProps = {

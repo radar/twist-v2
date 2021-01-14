@@ -6,23 +6,6 @@ import githubLogo from "./github.png";
 
 import { RouteComponentProps } from "@reach/router";
 
-interface SuccessfulLoginData {
-  __typename: string;
-  email: string;
-  token: string;
-}
-
-interface FailedLoginData {
-  __typename: string;
-  error: string;
-}
-
-type LoginData = SuccessfulLoginData | FailedLoginData;
-
-interface LoginMutationData {
-  login: LoginData;
-}
-
 interface LoginProps extends RouteComponentProps {}
 
 type LoginState = {
@@ -66,7 +49,7 @@ class Login extends React.Component<LoginProps, LoginState> {
                 window.location.href = this.state.githubAuthorizeUrl;
               }}
             >
-              <img src={githubLogo} className="float-left" />
+              <img src={githubLogo} className="float-left" alt="GitHub" />
 
               <span>Sign in with GitHub</span>
             </button>

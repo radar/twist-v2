@@ -30,7 +30,7 @@ const Notes: React.FC<NotesProps> = ({
 }) => {
   const [notes, setNotes] = useState<NotesType>(initialNotes);
   const renderNotes = () => {
-    if (notes.length == 0) {
+    if (notes.length === 0) {
       return null;
     }
 
