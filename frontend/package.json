@@ -54,9 +54,10 @@
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "build:styles": "postcss src/tailwind.css -o src/styles.css",
-    "prebuild": "yarn build:styles",
-    "prestart": "yarn build:styles",
-    "gql:codegen": "graphql-codegen --config codegen.yml"
+    "prebuild": "build:styles",
+    "prestart": "build:styles",
+    "gql:codegen": "graphql-codegen --config codegen.yml",
+    "lint": "eslint src --ext .ts,.tsx --max-warnings 0"
   },
   "eslintConfig": {
     "extends": "react-app"
