@@ -45,4 +45,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: TypeScript check
+        working-directory: "frontend"
         run: yarn tsc
