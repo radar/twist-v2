@@ -46,6 +46,9 @@ jobs:
       - run: "yarn"
 
   typescript:
+    defaults:
+      run:
+        working-directory: "frontend"
     runs-on: ubuntu-latest
     needs: build
     steps:
