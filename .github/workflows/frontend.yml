@@ -52,6 +52,16 @@ jobs:
         working-directory: "frontend"
     runs-on: ubuntu-latest
     needs: build
+    
     steps:
+    
+      - uses: actions/checkout@v2
+      
+       
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.4
+        with:
+          node-version: 14.15.1
+
       - name: TypeScript check
         run: yarn tsc
