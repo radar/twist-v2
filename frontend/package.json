@@ -54,10 +54,11 @@
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "build:styles": "postcss src/tailwind.css -o src/styles.css",
-    "prebuild": "build:styles",
-    "prestart": "build:styles",
+    "prebuild": "yarn build:styles",
+    "prestart": "yarn build:styles",
     "gql:codegen": "graphql-codegen --config codegen.yml",
-    "lint": "eslint src --ext .ts,.tsx --max-warnings 0"
+    "lint": "eslint src --ext .ts,.tsx --max-warnings 0",
+    "prettier": "prettier src/**/*.{ts,tsx}"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -79,6 +80,8 @@
     "@storybook/addon-links": "^5.3.18",
     "@storybook/addons": "^5.3.18",
     "@storybook/react": "^5.3.18",
-    "@types/react-select": "^3.1.2"
+    "@types/react-select": "^3.1.2",
+    "eslint-config-prettier": "^7.1.0",
+    "prettier": "^2.2.1"
   }
 }
