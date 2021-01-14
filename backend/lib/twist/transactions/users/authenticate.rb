@@ -1,21 +1,22 @@
 module Twist
   module Transactions
     module Users
-      class Authenticate
-        include Dry::Transaction
+      class Authenticate < Transaction
         include Twist::Import["user_repo"]
 
-        step :find_by_email
-        step :validate_password
-        step :encode_token
+        def call(email:, password:)
+          user = yield find_by_email(email: email)
+          yield validate_password(user: user, password: password)
+          encode_token(user)
+        end
 
         AUTHENTICATION_FAILED = "Invalid username or password.".freeze
 
-        def find_by_email(email:, password:)
+        def find_by_email(email:)
           user = user_repo.find_by_email(email)
           return Failure(AUTHENTICATION_FAILED) unless user
 
-          Success(user: user, password: password)
+          Success(user)
         end
 
         def validate_password(user:, password:)

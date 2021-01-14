@@ -1,15 +1,12 @@
 module Twist
   module Transactions
     module Notes
-      class Submit
-        include Dry::Transaction
+      class Submit < Transaction
         include Twist::Import["repositories.book_repo"]
         include Twist::Import["repositories.book_note_repo"]
         include Twist::Import["repositories.note_repo"]
 
-        step :submit
-
-        def submit(book_permalink:, user_id:, element_id:, text:)
+        def call(book_permalink:, user_id:, element_id:, text:)
           book = book_repo.find_by_permalink(book_permalink)
           note_count = book_note_repo.count_for_book(book.id)
           note = note_repo.create(

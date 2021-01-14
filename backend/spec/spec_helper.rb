@@ -25,4 +25,6 @@ RSpec.configure do |config|
   end
 
   config.include ControllerAuthenticationHelpers, uses_authentication: true
+
+  config.example_status_persistence_file_path = "tmp/examples.txt"
 end

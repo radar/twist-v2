@@ -6,7 +6,7 @@ module Twist
       include Import["repositories.footnote_repo"]
 
       def initialize(element:, commit:, **args)
-        super(args)
+        super(**args)
         @element = element
         @commit = commit
       end

@@ -4,18 +4,19 @@ require 'twist/permalinker'
 module Twist
   module Transactions
     module Books
-      class Create
-        include Dry::Transaction
+      class Create < Twist::Transaction
         include Twist::Import["repositories.book_repo"]
 
-        step :make_permalink
-        step :create_book
+        def call(input)
+          input = yield add_permalink(input)
+          book = yield create_book(input)
+          Success(book)
+        end
 
-        def make_permalink(input)
-          input_with_permalink = input.merge(
+        def add_permalink(input)
+          Success(input.merge(
             permalink: ::Twist::Permalinker.new(input[:title]).permalink,
-          )
-          Success(input_with_permalink)
+          ))
         end
 
         def create_book(input)

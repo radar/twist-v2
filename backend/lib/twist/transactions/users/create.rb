@@ -3,24 +3,30 @@ require "bcrypt"
 module Twist
   module Transactions
     module Users
-      class Create
-        include Dry::Transaction
+      class Create < Transaction
         include Twist::Import["repositories.user_repo"]
 
-        step :encrypt_password
-        step :persist
-
-        def encrypt_password(input)
-          input[:password] = BCrypt::Password.create(input[:password])
-          Success(input)
+        def call(email:, name:, password:, github_login: nil)
+          encrypted_password = yield encrypt_password(password)
+          persist(
+            email: email,
+            name: name,
+            encrypted_password: encrypted_password,
+            github_login: github_login,
+          )
         end
 
-        def persist(input)
+        def encrypt_password(password)
+          encrypted_password = BCrypt::Password.create(password)
+          Success(encrypted_password)
+        end
+
+        def persist(email:, name:, github_login:, encrypted_password:)
           user = user_repo.create(
-            email: input[:email],
-            name: input[:name],
-            github_login: input[:github_login],
-            encrypted_password: input[:password],
+            email: email,
+            name: name,
+            github_login: github_login,
+            encrypted_password: encrypted_password,
           )
           Success(user)
         end

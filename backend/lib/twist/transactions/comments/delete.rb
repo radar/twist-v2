@@ -1,13 +1,10 @@
 module Twist
   module Transactions
     module Comments
-      class Delete
-        include Dry::Transaction
+      class Delete < Transaction
         include Twist::Import["comment_repo"]
 
-        step :delete
-
-        def delete(id:)
+        def call(id:)
           comment_repo.delete(id)
           Success()
         end

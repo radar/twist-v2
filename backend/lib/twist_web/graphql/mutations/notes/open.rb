@@ -11,7 +11,6 @@ module Twist
             def resolve(id:)
               open = Transactions::Notes::Open.new(
                 note_repo: context[:note_repo],
-                current_user: context[:current_user],
               )
               open.(id: id).success
             end

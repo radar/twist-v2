@@ -1,13 +1,10 @@
 module Twist
   module Transactions
     module Comments
-      class Add
-        include Dry::Transaction
+      class Add < Transaction
         include Twist::Import["comment_repo"]
 
-        step :add
-
-        def add(current_user:, note_id:, text:)
+        def call(current_user:, note_id:, text:)
           comment = comment_repo.create(
             user_id: current_user.id,
             note_id: note_id,

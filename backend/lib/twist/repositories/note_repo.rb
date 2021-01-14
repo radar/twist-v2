@@ -14,7 +14,7 @@ module Twist
 
         missing = element_ids.select { |id| counts.none? { |c| c.element_id == id } }
         counts += missing.map { |m| NoteCount.new(element_id: m, count: 0) }
-        counts.map { |element_id:, count:| [element_id, count] }.to_h
+        counts.map { |nc| [nc.element_id, nc.count] }.to_h
       end
       # rubocop:enable Metrics/AbcSize
 

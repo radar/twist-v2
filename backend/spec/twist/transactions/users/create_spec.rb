@@ -5,7 +5,9 @@ module Twist
     it "creates a user with an encrypted password" do
       result = subject.(
         email: "me@ryanbigg.com",
-        name: "Ryan Bigg"
+        name: "Ryan Bigg",
+        password: "password",
+        github_login: "radar",
       )
 
       expect(result).to be_success

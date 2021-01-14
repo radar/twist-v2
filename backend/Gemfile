@@ -16,6 +16,7 @@ gem 'sequel'
 gem 'pg'
 
 # dry-rb
+gem 'dry-monads'
 gem 'dry-transaction'
 gem 'dry-auto_inject'
 gem 'dry-system'

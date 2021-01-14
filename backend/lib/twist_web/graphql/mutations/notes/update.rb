@@ -17,7 +17,6 @@ module Twist
 
               update = Transactions::Notes::Update.new(
                 note_repo: context[:note_repo],
-                current_user: context[:current_user],
               )
               update.(id: id, text: text).success
             end

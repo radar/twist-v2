@@ -1,3 +1,4 @@
+
 Twist::Container.boot(:core, namespace: true) do
   use :persistence
 
@@ -6,6 +7,9 @@ Twist::Container.boot(:core, namespace: true) do
     require 'nokogiri'
     require 'pygments'
     require 'sidekiq'
+
+    require 'dry/monads'
+    require 'dry/monads/do'
 
     require "twist/types"
     require "twist/repository"

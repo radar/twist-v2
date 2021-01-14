@@ -10,7 +10,7 @@ module Twist
 
     attr_reader :permalink, :branch_name, :username, :repo
     def initialize(permalink:, branch:, username:, repo:, **args)
-      super(args)
+      super(**args)
       @permalink = permalink
       @branch_name = branch
       @username = username

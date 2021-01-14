@@ -282,6 +282,7 @@ DEPENDENCIES
   dataloader
   dotenv
   dry-auto_inject
+  dry-monads
   dry-system
   dry-transaction
   graphql
@@ -310,4 +311,4 @@ DEPENDENCIES
   sidekiq
 
 BUNDLED WITH
-   2.2.3
+   2.2.5

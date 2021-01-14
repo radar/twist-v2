@@ -1,18 +1,17 @@
-require 'dry/transaction'
-
-module Web
+module Twist
   module Transactions
     module Users
-      class SignIn
-        include Dry::Transaction
+      class SignIn < Transaction
 
-        step :find_user
-        step :authenticate
+        def call(email:, password:)
+          user = yield find_user(email: email)
+          yield authenticate(user: user, password: password)
+        end
 
-        def find_user(input)
+        def find_user(email:)
           repo = UserRepo.new
-          user = repo.find_by_email(input[:email])
-          user ? Success(user: user, password: input[:password]) : Failure(nil)
+          user = repo.find_by_email(:email)
+          user ? Success(user) : Failure(nil)
         end
 
         def authenticate(user:, password:)

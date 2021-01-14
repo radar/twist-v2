@@ -1,13 +1,10 @@
 module Twist
   module Transactions
     module Notes
-      class Close
-        include Dry::Transaction
+      class Close < Transaction
         include Twist::Import["note_repo"]
 
-        step :close
-
-        def close(id:)
+        def call(id:)
           Success(note_repo.close(id))
         end
       end
