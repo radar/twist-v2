@@ -13,3 +13,5 @@ backend/capybara-*
 */node_modules
 */dump.rdb
 .now
+
+.vercel
