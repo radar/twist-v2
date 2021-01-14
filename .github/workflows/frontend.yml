@@ -37,6 +37,7 @@ jobs:
         with:
           node-version: 14.15.1
 
+      - run: "npm install -g yarn"
       - run: "yarn install"
         working-directory: "frontend"
 
