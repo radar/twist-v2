@@ -11,8 +11,8 @@ describe Twist::Web::Controllers::Oauth::Authorize do
   let(:auth_code) { double(OAuth2::Strategy::AuthCode, authorize_url: authorize_url) }
   let(:client) { double(OAuth2::Client, auth_code: auth_code) }
 
-  before do
-    allow(subject).to receive(:client) { client }
+  subject do
+    described_class.new(client: client)
   end
 
   it "returns an authorization URL for GitHub" do

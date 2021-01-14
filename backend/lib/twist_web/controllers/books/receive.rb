@@ -2,19 +2,22 @@ module Twist
   module Web
     module Controllers
       module Books
-        class Receive
-          include Hanami::Action
+        class Receive < Hanami::Action
+          include Twist::Import[
+            find_book: "transactions.books.find",
+            find_or_create_branch: "transactions.branches.find_or_create"
+          ]
 
-          def call(params)
-            payload = JSON.parse(params[:payload])
-            book = find_book(params[:permalink])
+          def handle(req, res)
+            payload = JSON.parse(req.params[:payload])
+            book = find_book.(permalink: req.params[:permalink])
             unless book
-              self.status = 404
-              self.body = JSON.generate(error: "Book not found")
+              res.status = 404
+              res.body = JSON.generate(error: "Book not found")
               return
             end
 
-            branch = find_or_create_branch(book.id, payload["ref"])
+            branch = find_or_create_branch.(book_id: book.id, ref: payload["ref"])
             worker = case book.format
                     when "markdown"
                       Twist::Markdown::BookWorker
@@ -29,25 +32,14 @@ module Twist
               github_path: payload["repository"]["full_name"],
             )
 
-            self.status = 200
-            self.body = "OK"
+            res.status = 200
+            res.body = "OK"
           end
 
           private
 
           def verify_csrf_token?
             false
-          end
-
-          def find_book(permalink)
-            repo = Repositories::BookRepo.new
-            repo.find_by_permalink(permalink)
-          end
-
-          def find_or_create_branch(book_id, ref)
-            branch = ref.split("/").last
-            repo = Repositories::BranchRepo.new
-            repo.find_or_create_by_book_id_and_name(book_id, branch)
           end
         end
       end

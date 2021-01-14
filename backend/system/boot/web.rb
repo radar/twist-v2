@@ -9,11 +9,4 @@ Twist::Container.boot(:web, namespace: true) do
     require 'hanami/action/session'
     require 'hanami/middleware/body_parser'
   end
-
-  start do
-    Hanami::Controller.configure do
-      handle_exceptions false
-    end
-  end
-
 end

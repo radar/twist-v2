@@ -5,26 +5,14 @@ module Twist
     let(:params) do
       {
         code: "abc123",
+        "rack.session" => session,
       }
     end
 
     let(:authorize_url) { "http://fake.example.com/oauth/authorize" }
     let(:auth_code) { double(OAuth2::Strategy::AuthCode) }
     let(:client) { double(OAuth2::Client, auth_code: auth_code) }
-    let(:github_user) { double(login: "radar", name: "Ryan Bigg") }
-    let(:github_emails) do
-      [
-        {
-          primary: false,
-          email: "non-primary@example.com"
-        },
-        {
-          primary: true,
-          email: "primary@example.com"
-        },
-      ]
-    end
-    let(:github_client) { double(Octokit::Client, user: github_user, emails: github_emails) }
+    let(:github_info) { -> (_token) { { name: "Ryan Bigg", login: "radar", email: "primary@example.com" } } }
     let(:user_repo) { double(Repositories::UserRepo) }
     let(:session) do
       {
@@ -34,13 +22,10 @@ module Twist
 
     subject do
       described_class.new(
-        user_repo: user_repo
+        oauth_client: client,
+        github_info: github_info,
+        user_repo: user_repo,
       )
-    end
-
-    before do
-      allow(subject).to receive(:session) { session }
-      allow(subject).to receive(:client) { client }
     end
 
     context "when fetching the token is successful" do
@@ -50,7 +35,6 @@ module Twist
           redirect_uri: ENV.fetch("FRONTEND_APP_URL") + "/oauth/callback",
           state: "state-abc123"
         ).and_return(double("Token", token: "token-123abc", params: {}))
-        allow(subject).to receive(:build_github_client) { github_client }
       end
 
       context "when a user is already known" do

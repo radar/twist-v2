@@ -12,7 +12,7 @@ module Twist
       end
 
       def by_ids(ids)
-        elements.where(id: ids).to_a
+        elements.by_pk(ids).to_a
       end
 
       def by_id(id)

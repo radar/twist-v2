@@ -4,8 +4,7 @@ module Twist
   module Web
     module Controllers
       module Graphql
-        class Run
-          include Hanami::Action
+        class Run < Hanami::Action
           include Web::Controllers::CORS
 
           %w(
@@ -15,7 +14,8 @@ module Twist
           end
 
           # rubocop:disable Metrics/AbcSize
-          def call(params)
+          def handle(req, res)
+            params = req.params
             variables = Hanami::Utils::Hash.stringify(params[:variables] || {})
             current_user = find_current_user(params.env["HTTP_AUTHORIZATION"])
 
@@ -44,8 +44,8 @@ module Twist
               },
             )
 
-            self.format = :json
-            self.body = result.to_json
+            res.format = :json
+            res.body = result.to_json
           end
           # rubocop:enable Metrics/AbcSize
 

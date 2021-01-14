@@ -1,34 +1,34 @@
-require_relative "client"
 require "twist_web/controllers/cors"
 
 module Twist
   module Web
     module Controllers
       module Oauth
-        class Callback
-          include Hanami::Action
+        class Callback < Hanami::Action
           include Hanami::Action::Session
-          include Twist::Import["repositories.user_repo"]
+          include Twist::Import[
+            "repositories.user_repo",
+            github_info: "transactions.users.github_info",
+            oauth_client: "oauth.client",
+          ]
           include Web::Controllers::CORS
-          include Client
 
-          def call(params)
+          def handle(req, res)
             # TODO!
             # raise "states do not match" if session[:state] != params[:state]
-            self.format = :json
+            res.format = :json
 
-            token = get_oauth_token(params[:code])
+            token = get_oauth_token(req.params[:code], req.session[:state])
 
             if token.params.key?("error")
-              handle_oauth_callback_failure(token)
+              res.status = 401
+              res.body = token.params.to_json
               return
             end
 
-            github_client = build_github_client(token)
-            github_user = github_client.user
-            primary_email = github_client.emails.detect { |e| e[:primary] }[:email]
+            gh_info = github_info.(token: token.token)
 
-            user = user_repo.find_by_github_login(github_user.login)
+            user = user_repo.find_by_github_login(gh_info[:login])
 
             user ||= begin
               create_user = Transactions::Users::Create.new(
@@ -36,10 +36,10 @@ module Twist
               )
 
               result = create_user.(
-                email: primary_email,
+                email: gh_info[:email],
                 password: SecureRandom.hex(64),
-                name: github_user.name,
-                github_login: github_user.login,
+                name: gh_info[:name],
+                github_login: gh_info[:login],
               )
               result.success
             end
@@ -48,31 +48,21 @@ module Twist
 
             jwt_token = generate_jwt.(email: user.email)
 
-            self.format = :json
-            self.status = 200
-            self.body = {
+            res.format = :json
+            res.status = 200
+            res.body = {
               jwt_token: jwt_token,
             }.to_json
           end
 
           private
 
-          def get_oauth_token(code)
-            client.auth_code.get_token(
+          def get_oauth_token(code, state)
+            oauth_client.auth_code.get_token(
               code,
               redirect_uri: "#{ENV.fetch('FRONTEND_APP_URL')}/oauth/callback",
-              state: session[:state],
+              state: state,
             )
-          end
-
-
-          def handle_oauth_callback_failure(token)
-            self.status = 401
-            self.body = token.params.to_json
-          end
-
-          def build_github_client(token)
-            Octokit::Client.new(access_token: token.token)
           end
         end
       end

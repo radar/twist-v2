@@ -12,7 +12,7 @@ module Twist
       end
 
       def by_ids(ids)
-        branches.where(id: ids).to_a
+        branches.by_pk(ids).to_a
       end
 
       def find_by_book_id_and_name(book_id, name)

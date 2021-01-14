@@ -21,8 +21,8 @@ gem 'dry-auto_inject'
 gem 'dry-system'
 
 # Hanami
-gem 'hanami-controller'
-gem 'hanami-router'
+gem 'hanami-controller', github: "hanami/controller", branch: "unstable"
+gem 'hanami-router', github: "hanami/router", branch: "unstable"
 
 # Twist
 gem 'rugged'

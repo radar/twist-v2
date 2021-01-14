@@ -8,7 +8,7 @@ module Twist
       end
 
       def by_ids(ids)
-        chapters.where(id: ids)
+        chapters.by_pk(ids)
       end
 
       def for_commit(commit_id)

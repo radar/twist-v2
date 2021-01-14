@@ -12,7 +12,7 @@ module Twist
       end
 
       def by_ids(ids)
-        users.where(id: ids).to_a
+        users.by_pk(ids).to_a
       end
 
       def by_github_login(github_login)

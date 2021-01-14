@@ -31,7 +31,7 @@ module Twist
       end
 
       def by_ids(ids)
-        commits.where(id: ids).to_a
+        commits.by_pk(ids).to_a
       end
 
       def find_and_clean_or_create(branch_id, sha, message, chapter_repo)

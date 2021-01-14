@@ -1,5 +1,4 @@
 require "oauth2"
-require_relative "client"
 
 require_relative "../../cors"
 
@@ -7,24 +6,22 @@ module Twist
   module Web
     module Controllers
       module Oauth
-        class Authorize
-          include Hanami::Action
+        class Authorize < Hanami::Action
+          include Import["oauth.client"]
           include Hanami::Action::Session
           include Web::Controllers::CORS
-          include Client
 
-          def call(params)
-
-            session[:state] = SecureRandom.hex(16)
+          def handle(req, res)
+            res.session[:state] = SecureRandom.hex(16)
 
             authorize_url = client.auth_code.authorize_url(
-              redirect_uri: params[:redirect_uri],
-              state: session[:state],
+              redirect_uri: req.params[:redirect_uri],
+              state: res.session[:state],
               scope: "user:email",
             )
 
-            self.format = :json
-            self.body = {
+            res.format = :json
+            res.body = {
               github_authorize_url: authorize_url,
             }.to_json
           end

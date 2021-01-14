@@ -26,7 +26,7 @@ module Twist
       end
 
       def by_ids(ids)
-        images.where(id: ids).to_a
+        images.by_pk(ids).to_a
       end
 
       def update_image_data(image_id, image_data)
