@@ -1,7 +1,7 @@
+require 'twist/image_uploader'
+
 module Twist
   class Image < ROM::Struct
-    def image
-      ImageUploader::Attacher.new(self, :image)
-    end
+    include ImageUploader::Attachment(:image)
   end
 end
