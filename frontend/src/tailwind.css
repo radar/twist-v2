@@ -29,7 +29,7 @@ textarea {
 }
 
 .main {
-  @apply bg-white p-4 border-gray-400 border rounded;
+  @apply bg-white p-6 border-gray-400 border rounded;
 }
 
 .main table {
@@ -86,6 +86,12 @@ textarea {
 
 .admonitionblock.warning .title {
   @apply text-red-600 font-bold;
+}
+
+.element .code .highlight pre {
+  @apply p-2;
+  overflow: auto;
+  font-size: 90%;
 }
 
 .btn {
@@ -164,6 +170,23 @@ textarea {
 
 .chapter figure figcaption {
   @apply p-2 bg-gray-200;
+}
+
+.element .note-button {
+  position: absolute;
+  left: -4.25rem;
+  top: -1rem;
+}
+
+@media screen and (min-width: 800px) {
+  .element .note-button {
+    opacity: 30%;
+    transition: opacity 750ms;
+  }
+
+  .element:hover .note-button {
+    opacity: 100%;
+  }
 }
 
 #sidebar {

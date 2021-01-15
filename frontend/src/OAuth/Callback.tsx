@@ -4,7 +4,6 @@ import queryString from "query-string";
 import { AxiosResponse } from "axios";
 
 import API from "../api";
-import * as styles from "./Callback.module.scss";
 
 type OAuthCallbackState = {
   error: string;
@@ -44,7 +43,7 @@ export default class OAuthCallback extends React.Component<
 
     if (error) {
       return (
-        <div className={styles.error}>
+        <div>
           <h3>Authentication failed: {this.state.error}</h3>
           <p>{errorDescription}</p>
 

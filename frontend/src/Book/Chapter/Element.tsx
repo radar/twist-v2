@@ -93,11 +93,7 @@ const Element: React.FC<ElementProps> = (props) => {
 
   return (
     <div className="relative element">
-      <span
-        className={`absolute`}
-        style={{ left: "-4rem", top: "-1rem" }}
-        id={`note_button_${id}`}
-      >
+      <span className={`absolute note-button`} id={`note_button_${id}`}>
         <button type="button" className="fa-stack fa-fw" onClick={toggleNotes}>
           <FontAwesomeIcon
             icon={faComment}

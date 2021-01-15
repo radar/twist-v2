@@ -619,7 +619,7 @@ textarea {
 
 .main {
   background-color: #fff;
-  padding: 1rem;
+  padding: 1.5rem;
   border-color: #cbd5e0;
   border-width: 1px;
   border-radius: 0.25rem;
@@ -701,6 +701,12 @@ textarea {
 .admonitionblock.warning .title {
   color: #e53e3e;
   font-weight: 700;
+}
+
+.element .code .highlight pre {
+  padding: 0.5rem;
+  overflow: auto;
+  font-size: 90%;
 }
 
 .btn {
@@ -803,6 +809,24 @@ textarea {
 .chapter figure figcaption {
   padding: 0.5rem;
   background-color: #edf2f7;
+}
+
+.element .note-button {
+  position: absolute;
+  left: -4.25rem;
+  top: -1rem;
+}
+
+@media screen and (min-width: 800px) {
+  .element .note-button {
+    opacity: 30%;
+    -webkit-transition: opacity 750ms;
+    transition: opacity 750ms;
+  }
+
+  .element:hover .note-button {
+    opacity: 100%;
+  }
 }
 
 #sidebar {

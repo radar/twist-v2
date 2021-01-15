@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as styles from "./Login.module.scss";
 import API from "../api";
 
 import githubLogo from "./github.png";
@@ -34,7 +33,7 @@ class Login extends React.Component<LoginProps, LoginState> {
 
   renderError() {
     if (this.state.failed) {
-      return <span className={styles.error}>{this.state.error}</span>;
+      return <span className="error">{this.state.error}</span>;
     }
   }
 
@@ -43,7 +42,7 @@ class Login extends React.Component<LoginProps, LoginState> {
       <div className="main flex md:w-1/2">
         <div className="w-1/4 mr-10">
           <h1>Login</h1>
-          <div className={`${styles.oauth} w-56`}>
+          <div className={`w-56`}>
             <button
               onClick={() => {
                 window.location.href = this.state.githubAuthorizeUrl;
