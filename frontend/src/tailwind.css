@@ -180,12 +180,12 @@ textarea {
 
 @media screen and (min-width: 800px) {
   .element .note-button {
-    opacity: 30%;
+    opacity: 0.3;
     transition: opacity 750ms;
   }
 
   .element:hover .note-button {
-    opacity: 100%;
+    opacity: 1;
   }
 }
 
