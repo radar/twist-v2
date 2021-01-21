@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import AsyncSelect from "react-select/async";
 import { OptionTypeBase, ValueType } from "react-select";
 import {
-  BookIdAndTitleQuery,
-  useBookIdAndTitleQuery,
+  BookIdTitleAndReadersQuery,
+  useBookIdTitleAndReadersQuery,
   useInviteUserMutation,
   useUsersLazyQuery,
 } from "../../graphql/types";
@@ -13,7 +13,7 @@ import { gql } from "@apollo/client";
 import { Link } from "@reach/router";
 
 gql`
-  query bookIDAndTitle($permalink: String!) {
+  query bookIDTitleAndReaders($permalink: String!) {
     book(permalink: $permalink) {
       ... on PermissionDenied {
         error
@@ -22,6 +22,11 @@ gql`
       ... on Book {
         id
         title
+
+        readers {
+          githubLogin
+          name
+        }
       }
     }
   }
@@ -46,10 +51,14 @@ gql`
   }
 `;
 
+type Book = Extract<BookIdTitleAndReadersQuery["book"], { __typename: "Book" }>;
+type Readers = Book["readers"];
+
 type InviteFormProps = {
   bookPermalink: string;
   bookId: string;
   bookTitle: string;
+  bookReaders: Readers;
 };
 
 type Selection = ValueType<OptionTypeBase, false>;
@@ -58,6 +67,7 @@ const InviteForm: React.FC<InviteFormProps> = ({
   bookPermalink,
   bookTitle,
   bookId,
+  bookReaders,
 }) => {
   const [userID, setUserID] = useState<string | null>(null);
   const [message, setMessage] = useState<string>("");
@@ -67,9 +77,14 @@ const InviteForm: React.FC<InviteFormProps> = ({
 
   const loadOptions = async (githubLogin: string, callback: Function) => {
     await usersQuery({ variables: { githubLogin } });
+
     if (data) {
+      const readerLogins = bookReaders.map((reader) => reader.githubLogin);
+      const uninvitedUsers = data.users.filter(
+        (user) => !readerLogins.includes(user.githubLogin)
+      );
       callback(
-        data.users.map((user) => {
+        uninvitedUsers.map((user) => {
           return {
             value: user.id,
             label: `${user.githubLogin} (${user.name})`,
@@ -103,7 +118,13 @@ const InviteForm: React.FC<InviteFormProps> = ({
       </Link>
       <h2>Invite a reader</h2>
 
-      <AsyncSelect loadOptions={loadOptions} onChange={selectUser} />
+      <AsyncSelect
+        loadOptions={loadOptions}
+        onChange={selectUser}
+        noOptionsMessage={({ inputValue }) =>
+          `Could not find '${inputValue}' -- have they already been invited?`
+        }
+      />
 
       <button
         type="button"
@@ -123,13 +144,13 @@ type WrappedInviteProps = {
 };
 
 const WrappedInviteForm: React.FC<WrappedInviteProps> = ({ bookPermalink }) => {
-  const { data, loading, error } = useBookIdAndTitleQuery({
+  const { data, loading, error } = useBookIdTitleAndReadersQuery({
     variables: {
       permalink: bookPermalink as string,
     },
   });
 
-  const renderInviteOrPermissionDenied = (data: BookIdAndTitleQuery) => {
+  const renderInviteOrPermissionDenied = (data: BookIdTitleAndReadersQuery) => {
     if (data.book.__typename === "PermissionDenied") {
       return <PermissionDenied />;
     }
@@ -139,6 +160,7 @@ const WrappedInviteForm: React.FC<WrappedInviteProps> = ({ bookPermalink }) => {
         bookPermalink={bookPermalink}
         bookId={data.book.id}
         bookTitle={data.book.title}
+        bookReaders={data.book.readers}
       />
     );
   };
