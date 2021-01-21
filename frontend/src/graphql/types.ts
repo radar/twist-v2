@@ -45,7 +45,7 @@ export type Book = {
   readonly latestCommit: Commit;
   readonly notes: ReadonlyArray<Note>;
   readonly permalink: Scalars['String'];
-  readonly readers: ReadonlyArray<User>;
+  readonly readers: ReadonlyArray<Reader>;
   readonly title: Scalars['String'];
 };
 
@@ -341,6 +341,16 @@ export type QueryUsersArgs = {
   githubLogin: Scalars['String'];
 };
 
+/** A reader for a book */
+export type Reader = {
+  readonly __typename: 'Reader';
+  readonly author: Scalars['Boolean'];
+  readonly email: Scalars['String'];
+  readonly githubLogin?: Maybe<Scalars['String']>;
+  readonly id: Scalars['ID'];
+  readonly name: Scalars['String'];
+};
+
 /** A section */
 export type Section = {
   readonly __typename: 'Section';
@@ -452,7 +462,7 @@ export type BookIdTitleAndReadersQueryVariables = Exact<{
 }>;
 
 
-export type BookIdTitleAndReadersQuery = { readonly __typename: 'Query', readonly book: { readonly __typename: 'Book', readonly id: string, readonly title: string, readonly readers: ReadonlyArray<{ readonly __typename: 'User', readonly githubLogin?: Maybe<string>, readonly name: string }> } | { readonly __typename: 'PermissionDenied', readonly error: string } };
+export type BookIdTitleAndReadersQuery = { readonly __typename: 'Query', readonly book: { readonly __typename: 'Book', readonly id: string, readonly title: string, readonly readers: ReadonlyArray<{ readonly __typename: 'Reader', readonly githubLogin?: Maybe<string>, readonly name: string }> } | { readonly __typename: 'PermissionDenied', readonly error: string } };
 
 export type UsersQueryVariables = Exact<{
   githubLogin: Scalars['String'];
@@ -474,7 +484,7 @@ export type ReadersQueryVariables = Exact<{
 }>;
 
 
-export type ReadersQuery = { readonly __typename: 'Query', readonly book: { readonly __typename: 'Book', readonly readers: ReadonlyArray<{ readonly __typename: 'User', readonly githubLogin?: Maybe<string>, readonly name: string }> } | { readonly __typename: 'PermissionDenied', readonly error: string } };
+export type ReadersQuery = { readonly __typename: 'Query', readonly book: { readonly __typename: 'Book', readonly readers: ReadonlyArray<{ readonly __typename: 'Reader', readonly id: string, readonly author: boolean, readonly githubLogin?: Maybe<string>, readonly name: string }> } | { readonly __typename: 'PermissionDenied', readonly error: string } };
 
 export type CloseNoteMutationMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -1108,6 +1118,8 @@ export const ReadersDocument = gql`
     }
     ... on Book {
       readers {
+        id
+        author
         githubLogin
         name
       }

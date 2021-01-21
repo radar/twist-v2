@@ -13,6 +13,8 @@ gql`
 
       ... on Book {
         readers {
+          id
+          author
           githubLogin
           name
         }
@@ -29,14 +31,15 @@ type ReadersProps = {
 };
 
 const Readers: React.FC<ReadersProps> = ({ readers }) => {
+  const authorSuffix = <span className="text-green-600 font-bold">Author</span>;
   return (
     <div className="main md:w-1/3">
       <h1>Readers</h1>
 
       <ul className="list-disc list-inside">
-        {readers.map(({ githubLogin, name }) => (
+        {readers.map(({ githubLogin, name, author }) => (
           <li>
-            {githubLogin} ({name})
+            {githubLogin} ({name}) {author && authorSuffix}
           </li>
         ))}
       </ul>

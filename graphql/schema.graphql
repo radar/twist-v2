@@ -16,7 +16,7 @@ type Book {
   latestCommit(gitRef: String): Commit!
   notes(elementId: String!): [Note!]!
   permalink: String!
-  readers: [User!]!
+  readers: [Reader!]!
   title: String!
 }
 
@@ -197,6 +197,17 @@ type Query {
   elementsWithNotes(bookPermalink: String!, state: NoteState!): [Element!]!
   note(bookPermalink: String!, number: Int!): Note!
   users(githubLogin: String!): [User!]!
+}
+
+"""
+A reader for a book
+"""
+type Reader {
+  author: Boolean!
+  email: String!
+  githubLogin: String
+  id: ID!
+  name: String!
 }
 
 """

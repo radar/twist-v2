@@ -104,11 +104,12 @@ const InviteForm: React.FC<InviteFormProps> = ({
     if (!userID) {
       return;
     }
-    inviteUserMutation({ variables: { userId: userID, bookId: bookId } }).then(
-      (response) => {
-        setMessage("Invite sent!");
-      }
-    );
+    inviteUserMutation({
+      variables: { userId: userID, bookId: bookId },
+      refetchQueries: ["readers"],
+    }).then((response) => {
+      setMessage("Invite sent!");
+    });
   };
 
   return (
