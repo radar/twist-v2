@@ -161,7 +161,7 @@ textarea {
 }
 
 .element p code {
-  @apply text-red-700 text-sm p-1;
+  @apply text-red-700 text-sm;
 }
 
 .chapter figure {
