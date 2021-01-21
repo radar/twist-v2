@@ -487,6 +487,13 @@ export type ReadersQueryVariables = Exact<{
 
 export type ReadersQuery = { readonly __typename: 'Query', readonly book: { readonly __typename: 'Book', readonly readers: ReadonlyArray<{ readonly __typename: 'Reader', readonly id: string, readonly author: boolean, readonly githubLogin?: Maybe<string>, readonly name: string }> } | { readonly __typename: 'PermissionDenied', readonly error: string } };
 
+export type BookCurrentUserAuthorQueryVariables = Exact<{
+  permalink: Scalars['String'];
+}>;
+
+
+export type BookCurrentUserAuthorQuery = { readonly __typename: 'Query', readonly book: { readonly __typename: 'Book', readonly currentUserAuthor: boolean } | { readonly __typename: 'PermissionDenied', readonly error: string } };
+
 export type CloseNoteMutationMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -1155,6 +1162,44 @@ export function useReadersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Re
 export type ReadersQueryHookResult = ReturnType<typeof useReadersQuery>;
 export type ReadersLazyQueryHookResult = ReturnType<typeof useReadersLazyQuery>;
 export type ReadersQueryResult = Apollo.QueryResult<ReadersQuery, ReadersQueryVariables>;
+export const BookCurrentUserAuthorDocument = gql`
+    query bookCurrentUserAuthor($permalink: String!) {
+  book(permalink: $permalink) {
+    ... on PermissionDenied {
+      error
+    }
+    ... on Book {
+      currentUserAuthor
+    }
+  }
+}
+    `;
+
+/**
+ * __useBookCurrentUserAuthorQuery__
+ *
+ * To run a query within a React component, call `useBookCurrentUserAuthorQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBookCurrentUserAuthorQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBookCurrentUserAuthorQuery({
+ *   variables: {
+ *      permalink: // value for 'permalink'
+ *   },
+ * });
+ */
+export function useBookCurrentUserAuthorQuery(baseOptions: Apollo.QueryHookOptions<BookCurrentUserAuthorQuery, BookCurrentUserAuthorQueryVariables>) {
+        return Apollo.useQuery<BookCurrentUserAuthorQuery, BookCurrentUserAuthorQueryVariables>(BookCurrentUserAuthorDocument, baseOptions);
+      }
+export function useBookCurrentUserAuthorLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BookCurrentUserAuthorQuery, BookCurrentUserAuthorQueryVariables>) {
+          return Apollo.useLazyQuery<BookCurrentUserAuthorQuery, BookCurrentUserAuthorQueryVariables>(BookCurrentUserAuthorDocument, baseOptions);
+        }
+export type BookCurrentUserAuthorQueryHookResult = ReturnType<typeof useBookCurrentUserAuthorQuery>;
+export type BookCurrentUserAuthorLazyQueryHookResult = ReturnType<typeof useBookCurrentUserAuthorLazyQuery>;
+export type BookCurrentUserAuthorQueryResult = Apollo.QueryResult<BookCurrentUserAuthorQuery, BookCurrentUserAuthorQueryVariables>;
 export const CloseNoteMutationDocument = gql`
     mutation closeNoteMutation($id: ID!) {
   closeNote(id: $id) {
