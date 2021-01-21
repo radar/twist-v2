@@ -37,8 +37,8 @@ const Readers: React.FC<ReadersProps> = ({ readers }) => {
       <h1>Readers</h1>
 
       <ul className="list-disc list-inside">
-        {readers.map(({ githubLogin, name, author }) => (
-          <li>
+        {readers.map(({ githubLogin, name, author }, index) => (
+          <li key={index}>
             {githubLogin} ({name}) {author && authorSuffix}
           </li>
         ))}
