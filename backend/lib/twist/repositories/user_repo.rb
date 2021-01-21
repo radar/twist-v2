@@ -28,7 +28,7 @@ module Twist
       end
 
       def by_book(book_id)
-        users.by_book(book_id)
+        users.combine(:permissions).by_book(book_id).map_to(Reader).to_a
       end
     end
   end

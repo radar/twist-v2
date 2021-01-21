@@ -10,6 +10,7 @@ require 'sidekiq/testing'
 Sidekiq::Testing.inline!
 
 require_relative 'support/controller_authentication_helpers'
+require_relative 'support/graphql_helpers'
 
 DatabaseCleaner.strategy = :truncation
 
@@ -25,6 +26,7 @@ RSpec.configure do |config|
   end
 
   config.include ControllerAuthenticationHelpers, uses_authentication: true
+  config.include GraphQLHelpers, graphql: true
 
   config.example_status_persistence_file_path = "tmp/examples.txt"
 end

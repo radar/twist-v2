@@ -27,6 +27,7 @@ module Twist
             permission_repo: repo(:permission),
             note_repo: repo(:note),
             user_repo: repo(:user),
+            reader_repo: repo(:reader),
           )
 
           context[:current_user] = repo(:user).first if ENV['BYPASS_PERMISSIONS']

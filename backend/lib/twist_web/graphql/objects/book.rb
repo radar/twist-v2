@@ -1,3 +1,5 @@
+require_relative 'reader'
+
 module Twist
   module Web
     module GraphQL
@@ -29,7 +31,7 @@ module Twist
           argument :elementId, String, required: true
         end
 
-        field :readers, [UserType], null: false
+        field :readers, [ReaderType], null: false
 
         def notes(element_id:)
           context[:book_note_repo].by_book_and_element(object.id, element_id)
@@ -66,7 +68,17 @@ module Twist
         end
 
         def readers
-          context[:user_repo].by_book(object.id)
+          readers = context[:reader_repo].by_book(object.id)
+          readers.map do |reader|
+            {
+              id: reader.id,
+              github_login: reader.github_login,
+              name: reader.name,
+              author: reader.permissions.any? do |permission|
+                permission.book_id == object.id && permission.author
+              end
+            }
+          end
         end
       end
     end
