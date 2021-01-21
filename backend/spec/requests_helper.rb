@@ -24,6 +24,10 @@ module RequestHelpers
     header 'Authorization', Twist::Transactions::Users::GenerateJwt.new.(email: user.email) if user
 
     post "/graphql", query: query, variables: variables
+
+    if !json_body["errors"].nil?
+      fail json_body["errors"][0]["message"]
+    end
   end
 end
 
