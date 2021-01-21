@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Twist
-  describe Web::GraphQL::Runner do
+  describe Web::GraphQL::Runner, graphql: true do
     context 'book' do
       let(:current_user) { double(User, id: 1) }
       let(:book_repo) { double(Repositories::BookRepo) }
@@ -56,6 +56,10 @@ module Twist
             permission: permission_repo,
           },
         )
+      end
+
+      let(:context) do
+        { current_user: current_user }
       end
 
       context "when the user has permission to access the book" do
@@ -116,6 +120,32 @@ module Twist
           expect(chapter["title"]).to eq("Introduction")
           expect(chapter["position"]).to eq(1)
           expect(chapter["permalink"]).to eq("introduction")
+        end
+
+        context "with currentUserAuthor" do
+          let(:query) do
+            %|
+              query {
+                book(permalink: "exploding-rails") {
+                  ... on Book {
+                    currentUserAuthor
+                  }
+                }
+              }
+            |
+          end
+          let(:variables) { }
+
+          before do
+            expect(book_repo).to receive(:find_by_permalink) { book }
+            expect(permission_repo).to receive(:author?) { true }
+          end
+
+          it "shows that the current user is the author" do
+            result = run_query!
+            book = result.dig("data", "book")
+            expect(book["currentUserAuthor"]).to eq(true)
+          end
         end
 
         it "latest commit for a branch (using ref)" do

@@ -32,6 +32,7 @@ module Twist
         end
 
         field :readers, [ReaderType], null: false
+        field :current_user_author, Boolean, null: false
 
         def notes(element_id:)
           context[:book_note_repo].by_book_and_element(object.id, element_id)
@@ -65,6 +66,10 @@ module Twist
 
         def branch(name:)
           context[:branch_repo].find_by_book_id_and_name(object.id, name)
+        end
+
+        def current_user_author
+          context[:permission_repo].author?(book_id: object.id, user_id: context[:current_user].id)
         end
 
         def readers

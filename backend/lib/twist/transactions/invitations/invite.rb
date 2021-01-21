@@ -10,8 +10,7 @@ module Twist
         end
 
         def call(book_id:, user_id:)
-          permission = permission_repo.find_by_book_id_and_user_id(book_id, user_id)
-          permission ||= permission_repo.create(book_id: book_id, user_id: user_id)
+          permission = permission_repo.find_or_create_by_book_id_and_user_id(book_id: book_id, user_id: user_id)
           Success(permission)
         end
       end

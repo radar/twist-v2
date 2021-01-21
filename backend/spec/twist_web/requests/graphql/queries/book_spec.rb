@@ -7,6 +7,7 @@ module Twist
     let!(:create_user) { Twist::Container["transactions.users.create"] }
     let!(:generate_jwt) { Twist::Container["transactions.users.generate_jwt"] }
     let!(:grant_permission) { Twist::Container["transactions.users.grant_permission"] }
+    let!(:make_author) { Twist::Container["transactions.permissions.make_author"] }
     let!(:submit_note) { Twist::Container["transactions.notes.submit"] }
 
     before do
@@ -39,6 +40,53 @@ module Twist
         element_id: element.id,
         text: "This is a note",
       ).success
+    end
+
+    context "currentUserAuthor" do
+      let(:book_query) do
+        <<~QUERY
+          query bookQuery($permalink: String!) {
+            book(permalink: $permalink) {
+              ... on Book {
+                currentUserAuthor
+              }
+            }
+          }
+        QUERY
+      end
+
+      let(:variables) do
+        {
+          permalink: "markdown-book-test",
+        }
+      end
+
+      let(:current_user_author) do
+        json_body
+          .dig(
+            "data",
+            "book",
+            "currentUserAuthor",
+          )
+      end
+
+      context "when the user is an author of the book" do
+        before do
+          make_author.(book_id: book.id, user_id: user.id)
+        end
+
+        it "returns true" do
+          query!(query: book_query, variables: variables, user: user)
+          expect(current_user_author).to eq(true)
+        end
+      end
+
+      context "when the user is not an author of the book" do
+        it "returns false" do
+          query!(query: book_query, variables: variables, user: user)
+          expect(current_user_author).to eq(false)
+        end
+      end
     end
 
     context "all chapters" do
