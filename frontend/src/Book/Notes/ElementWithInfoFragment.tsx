@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 export default gql`
   fragment elementWithInfo on Element {
     id
+    identifier
     content
     tag
     image {

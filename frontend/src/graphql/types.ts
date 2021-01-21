@@ -575,7 +575,7 @@ export type NoteBookQueryVariables = Exact<{
 
 export type NoteBookQuery = { readonly __typename: 'Query', readonly book: { readonly __typename: 'Book', readonly id: string, readonly permalink: string, readonly title: string } | { readonly __typename: 'PermissionDenied' } };
 
-export type ElementWithInfoFragment = { readonly __typename: 'Element', readonly id: string, readonly content?: Maybe<string>, readonly tag: string, readonly image?: Maybe<{ readonly __typename: 'Image', readonly id: string, readonly path: string, readonly caption?: Maybe<string> }>, readonly chapter: { readonly __typename: 'Chapter', readonly title: string, readonly part: string, readonly position: number, readonly permalink: string, readonly commit: { readonly __typename: 'Commit', readonly sha: string, readonly branch: { readonly __typename: 'Branch', readonly name: string } } } };
+export type ElementWithInfoFragment = { readonly __typename: 'Element', readonly id: string, readonly identifier?: Maybe<string>, readonly content?: Maybe<string>, readonly tag: string, readonly image?: Maybe<{ readonly __typename: 'Image', readonly id: string, readonly path: string, readonly caption?: Maybe<string> }>, readonly chapter: { readonly __typename: 'Chapter', readonly title: string, readonly part: string, readonly position: number, readonly permalink: string, readonly commit: { readonly __typename: 'Commit', readonly sha: string, readonly branch: { readonly __typename: 'Branch', readonly name: string } } } };
 
 export type NoteFragment = { readonly __typename: 'Note', readonly id: string, readonly number: number, readonly text: string, readonly createdAt: string, readonly state: string, readonly user: { readonly __typename: 'User', readonly id: string, readonly email: string, readonly name: string }, readonly comments: ReadonlyArray<{ readonly __typename: 'Comment', readonly id: string, readonly text: string, readonly createdAt: string, readonly user: { readonly __typename: 'User', readonly id: string, readonly email: string, readonly name: string } }> };
 
@@ -650,6 +650,7 @@ export const CommentFragmentFragmentDoc = gql`
 export const ElementWithInfoFragmentDoc = gql`
     fragment elementWithInfo on Element {
   id
+  identifier
   content
   tag
   image {
