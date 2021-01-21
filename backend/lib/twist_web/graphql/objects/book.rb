@@ -74,9 +74,7 @@ module Twist
               id: reader.id,
               github_login: reader.github_login,
               name: reader.name,
-              author: reader.permissions.any? do |permission|
-                permission.book_id == object.id && permission.author
-              end
+              author: reader.author_for?(object.id),
             }
           end
         end
