@@ -32,12 +32,20 @@ type ReadersProps = {
 
 const Readers: React.FC<ReadersProps> = ({ readers }) => {
   const authorSuffix = <span className="text-green-600 font-bold">Author</span>;
+
+  const sortedReaders = [...readers].sort((readerA, readerB) => {
+    if (readerA.author && !readerB.author) return -1;
+    return (readerA.githubLogin as string).localeCompare(
+      readerB.githubLogin as string
+    );
+  });
+
   return (
     <div className="main md:w-1/3">
       <h1>Readers</h1>
 
       <ul className="list-disc list-inside">
-        {readers.map(({ githubLogin, name, author }, index) => (
+        {sortedReaders.map(({ githubLogin, name, author }, index) => (
           <li key={index}>
             {githubLogin} ({name}) {author && authorSuffix}
           </li>
