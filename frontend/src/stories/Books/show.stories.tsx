@@ -46,6 +46,7 @@ export const BooksShow = () => {
         commit={commit}
         title="Markdown Book Test"
         permalink="markdown-book-test"
+        currentUserAuthor={false}
       />
     </Layout>
   );

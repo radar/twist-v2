@@ -10,6 +10,7 @@ export default gql`
       ... on Book {
         title
         permalink
+        currentUserAuthor
         latestCommit(gitRef: $gitRef) {
           sha
         }

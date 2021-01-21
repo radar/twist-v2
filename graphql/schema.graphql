@@ -11,6 +11,7 @@ type Book {
   branch(name: String!): Branch!
   branches: [Branch!]!
   commit(gitRef: String): Commit!
+  currentUserAuthor: Boolean!
   defaultBranch: Branch!
   id: ID!
   latestCommit(gitRef: String): Commit!

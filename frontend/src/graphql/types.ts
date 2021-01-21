@@ -40,6 +40,7 @@ export type Book = {
   readonly branch: Branch;
   readonly branches: ReadonlyArray<Branch>;
   readonly commit: Commit;
+  readonly currentUserAuthor: Scalars['Boolean'];
   readonly defaultBranch: Branch;
   readonly id: Scalars['ID'];
   readonly latestCommit: Commit;
@@ -381,7 +382,7 @@ export type BookQueryVariables = Exact<{
 }>;
 
 
-export type BookQuery = { readonly __typename: 'Query', readonly book: { readonly __typename: 'Book', readonly title: string, readonly permalink: string, readonly latestCommit: { readonly __typename: 'Commit', readonly sha: string }, readonly commit: { readonly __typename: 'Commit', readonly sha: string, readonly createdAt: string, readonly branch: { readonly __typename: 'Branch', readonly name: string }, readonly frontmatter: ReadonlyArray<(
+export type BookQuery = { readonly __typename: 'Query', readonly book: { readonly __typename: 'Book', readonly title: string, readonly permalink: string, readonly currentUserAuthor: boolean, readonly latestCommit: { readonly __typename: 'Commit', readonly sha: string }, readonly commit: { readonly __typename: 'Commit', readonly sha: string, readonly createdAt: string, readonly branch: { readonly __typename: 'Branch', readonly name: string }, readonly frontmatter: ReadonlyArray<(
         { readonly __typename: 'Chapter' }
         & ChapterFieldsFragment
       )>, readonly mainmatter: ReadonlyArray<(
@@ -698,6 +699,7 @@ export const BookDocument = gql`
     ... on Book {
       title
       permalink
+      currentUserAuthor
       latestCommit(gitRef: $gitRef) {
         sha
       }

@@ -29,6 +29,7 @@ export const Book: React.FC<BookProps> = ({
   latestCommit,
   permalink,
   gitRef,
+  currentUserAuthor,
 }) => {
   const renderPart = (title: string, chapters: Chapters) => {
     if (chapters.length === 0) {
@@ -54,6 +55,15 @@ export const Book: React.FC<BookProps> = ({
 
   const { frontmatter, mainmatter, backmatter } = commit;
 
+  const inviteAReader = (
+    <>
+      &middot;{" "}
+      <Link to={`/books/${permalink}/invite`} className="inline-block">
+        Invite a reader
+      </Link>
+    </>
+  );
+
   return (
     <div className={`bg-white p-4 border-gray-400 border rounded md:w-1/2`}>
       <h1>{title}</h1>
@@ -70,10 +80,7 @@ export const Book: React.FC<BookProps> = ({
         <Link to={`/books/${permalink}/branches`} className="inline-block">
           Branches
         </Link>{" "}
-        &middot;{" "}
-        <Link to={`/books/${permalink}/invite`} className="inline-block">
-          Invite a reader
-        </Link>
+        {currentUserAuthor && inviteAReader}
       </div>
       <hr />
       {renderPart("Frontmatter", frontmatter)}
