@@ -32,9 +32,25 @@ type ReadersProps = {
 
 type Reader = ReadersType[0];
 
-const Readers: React.FC<ReadersProps> = ({ readers }) => {
+type ReaderItemProps = Reader & {
+  index: number;
+};
+const ReaderItem: React.FC<ReaderItemProps> = ({
+  githubLogin,
+  name,
+  author,
+  index,
+}: ReaderItemProps) => {
   const authorSuffix = <span className="text-green-600 font-bold">Author</span>;
 
+  return (
+    <li key={index}>
+      {githubLogin} ({name}) {author && authorSuffix}
+    </li>
+  );
+};
+
+const Readers: React.FC<ReadersProps> = ({ readers }) => {
   const sortReaders = (readerA: Reader, readerB: Reader) =>
     (readerA.githubLogin as string)
       .toLowerCase()
@@ -50,20 +66,16 @@ const Readers: React.FC<ReadersProps> = ({ readers }) => {
       <h1>Authors</h1>
 
       <ul className="list-disc list-inside">
-        {authors.map(({ githubLogin, name, author }, index) => (
-          <li key={index}>
-            {githubLogin} ({name}) {author && authorSuffix}
-          </li>
+        {authors.map((reader, index) => (
+          <ReaderItem {...reader} index={index} />
         ))}
       </ul>
 
       <h1>Readers</h1>
 
       <ul className="list-disc list-inside">
-        {filteredReaders.map(({ githubLogin, name, author }, index) => (
-          <li key={index}>
-            {githubLogin} ({name}) {author && authorSuffix}
-          </li>
+        {filteredReaders.map((reader, index) => (
+          <ReaderItem {...reader} index={index} />
         ))}
       </ul>
     </div>
