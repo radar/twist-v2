@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Router, Link, Redirect } from "@reach/router";
 import { ApolloProvider } from "@apollo/client";
 
