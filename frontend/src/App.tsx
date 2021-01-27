@@ -25,8 +25,8 @@ function UserInfo({ githubLogin, email }: User) {
   return <span>Signed in as {githubLogin || email}</span>;
 }
 
-class Root extends Component<{}> {
-  renderUserInfo() {
+const Root: React.FC = () => {
+  const renderUserInfo = () => {
     return (
       <CurrentUserContext.Consumer>
         {(user: CurrentUserType) =>
@@ -34,9 +34,9 @@ class Root extends Component<{}> {
         }
       </CurrentUserContext.Consumer>
     );
-  }
+  };
 
-  renderAuthenticatedArea() {
+  const renderAuthenticatedArea = () => {
     return (
       <Router>
         <OAuthCallback path="/oauth/callback" />
@@ -55,47 +55,45 @@ class Root extends Component<{}> {
         <Redirect from="/books" to="/" />
       </Router>
     );
-  }
+  };
 
-  renderLogin() {
+  const renderLogin = () => {
     return (
       <Router>
         <Login path="/login" default />
         <OAuthCallback path="/oauth/callback" />
       </Router>
     );
-  }
+  };
 
-  renderAuthenticatedAreaOrRedirect = (user: CurrentUserType) => {
+  const renderAuthenticatedAreaOrRedirect = (user: CurrentUserType) => {
     if (user || process.env.REACT_APP_ALLOW_ANYONE) {
-      return this.renderAuthenticatedArea();
+      return renderAuthenticatedArea();
     } else {
-      return this.renderLogin();
+      return renderLogin();
     }
   };
 
-  render() {
-    return (
-      <ApolloProvider client={ApolloClient}>
-        <div className="my-4 mx-auto px-4">
-          <menu>
-            <Link to="/">
-              <strong>Twist</strong>
-            </Link>{" "}
-            &nbsp; | &nbsp;
-            <CurrentUser>{this.renderUserInfo()}</CurrentUser>
-          </menu>
-          <CurrentUser>
-            <CurrentUserContext.Consumer>
-              {(user) => {
-                return this.renderAuthenticatedAreaOrRedirect(user);
-              }}
-            </CurrentUserContext.Consumer>
-          </CurrentUser>
-        </div>
-      </ApolloProvider>
-    );
-  }
-}
+  return (
+    <ApolloProvider client={ApolloClient}>
+      <div className="my-4 mx-auto px-4">
+        <menu>
+          <Link to="/">
+            <strong>Twist</strong>
+          </Link>{" "}
+          &nbsp; | &nbsp;
+          <CurrentUser>{renderUserInfo()}</CurrentUser>
+        </menu>
+        <CurrentUser>
+          <CurrentUserContext.Consumer>
+            {(user) => {
+              return renderAuthenticatedAreaOrRedirect(user);
+            }}
+          </CurrentUserContext.Consumer>
+        </CurrentUser>
+      </div>
+    </ApolloProvider>
+  );
+};
 
 export default Root;
