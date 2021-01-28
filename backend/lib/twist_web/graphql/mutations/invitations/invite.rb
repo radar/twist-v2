@@ -1,3 +1,5 @@
+require_relative 'invite_permission_result'
+
 module Twist
   module Web
     module GraphQL
@@ -7,14 +9,17 @@ module Twist
             argument :book_id, ID, required: true
             argument :user_id, ID, required: true
 
-            type InvitationType
+            type InvitePermissionResult
 
             def resolve(book_id:, user_id:)
               invite = Transactions::Invitations::Invite.new(
                 permission_repo: context[:permission_repo],
-                current_user: context[:current_user],
               )
-              invite.(book_id: book_id, user_id: user_id).success
+              invite.(
+                inviter: context[:current_user],
+                book_id: book_id,
+                user_id: user_id,
+              )
             end
           end
         end

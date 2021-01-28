@@ -4,6 +4,9 @@ module Twist
   describe "Invite User", type: :request do
     let!(:create_user) { Twist::Container["transactions.users.create"] }
     let(:create_book) { Twist::Container["transactions.books.create"] }
+    let!(:make_author) { Twist::Container["transactions.permissions.make_author"] }
+    let!(:invite) { Twist::Container["transactions.invitations.invite"] }
+    let!(:permission_repo) { Twist::Container["repositories.permission_repo"] }
 
     let!(:book) { create_book.(title: "Active Rails", default_branch: "master").success }
 
@@ -12,7 +15,7 @@ module Twist
         email: "me@ryanbigg.com",
         password: "password",
         name: "Ryan Bigg",
-        github_login: "radar"
+        github_login: "radar",
       ).success
     end
 
@@ -22,7 +25,7 @@ module Twist
         email: "other@example.com",
         password: "password",
         name: "Other User",
-        github_login: "ghost"
+        github_login: "ghost",
       ).success
     end
 
@@ -30,47 +33,84 @@ module Twist
       %|
         mutation inviteUser($bookId: ID!, $userId: ID!) {
           inviteUser(bookId: $bookId, userId: $userId) {
-            bookId
-            userId
+            ...on Invitation {
+              bookId
+              userId
+            }
+
+            ...on PermissionDenied {
+              error
+            }
           }
         }
       |
     end
 
-    context "when the user is not already invited" do
-      it "invites a user" do
-        variables = {
-          bookId: book.id,
-          userId: ghost.id,
-        }
+    let(:permission_record) do
+      permission_repo.find_by_book_id_and_user_id(book_id: book.id, user_id: ghost.id)
+    end
 
-        query!(query: query, variables: variables, user: radar)
+    context "when the inviter is not an author" do
+      context "when the invitee is not already invited" do
+        it "does not invite a user" do
+          variables = {
+            bookId: book.id,
+            userId: ghost.id,
+          }
 
-        invite_user = json_body.dig("data", "inviteUser")
+          query!(query: query, variables: variables, user: radar)
 
-        expect(invite_user["bookId"]).to eq(book.id.to_s)
-        expect(invite_user["userId"]).to eq(ghost.id.to_s)
+          invite_user = json_body.dig("data", "inviteUser")
+          expect(invite_user["error"]).to eq("You do not have permission to access that book.")
+
+          expect(permission_record).to be_nil
+        end
       end
     end
 
-    context "when the user is already invited" do
-      let(:invite_user) { Twist::Container["transactions.invitations.invite"] }
+    context "when the inviter is an author" do
       before do
-        invite_user.(book_id: book.id, user_id: ghost.id).success
+        make_author.(book_id: book.id, user_id: radar.id)
       end
 
-      it "shows an error" do
-        variables = {
-          bookId: book.id,
-          userId: ghost.id,
-        }
+      context "when the invitee is not already invited" do
+        it "invites a user" do
+          variables = {
+            bookId: book.id,
+            userId: ghost.id,
+          }
 
-        query!(query: query, variables: variables, user: radar)
+          query!(query: query, variables: variables, user: radar)
 
-        invite_user = json_body.dig("data", "inviteUser")
+          invite_user = json_body.dig("data", "inviteUser")
 
-        expect(invite_user["bookId"]).to eq(book.id.to_s)
-        expect(invite_user["userId"]).to eq(ghost.id.to_s)
+          expect(invite_user["bookId"]).to eq(book.id.to_s)
+          expect(invite_user["userId"]).to eq(ghost.id.to_s)
+
+          expect(permission_record).not_to be_nil
+        end
+      end
+
+      context "when the invitee is already invited" do
+        before do
+          invite.(current_user: radar, book_id: book.id, user_id: ghost.id).success
+        end
+
+        it "does nothing at all" do
+          variables = {
+            bookId: book.id,
+            userId: ghost.id,
+          }
+
+          query!(query: query, variables: variables, user: radar)
+
+          invite_user = json_body.dig("data", "inviteUser")
+
+          expect(invite_user["bookId"]).to eq(book.id.to_s)
+          expect(invite_user["userId"]).to eq(ghost.id.to_s)
+
+          expect(permission_record).not_to be_nil
+        end
       end
     end
   end

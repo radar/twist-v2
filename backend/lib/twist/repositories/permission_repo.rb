@@ -13,6 +13,7 @@ module Twist
       end
 
       def make_author(book_id:, user_id:)
+        find_or_create_by_book_id_and_user_id(book_id: book_id, user_id: user_id)
         for_book_and_user(book_id: book_id, user_id: user_id).update(author: true)
       end
 
