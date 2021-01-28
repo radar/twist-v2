@@ -33,14 +33,9 @@ module Twist
       %|
         mutation inviteUser($bookId: ID!, $userId: ID!) {
           inviteUser(bookId: $bookId, userId: $userId) {
-            ...on Invitation {
-              bookId
-              userId
-            }
-
-            ...on PermissionDenied {
-              error
-            }
+            bookId
+            userId
+            error
           }
         }
       |
@@ -61,7 +56,7 @@ module Twist
           query!(query: query, variables: variables, user: radar)
 
           invite_user = json_body.dig("data", "inviteUser")
-          expect(invite_user["error"]).to eq("You do not have permission to access that book.")
+          expect(invite_user["error"]).to eq("You must be an author to do that.")
 
           expect(permission_record).to be_nil
         end
@@ -93,7 +88,7 @@ module Twist
 
       context "when the invitee is already invited" do
         before do
-          invite.(current_user: radar, book_id: book.id, user_id: ghost.id).success
+          invite.(inviter: radar, book_id: book.id, user_id: ghost.id).success
         end
 
         it "does nothing at all" do
@@ -105,6 +100,7 @@ module Twist
           query!(query: query, variables: variables, user: radar)
 
           invite_user = json_body.dig("data", "inviteUser")
+
 
           expect(invite_user["bookId"]).to eq(book.id.to_s)
           expect(invite_user["userId"]).to eq(ghost.id.to_s)

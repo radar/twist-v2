@@ -34,6 +34,10 @@ module Twist
           book_id: book.id,
         ).exist?
       end
+
+      def remove(book_id:, user_id:)
+        permissions.where(book_id: book_id, user_id: user_id).delete
+      end
     end
   end
 end

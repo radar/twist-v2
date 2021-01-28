@@ -4,7 +4,7 @@ module Twist
   describe "book -> readers", type: :request do
     let!(:create_book) { Twist::Container["transactions.books.create"] }
     let!(:create_user) { Twist::Container["transactions.users.create"] }
-    let!(:invite) { Twist::Container["transactions.invitations.invite"] }
+    let!(:permission_repo) { Twist::Container["repositories.permission_repo"] }
 
     let!(:book) { create_book.(title: "Active Rails", default_branch: "master").success }
 
@@ -27,7 +27,7 @@ module Twist
     end
 
     before do
-      invite.(book_id: book.id, user_id: radar.id)
+      permission_repo.create(book_id: book.id, user_id: radar.id)
     end
 
     let(:query) do

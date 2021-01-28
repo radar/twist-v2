@@ -14,6 +14,7 @@ require_relative 'mutations/notes/update'
 require_relative 'mutations/users/authenticate'
 
 require_relative 'mutations/invitations/invite'
+require_relative 'mutations/readers/remove'
 
 module Twist
   module Web
@@ -33,6 +34,7 @@ module Twist
         field :delete_comment, mutation: Mutations::Comments::Delete
 
         field :invite_user, mutation: Mutations::Invitations::Invite
+        field :remove_reader, mutation: Mutations::Readers::Remove
       end
     end
   end
