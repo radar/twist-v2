@@ -67,7 +67,7 @@ const Readers: React.FC<ReadersProps> = ({ readers }) => {
 
       <ul className="list-disc list-inside">
         {authors.map((reader, index) => (
-          <ReaderItem {...reader} index={index} />
+          <ReaderItem {...reader} key={reader.id} index={index} />
         ))}
       </ul>
 
@@ -75,7 +75,7 @@ const Readers: React.FC<ReadersProps> = ({ readers }) => {
 
       <ul className="list-disc list-inside">
         {filteredReaders.map((reader, index) => (
-          <ReaderItem {...reader} index={index} />
+          <ReaderItem {...reader} key={reader.id} index={index} />
         ))}
       </ul>
     </div>
