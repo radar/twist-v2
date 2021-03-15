@@ -21,7 +21,7 @@ module RequestHelpers
   end
 
   def query!(query:, variables: {}, user: nil)
-    header 'Authorization', Twist::Transactions::Users::GenerateJwt.new.(email: user.email) if user
+    header 'Authorization', Twist::Transactions::Users::GenerateJwt.new.(email: user.email).success if user
 
     post "/graphql", query: query, variables: variables
 
