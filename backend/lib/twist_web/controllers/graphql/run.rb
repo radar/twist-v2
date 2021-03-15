@@ -6,6 +6,7 @@ module Twist
       module Graphql
         class Run < Hanami::Action
           include Web::Controllers::CORS
+          include Twist::Import["transactions.users.find_current_user"]
 
           %w(
             book book_note branch chapter comment commit element footnote image note permission user reader
@@ -17,7 +18,14 @@ module Twist
           def handle(req, res)
             params = req.params
             variables = Hanami::Utils::Hash.stringify(params[:variables] || {})
-            current_user = find_current_user(params.env["HTTP_AUTHORIZATION"])
+            find_user_result = find_current_user.(params.env["HTTP_AUTHORIZATION"])
+
+            if find_user_result.failure?
+              res.status = 403
+              return
+            end
+
+            current_user = find_user_result.success
 
             runner = Web::GraphQL::Runner.new(
               repos: {
@@ -54,17 +62,6 @@ module Twist
 
           def verify_csrf_token?
             false
-          end
-
-          def find_current_user(token)
-            return unless token
-
-            token = token.split.last
-            return unless token
-
-            payload, _headers = JWT.decode token, ENV.fetch('AUTH_TOKEN_SECRET'), true, algorithm: 'HS256'
-            user_repo = Repositories::UserRepo.new
-            user_repo.find_by_email(payload["email"])
           end
         end
       end
