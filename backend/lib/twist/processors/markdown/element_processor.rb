@@ -1,5 +1,4 @@
 # rubocop:disable Metrics/ClassLength
-require 'rollbar'
 
 module Twist
   module Markdown
@@ -53,7 +52,7 @@ module Twist
         files = Dir[File.expand_path(File.join(book_path, "**", "*"))]
         unless files.include?(image_path)
           warning = "Missing image in #{chapter.title}: #{image_path}"
-          Rollbar.warning(warning)
+          Bugsnag.notify(warning)
           # Ignore it
           return
         end
