@@ -22,6 +22,8 @@ module Twist
 
             if find_user_result.failure?
               res.status = 403
+              res.body = { error: "You must be signed in to access this page" }.to_json
+              res.format = :json
               return
             end
 
