@@ -1,4 +1,6 @@
 # rubocop:disable Metrics/ClassLength
+require 'rollbar'
+
 module Twist
   module Markdown
     class ElementProcessor
