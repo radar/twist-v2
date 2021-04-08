@@ -7,7 +7,7 @@ module Twist
         end
 
         def set_cors_headers(req, res)
-          res.headers["Access-Control-Allow-Origin"] = '*'
+          res.headers["Access-Control-Allow-Origin"] = ENV['FRONTEND_APP_URL']
           res.headers["Access-Control-Allow-Headers"] = 'Content-Type, Authorization'
           res.headers["Access-Control-Request-Method"] = '*'
         end
