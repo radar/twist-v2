@@ -5,6 +5,7 @@ module Twist
     module Controllers
       module Graphql
         class Run < Hanami::Action
+          include Dry::Monads[:result]
           include Web::Controllers::CORS
           include Twist::Import["transactions.users.find_current_user"]
 
@@ -20,14 +21,12 @@ module Twist
             variables = Hanami::Utils::Hash.stringify(params[:variables] || {})
             find_user_result = find_current_user.(params.env["HTTP_AUTHORIZATION"])
 
-            if find_user_result.failure?
-              res.status = 403
-              res.body = { error: "You must be signed in to access this page" }.to_json
-              res.format = :json
-              return
-            end
-
-            current_user = find_user_result.success
+            current_user = case find_user_result
+                           in Success(user)
+                             user
+                           else
+                             nil
+                           end
 
             runner = Web::GraphQL::Runner.new(
               repos: {
