@@ -44,7 +44,7 @@ module Twist
 
       def to_html
         markdown = File.read(File.join(path, file_name))
-        renderer = Redcarpet::Markdown.new(Renderer, fenced_code_blocks: true)
+        renderer = Redcarpet::Markdown.new(Renderer, fenced_code_blocks: true, tables: true)
         Nokogiri::HTML(renderer.render(markdown))
       end
     end

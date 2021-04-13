@@ -41,7 +41,7 @@ module Twist
 
         sections = elements.select { |e| e.tag == "h2" }
         sections.map! { |s| Nokogiri::HTML(s.content).text }
-        expect(sections).to eq(["This is a new section"])
+        expect(sections).to eq(["This is a new section", "Here's a table:"])
 
         images = image_repo.by_chapter(chapter.id).to_a
 
@@ -51,6 +51,7 @@ module Twist
 
         expect(elements.select { |e| e.tag == "img" }).not_to be_empty
         expect(elements.select { |e| e.tag == "code" }).not_to be_empty
+        expect(elements.select { |e| e.tag == "table" }).not_to be_empty
       end
     end
   end
