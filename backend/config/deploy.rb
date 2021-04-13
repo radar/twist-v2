@@ -11,7 +11,7 @@ set :repo_tree, "backend"
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/var/www/twist-v2"
 
-set :chruby_ruby, 'ruby-2.6.2'
+set :chruby_ruby, 'ruby-2.7.3'
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
