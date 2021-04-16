@@ -788,13 +788,13 @@ textarea {
 }
 
 .element > p {
-  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 .element p code {
   color: #c53030;
   font-size: 0.875rem;
-  padding: 0.25rem;
 }
 
 .chapter figure {
@@ -814,7 +814,7 @@ textarea {
 .element .note-button {
   position: absolute;
   left: -4.25rem;
-  top: -1rem;
+  top: -0.3rem;
 }
 
 @media screen and (min-width: 800px) {

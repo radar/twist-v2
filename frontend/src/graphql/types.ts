@@ -220,6 +220,7 @@ export type Mutations = {
   readonly openNote: Note;
   readonly removeReader: RemovePayload;
   readonly submitNote: Note;
+  readonly updateBranch: Branch;
   readonly updateComment: Comment;
   readonly updateNote: Note;
 };
@@ -268,6 +269,12 @@ export type MutationsSubmitNoteArgs = {
   bookPermalink: Scalars['ID'];
   elementId: Scalars['ID'];
   text: Scalars['String'];
+};
+
+
+export type MutationsUpdateBranchArgs = {
+  bookPermalink: Scalars['String'];
+  branchName: Scalars['String'];
 };
 
 
@@ -412,6 +419,14 @@ export type BookQuery = { readonly __typename: 'Query', readonly book: { readonl
 
 export type ChapterFieldsFragment = { readonly __typename: 'Chapter', readonly id: string, readonly title: string, readonly position: number, readonly permalink: string };
 
+export type UpdateBranchMutationVariables = Exact<{
+  bookPermalink: Scalars['String'];
+  branchName: Scalars['String'];
+}>;
+
+
+export type UpdateBranchMutation = { readonly __typename: 'Mutations', readonly updateBranch: { readonly __typename: 'Branch', readonly name: string } };
+
 export type BranchQueryVariables = Exact<{
   bookPermalink: Scalars['String'];
   name: Scalars['String'];
@@ -495,7 +510,7 @@ export type InviteUserMutationVariables = Exact<{
 }>;
 
 
-export type InviteUserMutation = { readonly __typename: 'Mutations', readonly inviteUser: { readonly __typename: 'InvitePayload', readonly bookId?: Maybe<string>, readonly userId?: Maybe<string>, readonly error?: Maybe<string> } };
+export type InviteUserMutation = { readonly __typename: 'Mutations', readonly inviteUser: { readonly __typename: 'InvitePayload', readonly bookId?: Maybe<string>, readonly userId?: Maybe<string> } };
 
 export type ReadersQueryVariables = Exact<{
   permalink: Scalars['String'];
@@ -783,6 +798,39 @@ export function useBookLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BookQ
 export type BookQueryHookResult = ReturnType<typeof useBookQuery>;
 export type BookLazyQueryHookResult = ReturnType<typeof useBookLazyQuery>;
 export type BookQueryResult = Apollo.QueryResult<BookQuery, BookQueryVariables>;
+export const UpdateBranchDocument = gql`
+    mutation UpdateBranch($bookPermalink: String!, $branchName: String!) {
+  updateBranch(bookPermalink: $bookPermalink, branchName: $branchName) {
+    name
+  }
+}
+    `;
+export type UpdateBranchMutationFn = Apollo.MutationFunction<UpdateBranchMutation, UpdateBranchMutationVariables>;
+
+/**
+ * __useUpdateBranchMutation__
+ *
+ * To run a mutation, you first call `useUpdateBranchMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateBranchMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateBranchMutation, { data, loading, error }] = useUpdateBranchMutation({
+ *   variables: {
+ *      bookPermalink: // value for 'bookPermalink'
+ *      branchName: // value for 'branchName'
+ *   },
+ * });
+ */
+export function useUpdateBranchMutation(baseOptions?: Apollo.MutationHookOptions<UpdateBranchMutation, UpdateBranchMutationVariables>) {
+        return Apollo.useMutation<UpdateBranchMutation, UpdateBranchMutationVariables>(UpdateBranchDocument, baseOptions);
+      }
+export type UpdateBranchMutationHookResult = ReturnType<typeof useUpdateBranchMutation>;
+export type UpdateBranchMutationResult = Apollo.MutationResult<UpdateBranchMutation>;
+export type UpdateBranchMutationOptions = Apollo.BaseMutationOptions<UpdateBranchMutation, UpdateBranchMutationVariables>;
 export const BranchDocument = gql`
     query branch($bookPermalink: String!, $name: String!) {
   book(permalink: $bookPermalink) {
@@ -1116,7 +1164,6 @@ export const InviteUserDocument = gql`
   inviteUser(bookId: $bookId, userId: $userId) {
     bookId
     userId
-    error
   }
 }
     `;

@@ -8,7 +8,7 @@ module Twist
       attr_accessor :test
     end
 
-    def initialize(username:, repo:, branch: "master", target: File.expand_path(File.join(__dir__, "../../repos")), logger: nil)
+    def initialize(username:, repo:, branch: "master", target: File.expand_path(File.join(__dir__, "../../repos")), logger: Logger.new($STDOUT))
       @username = username
       @repo = repo
       @branch = branch

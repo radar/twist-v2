@@ -1,10 +1,15 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { RouteComponentProps, Link } from "@reach/router";
 import moment from "moment";
 
 import QueryWrapper from "../../QueryWrapper";
-import { BranchQuery, useBranchQuery } from "../../graphql/types";
+import {
+  BranchQuery,
+  useBranchQuery,
+  useUpdateBranchMutation,
+} from "../../graphql/types";
 import PermissionDenied from "../../PermissionDenied";
+import { gql } from "@apollo/client";
 
 type Book = Extract<BranchQuery["book"], { __typename?: "Book" }>;
 type BranchData = Book["branch"];
@@ -16,6 +21,14 @@ interface BranchProps extends BranchData {
   bookTitle: string;
   bookPermalink: string;
 }
+
+gql`
+  mutation UpdateBranch($bookPermalink: String!, $branchName: String!) {
+    updateBranch(bookPermalink: $bookPermalink, branchName: $branchName) {
+      name
+    }
+  }
+`;
 
 const Commit: FunctionComponent<CommitData> = (props) => {
   const { bookPermalink, sha, createdAt, message } = props;
@@ -36,7 +49,20 @@ const Commit: FunctionComponent<CommitData> = (props) => {
 };
 
 const Branch: FunctionComponent<BranchProps> = (props) => {
+  const [updateBranch] = useUpdateBranchMutation({ errorPolicy: "all" });
   const { bookPermalink, bookTitle, name, commits } = props;
+
+  const [message, setMessage] = useState<string>("");
+
+  const update = () => {
+    updateBranch({
+      variables: { bookPermalink, branchName: name },
+    }).then((response) =>
+      setMessage(
+        "Branch is being updated. Refresh this page in a few seconds to see latest commit."
+      )
+    );
+  };
 
   const renderCommits = () => {
     return commits
@@ -53,8 +79,12 @@ const Branch: FunctionComponent<BranchProps> = (props) => {
       </h1>
       <Link to={`/books/${bookPermalink}/tree/${name}`}>
         Go to latest revision
-      </Link>
+      </Link>{" "}
       <hr className="my-4" />
+      <button type="button" className="btn btn-green" onClick={update}>
+        Update branch
+      </button>
+      <div className="ml-2 text-green-600">{message}</div>
       <h2>Recent commits</h2>
       <ul className="list-inside list-disc">{renderCommits()}</ul>
     </div>

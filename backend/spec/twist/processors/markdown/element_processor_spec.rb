@@ -42,21 +42,6 @@ module Twist
           subject.process!(markup)
         end
       end
-
-      context "with a p, containing a missing image" do
-        let(:markup) do
-          Nokogiri::HTML.fragment("<p><img src='404.png' />Hello World</p>").at("p")
-        end
-
-        it "does not try to call create element" do
-          expect(subject).not_to receive(:create_element).with(
-            "<img src='404.png' />",
-            "img"
-          )
-
-          subject.process!(markup)
-        end
-      end
     end
   end
 end

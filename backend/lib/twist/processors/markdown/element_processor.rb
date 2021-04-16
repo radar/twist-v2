@@ -38,9 +38,7 @@ module Twist
           # TODO: can Markdown really contain multiple images in the same p tag?
           markup.css('img').each do |img|
             image = process_img!(img)
-            if image
-              create_element(img.to_html, "img", identifier: img['src'], image_id: image.id)
-            end
+            create_element(img.to_html, "img", identifier: img['src'], image_id: image.id)
           end
         else
           create_element(markup.to_html, "p")
@@ -53,15 +51,12 @@ module Twist
         # This stops illegal access to files outside this directory
         image_path = File.expand_path(File.join(book_path, markup['src']))
         files = Dir[File.expand_path(File.join(book_path, "**", "*"))]
-        unless files.include?(image_path)
-          warning = "Missing image in #{chapter.title}: #{image_path}"
-          Bugsnag.notify(warning)
-          # Ignore it
-          return
-        end
-
         filename = markup['src']
-        image_repo.find_or_create_image(chapter.id, filename, image_path, markup['alt'])
+        if files.include?(image_path)
+          image_repo.find_or_create_image(chapter.id, filename, image_path, markup['alt'])
+        else
+          image_repo.find_or_create_image(chapter.id, filename, nil, markup['alt'])
+        end
       end
       # rubocop:enable Metrics/AbcSize
 

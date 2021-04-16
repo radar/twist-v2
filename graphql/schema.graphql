@@ -158,6 +158,7 @@ type Mutations {
   openNote(id: ID!): Note!
   removeReader(bookId: ID!, userId: ID!): RemovePayload!
   submitNote(bookPermalink: ID!, elementId: ID!, text: String!): Note!
+  updateBranch(bookPermalink: String!, branchName: String!): Branch!
   updateComment(id: ID!, text: String!): Comment!
   updateNote(id: ID!, text: String!): Note!
 }
