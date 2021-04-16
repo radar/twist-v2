@@ -46,7 +46,7 @@ module Twist
 
             generate_jwt = Transactions::Users::GenerateJwt.new
 
-            jwt_token = generate_jwt.(email: user.email)
+            jwt_token = generate_jwt.(email: user.email).success
 
             res.format = :json
             res.status = 200
