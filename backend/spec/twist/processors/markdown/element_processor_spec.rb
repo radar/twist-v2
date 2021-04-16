@@ -3,7 +3,7 @@ require "spec_helper"
 module Twist
   module Markdown
     describe ElementProcessor do
-      let(:chapter) { double(Twist::Chapter) }
+      let(:chapter) { double(Twist::Chapter, title: "Chapter title") }
       let(:book_path) { "fake/path/to/book" }
       let(:element_repo) { double }
 
@@ -37,6 +37,21 @@ module Twist
             "<h3 id=\"hello-world\">Hello World</h3>",
             "h3",
             identifier: "hello-world",
+          )
+
+          subject.process!(markup)
+        end
+      end
+
+      context "with a p, containing a missing image" do
+        let(:markup) do
+          Nokogiri::HTML.fragment("<p><img src='404.png' />Hello World</p>").at("p")
+        end
+
+        it "does not try to call create element" do
+          expect(subject).not_to receive(:create_element).with(
+            "<img src='404.png' />",
+            "img"
           )
 
           subject.process!(markup)

@@ -1,4 +1,5 @@
 # rubocop:disable Metrics/ClassLength
+require 'bugsnag'
 
 module Twist
   module Markdown
@@ -37,7 +38,9 @@ module Twist
           # TODO: can Markdown really contain multiple images in the same p tag?
           markup.css('img').each do |img|
             image = process_img!(img)
-            create_element(img.to_html, "img", identifier: img['src'], image_id: image.id)
+            if image
+              create_element(img.to_html, "img", identifier: img['src'], image_id: image.id)
+            end
           end
         else
           create_element(markup.to_html, "p")
