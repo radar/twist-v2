@@ -26,10 +26,13 @@ module Twist
                     else
                       raise "unknown format"
                     end
+            username, repo = payload["repository"]["full_name"].split("/")
+
             worker.perform_async(
               permalink: book.permalink,
               branch: branch.name,
-              github_path: payload["repository"]["full_name"],
+              username: username,
+              repo: repo,
             )
 
             res.status = 200
