@@ -89,7 +89,7 @@ textarea {
 }
 
 .element .code .highlight pre {
-  @apply p-2;
+  @apply py-2 px-3;
   overflow: auto;
   font-size: 90%;
 }
