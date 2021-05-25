@@ -9,7 +9,7 @@ module Twist
 
       # rubocop:disable Metrics/MethodLength
       def process_manifest
-        lines = File.readlines(Pathname.new(path) + "Book.txt")
+        lines = File.readlines(Pathname.new(path) + "manuscript/Book.txt")
         parts = Hash.new { |h, k| h[k] = [] }
         part = :mainmatter
         lines.each do |line|
