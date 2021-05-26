@@ -406,7 +406,7 @@ export type BookQueryVariables = Exact<{
 }>;
 
 
-export type BookQuery = { readonly __typename: 'Query', readonly book: { readonly __typename: 'Book', readonly title: string, readonly permalink: string, readonly currentUserAuthor: boolean, readonly latestCommit: { readonly __typename: 'Commit', readonly sha: string }, readonly commit: { readonly __typename: 'Commit', readonly sha: string, readonly createdAt: string, readonly branch: { readonly __typename: 'Branch', readonly name: string }, readonly frontmatter: ReadonlyArray<(
+export type BookQuery = { readonly __typename: 'Query', readonly result: { readonly __typename: 'Book', readonly title: string, readonly permalink: string, readonly currentUserAuthor: boolean, readonly latestCommit: { readonly __typename: 'Commit', readonly sha: string }, readonly commit: { readonly __typename: 'Commit', readonly sha: string, readonly createdAt: string, readonly branch: { readonly __typename: 'Branch', readonly name: string }, readonly frontmatter: ReadonlyArray<(
         { readonly __typename: 'Chapter' }
         & ChapterFieldsFragment
       )>, readonly mainmatter: ReadonlyArray<(
@@ -740,7 +740,7 @@ export const NoteFragmentDoc = gql`
     `;
 export const BookDocument = gql`
     query book($permalink: String!, $gitRef: String) {
-  book(permalink: $permalink) {
+  result: book(permalink: $permalink) {
     ... on PermissionDenied {
       error
     }

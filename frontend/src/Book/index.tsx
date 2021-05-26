@@ -104,11 +104,13 @@ const WrappedBook: React.FC<RouteComponentProps<WrappedBookProps>> = ({
   });
 
   const renderBook = (data: BookQuery) => {
-    if (data.book.__typename === "PermissionDenied") {
+    if (data.result.__typename === "PermissionDenied") {
       return <PermissionDenied />;
     }
 
-    return <Book {...data.book} gitRef={gitRef as string} />;
+    const book = data.result;
+
+    return <Book {...book} gitRef={gitRef as string} />;
   };
 
   return (

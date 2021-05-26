@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export default gql`
   query book($permalink: String!, $gitRef: String) {
-    book(permalink: $permalink) {
+    result: book(permalink: $permalink) {
       ... on PermissionDenied {
         error
       }
