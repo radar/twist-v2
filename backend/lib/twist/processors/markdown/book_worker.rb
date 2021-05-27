@@ -21,7 +21,7 @@ module Twist
         manifest = markdown_book.process_manifest
         manifest.each do |part, file_names|
           file_names.each_with_index do |file_name, position|
-            ChapterProcessor.new(commit, git.local_path, file_name, part, position).process
+            ChapterProcessor.new(commit, git.local_path + "manuscript", file_name, part, position).process
           end
         end
       end

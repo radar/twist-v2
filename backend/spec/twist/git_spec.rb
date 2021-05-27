@@ -97,7 +97,7 @@ describe Twist::Git do
     before { subject.clone }
 
     it "returns a sha of the HEAD" do
-      expect(subject.head.oid).to eq("4fbde233841a470b8ac32d053c67c7e7b35ed7f3")
+      expect(subject.head.oid).to eq("f0185bfdc005b8f9b6c9c2075deacbda008006a8")
     end
   end
 end

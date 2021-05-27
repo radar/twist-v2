@@ -17,7 +17,8 @@ module Twist
             subject.perform(
               "permalink" => book.permalink,
               "branch" => branch.name,
-              "github_path" => "radar/markdown_book_test",
+              "username" => "radar",
+              "repo" => "markdown_book_test"
             )
 
             commit = commit_repo.latest_for_branch(branch.id)
@@ -55,7 +56,8 @@ module Twist
               subject.perform(
                 "permalink" => book.permalink,
                 "branch" => branch.name,
-                "github_path" => "radar/markdown_book_test",
+                "username" => "radar",
+                "repo" => "markdown_book_test"
               )
             end
 
