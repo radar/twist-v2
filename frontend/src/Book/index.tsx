@@ -13,7 +13,7 @@ import {
 } from "../graphql/types";
 
 export type BookData = Omit<
-  Extract<BookQuery["book"], { __typename?: "Book" }>,
+  Extract<BookQuery["result"], { __typename: "Book" }>,
   "__typename"
 >;
 type Chapters = readonly ChapterFieldsFragment[];
