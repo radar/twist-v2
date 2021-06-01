@@ -50,7 +50,7 @@ class Login extends React.Component<LoginProps, LoginState> {
             >
               <img src={githubLogo} className="float-left" alt="GitHub" />
 
-              <span>Sign in with GitHub</span>
+              <div className="btn btn-blue">Sign in with GitHub</div>
             </button>
           </div>
         </div>
