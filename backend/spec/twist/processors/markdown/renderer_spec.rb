@@ -118,14 +118,14 @@ module Twist
 
       it "can parse an aside" do
         aside = <<~INPUT
-          A> **Pssst, over here!**
+          A> ## A simple aside
           A>
           A> Did you know that this is an aside? Please keep it on the DL.
         INPUT
 
         output = render(aside)
         parsed_aside = output.css("div.aside")
-        expect(parsed_aside.css("strong").text).to eq("Pssst, over here!")
+        expect(parsed_aside.css("h2").text).to eq("Pssst, over here!")
         expect(parsed_aside.css("p").count).to eq(2)
       end
 
