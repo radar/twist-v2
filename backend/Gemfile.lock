@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/hanami/controller.git
-  revision: 08848a00e117f0fb180dbf8c8bce25761506b6e5
+  revision: 7695bedf3b094c6574c16371120c51b139005018
   branch: unstable
   specs:
     hanami-controller (2.0.0.alpha1)
@@ -10,10 +10,10 @@ GIT
 
 GIT
   remote: https://github.com/hanami/router.git
-  revision: f9468bc5de7d74e36ee23bc46eda58389ab5276e
+  revision: 7d70f09f9c256c1093d008c561c2f53fc3f61d7f
   branch: unstable
   specs:
-    hanami-router (2.0.0.alpha3)
+    hanami-router (2.0.0.alpha4)
       mustermann (~> 1.0)
       mustermann-contrib (~> 1.0)
       rack (~> 2.0)
@@ -67,7 +67,7 @@ GEM
       xpath (~> 3.2)
     childprocess (3.0.0)
     coderay (1.1.2)
-    concurrent-ruby (1.1.7)
+    concurrent-ruby (1.1.8)
     connection_pool (2.2.2)
     content_disposition (1.0.0)
     database_cleaner (1.7.0)
@@ -80,7 +80,7 @@ GEM
       addressable (~> 2.5)
     dry-auto_inject (0.7.0)
       dry-container (>= 0.3.4)
-    dry-configurable (0.12.0)
+    dry-configurable (0.12.1)
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.5, >= 0.5.0)
     dry-container (0.7.2)
@@ -133,7 +133,7 @@ GEM
       dry-logic (~> 1.0, >= 1.0.2)
     faraday (0.17.4)
       multipart-post (>= 1.2, < 3)
-    graphql (1.11.6)
+    graphql (1.12.14)
     hanami-utils (2.0.0.alpha1)
       concurrent-ruby (~> 1.0)
       transproc (~> 1.0)
@@ -190,7 +190,7 @@ GEM
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rainbow (3.0.0)
-    rake (13.0.1)
+    rake (13.0.6)
     redcarpet (3.5.1)
     redis (4.1.0)
     regexp_parser (1.6.0)
@@ -240,7 +240,7 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.6)
     ruby-progressbar (1.10.0)
-    ruby2_keywords (0.0.2)
+    ruby2_keywords (0.0.4)
     rubyzip (2.1.0)
     rugged (1.1.0)
     sawyer (0.8.1)
