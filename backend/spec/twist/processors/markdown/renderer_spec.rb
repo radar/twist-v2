@@ -123,8 +123,8 @@ describe Twist::Processors::Markdown::Renderer do
 
     output = render(aside)
     parsed_aside = output.css("div.aside")
-    expect(parsed_aside.css("h2").text).to eq("Pssst, over here!")
-    expect(parsed_aside.css("p").count).to eq(2)
+    expect(parsed_aside.css("h2").text).to eq("A simple aside")
+    expect(parsed_aside.css("p").count).to eq(1)
   end
 
   it "can parse a titleized code listing" do
