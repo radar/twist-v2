@@ -5,9 +5,13 @@ module Twist
   module Processors
     module Markdown
       class ElementProcessor
-        def initialize(chapter, book_path)
+        include Twist::Import["repositories.element_repo", "repositories.image_repo"]
+
+        def initialize(chapter, book_path, **args)
           @chapter = chapter
           @book_path = book_path
+
+          super(**args)
         end
 
         def process!(markup)
@@ -17,14 +21,6 @@ module Twist
         private
 
         attr_reader :chapter, :book_path
-
-        def element_repo
-          @element_repo ||= Repositories::ElementRepo.new
-        end
-
-        def image_repo
-          @image_repo ||= Repositories::ImageRepo.new
-        end
 
         def create_element(markup, name, extra = {})
           element_repo.create({
