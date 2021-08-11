@@ -1,5 +1,6 @@
-require 'dry-transaction'
 require 'twist/permalinker'
+
+require 'pry'
 
 module Twist
   module Transactions
@@ -7,16 +8,16 @@ module Twist
       class Create < Twist::Transaction
         include Twist::Import["repositories.book_repo"]
 
-        def call(input)
-          input = yield add_permalink(input)
-          book = yield create_book(input)
+        def call(params)
+          params_with_permalink = add_permalink(params)
+          book = yield create_book(params_with_permalink)
           Success(book)
         end
 
         def add_permalink(input)
-          Success(input.merge(
+          input.merge(
             permalink: ::Twist::Permalinker.new(input[:title]).permalink,
-          ))
+          )
         end
 
         def create_book(input)
