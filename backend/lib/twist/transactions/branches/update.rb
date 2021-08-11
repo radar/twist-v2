@@ -21,8 +21,6 @@ module Twist
                     raise "unknown format"
                   end
 
-          puts "Enqueuing work on book"
-
           worker.perform_async(
             permalink: book.permalink,
             branch: branch.name,
