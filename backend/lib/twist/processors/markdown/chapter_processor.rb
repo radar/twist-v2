@@ -5,12 +5,16 @@ module Twist
   module Processors
     module Markdown
       class ChapterProcessor
-        def initialize(commit, path, file_name, part, position)
+        include Import["repositories.chapter_repo"]
+
+        def initialize(commit, path, file_name, part, position, **args)
           @commit = commit
           @path = path + "manuscript"
           @part = part
           @file_name = file_name
           @position = position
+
+          super(**args)
         end
 
         def process
@@ -32,8 +36,7 @@ module Twist
         attr_reader :commit, :path, :part, :file_name, :position
 
         def create_chapter(title)
-          repo = Repositories::ChapterRepo.new
-          repo.create(
+          chapter_repo.create(
             commit_id: commit.id,
             title: title,
             part: part,

@@ -2,6 +2,8 @@ require "spec_helper"
 
 module Twist
   describe Web::Controllers::Oauth::Callback do
+    include Dry::Monads[:result]
+
     let(:params) do
       {
         code: "abc123",
@@ -13,7 +15,8 @@ module Twist
     let(:auth_code) { double(OAuth2::Strategy::AuthCode) }
     let(:client) { double(OAuth2::Client, auth_code: auth_code) }
     let(:github_info) { -> (_token) { { name: "Ryan Bigg", login: "radar", email: "primary@example.com" } } }
-    let(:user_repo) { double(Repositories::UserRepo) }
+    let(:create_user) { double(Transactions::Users::Create) }
+    let(:find_by_github_login) { double(Transactions::Users::FindByGithubLogin) }
     let(:session) do
       {
         state: "state-abc123"
@@ -24,7 +27,8 @@ module Twist
       described_class.new(
         oauth_client: client,
         github_info: github_info,
-        user_repo: user_repo,
+        find_by_github_login: find_by_github_login,
+        create_user: create_user,
       )
     end
 
@@ -41,33 +45,33 @@ module Twist
         let(:user) { double(Entities::User, email: "me@ryanbigg.com") }
 
         before do
-          allow(user_repo).to receive(:find_by_github_login) { user }
+          allow(find_by_github_login).to receive(:call) { user }
         end
 
         it "re-uses that user" do
-          expect(user_repo).not_to receive(:create)
+          expect(create_user).to_not receive(:call)
           subject.(params)
         end
       end
 
       context "when the user is not known" do
-        before do
-          allow(user_repo).to receive(:find_by_github_login) { nil }
-        end
-
         let(:user) { double(Entities::User, email: "me@ryanbigg.com") }
 
+        before do
+          allow(find_by_github_login).to receive(:call) { nil }
+        end
+
         it "creates that user" do
-          expect(user_repo).to receive(:create).with(hash_including(
+          expect(create_user).to receive(:call).with(hash_including(
             email: "primary@example.com",
             name: "Ryan Bigg",
             github_login: "radar",
-          )) { user }
+          )) { Success(user) }
           subject.(params)
         end
 
         it "returns a JWT for the client" do
-          allow(user_repo).to receive(:create) { user }
+          allow(create_user).to receive(:call) { Success(user) }
           status, _, body = subject.(params)
           expect(status).to eq(200)
           jwt_token = body.first["jwt_token"]

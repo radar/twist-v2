@@ -2,7 +2,7 @@ module Twist
   module Transactions
     module Users
       class Authenticate < Transaction
-        include Twist::Import["user_repo"]
+        include Twist::Import["repositories.user_repo", "transactions.users.generate_jwt"]
 
         def call(email:, password:)
           user = yield find_by_email(email: email)
@@ -26,7 +26,6 @@ module Twist
         end
 
         def encode_token(user)
-          generate_jwt = GenerateJwt.new
           token = generate_jwt.(email: user.email).success
 
           Success(email: user.email, token: token)

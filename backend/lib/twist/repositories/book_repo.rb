@@ -26,10 +26,6 @@ module Twist
           .commit
       end
 
-      def ordered_by_title_with_branches
-        aggregate(:branches).map_to(Book).order { :title }.to_a
-      end
-
       def find_by_permalink(permalink)
         books.where(permalink: permalink).limit(1).one!
       end

@@ -1,4 +1,8 @@
 Twist::Container.boot(:oauth) do
+  init do
+    require 'oauth2'
+  end
+
   start do
     register('oauth.client', -> {
       OAuth2::Client.new(

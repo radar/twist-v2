@@ -1,10 +1,6 @@
 module Twist
   class Permalinker
-    def initialize(string)
-      @string = string
-    end
-
-    def permalink
+    def call(string)
       # uses Babosa to get the work done
       string.to_slug.normalize.to_s
     end

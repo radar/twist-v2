@@ -8,6 +8,9 @@ module Twist
             "repositories.user_repo",
             github_info: "transactions.users.github_info",
             oauth_client: "oauth.client",
+            create_user: "transactions.users.create",
+            find_by_github_login: "transactions.users.find_by_github_login",
+            generate_jwt: "transactions.users.generate_jwt",
           ]
           include Web::Controllers::CORS
 
@@ -26,13 +29,9 @@ module Twist
 
             gh_info = github_info.(token: token.token)
 
-            user = user_repo.find_by_github_login(gh_info[:login])
+            user = find_by_github_login.(gh_info[:login])
 
             user ||= begin
-              create_user = Transactions::Users::Create.new(
-                user_repo: user_repo,
-              )
-
               result = create_user.(
                 email: gh_info[:email],
                 password: SecureRandom.hex(64),
@@ -41,8 +40,6 @@ module Twist
               )
               result.success
             end
-
-            generate_jwt = Transactions::Users::GenerateJwt.new
 
             jwt_token = generate_jwt.(email: user.email).success
 

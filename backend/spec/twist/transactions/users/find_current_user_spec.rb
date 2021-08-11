@@ -2,8 +2,13 @@ require "spec_helper"
 
 module Twist
   describe Transactions::Users::FindCurrentUser do
+    include Twist::Import[
+      "transactions.users.generate_jwt",
+      create_user: "transactions.users.create"
+    ]
+
     let(:user) do
-      Transactions::Users::Create.(
+      create_user.(
         email: "me@ryanbigg.com",
         name: "Ryan Bigg",
         password: "password",
@@ -11,7 +16,7 @@ module Twist
       ).success
     end
 
-    let(:token) { Transactions::Users::GenerateJwt.(email: user.email).success }
+    let(:token) { generate_jwt.(email: user.email).success }
 
     it "finds a user by a given JWT token" do
       result = subject.(token)
