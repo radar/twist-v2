@@ -5,8 +5,8 @@ module Twist
       base.include Dry::Monads::Do.for(:call)
     end
 
-    def self.call(**args)
-      new.call(**args)
+    def self.call(...)
+      new.call(...)
     end
 
     def permission_denied!
