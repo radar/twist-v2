@@ -79,7 +79,7 @@ describe Twist::Git do
     context "when local changes have been made" do
       before do
         Dir.chdir(subject.local_path) do
-          `git rm Book.txt`
+          `git rm manuscript/Book.txt`
         end
       end
 
@@ -87,7 +87,7 @@ describe Twist::Git do
         subject.update
 
         Dir.chdir(subject.local_path) do
-          expect(File).to exist("Book.txt")
+          expect(File).to exist("manuscript/Book.txt")
         end
       end
     end
@@ -97,7 +97,7 @@ describe Twist::Git do
     before { subject.clone }
 
     it "returns a sha of the HEAD" do
-      expect(subject.head.oid).to eq("f0185bfdc005b8f9b6c9c2075deacbda008006a8")
+      expect(subject.head.oid).to eq("122d2712d9214913cdff8ffd568e11985147bff7")
     end
   end
 end

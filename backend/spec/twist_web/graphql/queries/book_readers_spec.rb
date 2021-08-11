@@ -3,12 +3,12 @@ require 'spec_helper'
 module Twist
   describe Web::GraphQL::Runner, graphql: true do
     context 'book -> readers' do
-      let(:current_user) { double(User, id: 1) }
+      let(:current_user) { double(Entities::User, id: 1) }
       let(:book_repo) { instance_double(Repositories::BookRepo) }
       let(:reader_repo) { instance_double(Repositories::ReaderRepo) }
       let(:permission_repo) { instance_double(Repositories::PermissionRepo) }
       let(:book) do
-        Twist::Book.new(
+        Twist::Entities::Book.new(
           id: 1,
           title: "Active Rails",
           permalink: "active-rails",
@@ -16,7 +16,7 @@ module Twist
       end
 
       let(:reader_1) do
-        Twist::Reader.new(
+        Twist::Entities::Reader.new(
           id: 1,
           github_login: "radar",
           name: "Ryan Bigg",
@@ -29,7 +29,7 @@ module Twist
       end
 
       let(:reader_2) do
-        Twist::Reader.new(
+        Twist::Entities::Reader.new(
           id: 2,
           github_login: "twist",
           name: "Twist Books",
@@ -42,7 +42,7 @@ module Twist
       end
 
       let(:reader_3) do
-        Twist::Reader.new(
+        Twist::Entities::Reader.new(
           id: 3,
           github_login: "sharon",
           name: "Sharon",

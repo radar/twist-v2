@@ -14,9 +14,9 @@ module Twist
 
           worker = case book.format
                   when "markdown"
-                    Twist::Markdown::BookWorker
+                    Twist::Processors::Markdown::BookWorker
                   when "asciidoc"
-                    Twist::Asciidoc::BookWorker
+                    Twist::Processors::Asciidoc::BookWorker
                   else
                     raise "unknown format"
                   end

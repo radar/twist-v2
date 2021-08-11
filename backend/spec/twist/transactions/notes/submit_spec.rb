@@ -5,7 +5,7 @@ describe Twist::Transactions::Notes::Submit do
     let(:book_repo) { double(Twist::Repositories::BookRepo) }
     let(:note_repo) { double(Twist::Repositories::NoteRepo) }
     let(:book_note_repo) { double(Twist::Repositories::BookNoteRepo) }
-    let(:user) { double(Twist::User, id: 1) }
+    let(:user) { double(Twist::Entities::User, id: 1) }
 
     subject do
       described_class.new(

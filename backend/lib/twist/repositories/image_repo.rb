@@ -1,5 +1,3 @@
-require 'twist/image_uploader'
-
 module Twist
   module Repositories
     class ImageRepo < Twist::Repository[:images]

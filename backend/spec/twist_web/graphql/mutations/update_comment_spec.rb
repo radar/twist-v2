@@ -14,7 +14,7 @@ module Twist
       end
 
       let(:comment) do
-        double(Twist::Comment, id: 1, user_id: 1, text: "Hello World")
+        double(Twist::Entities::Comment, id: 1, user_id: 1, text: "Hello World")
       end
 
       before do
@@ -22,7 +22,7 @@ module Twist
       end
 
       context "when signed as the comment's owner" do
-        let(:current_user) { double(User, id: 1) }
+        let(:current_user) { double(Entities::User, id: 1) }
         it "updates the comment's text" do
           query = %|
             mutation {
@@ -34,7 +34,7 @@ module Twist
           |
 
           expect(comment_repo).to receive(:update) do
-            double(Comment, id: 1, text: "Hello New World")
+            double(Entities::Comment, id: 1, text: "Hello New World")
           end
 
           result = subject.run(
@@ -48,7 +48,7 @@ module Twist
       end
 
       context "when signed as someone else" do
-        let(:current_user) { double(User, id: 2) }
+        let(:current_user) { double(Entities::User, id: 2) }
         it "does not change the comment's text" do
           query = %|
             mutation {

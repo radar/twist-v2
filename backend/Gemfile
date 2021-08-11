@@ -19,9 +19,11 @@ gem 'pg'
 
 # dry-rb
 gem 'dry-monads'
-gem 'dry-transaction'
 gem 'dry-auto_inject'
 gem 'dry-system'
+
+# Zeitwerk
+gem 'zeitwerk'
 
 # Hanami
 gem 'hanami-controller', github: "hanami/controller", branch: "unstable"

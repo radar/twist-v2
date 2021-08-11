@@ -3,14 +3,14 @@ require 'spec_helper'
 module Twist
   describe Web::GraphQL::Runner, graphql: true do
     context 'book' do
-      let(:current_user) { double(User, id: 1) }
+      let(:current_user) { double(Entities::User, id: 1) }
       let(:book_repo) { double(Repositories::BookRepo) }
       let(:branch_repo) { double(Repositories::BranchRepo) }
       let(:commit_repo) { double(Repositories::CommitRepo) }
       let(:chapter_repo) { double(Repositories::ChapterRepo) }
       let(:permission_repo) { double(Repositories::PermissionRepo) }
       let(:book) do
-        Twist::Book.new(
+        Twist::Entities::Book.new(
           id: 1,
           title: "Exploding Rails",
           permalink: "exploding-rails",
@@ -19,7 +19,7 @@ module Twist
 
       let(:branch) do
         double(
-          Branch,
+          Entities::Branch,
           id: 1,
           name: "master",
           default: true,
@@ -28,7 +28,7 @@ module Twist
 
       let(:commit) do
         double(
-          Commit,
+          Entities::Commit,
           sha: "abc123",
           id: 1,
           created_at: Time.now,
@@ -38,7 +38,7 @@ module Twist
 
       let(:chapter) do
         double(
-          Chapter,
+          Entities::Chapter,
           id: 1,
           title: "Introduction",
           permalink: "introduction",

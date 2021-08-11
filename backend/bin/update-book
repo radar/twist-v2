@@ -12,15 +12,16 @@ book = repo.find_by_permalink(permalink)
 
 worker = case book.format
          when "markdown"
-           Twist::Markdown::BookWorker
+           Twist::Processors::Markdown::BookWorker
          when "asciidoc"
-           Twist::Asciidoc::BookWorker
+           Twist::Processors::Asciidoc::BookWorker
          end
 
 worker.perform_async(
   permalink: permalink,
   branch: branch,
-  github_path: "#{book.github_user}/#{book.github_repo}",
+  username: book.github_user,
+  repo: book.github_repo,
 )
 
 puts "Update enqueued for #{book.title}"

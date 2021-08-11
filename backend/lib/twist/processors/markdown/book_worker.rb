@@ -3,50 +3,52 @@ require_relative 'book'
 require_relative 'chapter_processor'
 
 module Twist
-  module Markdown
-    class BookWorker
-      include Sidekiq::Worker
+  module Processors
+    module Markdown
+      class BookWorker
+        include Sidekiq::Worker
 
-      # rubocop:disable Metrics/MethodLength
-      def perform(args)
-        book_updater = BookUpdater.new(
-          permalink: args["permalink"],
-          branch: args["branch"],
-          username: args["username"],
-          repo: args["repo"],
-        )
-        git, commit = book_updater.update!
+        # rubocop:disable Metrics/MethodLength
+        def perform(args)
+          book_updater = BookUpdater.new(
+            permalink: args["permalink"],
+            branch: args["branch"],
+            username: args["username"],
+            repo: args["repo"],
+          )
+          git, commit = book_updater.update!
 
-        markdown_book = Markdown::Book.new(git.local_path)
-        manifest = markdown_book.process_manifest
-        manifest.each do |part, file_names|
-          file_names.each_with_index do |file_name, position|
-            ChapterProcessor.new(commit, git.local_path + "manuscript", file_name, part, position).process
+          markdown_book = Markdown::Book.new(git.local_path)
+          manifest = markdown_book.process_manifest
+          manifest.each do |part, file_names|
+            file_names.each_with_index do |file_name, position|
+              ChapterProcessor.new(commit, git.local_path + "manuscript", file_name, part, position).process
+            end
           end
         end
-      end
-      # rubocop:enable Metrics/MethodLength
+        # rubocop:enable Metrics/MethodLength
 
-      private
+        private
 
-      def find_book(permalink)
-        repo = Repositories::BookRepo.new
-        book = repo.find_by_permalink(permalink)
-        raise "Book (#{permalink}) not found" unless book
+        def find_book(permalink)
+          repo = Repositories::BookRepo.new
+          book = repo.find_by_permalink(permalink)
+          raise "Book (#{permalink}) not found" unless book
 
-        book
-      end
+          book
+        end
 
-      def find_branch(book, branch)
-        repo = Repositories::BranchRepo.new
-        branch = repo.find_by_book_id_and_name(book.id, branch)
-        branch = raise "Branch (#{branch_name}) not found" unless book
-        branch
-      end
+        def find_branch(book, branch)
+          repo = Repositories::BranchRepo.new
+          branch = repo.find_by_book_id_and_name(book.id, branch)
+          branch = raise "Branch (#{branch_name}) not found" unless book
+          branch
+        end
 
-      def find_and_clean_or_create_commit(branch_id, commit)
-        repo = Repositories::CommitRepo.new
-        repo.find_and_clean_or_create(branch_id, commit, Repositories::ChapterRepo.new)
+        def find_and_clean_or_create_commit(branch_id, commit)
+          repo = Repositories::CommitRepo.new
+          repo.find_and_clean_or_create(branch_id, commit, Repositories::ChapterRepo.new)
+        end
       end
     end
   end

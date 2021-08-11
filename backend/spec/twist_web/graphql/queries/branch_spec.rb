@@ -3,13 +3,13 @@ require 'spec_helper'
 module Twist
   describe Web::GraphQL::Runner do
     context 'branches' do
-      let(:current_user) { double(User, id: 1) }
+      let(:current_user) { double(Entities::User, id: 1) }
       let(:book_repo) { double(Repositories::BookRepo) }
       let(:branch_repo) { double(Repositories::BranchRepo) }
       let(:commit_repo) { double(Repositories::CommitRepo) }
       let(:permission_repo) { double(Repositories::PermissionRepo) }
       let(:book) do
-        Twist::Book.new(
+        Twist::Entities::Book.new(
           id: 1,
           title: "Exploding Rails",
           permalink: "exploding-rails",
@@ -17,7 +17,7 @@ module Twist
       end
 
       let(:branch) do
-        Twist::Branch.new(
+        Twist::Entities::Branch.new(
           id: 1,
           name: "master",
           default: true
@@ -25,7 +25,7 @@ module Twist
       end
 
       let(:commit) do
-        double(Twist::Commit,
+        double(Twist::Entities::Commit,
           id: 1,
           sha: "abc123",
           message: "initial commit",

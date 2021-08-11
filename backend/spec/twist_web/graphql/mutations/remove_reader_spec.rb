@@ -3,7 +3,7 @@ require 'spec_helper'
 module Twist
   describe Web::GraphQL::Runner do
     context 'removeReader mutation', graphql: true do
-      let(:current_user) { double(User, id: 1) }
+      let(:current_user) { double(Entities::User, id: 1) }
       let(:permission_repo) { instance_double(Repositories::PermissionRepo) }
 
       subject do

@@ -1,5 +1,7 @@
 module Twist
-  class Element < ROM::Struct
+  module Entities
+    class Element < ROM::Struct
 
+    end
   end
 end

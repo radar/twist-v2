@@ -30,15 +30,16 @@ describe Twist::Web::Controllers::Books::Receive do
     end
 
     context "and the book is a markdown book" do
-      let(:book) { double(Twist::Book, id: 1, permalink: "exploding-rails", format: "markdown") }
-      let(:branch) { double(Twist::Branch, name: "master") }
+      let(:book) { double(Twist::Entities::Book, id: 1, permalink: "exploding-rails", format: "markdown") }
+      let(:branch) { double(Twist::Entities::Branch, name: "master") }
 
       it "triggers an update" do
-        expect(Twist::Markdown::BookWorker).to receive(:perform_async)
+        expect(Twist::Processors::Markdown::BookWorker).to receive(:perform_async)
           .with(
             permalink: "exploding-rails",
             branch: "master",
-            github_path: "radar/exploding_rails",
+            username: "radar",
+            repo: "exploding_rails",
           )
         status, _, body = subject.(params)
         expect(status).to eq(200)
@@ -47,15 +48,16 @@ describe Twist::Web::Controllers::Books::Receive do
     end
 
     context "and the book is an asciidoc book" do
-      let(:book) { double(Twist::Book, id: 1, permalink: "exploding-rails", format: "asciidoc") }
-      let(:branch) { double(Twist::Branch, name: "master") }
+      let(:book) { double(Twist::Entities::Book, id: 1, permalink: "exploding-rails", format: "asciidoc") }
+      let(:branch) { double(Twist::Entities::Branch, name: "master") }
 
       it "triggers an update" do
-        expect(Twist::Asciidoc::BookWorker).to receive(:perform_async)
+        expect(Twist::Processors::Asciidoc::BookWorker).to receive(:perform_async)
           .with(
             permalink: "exploding-rails",
             branch: "master",
-            github_path: "radar/exploding_rails",
+            username: "radar",
+            repo: "exploding_rails",
           )
         status, _, body = subject.(params)
         expect(status).to eq(200)

@@ -3,7 +3,7 @@ require 'spec_helper'
 module Twist
   describe Web::GraphQL::Runner do
     context 'chapter' do
-      let(:current_user) { double(User, id: 1) }
+      let(:current_user) { double(Entities::User, id: 1) }
       let(:book_repo) { double(Repositories::BookRepo) }
       let(:branch_repo) { double(Repositories::BranchRepo) }
       let(:commit_repo) { double(Repositories::CommitRepo) }
@@ -17,7 +17,7 @@ module Twist
       let(:permission_repo) { double(Repositories::PermissionRepo) }
 
       let(:book) do
-        Twist::Book.new(
+        Twist::Entities::Book.new(
           id: 1,
           title: "Exploding Rails",
           permalink: "exploding-rails",
@@ -26,7 +26,7 @@ module Twist
 
       let(:branch) do
         double(
-          Branch,
+          Entities::Branch,
           id: 1,
           name: "master",
           default: true,
@@ -35,14 +35,14 @@ module Twist
 
       let(:commit) do
         double(
-          Commit,
+          Entities::Commit,
           id: 1,
         )
       end
 
       let(:previous_chapter) do
         double(
-          Chapter,
+          Entities::Chapter,
           id: 1,
           title: "Preface",
           permalink: "preface",
@@ -54,7 +54,7 @@ module Twist
 
       let(:chapter) do
         double(
-          Chapter,
+          Entities::Chapter,
           id: 2,
           title: "Introduction",
           permalink: "introduction",
@@ -66,7 +66,7 @@ module Twist
 
       let(:next_chapter) do
         double(
-          Chapter,
+          Entities::Chapter,
           id: 3,
           title: "Getting Started",
           permalink: "getting-started",
@@ -78,7 +78,7 @@ module Twist
 
       let(:section) do
         double(
-          Element,
+          Entities::Element,
           id: 1,
           content: "<h2>In the beginning</h2>",
           tag: "h2",
@@ -89,7 +89,7 @@ module Twist
 
       let(:sub_section) do
         double(
-          Element,
+          Entities::Element,
           id: 3,
           content: "<h3>And then...</h3>",
           tag: "h3",
@@ -100,7 +100,7 @@ module Twist
 
       let(:element) do
         double(
-          Element,
+          Entities::Element,
           id: 2,
           content: "<p>Hello World</p>",
           identifier: "hello-world",
@@ -112,7 +112,7 @@ module Twist
 
       let(:footnote) do
         double(
-          Footnote,
+          Entities::Footnote,
           number: "1",
           identifier: "_footnotedef_1",
         )
@@ -120,7 +120,7 @@ module Twist
 
       let(:image) do
         double(
-          Image,
+          Entities::Image,
           image: double(url: "img.jpg"),
           status: 'completed',
         )
@@ -128,7 +128,7 @@ module Twist
 
       let(:other_user) do
         double(
-          User,
+          Entities::User,
           id: 2,
           email: "other@example.com",
           name: "Other User"
@@ -137,7 +137,7 @@ module Twist
 
       let(:note) do
         double(
-          Note,
+          Entities::Note,
           id: 1,
           number: 1,
           created_at: Time.now,

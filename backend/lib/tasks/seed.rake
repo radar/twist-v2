@@ -29,7 +29,7 @@ namespace :db do
       github_repo: "markdown_book_test",
     ) do |result|
       result.success do |book|
-        Twist::Markdown::BookWorker.perform_async(
+        Twist::Processors::Markdown::BookWorker.perform_async(
           permalink: book.permalink,
           branch: "master",
           github_path: "radar/markdown_book_test",
@@ -54,7 +54,7 @@ namespace :db do
       github_repo: "asciidoc_book_test",
     ) do |result|
       result.success do |book|
-        Twist::Asciidoc::BookWorker.perform_async(
+        Twist::Processors::Asciidoc::BookWorker.perform_async(
           permalink: book.permalink,
           branch: "master",
           github_path: "radar/asciidoc_book_test",

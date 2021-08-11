@@ -3,7 +3,7 @@ require 'spec_helper'
 module Twist
   describe Web::GraphQL::Runner do
     context 'updateNote mutation' do
-      let(:current_user) { double(User, id: 1) }
+      let(:current_user) { double(Entities::User, id: 1) }
       let(:note_repo) { double(Repositories::NoteRepo) }
       subject do
         described_class.new(
@@ -26,11 +26,11 @@ module Twist
           |
 
           expect(note_repo).to receive(:find).with("1") do
-            double(Note, id: 1, text: "Old text", state: "open", user_id: 1)
+            double(Entities::Note, id: 1, text: "Old text", state: "open", user_id: 1)
           end
 
           expect(note_repo).to receive(:update_text).with("1", text: "New text goes here") do
-            double(Note, id: 1, text: "New text goes here", state: "open")
+            double(Entities::Note, id: 1, text: "New text goes here", state: "open")
           end
 
           result = subject.run(
@@ -46,7 +46,7 @@ module Twist
       end
 
       context "when signed in as a different user" do
-        let(:current_user) { double(User, id: 2) }
+        let(:current_user) { double(Entities::User, id: 2) }
         it "does not update the note" do
           query = %|
             mutation updateNoteMutation {
@@ -59,7 +59,7 @@ module Twist
           |
 
           expect(note_repo).to receive(:find).with("1") do
-            double(Note, id: 1, text: "Old text", state: "open", user_id: 1)
+            double(Entities::Note, id: 1, text: "Old text", state: "open", user_id: 1)
           end
 
           expect(note_repo).not_to receive(:update_text)

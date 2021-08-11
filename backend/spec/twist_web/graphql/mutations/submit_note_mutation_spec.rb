@@ -3,7 +3,7 @@ require 'spec_helper'
 module Twist
   describe Web::GraphQL::Runner do
     context 'submitNote mutation' do
-      let(:current_user) { double(User, id: 1) }
+      let(:current_user) { double(Entities::User, id: 1) }
       let(:note_repo) { double }
       let(:book_repo) { double(Repositories::BookRepo) }
       subject do
@@ -15,7 +15,7 @@ module Twist
         )
       end
 
-      let(:book) { double(Book, id: 1) }
+      let(:book) { double(Entities::Book, id: 1) }
 
       before do
         expect(book_repo).to receive(:find_by_permalink) { book }
@@ -35,7 +35,7 @@ module Twist
             }
           |
 
-          expect(note_repo).to receive(:create) { double(Note, id: 1) }
+          expect(note_repo).to receive(:create) { double(Entities::Note, id: 1) }
 
           result = subject.run(
             query: query,

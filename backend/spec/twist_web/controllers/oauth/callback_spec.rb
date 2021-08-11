@@ -38,7 +38,7 @@ module Twist
       end
 
       context "when a user is already known" do
-        let(:user) { double(User, email: "me@ryanbigg.com") }
+        let(:user) { double(Entities::User, email: "me@ryanbigg.com") }
 
         before do
           allow(user_repo).to receive(:find_by_github_login) { user }
@@ -55,7 +55,7 @@ module Twist
           allow(user_repo).to receive(:find_by_github_login) { nil }
         end
 
-        let(:user) { double(User, email: "me@ryanbigg.com") }
+        let(:user) { double(Entities::User, email: "me@ryanbigg.com") }
 
         it "creates that user" do
           expect(user_repo).to receive(:create).with(hash_including(

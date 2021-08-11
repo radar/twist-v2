@@ -71,7 +71,7 @@ bin/console
 And you can setup some initial data by running:
 
 ```
-bundle exec rake seed
+bundle exec rake db:seed
 ```
 
 This will setup a user and a book. The book will not be processed until Sidekiq is running, which you can do with:

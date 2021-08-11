@@ -1,7 +1,7 @@
 require "spec_helper"
 
 
-describe Twist::Web::Controllers::Graphql::Run do
+describe Twist::Web::Controllers::GraphQL::Run do
   include Dry::Monads[:result]
 
   subject do

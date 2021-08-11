@@ -15,7 +15,7 @@ module Twist
         it "gets author information for a book" do
           readers = subject.by_book(book.id)
 
-          expect(readers.first).to be_a(Twist::Reader)
+          expect(readers.first).to be_a(Twist::Entities::Reader)
           expect(readers.first.permissions).not_to be_nil
         end
       end

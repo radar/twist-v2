@@ -1,16 +1,21 @@
 require 'dry/system/container'
 require 'dry/auto_inject'
+require 'dry/system/loader/autoloading'
+require 'zeitwerk'
+require 'pry'
 
 module Twist
   class Container < Dry::System::Container
-    configure do |config|
-      config.root = File.expand_path('.')
-      config.default_namespace = 'twist'
+    config.root = __dir__
 
-      config.auto_register = 'lib'
+    config.component_dirs.loader = Dry::System::Loader::Autoloading
+    config.component_dirs.add_to_load_path = false
+    config.component_dirs.default_namespace = 'twist'
+
+    config.component_dirs.add "lib" do |dir|
+      dir.auto_register = true
+      dir.default_namespace = 'twist'
     end
-
-    load_paths!('lib')
   end
 
   Container.register 'oauth.client', -> {
@@ -26,3 +31,9 @@ module Twist
 
   Import = Dry::AutoInject(Container)
 end
+
+loader = Zeitwerk::Loader.new
+loader.inflector.inflect "graphql" => "GraphQL"
+loader.inflector.inflect "cors" => "CORS"
+loader.push_dir Twist::Container.config.root.join("lib").realpath
+loader.setup

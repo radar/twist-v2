@@ -3,7 +3,7 @@ require 'spec_helper'
 module Twist
   describe Web::GraphQL::Runner do
     context 'current_user' do
-      let(:current_user) { double(User, id: 1) }
+      let(:current_user) { double(Entities::User, id: 1) }
       let(:user_repository) { double(Repositories::UserRepo) }
 
       subject do

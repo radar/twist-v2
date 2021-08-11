@@ -3,7 +3,7 @@ require 'spec_helper'
 module Twist
   describe Web::GraphQL::Runner do
     context 'openNote mutation' do
-      let(:current_user) { double(User, id: 1) }
+      let(:current_user) { double(Entities::User, id: 1) }
       let(:note_repo) { double(Repositories::NoteRepo) }
       subject do
         described_class.new(
@@ -24,7 +24,7 @@ module Twist
         |
 
         expect(note_repo).to receive(:open).with("1") do
-          double(Note, id: 1, state: "open")
+          double(Entities::Note, id: 1, state: "open")
         end
 
         result = subject.run(

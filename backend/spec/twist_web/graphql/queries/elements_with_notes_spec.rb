@@ -3,9 +3,9 @@ require 'spec_helper'
 module Twist
   describe Web::GraphQL::Runner do
     context 'chapter' do
-      let(:current_user) { double(User, id: 1) }
+      let(:current_user) { double(Entities::User, id: 1) }
       let(:user_1) { current_user }
-      let(:user_2) { double(User, id: 2) }
+      let(:user_2) { double(Entities::User, id: 2) }
       let(:book_repo) { double(Repositories::BookRepo) }
       let(:chapter_repo) { double(Repositories::ChapterRepo) }
       let(:element_repo) { double(Repositories::ElementRepo) }
@@ -13,7 +13,7 @@ module Twist
       let(:user_repo) { double(Repositories::UserRepo) }
       let(:book) do
         double(
-          Book,
+          Entities::Book,
           id: 1,
           title: "Exploding Rails",
           permalink: "exploding-rails",
@@ -22,7 +22,7 @@ module Twist
 
       let(:book_note_1) do
         double(
-          BookNote,
+          Entities::BookNote,
           id: 1,
           number: 1,
           text: "Hello World",
@@ -35,7 +35,7 @@ module Twist
 
       let(:book_note_2) do
         double(
-          BookNote,
+          Entities::BookNote,
           id: 2,
           number: 2,
           text: "Hello World",
@@ -48,7 +48,7 @@ module Twist
 
       let(:element) do
         double(
-          Element,
+          Entities::Element,
           id: 2,
           chapter_id: 1,
           content: "<p>Hello World</p>",

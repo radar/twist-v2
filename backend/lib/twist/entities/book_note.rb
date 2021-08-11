@@ -1,5 +1,7 @@
 module Twist
-  class BookNote < ROM::Struct
+  module Entities
+    class BookNote < ROM::Struct
 
+    end
   end
 end

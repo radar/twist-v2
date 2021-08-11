@@ -10,9 +10,6 @@ Twist::Container.boot(:core, namespace: true) do
 
     require 'dry/monads'
     require 'dry/monads/do'
-
-    require "twist/types"
-    require "twist/repository"
   end
 
 end

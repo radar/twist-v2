@@ -11,10 +11,11 @@ module Twist
     let!(:submit_note) { Twist::Container["transactions.notes.submit"] }
 
     before do
-      Markdown::BookWorker.new.perform(
+      Processors::Markdown::BookWorker.new.perform(
         "permalink" => "markdown-book-test",
         "branch" => "master",
-        "github_path" => "radar/markdown_book_test",
+        "username" => "radar",
+        "repo" => "markdown_book_test",
       )
     end
 

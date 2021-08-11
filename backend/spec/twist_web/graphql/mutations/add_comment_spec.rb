@@ -3,7 +3,7 @@ require 'spec_helper'
 module Twist
   describe Web::GraphQL::Runner do
     context 'addComment mutation' do
-      let(:current_user) { double(User, id: 1) }
+      let(:current_user) { double(Entities::User, id: 1) }
       let(:comment_repo) { double(Repositories::CommentRepo) }
 
       subject do
@@ -25,7 +25,7 @@ module Twist
         |
 
         expect(comment_repo).to receive(:create) do
-          double(Comment, id: 1, text: "Hello World")
+          double(Entities::Comment, id: 1, text: "Hello World")
         end
 
         result = subject.run(

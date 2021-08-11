@@ -14,4 +14,4 @@ if ENV['APP_ENV'] == "development"
 end
 
 use Rack::CommonLogger
-run Twist::Web.app
+run Twist::Web::App

@@ -1,5 +1,7 @@
 module Twist
-  class Comment < ROM::Struct
+  module Entities
+    class Comment < ROM::Struct
 
+    end
   end
 end

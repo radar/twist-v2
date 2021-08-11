@@ -1,5 +1,7 @@
 module Twist
-  class Note < ROM::Struct
+  module Entities
+    class Note < ROM::Struct
 
+    end
   end
 end

@@ -35,7 +35,7 @@ end
 
 Capybara.current_driver = :selenium_chrome
 
-Capybara.app = Twist::Web.app
+Capybara.app = Twist::Web::App
 Capybara.server = :puma
 Capybara.server_host = '127.0.0.1'
 Capybara.server_port = 3030

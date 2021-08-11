@@ -3,7 +3,7 @@ require 'spec_helper'
 module Twist
   describe Web::GraphQL::Runner do
     context 'inviteUser mutation' do
-      let(:current_user) { double(User, id: 1) }
+      let(:current_user) { double(Entities::User, id: 1) }
       let(:permission_repo) { instance_double(Repositories::PermissionRepo) }
 
       subject do
@@ -15,7 +15,7 @@ module Twist
       end
 
       let(:permission) do
-        double(Permission, book_id: 1, user_id: 2)
+        double(Entities::Permission, book_id: 1, user_id: 2)
       end
 
       context "when the current user is an author" do

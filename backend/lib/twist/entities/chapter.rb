@@ -1,5 +1,7 @@
 module Twist
-  class Chapter < ROM::Struct
+  module Entities
+    class Chapter < ROM::Struct
 
+    end
   end
 end

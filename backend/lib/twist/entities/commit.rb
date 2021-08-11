@@ -1,5 +1,7 @@
 module Twist
-  class Commit < ROM::Struct
+  module Entities
+    class Commit < ROM::Struct
 
+    end
   end
 end

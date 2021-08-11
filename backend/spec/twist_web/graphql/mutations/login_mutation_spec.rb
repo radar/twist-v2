@@ -33,7 +33,7 @@ module Twist
 
       context 'when the credentials are valid' do
         let(:email) { "test@example.com" }
-        let(:user) { double(User, id: 1, email: email) }
+        let(:user) { double(Entities::User, id: 1, email: email) }
 
         before do
           allow(user_repo).to receive(:find_by_email) { user }
@@ -64,7 +64,7 @@ module Twist
 
       context 'when the password is invalid' do
         let(:email) { "test@example.com" }
-        let(:user) { double(User, id: 1) }
+        let(:user) { double(Entities::User, id: 1) }
 
         before do
           allow(user_repo).to receive(:find_by_email) { user }
