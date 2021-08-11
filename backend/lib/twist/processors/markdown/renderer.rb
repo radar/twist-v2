@@ -5,7 +5,7 @@ module Twist
         # rubocop:disable Metrics/MethodLength
         def paragraph(text)
           # Is special
-          if text.gsub!(/^([TWAIDEQX])&gt;/, '')
+          if text.gsub!(/^([TWAIDEQX])&gt;[ ]?/, '')
             special(text, Regexp.last_match(1))
           # Begins with the footnote markings: [^footnote]:
           elsif footnote_prefix_regex.match?(text.strip)
@@ -37,8 +37,8 @@ module Twist
         end
 
         def special(text, type)
-          paragraphs = text.gsub("\n\n", "</p><p>")
-          "<div class='#{convert_type(type)}'><p>" + paragraphs + "</p></div>"
+          renderer = Redcarpet::Markdown.new(self.class, fenced_code_blocks: true, tables: true)
+          "<div class='#{convert_type(type)}'>#{renderer.render(text)}</div>"
         end
 
         def preprocess(full_document)

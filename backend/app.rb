@@ -2,7 +2,6 @@ require 'dry/system/container'
 require 'dry/auto_inject'
 require 'dry/system/loader/autoloading'
 require 'zeitwerk'
-require 'pry'
 
 module Twist
   class Container < Dry::System::Container

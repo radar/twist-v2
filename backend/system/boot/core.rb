@@ -3,6 +3,7 @@ Twist::Container.boot(:core, namespace: true) do
   use :persistence
 
   init do
+    require 'babosa'
     require 'redcarpet'
     require 'nokogiri'
     require 'pygments'
