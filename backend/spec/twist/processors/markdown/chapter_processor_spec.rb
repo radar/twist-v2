@@ -28,7 +28,7 @@ module Twist
           described_class.new(
             commit,
             git.local_path,
-            "manuscript/chapter_1/chapter_1.markdown",
+            "chapter_1/chapter_1.markdown",
             "mainmatter",
             1,
           )

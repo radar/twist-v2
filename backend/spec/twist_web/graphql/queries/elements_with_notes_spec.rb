@@ -48,7 +48,7 @@ module Twist
 
       let(:element) do
         double(
-          Entities::Element,
+          Entities::  Element,
           id: 2,
           chapter_id: 1,
           content: "<p>Hello World</p>",

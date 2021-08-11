@@ -7,7 +7,7 @@ module Twist
       class ChapterProcessor
         def initialize(commit, path, file_name, part, position)
           @commit = commit
-          @path = path
+          @path = path + "manuscript"
           @part = part
           @file_name = file_name
           @position = position
