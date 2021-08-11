@@ -3,7 +3,7 @@ module Twist
     module GraphQL
       module Resolvers
         class ElementsWithNotes < Resolver
-          def call(book_permalink:, state:)
+          def resolve(book_permalink:, state:)
             book = context[:book_repo].find_by_permalink(book_permalink)
             notes = context[:book_note_repo].by_book_and_state(book.id, state.downcase)
 

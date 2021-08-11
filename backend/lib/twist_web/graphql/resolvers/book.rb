@@ -3,7 +3,7 @@ module Twist
     module GraphQL
       module Resolvers
         class Book < Resolver
-          def call(permalink:)
+          def resolve(permalink:)
             book = context[:book_repo].find_by_permalink(permalink)
             authorization = Authorization::Book.new(
               book: book,

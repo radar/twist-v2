@@ -15,35 +15,39 @@ module Twist
         graphql_name "Query"
         description "The query root of this schema"
 
-        field :books, [BookType], null: false, resolve: Resolvers::Books
+        field :books, [BookType], null: false, resolver: Resolvers::Books
 
-        field :book, BookPermissionCheckResult, null: false, resolve: Resolvers::Book do
+        field :users, [UserType], null: false, resolver: Resolvers::Users do
+          argument :github_login, String, required: true
+        end
+
+        field :book, BookPermissionCheckResult, null: false, resolver: Resolvers::Book do
           argument :permalink, String, required: true
         end
 
-        field :elements_with_notes, [ElementType], null: false, resolve: Resolvers::ElementsWithNotes do
+        field :elements_with_notes, [ElementType], null: false, resolver: Resolvers::ElementsWithNotes do
           argument :book_permalink, String, required: true
           argument :state, Types::NoteState, required: true
         end
 
-        field :note, NoteType, null: false, resolve: Resolvers::Note do
+        field :note, NoteType, null: false, resolver: Resolvers::Note do
           argument :book_permalink, String, required: true
           argument :number, Integer, required: true
         end
 
         field :current_user, UserType, null: true
 
-        field :comments, [CommentType], resolve: Resolvers::Comments, null: false do
+        field :comments, [CommentType], resolver: Resolvers::Comments, null: false do
           argument :note_id, ID, required: true
-        end
-
-        field :users, [UserType], null: false, resolve: Resolvers::Users do
-          argument :github_login, String, required: true
         end
 
         def current_user
           context[:current_user]
         end
+
+        # def users(github_login:)
+        #   context[:user_repo].by_github_login(github_login)
+        # end
       end
     end
   end

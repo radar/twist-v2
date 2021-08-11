@@ -3,7 +3,7 @@ module Twist
     module GraphQL
       module Resolvers
         class Comments < Resolver
-          def call(note_id:)
+          def resolve(note_id:)
             context[:comment_repo].by_note_id(note_id)
           end
         end

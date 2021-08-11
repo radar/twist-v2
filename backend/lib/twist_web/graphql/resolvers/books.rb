@@ -3,7 +3,7 @@ module Twist
     module GraphQL
       module Resolvers
         class Books < Resolver
-          def call
+          def resolve
             books = context[:book_repo].all
             books.select do |book|
               authorization = Authorization::Book.new(
