@@ -75,6 +75,7 @@ const WrappedNotes: React.FC<WrappedNotesProps> = ({
 }) => {
   const { data, loading, error } = useChapterNotesQuery({
     variables: { elementId, bookPermalink },
+    fetchPolicy: "network-only",
   });
 
   const renderNotes = (data: ChapterNotesQuery) => {
