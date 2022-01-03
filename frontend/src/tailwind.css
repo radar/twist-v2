@@ -4,7 +4,7 @@ body {
   font-family: "Nunito Sans";
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   @apply mb-4 mt-8;
 }
 
@@ -37,7 +37,7 @@ textarea {
 }
 
 .chapter table {
-  @apply table w-full mb-4 divide-y divide-gray-200;
+  @apply table w-full mb-4 divide-y divide-gray-200 bg-white;
 }
 
 .chapter table thead th {

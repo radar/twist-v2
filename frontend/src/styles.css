@@ -433,7 +433,7 @@ body {
   font-family: "Nunito Sans";
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   margin-bottom: 1rem;
   margin-top: 2rem;
 }
@@ -485,6 +485,11 @@ textarea {
   border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
   --tw-divide-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-divide-opacity));
+}
+
+.chapter table {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .chapter table thead th {
