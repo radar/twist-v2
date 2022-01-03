@@ -65,7 +65,7 @@ export const Book: React.FC<BookProps> = ({
   );
 
   return (
-    <div className={`bg-white p-4 border-gray-400 border rounded md:w-1/2`}>
+    <div>
       <h1>{title}</h1>
       <CommitInfo
         permalink={permalink}

@@ -73,7 +73,7 @@ const Branch: FunctionComponent<BranchProps> = (props) => {
   };
 
   return (
-    <div className={`bg-white p-4 border-gray-400 border rounded md:w-1/2`}>
+    <div>
       <h1>
         <Link to={`/books/${bookPermalink}`}>{bookTitle}</Link> - {name} branch
       </h1>

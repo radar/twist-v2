@@ -5,12 +5,11 @@ import QueryWrapper from "../../QueryWrapper";
 import Element from "./Element";
 import Footnote from "./Footnote";
 import { PreviousChapterLink, NextChapterLink } from "./Link";
-import SectionList from "./SectionList";
 import bookLink from "../../Book/link";
 
 import PermissionDenied from "../../PermissionDenied";
 import Commit from "../Commit";
-import { ChapterQuery, Section, useChapterQuery } from "../../graphql/types";
+import { ChapterQuery, useChapterQuery } from "../../graphql/types";
 
 type ChapterQueryBook = Extract<ChapterQuery["book"], { __typename: "Book" }>;
 
@@ -79,9 +78,9 @@ const ChapterAtCommit: React.FC<ChapterAtCommitProps> = ({
   const renderChapterLinks = () => {
     return (
       <div>
-        <div className="grid grid-cols-2">
+        <div className="flex">
           <div>{renderPreviousChapterLink()}</div>
-          <div className="text-right">{renderNextChapterLink()}</div>
+          <div className="ml-auto">{renderNextChapterLink()}</div>
         </div>
       </div>
     );
@@ -93,7 +92,6 @@ const ChapterAtCommit: React.FC<ChapterAtCommitProps> = ({
     title: chapterTitle,
     elements,
     footnotes,
-    sections,
   } = chapter;
 
   const renderFootnotes = () => {
@@ -118,9 +116,9 @@ const ChapterAtCommit: React.FC<ChapterAtCommitProps> = ({
   const commit = { sha, createdAt, branch };
 
   return (
-    <div className="flex flex-wrap lg:flex-no-wrap">
+    <div className="flex flex-wrap lg:flex-no-wrap mx-16 md:mx-0">
       <div className="w-1/12"></div>
-      <div className="main w-full ml-8 lg:w-3/4 flex-grow mr-4 chapter">
+      <div className="w-full lg:w-3/4 flex-grow mr-4 chapter">
         <header className="mb-4">
           <h1>
             <Link id="top" to={bookPath}>
@@ -147,22 +145,6 @@ const ChapterAtCommit: React.FC<ChapterAtCommitProps> = ({
 
         {renderFootnotes()}
         {renderChapterLinks()}
-      </div>
-
-      <div className="w-full lg:w-1/4">
-        <div id="sidebar">
-          {renderPreviousChapterLink()}
-          <hr className="my-2" />
-
-          <h4 className="text-xl font-bold">
-            <a href="#top">{positionAndTitle}</a>
-          </h4>
-
-          <SectionList sections={sections as Array<Section>} />
-
-          <hr className="my-2" />
-          {renderNextChapterLink()}
-        </div>
       </div>
     </div>
   );
