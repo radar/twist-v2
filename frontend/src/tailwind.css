@@ -57,7 +57,12 @@ textarea {
 }
 
 .listingblock {
-  @apply my-4 rounded border bg-gray-100;
+  @apply my-4 rounded border;
+}
+
+.listingblock .content {
+  @apply text-white;
+  background-color: #282a36;
 }
 
 .listingblock .title {
