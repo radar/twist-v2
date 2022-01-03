@@ -52,8 +52,12 @@ textarea {
   @apply bg-gray-100;
 }
 
+.chapter .image {
+  @apply my-4;
+}
+
 .listingblock {
-  @apply mb-4 rounded border bg-gray-100;
+  @apply my-4 rounded border bg-gray-100;
 }
 
 .listingblock .title {

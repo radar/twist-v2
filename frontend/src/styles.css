@@ -509,7 +509,13 @@ textarea {
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
+.chapter .image {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .listingblock {
+  margin-top: 1rem;
   margin-bottom: 1rem;
   border-radius: 0.25rem;
   border-width: 1px;
@@ -767,6 +773,10 @@ textarea {
   margin-top: 0.25rem;
 }
 
+.ml-auto {
+  margin-left: auto;
+}
+
 .mr-4 {
   margin-right: 1rem;
 }
@@ -789,10 +799,6 @@ textarea {
 
 .mb-10 {
   margin-bottom: 2.5rem;
-}
-
-.ml-auto {
-  margin-left: auto;
 }
 
 .block {
@@ -845,10 +851,6 @@ textarea {
 
 .list-disc {
   list-style-type: disc;
-}
-
-.grid-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .grid-cols-1 {
@@ -936,10 +938,6 @@ textarea {
   padding-bottom: 0.5rem;
 }
 
-.text-right {
-  text-align: right;
-}
-
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -1023,10 +1021,6 @@ textarea {
 
   .md\:w-3\/4 {
     width: 75%;
-  }
-
-  .md\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .md\:px-0 {
