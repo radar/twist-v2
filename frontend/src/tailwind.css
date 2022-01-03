@@ -1,5 +1,13 @@
 @tailwind base;
 
+body {
+  font-family: "Nunito Sans";
+}
+
+h1, h2, h3 {
+  @apply mb-4 mt-8;
+}
+
 h1 {
   @apply text-4xl;
 }
@@ -20,31 +28,27 @@ a {
   @apply text-blue-600 underline;
 }
 
-menu {
-  @apply px-4;
+pre {
+  font-family: "Source Code Pro";
 }
 
 textarea {
   @apply border;
 }
 
-.main {
-  @apply bg-white p-6 border-gray-400 border rounded;
+.chapter table {
+  @apply table w-full mb-4 divide-y divide-gray-200;
 }
 
-.main table {
-  @apply table-auto mb-4;
-}
-
-.main table thead th {
+.chapter table thead th {
   @apply bg-gray-200 px-4 py-2;
 }
 
-.main table tbody td {
+.chapter table tbody td {
   @apply border px-4 py-2;
 }
 
-.main table tbody tr:nth-child(even) td {
+.chapter table tbody tr:nth-child(even) td {
   @apply bg-gray-100;
 }
 
@@ -115,7 +119,7 @@ textarea {
 }
 
 .btn-green:enabled:hover {
-  @apply bg-green-700 border-green-600;
+  @apply bg-green-600 border-green-600;
 }
 
 .btn-red {
@@ -123,7 +127,7 @@ textarea {
 }
 
 .btn-red:enabled:hover {
-  @apply bg-red-700 border-red-600;
+  @apply bg-red-600 border-red-600;
 }
 
 .btn:disabled {
@@ -174,7 +178,7 @@ textarea {
 
 .element .note-button {
   position: absolute;
-  left: -4.25rem;
+  left: -3.25rem;
   top: -0.3rem;
 }
 

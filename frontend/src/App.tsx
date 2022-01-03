@@ -76,14 +76,15 @@ const Root: React.FC = () => {
 
   return (
     <ApolloProvider client={ApolloClient}>
-      <div className="my-4 mx-auto px-4">
-        <menu>
+      <div className="w-full md:w-2/3 px-4 md:px-0 mx-auto">
+        <menu className="my-4">
           <Link to="/">
             <strong>Twist</strong>
           </Link>{" "}
           &nbsp; | &nbsp;
           <CurrentUser>{renderUserInfo()}</CurrentUser>
         </menu>
+
         <CurrentUser>
           <CurrentUserContext.Consumer>
             {(user) => {

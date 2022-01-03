@@ -1,11 +1,9 @@
 import * as React from "react";
 import API from "../api";
 
-import githubLogo from "./github.png";
-
 import { RouteComponentProps } from "@reach/router";
 
-interface LoginProps extends RouteComponentProps {}
+interface LoginProps extends RouteComponentProps { }
 
 type LoginState = {
   email: string;
@@ -39,18 +37,17 @@ class Login extends React.Component<LoginProps, LoginState> {
 
   render() {
     return (
-      <div className="main flex md:w-1/2">
+      <div className="flex">
         <div className="w-1/4 mr-10">
           <h1>Login</h1>
-          <div className={`w-56`}>
+          <div>
             <button
+              className="btn btn-blue"
               onClick={() => {
                 window.location.href = this.state.githubAuthorizeUrl;
               }}
             >
-              <img src={githubLogo} className="float-left" alt="GitHub" />
-
-              <div className="btn btn-blue">Sign in with GitHub</div>
+              Sign in with GitHub
             </button>
           </div>
         </div>

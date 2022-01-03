@@ -37,7 +37,7 @@ export class Books extends React.Component<BooksProps> {
   }
   render() {
     return (
-      <div className="main md:w-1/2" id="books">
+      <div id="books">
         <h1>Books</h1>
 
         {this.renderBooks()}

@@ -30,12 +30,6 @@ export default gql`
             position
             permalink
             part
-            sections {
-              ...sectionFragment
-              subsections {
-                ...sectionFragment
-              }
-            }
             previousChapter {
               ...chapterFragment
             }

@@ -57,7 +57,7 @@ const CommentForm: FunctionComponent<CommentFormProps> = ({
           <div className="flex">
             <div className="w-34 p-4">
               <CurrentUserContext.Consumer>
-                {(user) => (user ? <Gravatar email={user.email} /> : null)}
+                {(user) => (user ? <Gravatar email={user.email} className="rounded-full" /> : null)}
               </CurrentUserContext.Consumer>
             </div>
             <textarea

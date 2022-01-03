@@ -18,7 +18,7 @@ class Note extends React.Component<NoteProps> {
   render() {
     const { number, bookPermalink, element } = this.props;
     return (
-      <div className="main md:w-3/4">
+      <div className="md:w-3/4">
         <div>
           <Header permalink={bookPermalink} noteNumber={number} />
           <ElementWithInfo {...element} bookPermalink={bookPermalink} />
@@ -35,7 +35,7 @@ interface WrappedNoteMatchParams {
 }
 
 interface WrappedNoteProps
-  extends RouteComponentProps<WrappedNoteMatchParams> {}
+  extends RouteComponentProps<WrappedNoteMatchParams> { }
 
 const WrappedNote: React.FC<WrappedNoteProps> = ({ number, bookPermalink }) => {
   const { data, loading, error } = useNoteQuery({
