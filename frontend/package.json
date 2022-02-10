@@ -30,7 +30,7 @@
     "framer-motion": "^1.11.0",
     "graphql": "^15.4.0",
     "moment": "^2.24.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "query-string": "^6.4.2",
     "react": "^16.13.1",
     "react-apollo": "^3.1.5",
