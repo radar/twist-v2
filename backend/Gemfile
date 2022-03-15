@@ -21,6 +21,7 @@ gem 'pg'
 gem 'dry-monads'
 gem 'dry-auto_inject'
 gem 'dry-system'
+gem 'dry-struct'
 
 # Zeitwerk
 gem 'zeitwerk'

@@ -13,6 +13,7 @@ module Twist
         context "with test book" do
           let!(:book) do
             book_repo.create(
+              permalink: "asciidoc-book-test",
               title: "Asciidoc Book Test",
               github_user: "radar",
               github_repo: "asciidoc_book_test",
@@ -25,7 +26,8 @@ module Twist
             subject.perform(
               "permalink" => book.permalink,
               "branch" => branch.name,
-              "github_path" => "radar/asciidoc_book_test",
+              "username" => "radar",
+              "repo" => "asciidoc_book_test"
             )
 
             commit = commit_repo.latest_for_branch(branch.id)

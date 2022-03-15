@@ -292,6 +292,7 @@ DEPENDENCIES
   dotenv
   dry-auto_inject
   dry-monads
+  dry-struct
   dry-system
   graphql
   hanami-controller!
