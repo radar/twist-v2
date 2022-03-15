@@ -12,12 +12,11 @@ module Twist
         include Import['repositories.book_repo']
 
         def perform(args)
-          username, repo = args["github_path"].split("/")
           book_updater = BookUpdater.new(
             permalink: args["permalink"],
             branch: args["branch"],
-            username: username,
-            repo: repo,
+            username: args["username"],
+            repo: args["repo"],
           )
 
           git, commit = book_updater.update!
