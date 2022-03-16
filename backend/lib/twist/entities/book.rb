@@ -4,6 +4,8 @@ module Twist
       attribute :id, Types::Integer
       attribute :title, Types::String
       attribute :permalink, Types::String
+      attribute :github_user, Types::String
+      attribute :github_repo, Types::String
 
       def path
         git = Git.new(
