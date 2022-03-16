@@ -1,19 +1,16 @@
 require 'spec_helper'
 
 module Twist
-  describe Web::GraphQL::Runner do
+  describe Web::GraphQL::Runner, graphql: true do
     context 'branches' do
       let(:current_user) { double(Entities::User, id: 1) }
       let(:book_repo) { double(Repositories::BookRepo) }
       let(:branch_repo) { double(Repositories::BranchRepo) }
       let(:permission_repo) { double(Repositories::PermissionRepo) }
       let(:book) do
-        Twist::Entities::Book.new(
-          id: 1,
-          title: "Exploding Rails",
-          permalink: "exploding-rails",
-        )
+        exploding_rails
       end
+
       let(:branch) do
         Twist::Entities::Branch.new(
           id: 1,

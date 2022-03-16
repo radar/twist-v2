@@ -8,11 +8,7 @@ module Twist
       let(:reader_repo) { instance_double(Repositories::ReaderRepo) }
       let(:permission_repo) { instance_double(Repositories::PermissionRepo) }
       let(:book) do
-        Twist::Entities::Book.new(
-          id: 1,
-          title: "Active Rails",
-          permalink: "active-rails",
-        )
+        exploding_rails
       end
 
       let(:reader_1) do
@@ -88,12 +84,12 @@ module Twist
 
       before do
         expect(permission_repo).to receive(:user_authorized_for_book?) { true }
-        expect(book_repo).to receive(:find_by_permalink).with("active-rails") { book }
+        expect(book_repo).to receive(:find_by_permalink).with(book.permalink) { book }
         expect(reader_repo).to receive(:by_book).with(1) { [reader_1, reader_2] }
       end
 
       let(:variables) do
-        { permalink: "active-rails" }
+        { permalink: book.permalink }
       end
 
       let(:context) do

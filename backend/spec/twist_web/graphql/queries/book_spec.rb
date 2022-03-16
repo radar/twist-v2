@@ -10,11 +10,7 @@ module Twist
       let(:chapter_repo) { double(Repositories::ChapterRepo) }
       let(:permission_repo) { double(Repositories::PermissionRepo) }
       let(:book) do
-        Twist::Entities::Book.new(
-          id: 1,
-          title: "Exploding Rails",
-          permalink: "exploding-rails",
-        )
+        exploding_rails
       end
 
       let(:branch) do
