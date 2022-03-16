@@ -18,7 +18,7 @@ describe Twist::Processors::Markdown::Renderer do
 
   it "can parse a tip" do
     tip = <<~INPUT
-      T> **The constraint request object**
+      T> ##The constraint request object
       T>
       T> The `request` object passed in to the `matches?` call in any constraint is
       T> an `ActionDispatch::Request` object, the same kind of object that is available
@@ -32,8 +32,8 @@ describe Twist::Processors::Markdown::Renderer do
 
     output = render(tip)
     parsed_tip = output.css("div.tip")
-    expect(parsed_tip.css("strong").text).to eq("The constraint request object")
-    expect(parsed_tip.css("p").count).to eq(3)
+    expect(parsed_tip.css("h2").text).to eq("The constraint request object")
+    expect(parsed_tip.css("p").count).to eq(2)
   end
 
   it "can parse a warning" do
@@ -123,8 +123,8 @@ describe Twist::Processors::Markdown::Renderer do
 
     output = render(aside)
     parsed_aside = output.css("div.aside")
-    expect(parsed_aside.css("h2").text).to eq("Pssst, over here!")
-    expect(parsed_aside.css("p").count).to eq(2)
+    expect(parsed_aside.css("h2").text).to eq("A simple aside")
+    expect(parsed_aside.css("p").count).to eq(1)
   end
 
   it "can parse a titleized code listing" do

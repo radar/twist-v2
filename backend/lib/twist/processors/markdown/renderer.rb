@@ -5,7 +5,11 @@ module Twist
         # rubocop:disable Metrics/MethodLength
         def paragraph(text)
           # Is special
-          if text.gsub!(/^([TWAIDEQX])&gt;/, '')
+          # 1. Anything starting with the TWAIDEQX
+          # 2. Immediately followed by &gt;
+          # 3. And any number of spaces (but leaving new lines)
+
+          if text.gsub!(/^([TWAIDEQX])&gt;[ ]*/, '')
             special(text, Regexp.last_match(1))
           # Begins with the footnote markings: [^footnote]:
           elsif footnote_prefix_regex.match?(text.strip)
@@ -37,8 +41,19 @@ module Twist
         end
 
         def special(text, type)
-          paragraphs = text.gsub("\n\n", "</p><p>")
-          "<div class='#{convert_type(type)}'><p>" + paragraphs + "</p></div>"
+          types = {
+            'T' => 'tip',
+            'W' => 'warning',
+            'A' => 'aside',
+            'I' => 'information',
+            'D' => 'discussion',
+            'E' => 'error',
+            'X' => 'exercise',
+            'Q' => 'question',
+          }
+
+
+          "<div class='#{types[type]}'>#{MarkdownProcessor.process(text)}</div>"
         end
 
         def preprocess(full_document)
@@ -79,31 +94,6 @@ module Twist
 
           output + "```#{details['lang']}\n#{code}\n```\n\n"
         end
-
-        # rubocop:disable Metrics/CyclomaticComplexity
-        # rubocop:disable Metrics/MethodLength
-        def convert_type(type)
-          case type
-          when 'T'
-            'tip'
-          when 'W'
-            'warning'
-          when 'A'
-            'aside'
-          when 'I'
-            'information'
-          when 'D'
-            'discussion'
-          when 'E'
-            'error'
-          when 'X'
-            'exercise'
-          when 'Q'
-            'question'
-          end
-        end
-        # rubocop:enable Metrics/CyclomaticComplexity
-        # rubocop:enable Metrics/MethodLength
       end
     end
   end
