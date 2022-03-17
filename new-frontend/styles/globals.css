@@ -1,0 +1,208 @@
+@tailwind base;
+body {
+  font-family: "Inter";
+}
+
+h1, h2, h3, h4 {
+  @apply mb-4 mt-8;
+}
+
+h1 {
+  @apply text-4xl;
+}
+
+h2 {
+  @apply text-3xl;
+}
+
+h3 {
+  @apply text-2xl;
+}
+
+h4 {
+  @apply text-xl;
+}
+
+a {
+  @apply text-blue-600 underline;
+}
+
+pre {
+  font-family: "Source Code Pro";
+}
+
+textarea {
+  @apply border;
+}
+
+.chapter table {
+  @apply table w-full mb-4 divide-y divide-gray-200 bg-white;
+}
+
+.chapter table thead th {
+  @apply bg-gray-200 px-4 py-2;
+}
+
+.chapter table tbody td {
+  @apply border px-4 py-2;
+}
+
+.chapter table tbody tr:nth-child(even) td {
+  @apply bg-gray-100;
+}
+
+.chapter .image {
+  @apply my-4;
+}
+
+.listingblock {
+  @apply my-4 rounded border;
+}
+
+.listingblock .content {
+  @apply text-white;
+  background-color: #282a36;
+}
+
+.listingblock .title {
+  @apply bg-gray-300 p-2 font-bold;
+}
+
+.listingblock .content pre {
+  @apply p-2;
+  overflow: auto;
+  font-size: 90%;
+}
+
+.admonitionblock {
+  @apply border rounded my-4 p-2 border-blue-200;
+}
+
+.admonitionblock p {
+  @apply mb-2;
+}
+
+.admonitionblock.note,
+.admonitionblock.tip {
+  @apply bg-blue-100;
+}
+
+.admonitionblock.note .title,
+.admonitionblock.tip .title {
+  @apply text-blue-600 font-bold;
+}
+
+.admonitionblock.warning {
+  @apply bg-red-100 border-red-200;
+}
+
+.admonitionblock.warning .title {
+  @apply text-red-600 font-bold;
+}
+
+.element .code .highlight pre {
+  @apply py-2 px-3;
+  overflow: auto;
+  font-size: 90%;
+}
+
+.btn {
+  @apply bg-white font-bold border-2 py-2 px-4 rounded inline-block;
+}
+
+.btn:enabled:hover {
+  @apply text-white;
+}
+
+.btn-blue {
+  @apply text-blue-500 border-blue-500;
+}
+
+.btn-blue:enabled:hover {
+  @apply bg-blue-700 border-blue-600;
+}
+
+.btn-green {
+  @apply text-green-500 border-green-500;
+}
+
+.btn-green:enabled:hover {
+  @apply bg-green-600 border-green-600;
+}
+
+.btn-red {
+  @apply text-red-500 border-red-500;
+}
+
+.btn-red:enabled:hover {
+  @apply bg-red-600 border-red-600;
+}
+
+.btn:disabled {
+  @apply opacity-50;
+}
+
+.section_listing .major {
+  @apply ml-4;
+}
+
+.section_listing .minor {
+  @apply ml-4;
+}
+
+.chapter ol,
+.chapter ul {
+  @apply mb-4;
+}
+
+.chapter ol {
+  @apply list-decimal list-inside;
+}
+
+.chapter ol li p,
+.chapter ul li p {
+  @apply inline;
+}
+
+.chapter ul {
+  @apply list-disc list-inside;
+}
+
+.element > p {
+  @apply mt-4 mb-1;
+}
+
+.element p code {
+  @apply text-red-700 text-sm;
+}
+
+.chapter figure {
+  @apply mb-4 w-2/3 mx-auto rounded border;
+}
+
+.chapter figure figcaption {
+  @apply p-2 bg-gray-200;
+}
+
+.element .note-button {
+  position: absolute;
+  left: -3.25rem;
+  top: -0.2rem;
+}
+
+.element .note-button {
+  opacity: 0.3;
+  transition: opacity 750ms;
+}
+
+.element:hover .note-button {
+  opacity: 1;
+}
+
+#sidebar {
+  @apply text-sm;
+}
+
+
+@tailwind components;
+@tailwind utilities;
