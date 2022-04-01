@@ -1,11 +1,8 @@
 import React, { Component, useState } from "react";
-import Notes from "./Notes";
+import Notes from "components/notes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment } from "@fortawesome/free-regular-svg-icons";
-import {
-  ElementWithInfoFragment,
-  Image as ImageType,
-} from "graphql/types";
+import { ElementWithInfoFragment, Image as ImageType } from "graphql/types";
 
 type ImageElementProps = {
   id: string;

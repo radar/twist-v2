@@ -392,10 +392,179 @@ export type BookQuery = { __typename?: 'Query', result: { __typename?: 'Book', t
 
 export type ChapterFieldsFragment = { __typename?: 'Chapter', id: string, title: string, position: number, permalink: string };
 
+export type ChapterNotesQueryVariables = Exact<{
+  elementId: Scalars['String'];
+  bookPermalink: Scalars['String'];
+}>;
+
+
+export type ChapterNotesQuery = { __typename?: 'Query', book: { __typename?: 'Book', id: string, notes: Array<{ __typename?: 'Note', id: string, number: number, text: string, createdAt: string, state: string, user: { __typename: 'User', id: string, email: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, text: string, createdAt: string, user: { __typename: 'User', id: string, email: string, name: string } }> }> } | { __typename?: 'PermissionDenied' } };
+
+export type ChapterQueryVariables = Exact<{
+  bookPermalink: Scalars['String'];
+  chapterPermalink: Scalars['String'];
+  gitRef?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type ChapterQuery = { __typename?: 'Query', book: { __typename?: 'Book', title: string, id: string, permalink: string, latestCommit: { __typename?: 'Commit', sha: string }, commit: { __typename?: 'Commit', id: string, sha: string, createdAt: string, branch: { __typename?: 'Branch', name: string }, chapter: { __typename?: 'Chapter', id: string, title: string, position: number, permalink: string, part: string, previousChapter?: { __typename?: 'Chapter', id: string, title: string, position: number, part: string, permalink: string } | null, nextChapter?: { __typename?: 'Chapter', id: string, title: string, position: number, part: string, permalink: string } | null, footnotes: Array<{ __typename?: 'Footnote', identifier: string, content: string }>, elements: Array<{ __typename?: 'Element', id: string, content?: string | null, tag: string, noteCount: number, identifier?: string | null, image?: { __typename?: 'Image', id: string, caption?: string | null, path: string } | null }> } } } | { __typename?: 'PermissionDenied', error: string } };
+
+export type SectionFragmentFragment = { __typename?: 'Section', id: string, title: string, link: string };
+
+export type ChapterFragmentFragment = { __typename?: 'Chapter', id: string, title: string, position: number, part: string, permalink: string };
+
+export type ElementWithInfoFragment = { __typename?: 'Element', id: string, identifier?: string | null, content?: string | null, tag: string, image?: { __typename?: 'Image', id: string, path: string, caption?: string | null } | null, chapter: { __typename?: 'Chapter', title: string, part: string, position: number, permalink: string, commit: { __typename?: 'Commit', sha: string, branch: { __typename?: 'Branch', name: string } } } };
+
+export type NoteFragment = { __typename?: 'Note', id: string, number: number, text: string, createdAt: string, state: string, user: { __typename: 'User', id: string, email: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, text: string, createdAt: string, user: { __typename: 'User', id: string, email: string, name: string } }> };
+
+export type BookCurrentUserAuthorQueryVariables = Exact<{
+  permalink: Scalars['String'];
+}>;
+
+
+export type BookCurrentUserAuthorQuery = { __typename?: 'Query', book: { __typename?: 'Book', currentUserAuthor: boolean } | { __typename?: 'PermissionDenied', error: string } };
+
+export type BookNotesQueryVariables = Exact<{
+  bookPermalink: Scalars['String'];
+  state: NoteState;
+}>;
+
+
+export type BookNotesQuery = { __typename?: 'Query', elementsWithNotes: Array<{ __typename?: 'Element', id: string, identifier?: string | null, content?: string | null, tag: string, notes: Array<{ __typename?: 'Note', id: string, number: number, text: string, createdAt: string, state: string, user: { __typename: 'User', id: string, email: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, text: string, createdAt: string, user: { __typename: 'User', id: string, email: string, name: string } }> }>, image?: { __typename?: 'Image', id: string, path: string, caption?: string | null } | null, chapter: { __typename?: 'Chapter', title: string, part: string, position: number, permalink: string, commit: { __typename?: 'Commit', sha: string, branch: { __typename?: 'Branch', name: string } } } }> };
+
 export type BooksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type BooksQuery = { __typename?: 'Query', books: Array<{ __typename?: 'Book', id: string, title: string, permalink: string, blurb: string }> };
+
+export type BranchQueryVariables = Exact<{
+  bookPermalink: Scalars['String'];
+  name: Scalars['String'];
+}>;
+
+
+export type BranchQuery = { __typename?: 'Query', book: { __typename?: 'Book', id: string, title: string, branch: { __typename?: 'Branch', id: string, default: boolean, name: string, commits: Array<{ __typename?: 'Commit', sha: string, message?: string | null, createdAt: string }> } } | { __typename?: 'PermissionDenied' } };
+
+export type BranchesQueryVariables = Exact<{
+  bookPermalink: Scalars['String'];
+}>;
+
+
+export type BranchesQuery = { __typename?: 'Query', book: { __typename?: 'Book', id: string, title: string, branches: Array<{ __typename?: 'Branch', id: string, default: boolean, name: string }> } | { __typename?: 'PermissionDenied' } };
+
+export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentUserQuery = { __typename?: 'Query', currentUser?: { __typename: 'User', id: string, githubLogin?: string | null, email: string } | null };
+
+export type AddCommentMutationMutationVariables = Exact<{
+  noteId: Scalars['ID'];
+  text: Scalars['String'];
+}>;
+
+
+export type AddCommentMutationMutation = { __typename?: 'Mutations', addComment: { __typename?: 'Comment', id: string, text: string, createdAt: string, user: { __typename?: 'User', id: string, email: string, name: string } } };
+
+export type CloseNoteMutationMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type CloseNoteMutationMutation = { __typename?: 'Mutations', closeNote: { __typename?: 'Note', id: string, state: string } };
+
+export type CommentFragmentFragment = { __typename?: 'Comment', id: string, text: string, createdAt: string, user: { __typename?: 'User', id: string, email: string, name: string } };
+
+export type DeleteCommentMutationMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteCommentMutationMutation = { __typename?: 'Mutations', deleteComment: { __typename?: 'Comment', id: string } };
+
+export type OpenNoteMutationMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type OpenNoteMutationMutation = { __typename?: 'Mutations', openNote: { __typename?: 'Note', id: string, state: string } };
+
+export type SubmitNoteMutationVariables = Exact<{
+  bookPermalink: Scalars['ID'];
+  elementId: Scalars['ID'];
+  text: Scalars['String'];
+}>;
+
+
+export type SubmitNoteMutation = { __typename?: 'Mutations', note: { __typename?: 'Note', id: string, number: number, text: string, createdAt: string, state: string, user: { __typename: 'User', id: string, email: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, text: string, createdAt: string, user: { __typename: 'User', id: string, email: string, name: string } }> } };
+
+export type InviteUserMutationVariables = Exact<{
+  bookId: Scalars['ID'];
+  userId: Scalars['ID'];
+}>;
+
+
+export type InviteUserMutation = { __typename?: 'Mutations', inviteUser: { __typename?: 'InvitePayload', bookId?: string | null, userId?: string | null } };
+
+export type RemoveReaderMutationVariables = Exact<{
+  bookId: Scalars['ID'];
+  userId: Scalars['ID'];
+}>;
+
+
+export type RemoveReaderMutation = { __typename?: 'Mutations', removeReader: { __typename?: 'RemovePayload', bookId?: string | null, userId?: string | null } };
+
+export type UpdateBranchMutationVariables = Exact<{
+  bookPermalink: Scalars['String'];
+  branchName: Scalars['String'];
+}>;
+
+
+export type UpdateBranchMutation = { __typename?: 'Mutations', updateBranch: { __typename?: 'Branch', name: string } };
+
+export type UpdateCommentMutationMutationVariables = Exact<{
+  id: Scalars['ID'];
+  text: Scalars['String'];
+}>;
+
+
+export type UpdateCommentMutationMutation = { __typename?: 'Mutations', updateComment: { __typename?: 'Comment', id: string, text: string } };
+
+export type UpdateNoteMutationMutationVariables = Exact<{
+  id: Scalars['ID'];
+  text: Scalars['String'];
+}>;
+
+
+export type UpdateNoteMutationMutation = { __typename?: 'Mutations', updateNote: { __typename?: 'Note', id: string, text: string, state: string } };
+
+export type NoteBookQueryVariables = Exact<{
+  bookPermalink: Scalars['String'];
+}>;
+
+
+export type NoteBookQuery = { __typename?: 'Query', book: { __typename?: 'Book', id: string, permalink: string, title: string } | { __typename?: 'PermissionDenied' } };
+
+export type NoteQueryVariables = Exact<{
+  bookPermalink: Scalars['String'];
+  number: Scalars['Int'];
+}>;
+
+
+export type NoteQuery = { __typename?: 'Query', note: { __typename?: 'Note', id: string, number: number, text: string, createdAt: string, state: string, element: { __typename?: 'Element', id: string, identifier?: string | null, content?: string | null, tag: string, image?: { __typename?: 'Image', id: string, path: string, caption?: string | null } | null, chapter: { __typename?: 'Chapter', title: string, part: string, position: number, permalink: string, commit: { __typename?: 'Commit', sha: string, branch: { __typename?: 'Branch', name: string } } } }, user: { __typename: 'User', id: string, email: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, text: string, createdAt: string, user: { __typename: 'User', id: string, email: string, name: string } }> } };
+
+export type ReadersQueryVariables = Exact<{
+  permalink: Scalars['String'];
+}>;
+
+
+export type ReadersQuery = { __typename?: 'Query', book: { __typename?: 'Book', id: string, title: string, readers: Array<{ __typename?: 'Reader', id: string, author: boolean, githubLogin?: string | null, name: string }> } | { __typename?: 'PermissionDenied', error: string } };
+
+export type UsersQueryVariables = Exact<{
+  githubLogin: Scalars['String'];
+}>;
+
+
+export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, githubLogin?: string | null, name: string }> };
 
 export const ChapterFieldsFragmentDoc = gql`
     fragment chapterFields on Chapter {
@@ -403,6 +572,85 @@ export const ChapterFieldsFragmentDoc = gql`
   title
   position
   permalink
+}
+    `;
+export const SectionFragmentFragmentDoc = gql`
+    fragment sectionFragment on Section {
+  id
+  title
+  link
+}
+    `;
+export const ChapterFragmentFragmentDoc = gql`
+    fragment chapterFragment on Chapter {
+  id
+  title
+  position
+  part
+  permalink
+}
+    `;
+export const ElementWithInfoFragmentDoc = gql`
+    fragment elementWithInfo on Element {
+  id
+  identifier
+  content
+  tag
+  image {
+    id
+    path
+    caption
+  }
+  chapter {
+    title
+    part
+    position
+    permalink
+    commit {
+      sha
+      branch {
+        name
+      }
+    }
+  }
+}
+    `;
+export const NoteFragmentDoc = gql`
+    fragment note on Note {
+  id
+  number
+  text
+  createdAt
+  state
+  user {
+    __typename
+    id
+    email
+    name
+  }
+  comments {
+    id
+    text
+    createdAt
+    user {
+      __typename
+      id
+      email
+      name
+    }
+  }
+}
+    `;
+export const CommentFragmentFragmentDoc = gql`
+    fragment commentFragment on Comment {
+  id
+  text
+  createdAt
+  user {
+    id
+    email
+    name
+  }
 }
     `;
 export const BookDocument = gql`
@@ -467,6 +715,211 @@ export function useBookLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BookQ
 export type BookQueryHookResult = ReturnType<typeof useBookQuery>;
 export type BookLazyQueryHookResult = ReturnType<typeof useBookLazyQuery>;
 export type BookQueryResult = Apollo.QueryResult<BookQuery, BookQueryVariables>;
+export const ChapterNotesDocument = gql`
+    query chapterNotes($elementId: String!, $bookPermalink: String!) {
+  book(permalink: $bookPermalink) {
+    ... on Book {
+      id
+      notes(elementId: $elementId) {
+        ...note
+      }
+    }
+  }
+}
+    ${NoteFragmentDoc}`;
+
+/**
+ * __useChapterNotesQuery__
+ *
+ * To run a query within a React component, call `useChapterNotesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChapterNotesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChapterNotesQuery({
+ *   variables: {
+ *      elementId: // value for 'elementId'
+ *      bookPermalink: // value for 'bookPermalink'
+ *   },
+ * });
+ */
+export function useChapterNotesQuery(baseOptions: Apollo.QueryHookOptions<ChapterNotesQuery, ChapterNotesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ChapterNotesQuery, ChapterNotesQueryVariables>(ChapterNotesDocument, options);
+      }
+export function useChapterNotesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChapterNotesQuery, ChapterNotesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ChapterNotesQuery, ChapterNotesQueryVariables>(ChapterNotesDocument, options);
+        }
+export type ChapterNotesQueryHookResult = ReturnType<typeof useChapterNotesQuery>;
+export type ChapterNotesLazyQueryHookResult = ReturnType<typeof useChapterNotesLazyQuery>;
+export type ChapterNotesQueryResult = Apollo.QueryResult<ChapterNotesQuery, ChapterNotesQueryVariables>;
+export const ChapterDocument = gql`
+    query chapter($bookPermalink: String!, $chapterPermalink: String!, $gitRef: String) {
+  book(permalink: $bookPermalink) {
+    ... on PermissionDenied {
+      error
+    }
+    ... on Book {
+      title
+      id
+      permalink
+      latestCommit(gitRef: $gitRef) {
+        sha
+      }
+      commit(gitRef: $gitRef) {
+        id
+        sha
+        createdAt
+        branch {
+          name
+        }
+        chapter(permalink: $chapterPermalink) {
+          id
+          title
+          position
+          permalink
+          part
+          previousChapter {
+            ...chapterFragment
+          }
+          nextChapter {
+            ...chapterFragment
+          }
+          footnotes {
+            identifier
+            content
+          }
+          elements {
+            id
+            content
+            tag
+            noteCount
+            identifier
+            image {
+              id
+              caption
+              path
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${ChapterFragmentFragmentDoc}`;
+
+/**
+ * __useChapterQuery__
+ *
+ * To run a query within a React component, call `useChapterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChapterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChapterQuery({
+ *   variables: {
+ *      bookPermalink: // value for 'bookPermalink'
+ *      chapterPermalink: // value for 'chapterPermalink'
+ *      gitRef: // value for 'gitRef'
+ *   },
+ * });
+ */
+export function useChapterQuery(baseOptions: Apollo.QueryHookOptions<ChapterQuery, ChapterQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ChapterQuery, ChapterQueryVariables>(ChapterDocument, options);
+      }
+export function useChapterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChapterQuery, ChapterQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ChapterQuery, ChapterQueryVariables>(ChapterDocument, options);
+        }
+export type ChapterQueryHookResult = ReturnType<typeof useChapterQuery>;
+export type ChapterLazyQueryHookResult = ReturnType<typeof useChapterLazyQuery>;
+export type ChapterQueryResult = Apollo.QueryResult<ChapterQuery, ChapterQueryVariables>;
+export const BookCurrentUserAuthorDocument = gql`
+    query bookCurrentUserAuthor($permalink: String!) {
+  book(permalink: $permalink) {
+    ... on PermissionDenied {
+      error
+    }
+    ... on Book {
+      currentUserAuthor
+    }
+  }
+}
+    `;
+
+/**
+ * __useBookCurrentUserAuthorQuery__
+ *
+ * To run a query within a React component, call `useBookCurrentUserAuthorQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBookCurrentUserAuthorQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBookCurrentUserAuthorQuery({
+ *   variables: {
+ *      permalink: // value for 'permalink'
+ *   },
+ * });
+ */
+export function useBookCurrentUserAuthorQuery(baseOptions: Apollo.QueryHookOptions<BookCurrentUserAuthorQuery, BookCurrentUserAuthorQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BookCurrentUserAuthorQuery, BookCurrentUserAuthorQueryVariables>(BookCurrentUserAuthorDocument, options);
+      }
+export function useBookCurrentUserAuthorLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BookCurrentUserAuthorQuery, BookCurrentUserAuthorQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BookCurrentUserAuthorQuery, BookCurrentUserAuthorQueryVariables>(BookCurrentUserAuthorDocument, options);
+        }
+export type BookCurrentUserAuthorQueryHookResult = ReturnType<typeof useBookCurrentUserAuthorQuery>;
+export type BookCurrentUserAuthorLazyQueryHookResult = ReturnType<typeof useBookCurrentUserAuthorLazyQuery>;
+export type BookCurrentUserAuthorQueryResult = Apollo.QueryResult<BookCurrentUserAuthorQuery, BookCurrentUserAuthorQueryVariables>;
+export const BookNotesDocument = gql`
+    query bookNotes($bookPermalink: String!, $state: NoteState!) {
+  elementsWithNotes(bookPermalink: $bookPermalink, state: $state) {
+    ...elementWithInfo
+    notes(state: $state) {
+      ...note
+    }
+  }
+}
+    ${ElementWithInfoFragmentDoc}
+${NoteFragmentDoc}`;
+
+/**
+ * __useBookNotesQuery__
+ *
+ * To run a query within a React component, call `useBookNotesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBookNotesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBookNotesQuery({
+ *   variables: {
+ *      bookPermalink: // value for 'bookPermalink'
+ *      state: // value for 'state'
+ *   },
+ * });
+ */
+export function useBookNotesQuery(baseOptions: Apollo.QueryHookOptions<BookNotesQuery, BookNotesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BookNotesQuery, BookNotesQueryVariables>(BookNotesDocument, options);
+      }
+export function useBookNotesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BookNotesQuery, BookNotesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BookNotesQuery, BookNotesQueryVariables>(BookNotesDocument, options);
+        }
+export type BookNotesQueryHookResult = ReturnType<typeof useBookNotesQuery>;
+export type BookNotesLazyQueryHookResult = ReturnType<typeof useBookNotesLazyQuery>;
+export type BookNotesQueryResult = Apollo.QueryResult<BookNotesQuery, BookNotesQueryVariables>;
 export const BooksDocument = gql`
     query Books {
   books {
@@ -504,3 +957,644 @@ export function useBooksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Book
 export type BooksQueryHookResult = ReturnType<typeof useBooksQuery>;
 export type BooksLazyQueryHookResult = ReturnType<typeof useBooksLazyQuery>;
 export type BooksQueryResult = Apollo.QueryResult<BooksQuery, BooksQueryVariables>;
+export const BranchDocument = gql`
+    query branch($bookPermalink: String!, $name: String!) {
+  book(permalink: $bookPermalink) {
+    ... on Book {
+      id
+      title
+      branch(name: $name) {
+        id
+        default
+        name
+        commits {
+          sha
+          message
+          createdAt
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useBranchQuery__
+ *
+ * To run a query within a React component, call `useBranchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBranchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBranchQuery({
+ *   variables: {
+ *      bookPermalink: // value for 'bookPermalink'
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useBranchQuery(baseOptions: Apollo.QueryHookOptions<BranchQuery, BranchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BranchQuery, BranchQueryVariables>(BranchDocument, options);
+      }
+export function useBranchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BranchQuery, BranchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BranchQuery, BranchQueryVariables>(BranchDocument, options);
+        }
+export type BranchQueryHookResult = ReturnType<typeof useBranchQuery>;
+export type BranchLazyQueryHookResult = ReturnType<typeof useBranchLazyQuery>;
+export type BranchQueryResult = Apollo.QueryResult<BranchQuery, BranchQueryVariables>;
+export const BranchesDocument = gql`
+    query branches($bookPermalink: String!) {
+  book(permalink: $bookPermalink) {
+    ... on Book {
+      id
+      title
+      branches {
+        id
+        default
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useBranchesQuery__
+ *
+ * To run a query within a React component, call `useBranchesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBranchesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBranchesQuery({
+ *   variables: {
+ *      bookPermalink: // value for 'bookPermalink'
+ *   },
+ * });
+ */
+export function useBranchesQuery(baseOptions: Apollo.QueryHookOptions<BranchesQuery, BranchesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BranchesQuery, BranchesQueryVariables>(BranchesDocument, options);
+      }
+export function useBranchesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BranchesQuery, BranchesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BranchesQuery, BranchesQueryVariables>(BranchesDocument, options);
+        }
+export type BranchesQueryHookResult = ReturnType<typeof useBranchesQuery>;
+export type BranchesLazyQueryHookResult = ReturnType<typeof useBranchesLazyQuery>;
+export type BranchesQueryResult = Apollo.QueryResult<BranchesQuery, BranchesQueryVariables>;
+export const CurrentUserDocument = gql`
+    query currentUser {
+  currentUser {
+    __typename
+    id
+    githubLogin
+    email
+  }
+}
+    `;
+
+/**
+ * __useCurrentUserQuery__
+ *
+ * To run a query within a React component, call `useCurrentUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCurrentUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCurrentUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCurrentUserQuery(baseOptions?: Apollo.QueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
+      }
+export function useCurrentUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
+        }
+export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
+export type CurrentUserLazyQueryHookResult = ReturnType<typeof useCurrentUserLazyQuery>;
+export type CurrentUserQueryResult = Apollo.QueryResult<CurrentUserQuery, CurrentUserQueryVariables>;
+export const AddCommentMutationDocument = gql`
+    mutation addCommentMutation($noteId: ID!, $text: String!) {
+  addComment(noteId: $noteId, text: $text) {
+    ...commentFragment
+  }
+}
+    ${CommentFragmentFragmentDoc}`;
+export type AddCommentMutationMutationFn = Apollo.MutationFunction<AddCommentMutationMutation, AddCommentMutationMutationVariables>;
+
+/**
+ * __useAddCommentMutationMutation__
+ *
+ * To run a mutation, you first call `useAddCommentMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCommentMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCommentMutationMutation, { data, loading, error }] = useAddCommentMutationMutation({
+ *   variables: {
+ *      noteId: // value for 'noteId'
+ *      text: // value for 'text'
+ *   },
+ * });
+ */
+export function useAddCommentMutationMutation(baseOptions?: Apollo.MutationHookOptions<AddCommentMutationMutation, AddCommentMutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddCommentMutationMutation, AddCommentMutationMutationVariables>(AddCommentMutationDocument, options);
+      }
+export type AddCommentMutationMutationHookResult = ReturnType<typeof useAddCommentMutationMutation>;
+export type AddCommentMutationMutationResult = Apollo.MutationResult<AddCommentMutationMutation>;
+export type AddCommentMutationMutationOptions = Apollo.BaseMutationOptions<AddCommentMutationMutation, AddCommentMutationMutationVariables>;
+export const CloseNoteMutationDocument = gql`
+    mutation closeNoteMutation($id: ID!) {
+  closeNote(id: $id) {
+    id
+    state
+  }
+}
+    `;
+export type CloseNoteMutationMutationFn = Apollo.MutationFunction<CloseNoteMutationMutation, CloseNoteMutationMutationVariables>;
+
+/**
+ * __useCloseNoteMutationMutation__
+ *
+ * To run a mutation, you first call `useCloseNoteMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCloseNoteMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [closeNoteMutationMutation, { data, loading, error }] = useCloseNoteMutationMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCloseNoteMutationMutation(baseOptions?: Apollo.MutationHookOptions<CloseNoteMutationMutation, CloseNoteMutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CloseNoteMutationMutation, CloseNoteMutationMutationVariables>(CloseNoteMutationDocument, options);
+      }
+export type CloseNoteMutationMutationHookResult = ReturnType<typeof useCloseNoteMutationMutation>;
+export type CloseNoteMutationMutationResult = Apollo.MutationResult<CloseNoteMutationMutation>;
+export type CloseNoteMutationMutationOptions = Apollo.BaseMutationOptions<CloseNoteMutationMutation, CloseNoteMutationMutationVariables>;
+export const DeleteCommentMutationDocument = gql`
+    mutation deleteCommentMutation($id: ID!) {
+  deleteComment(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteCommentMutationMutationFn = Apollo.MutationFunction<DeleteCommentMutationMutation, DeleteCommentMutationMutationVariables>;
+
+/**
+ * __useDeleteCommentMutationMutation__
+ *
+ * To run a mutation, you first call `useDeleteCommentMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCommentMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCommentMutationMutation, { data, loading, error }] = useDeleteCommentMutationMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteCommentMutationMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCommentMutationMutation, DeleteCommentMutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteCommentMutationMutation, DeleteCommentMutationMutationVariables>(DeleteCommentMutationDocument, options);
+      }
+export type DeleteCommentMutationMutationHookResult = ReturnType<typeof useDeleteCommentMutationMutation>;
+export type DeleteCommentMutationMutationResult = Apollo.MutationResult<DeleteCommentMutationMutation>;
+export type DeleteCommentMutationMutationOptions = Apollo.BaseMutationOptions<DeleteCommentMutationMutation, DeleteCommentMutationMutationVariables>;
+export const OpenNoteMutationDocument = gql`
+    mutation openNoteMutation($id: ID!) {
+  openNote(id: $id) {
+    id
+    state
+  }
+}
+    `;
+export type OpenNoteMutationMutationFn = Apollo.MutationFunction<OpenNoteMutationMutation, OpenNoteMutationMutationVariables>;
+
+/**
+ * __useOpenNoteMutationMutation__
+ *
+ * To run a mutation, you first call `useOpenNoteMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOpenNoteMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [openNoteMutationMutation, { data, loading, error }] = useOpenNoteMutationMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useOpenNoteMutationMutation(baseOptions?: Apollo.MutationHookOptions<OpenNoteMutationMutation, OpenNoteMutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<OpenNoteMutationMutation, OpenNoteMutationMutationVariables>(OpenNoteMutationDocument, options);
+      }
+export type OpenNoteMutationMutationHookResult = ReturnType<typeof useOpenNoteMutationMutation>;
+export type OpenNoteMutationMutationResult = Apollo.MutationResult<OpenNoteMutationMutation>;
+export type OpenNoteMutationMutationOptions = Apollo.BaseMutationOptions<OpenNoteMutationMutation, OpenNoteMutationMutationVariables>;
+export const SubmitNoteDocument = gql`
+    mutation submitNote($bookPermalink: ID!, $elementId: ID!, $text: String!) {
+  note: submitNote(
+    bookPermalink: $bookPermalink
+    elementId: $elementId
+    text: $text
+  ) {
+    ...note
+  }
+}
+    ${NoteFragmentDoc}`;
+export type SubmitNoteMutationFn = Apollo.MutationFunction<SubmitNoteMutation, SubmitNoteMutationVariables>;
+
+/**
+ * __useSubmitNoteMutation__
+ *
+ * To run a mutation, you first call `useSubmitNoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSubmitNoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [submitNoteMutation, { data, loading, error }] = useSubmitNoteMutation({
+ *   variables: {
+ *      bookPermalink: // value for 'bookPermalink'
+ *      elementId: // value for 'elementId'
+ *      text: // value for 'text'
+ *   },
+ * });
+ */
+export function useSubmitNoteMutation(baseOptions?: Apollo.MutationHookOptions<SubmitNoteMutation, SubmitNoteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SubmitNoteMutation, SubmitNoteMutationVariables>(SubmitNoteDocument, options);
+      }
+export type SubmitNoteMutationHookResult = ReturnType<typeof useSubmitNoteMutation>;
+export type SubmitNoteMutationResult = Apollo.MutationResult<SubmitNoteMutation>;
+export type SubmitNoteMutationOptions = Apollo.BaseMutationOptions<SubmitNoteMutation, SubmitNoteMutationVariables>;
+export const InviteUserDocument = gql`
+    mutation inviteUser($bookId: ID!, $userId: ID!) {
+  inviteUser(bookId: $bookId, userId: $userId) {
+    bookId
+    userId
+  }
+}
+    `;
+export type InviteUserMutationFn = Apollo.MutationFunction<InviteUserMutation, InviteUserMutationVariables>;
+
+/**
+ * __useInviteUserMutation__
+ *
+ * To run a mutation, you first call `useInviteUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInviteUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [inviteUserMutation, { data, loading, error }] = useInviteUserMutation({
+ *   variables: {
+ *      bookId: // value for 'bookId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useInviteUserMutation(baseOptions?: Apollo.MutationHookOptions<InviteUserMutation, InviteUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InviteUserMutation, InviteUserMutationVariables>(InviteUserDocument, options);
+      }
+export type InviteUserMutationHookResult = ReturnType<typeof useInviteUserMutation>;
+export type InviteUserMutationResult = Apollo.MutationResult<InviteUserMutation>;
+export type InviteUserMutationOptions = Apollo.BaseMutationOptions<InviteUserMutation, InviteUserMutationVariables>;
+export const RemoveReaderDocument = gql`
+    mutation removeReader($bookId: ID!, $userId: ID!) {
+  removeReader(bookId: $bookId, userId: $userId) {
+    bookId
+    userId
+  }
+}
+    `;
+export type RemoveReaderMutationFn = Apollo.MutationFunction<RemoveReaderMutation, RemoveReaderMutationVariables>;
+
+/**
+ * __useRemoveReaderMutation__
+ *
+ * To run a mutation, you first call `useRemoveReaderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveReaderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeReaderMutation, { data, loading, error }] = useRemoveReaderMutation({
+ *   variables: {
+ *      bookId: // value for 'bookId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useRemoveReaderMutation(baseOptions?: Apollo.MutationHookOptions<RemoveReaderMutation, RemoveReaderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveReaderMutation, RemoveReaderMutationVariables>(RemoveReaderDocument, options);
+      }
+export type RemoveReaderMutationHookResult = ReturnType<typeof useRemoveReaderMutation>;
+export type RemoveReaderMutationResult = Apollo.MutationResult<RemoveReaderMutation>;
+export type RemoveReaderMutationOptions = Apollo.BaseMutationOptions<RemoveReaderMutation, RemoveReaderMutationVariables>;
+export const UpdateBranchDocument = gql`
+    mutation updateBranch($bookPermalink: String!, $branchName: String!) {
+  updateBranch(bookPermalink: $bookPermalink, branchName: $branchName) {
+    name
+  }
+}
+    `;
+export type UpdateBranchMutationFn = Apollo.MutationFunction<UpdateBranchMutation, UpdateBranchMutationVariables>;
+
+/**
+ * __useUpdateBranchMutation__
+ *
+ * To run a mutation, you first call `useUpdateBranchMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateBranchMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateBranchMutation, { data, loading, error }] = useUpdateBranchMutation({
+ *   variables: {
+ *      bookPermalink: // value for 'bookPermalink'
+ *      branchName: // value for 'branchName'
+ *   },
+ * });
+ */
+export function useUpdateBranchMutation(baseOptions?: Apollo.MutationHookOptions<UpdateBranchMutation, UpdateBranchMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateBranchMutation, UpdateBranchMutationVariables>(UpdateBranchDocument, options);
+      }
+export type UpdateBranchMutationHookResult = ReturnType<typeof useUpdateBranchMutation>;
+export type UpdateBranchMutationResult = Apollo.MutationResult<UpdateBranchMutation>;
+export type UpdateBranchMutationOptions = Apollo.BaseMutationOptions<UpdateBranchMutation, UpdateBranchMutationVariables>;
+export const UpdateCommentMutationDocument = gql`
+    mutation updateCommentMutation($id: ID!, $text: String!) {
+  updateComment(id: $id, text: $text) {
+    id
+    text
+  }
+}
+    `;
+export type UpdateCommentMutationMutationFn = Apollo.MutationFunction<UpdateCommentMutationMutation, UpdateCommentMutationMutationVariables>;
+
+/**
+ * __useUpdateCommentMutationMutation__
+ *
+ * To run a mutation, you first call `useUpdateCommentMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCommentMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCommentMutationMutation, { data, loading, error }] = useUpdateCommentMutationMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      text: // value for 'text'
+ *   },
+ * });
+ */
+export function useUpdateCommentMutationMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCommentMutationMutation, UpdateCommentMutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCommentMutationMutation, UpdateCommentMutationMutationVariables>(UpdateCommentMutationDocument, options);
+      }
+export type UpdateCommentMutationMutationHookResult = ReturnType<typeof useUpdateCommentMutationMutation>;
+export type UpdateCommentMutationMutationResult = Apollo.MutationResult<UpdateCommentMutationMutation>;
+export type UpdateCommentMutationMutationOptions = Apollo.BaseMutationOptions<UpdateCommentMutationMutation, UpdateCommentMutationMutationVariables>;
+export const UpdateNoteMutationDocument = gql`
+    mutation updateNoteMutation($id: ID!, $text: String!) {
+  updateNote(id: $id, text: $text) {
+    id
+    text
+    state
+  }
+}
+    `;
+export type UpdateNoteMutationMutationFn = Apollo.MutationFunction<UpdateNoteMutationMutation, UpdateNoteMutationMutationVariables>;
+
+/**
+ * __useUpdateNoteMutationMutation__
+ *
+ * To run a mutation, you first call `useUpdateNoteMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateNoteMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateNoteMutationMutation, { data, loading, error }] = useUpdateNoteMutationMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      text: // value for 'text'
+ *   },
+ * });
+ */
+export function useUpdateNoteMutationMutation(baseOptions?: Apollo.MutationHookOptions<UpdateNoteMutationMutation, UpdateNoteMutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateNoteMutationMutation, UpdateNoteMutationMutationVariables>(UpdateNoteMutationDocument, options);
+      }
+export type UpdateNoteMutationMutationHookResult = ReturnType<typeof useUpdateNoteMutationMutation>;
+export type UpdateNoteMutationMutationResult = Apollo.MutationResult<UpdateNoteMutationMutation>;
+export type UpdateNoteMutationMutationOptions = Apollo.BaseMutationOptions<UpdateNoteMutationMutation, UpdateNoteMutationMutationVariables>;
+export const NoteBookDocument = gql`
+    query noteBook($bookPermalink: String!) {
+  book(permalink: $bookPermalink) {
+    ... on Book {
+      id
+      permalink
+      title
+    }
+  }
+}
+    `;
+
+/**
+ * __useNoteBookQuery__
+ *
+ * To run a query within a React component, call `useNoteBookQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNoteBookQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNoteBookQuery({
+ *   variables: {
+ *      bookPermalink: // value for 'bookPermalink'
+ *   },
+ * });
+ */
+export function useNoteBookQuery(baseOptions: Apollo.QueryHookOptions<NoteBookQuery, NoteBookQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NoteBookQuery, NoteBookQueryVariables>(NoteBookDocument, options);
+      }
+export function useNoteBookLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NoteBookQuery, NoteBookQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NoteBookQuery, NoteBookQueryVariables>(NoteBookDocument, options);
+        }
+export type NoteBookQueryHookResult = ReturnType<typeof useNoteBookQuery>;
+export type NoteBookLazyQueryHookResult = ReturnType<typeof useNoteBookLazyQuery>;
+export type NoteBookQueryResult = Apollo.QueryResult<NoteBookQuery, NoteBookQueryVariables>;
+export const NoteDocument = gql`
+    query note($bookPermalink: String!, $number: Int!) {
+  note(bookPermalink: $bookPermalink, number: $number) {
+    ...note
+    element {
+      ...elementWithInfo
+    }
+  }
+}
+    ${NoteFragmentDoc}
+${ElementWithInfoFragmentDoc}`;
+
+/**
+ * __useNoteQuery__
+ *
+ * To run a query within a React component, call `useNoteQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNoteQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNoteQuery({
+ *   variables: {
+ *      bookPermalink: // value for 'bookPermalink'
+ *      number: // value for 'number'
+ *   },
+ * });
+ */
+export function useNoteQuery(baseOptions: Apollo.QueryHookOptions<NoteQuery, NoteQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NoteQuery, NoteQueryVariables>(NoteDocument, options);
+      }
+export function useNoteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NoteQuery, NoteQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NoteQuery, NoteQueryVariables>(NoteDocument, options);
+        }
+export type NoteQueryHookResult = ReturnType<typeof useNoteQuery>;
+export type NoteLazyQueryHookResult = ReturnType<typeof useNoteLazyQuery>;
+export type NoteQueryResult = Apollo.QueryResult<NoteQuery, NoteQueryVariables>;
+export const ReadersDocument = gql`
+    query readers($permalink: String!) {
+  book(permalink: $permalink) {
+    ... on PermissionDenied {
+      error
+    }
+    ... on Book {
+      id
+      title
+      readers {
+        id
+        author
+        githubLogin
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useReadersQuery__
+ *
+ * To run a query within a React component, call `useReadersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReadersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReadersQuery({
+ *   variables: {
+ *      permalink: // value for 'permalink'
+ *   },
+ * });
+ */
+export function useReadersQuery(baseOptions: Apollo.QueryHookOptions<ReadersQuery, ReadersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ReadersQuery, ReadersQueryVariables>(ReadersDocument, options);
+      }
+export function useReadersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReadersQuery, ReadersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ReadersQuery, ReadersQueryVariables>(ReadersDocument, options);
+        }
+export type ReadersQueryHookResult = ReturnType<typeof useReadersQuery>;
+export type ReadersLazyQueryHookResult = ReturnType<typeof useReadersLazyQuery>;
+export type ReadersQueryResult = Apollo.QueryResult<ReadersQuery, ReadersQueryVariables>;
+export const UsersDocument = gql`
+    query users($githubLogin: String!) {
+  users(githubLogin: $githubLogin) {
+    id
+    githubLogin
+    name
+  }
+}
+    `;
+
+/**
+ * __useUsersQuery__
+ *
+ * To run a query within a React component, call `useUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUsersQuery({
+ *   variables: {
+ *      githubLogin: // value for 'githubLogin'
+ *   },
+ * });
+ */
+export function useUsersQuery(baseOptions: Apollo.QueryHookOptions<UsersQuery, UsersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
+      }
+export function useUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UsersQuery, UsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
+        }
+export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>;
+export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
+export type UsersQueryResult = Apollo.QueryResult<UsersQuery, UsersQueryVariables>;

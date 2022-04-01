@@ -9,12 +9,12 @@ type ChapterLinkProps = {
   permalink: string;
 };
 
-const ChapterLink: React.FC<ChapterLinkProps> = ({
+const ChapterLink = ({
   bookPermalink,
   gitRef,
   title,
   permalink,
-}) => {
+}: ChapterLinkProps) => {
   const link = `${bookLink(bookPermalink, gitRef)}/chapters/${permalink}`;
 
   return (

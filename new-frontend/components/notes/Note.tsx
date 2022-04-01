@@ -1,16 +1,16 @@
 import React, { FunctionComponent, useState } from "react";
-import Link from "next/link"
 import ReactMarkdown from "react-markdown";
 import Gravatar from "react-gravatar";
 import moment from "moment";
+import Link from "next/link";
 
-import Comments from "./Comments";
-import CloseButton from "./CloseButton";
-import OpenButton from "./OpenButton";
-import EditForm from "./EditForm";
+import Comments from "../note/Comments";
+import CloseButton from "../note/CloseButton";
+import OpenButton from "../note/OpenButton";
+import EditForm from "../note/EditForm";
 
-import CurrentUserContext from "../../CurrentUser/context";
-import { Note } from "../../graphql/types";
+import CurrentUserContext from "components/CurrentUser/context";
+import { Note } from "graphql/types";
 
 type ElementNoteProps = Omit<Note, "element"> & {
   bookPermalink: string;
@@ -62,7 +62,7 @@ const ElementNote: FunctionComponent<ElementNoteProps> = (props) => {
         <EditForm toggleForm={toggleForm} noteId={id} originalText={text} />
       );
     } else {
-      return <ReactMarkdown source={text} />;
+      return <ReactMarkdown>{text}</ReactMarkdown>;
     }
   };
 
@@ -78,8 +78,10 @@ const ElementNote: FunctionComponent<ElementNoteProps> = (props) => {
           <div className="row">
             <div className={`bg-gray-200 px-4 py-2 rounded-t-md`}>
               <div>
-                <Link to={`/books/${bookPermalink}/notes/${number}`}>
-                  {user.name} left note #{number}
+                <Link href={`/books/${bookPermalink}/notes/${number}`}>
+                  <a>
+                    {user.name} left note #{number}
+                  </a>
                 </Link>
               </div>
               <div>

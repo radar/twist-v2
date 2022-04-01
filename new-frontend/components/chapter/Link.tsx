@@ -1,7 +1,19 @@
 import React, { Component } from "react";
-import { chapterPositionAndTitle } from "./index";
+import Link from "next/link";
 import bookLink from "components/book/link";
 import { Chapter } from "graphql/types";
+
+export const chapterPositionAndTitle = (
+  part: string,
+  position: number,
+  title: string
+) => {
+  if (part === "mainmatter") {
+    return `${position}. ${title}`;
+  } else {
+    return title;
+  }
+};
 
 type ChapterLinkProps = Pick<
   Chapter,
@@ -33,15 +45,15 @@ class ChapterLink extends Component<ChapterLinkProps> {
 
     if (direction === "back") {
       return (
-        <Link to={path} className="font-bold">
-          « {text}
+        <Link href={path}>
+          <a className="font-bold">« {text}</a>
         </Link>
       );
     }
 
     return (
-      <Link to={path} className="font-bold">
-        {text} »
+      <Link href={path}>
+        <a className="font-bold">{text} »</a>
       </Link>
     );
   }

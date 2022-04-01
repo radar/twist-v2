@@ -16,11 +16,11 @@ interface CommitProps {
   };
 }
 
-const Commit: React.FC<CommitProps> = ({
+function Commit({
   permalink,
   commit: { sha, createdAt, branch },
   latestCommit,
-}) => {
+}: CommitProps) {
   let latest;
   if (sha !== latestCommit.sha) {
     latest = <Link href={`/books/${permalink}`}> Go to latest revision </Link>;
@@ -35,6 +35,6 @@ const Commit: React.FC<CommitProps> = ({
       </small>
     </div>
   );
-};
+}
 
 export default Commit;

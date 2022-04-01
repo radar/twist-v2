@@ -6,12 +6,13 @@ import { ChapterQuery, useChapterQuery } from "graphql/types";
 
 const WrappedChapter = () => {
   const router = useRouter();
-  const { bookPermalink, chapterPermalink } = router.query;
+  const { bookPermalink, chapterPermalink, ref } = router.query;
 
   const { data, loading, error } = useChapterQuery({
     variables: {
       bookPermalink: bookPermalink as string,
       chapterPermalink: chapterPermalink as string,
+      gitRef: ref as string,
     },
   });
 
@@ -38,6 +39,7 @@ const WrappedChapter = () => {
     </QueryWrapper>
   );
 };
+
 export default WrappedChapter;
 
 WrappedChapter.auth = true;

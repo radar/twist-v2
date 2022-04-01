@@ -10,9 +10,9 @@ export type BookData = Extract<BookQuery["result"], { __typename?: "Book" }>;
 
 const WrappedBook = () => {
   const router = useRouter();
-  const { bookPermalink } = router.query;
+  const { bookPermalink, ref } = router.query;
   const { data, loading, error } = useBookQuery({
-    variables: { permalink: bookPermalink as string },
+    variables: { permalink: bookPermalink as string, gitRef: ref as string },
   });
 
   const renderBook = (data: BookQuery) => {
@@ -22,7 +22,7 @@ const WrappedBook = () => {
 
     const book = data.result;
 
-    return <Book {...book} />;
+    return <Book {...book} gitRef={ref as string} />;
   };
 
   return (

@@ -1,8 +1,9 @@
 import React from "react";
-import Link from 'next/link'
+import Link from "next/link";
 
 import { useBooksQuery, BooksQuery } from "../graphql/types";
 import QueryWrapper from "../components/QueryWrapper";
+import { useSession } from "next-auth/react";
 
 type Book = BooksQuery["books"][0];
 
@@ -33,7 +34,7 @@ const Books = ({ books }: BooksProps) => {
         nicely?
       </div>
     );
-  }
+  };
   return (
     <div id="books">
       <h1>Books</h1>
@@ -41,9 +42,13 @@ const Books = ({ books }: BooksProps) => {
       {renderBooks()}
     </div>
   );
-}
+};
 
 const WrappedBooks = () => {
+  const { status } = useSession({
+    required: true,
+  });
+
   const { data, loading, error } = useBooksQuery();
 
   const renderBooks = (data: BooksQuery) => {
@@ -57,3 +62,5 @@ const WrappedBooks = () => {
 };
 
 export default WrappedBooks;
+
+WrappedBooks.auth = true;

@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import Note from "components/note/note";
-import Form from "./Form";
-import {
-  ChapterNotesQuery,
-  useChapterNotesQuery,
-} from "graphql/types";
+import Note from "components/notes/Note";
+import Form from "components/note/Form";
+import { ChapterNotesQuery, useChapterNotesQuery } from "graphql/types";
 import PermissionDenied from "components/PermissionDenied";
 import QueryWrapper from "components/QueryWrapper";
 
@@ -51,7 +48,10 @@ const Notes: React.FC<NotesProps> = ({
   };
 
   return (
-    <div className="border-2 rounded p-2 mb-4" key={`notes-${elementId}`}>
+    <div
+      className="border-2 rounded-lg p-4 mb-4 bg-white"
+      key={`notes-${elementId}`}
+    >
       {renderNotes()}
       <Form
         bookPermalink={bookPermalink}
