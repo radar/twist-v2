@@ -6,6 +6,11 @@ module Twist
       attribute :permalink, Types::String
       attribute :github_user, Types::String
       attribute :github_repo, Types::String
+      attribute? :is_public, Types::String
+
+      def public?
+        is_public
+      end
 
       def path
         git = Git.new(
