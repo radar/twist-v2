@@ -60,9 +60,8 @@ module Twist
           book
         end
 
-
         def htmlify_book(path, username, repo)
-          book_file_candidates = [path + "book-highlights.adoc", path + "book.ad", path + "book.adoc"]
+          book_file_candidates = [path + "book-highlights.ad", path + "book-highlights.adoc", path + "book.ad", path + "book.adoc"]
           book_file = book_file_candidates.detect { |file| File.exist?(file) }
 
           unless book_file
