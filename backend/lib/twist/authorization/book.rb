@@ -12,7 +12,7 @@ module Twist
       end
 
       def success?
-        permission_repo.user_authorized_for_book?(user, book)
+        book.public? || permission_repo.user_authorized_for_book?(user, book)
       end
     end
   end
