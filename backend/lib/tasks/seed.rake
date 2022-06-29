@@ -54,10 +54,11 @@ namespace :db do
       github_repo: "asciidoc_book_test",
     ) do |result|
       result.success do |book|
-        Twist::Processors::Asciidoc::BookWorker.perform_async(
+        Twist::Processors::Asciidoc::BookWorker.new.perform(
           permalink: book.permalink,
           branch: "master",
-          github_path: "radar/asciidoc_book_test",
+          username: "radar",
+          repo: "asciidoc_book_test",
         )
         puts "Book Asciidoc Book Test created and enqueued."
       end
