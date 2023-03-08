@@ -17,8 +17,8 @@ module Twist
 
       @creds = Rugged::Credentials::SshKey.new(
         username: 'git',
-        publickey: File.expand_path("~/.ssh/id_ed25519.pub"),
-        privatekey: File.expand_path("~/.ssh/id_ed25519"),
+        publickey: File.expand_path("~/.ssh/id_rsa.pub"),
+        privatekey: File.expand_path("~/.ssh/id_rsa"),
       )
     end
 
