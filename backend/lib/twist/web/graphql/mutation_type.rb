@@ -11,7 +11,7 @@ module Twist
         field :open_note, mutation: Mutations::Notes::Open
         field :update_note, mutation: Mutations::Notes::Update
 
-        field :update_branch, mutation: Mutations::Branches::Update
+        field :update_branch, mutation: Mutations::Branches::UpdateBranch
 
         field :add_comment, mutation: Mutations::Comments::Add
         field :update_comment, mutation: Mutations::Comments::Update

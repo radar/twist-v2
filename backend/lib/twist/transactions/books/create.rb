@@ -1,7 +1,3 @@
-require 'twist/permalinker'
-
-require 'pry'
-
 module Twist
   module Transactions
     module Books

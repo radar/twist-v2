@@ -3,7 +3,7 @@ module Twist
     module GraphQL
       module Mutations
         module Branches
-          class Update < BaseMutation
+          class UpdateBranch < BaseMutation
             argument :book_permalink, String, required: true
             argument :branch_name, String, required: true
 
