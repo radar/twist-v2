@@ -5,7 +5,7 @@ Twist::Container.boot(:core, namespace: true) do
   init do
     require 'redcarpet'
     require 'nokogiri'
-    require 'pygments'
+    require 'rouge'
     require 'sidekiq'
 
     require 'dry/monads'
