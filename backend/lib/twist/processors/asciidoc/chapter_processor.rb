@@ -174,7 +174,10 @@ module Twist
                 else code['data-lang']
                 end
 
-          highlighted_code = Pygments.highlight(code.text, lexer: lang)
+          lexer = Rouge::Lexer.find(lang)
+          formatter = Rouge::Formatters::HTML.new
+
+          highlighted_code = formatter.format(lexer.lex(code.text))
           title = element.css(".title").text
           html = %{<div class="listingblock highlighted lang-#{lang}">}
           html << %{<div class="title">#{title}</div>} unless title.empty?
