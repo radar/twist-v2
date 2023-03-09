@@ -147,6 +147,14 @@ module Twist
           )
         end
 
+        def process_colist(element)
+          create_element(
+            tag: "div",
+            content: element.to_html,
+          )
+        end
+
+
         def process_listingblock(element)
           if element.css("pre code").any?
             return process_language_block(element)

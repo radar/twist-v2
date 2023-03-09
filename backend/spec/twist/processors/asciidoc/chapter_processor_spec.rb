@@ -439,6 +439,47 @@ module Twist
               HTML
             end
 
+            context "div.colist.arabic" do
+              let(:content) do
+                <<~HTML.strip
+                  <div class="colist arabic">
+                    <table>
+                    <tr>
+                    <td>
+                    <i class="conum" data-value="1"></i><b>1</b>
+                    </td>
+                    <td>Book</td>
+                    </tr>
+                    <tr>
+                    <td>
+                    <i class="conum" data-value="2"></i><b>2</b>
+                    </td>
+                    <td>String</td>
+                    </tr>
+                    <tr>
+                    <td>
+                    <i class="conum" data-value="3"></i><b>3</b>
+                    </td>
+                    <td>String</td>
+                    </tr>
+                    <tr>
+                    <td>
+                    <i class="conum" data-value="4"></i><b>4</b>
+                    </td>
+                    <td>Int</td>
+                    </tr>
+                    </table>
+                  </div>
+                HTML
+              end
+
+              it "parses into a regular div" do
+                element = elements_by_tag("div").first
+                expect(element.content).to eq(content)
+              end
+            end
+
+
             it "adds the admonitionblock element to the chapter" do
               element = elements_by_tag("div").first
               expected =
