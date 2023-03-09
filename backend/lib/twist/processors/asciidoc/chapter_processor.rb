@@ -175,7 +175,7 @@ module Twist
                 end
 
           lexer = Rouge::Lexer.find(lang)
-          formatter = Rouge::Formatters::HTML.new
+          formatter = Rouge::Formatters::HTMLPygments.new(Rouge::Formatters::HTML.new)
 
           highlighted_code = formatter.format(lexer.lex(code.text))
           title = element.css(".title").text
