@@ -168,6 +168,7 @@ module Twist
             end
           end
 
+
           context "div.listingblock, with pre + code, as yml" do
             let(:content) do
               <<-HTML.strip
@@ -219,6 +220,36 @@ module Twist
               expect(listing_block).to be_truthy
               expect(listing_block['class']).to include("lang-ruby")
               expect(fragment.css(".title")).to be_empty
+              expect(fragment.css(".content .highlight .kr")).to be_truthy
+            end
+          end
+
+          context "div.listingblock, with pre + code, with unknown language" do
+            let(:content) do
+              <<-HTML.strip
+                <div class="listingblock">
+                <div class="title">book.rb</div>
+                <div class="content">
+                <pre class="highlight"><code data-lang="gql">class Book
+                  attr_reader :title
+
+                  def initialize(title)
+                    @title = title
+                  end
+                end</code></pre>
+                </div>
+              </div>
+              HTML
+            end
+
+            it "adds the listingblock element to the chapter" do
+              element = elements_by_tag("div").first
+
+              fragment = Nokogiri::HTML::DocumentFragment.parse(element.content)
+              listing_block = fragment.css(".listingblock").first
+              expect(listing_block).to be_truthy
+              expect(listing_block['class']).to include("listingblock")
+              expect(fragment.css(".title").text).to eq("book.rb")
               expect(fragment.css(".content .highlight .kr")).to be_truthy
             end
           end

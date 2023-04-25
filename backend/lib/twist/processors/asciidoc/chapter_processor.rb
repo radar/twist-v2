@@ -12,7 +12,8 @@ module Twist
           "repositories.commit_repo",
           "repositories.footnote_repo",
           "repositories.chapter_repo",
-          "repositories.book_repo"
+          "repositories.book_repo",
+          "logger"
         ]
 
         def perform(book_permalink, chapter_id, chapter)
@@ -177,7 +178,13 @@ module Twist
           lexer = Rouge::Lexer.find(lang)
           formatter = Rouge::Formatters::HTMLPygments.new(Rouge::Formatters::HTML.new)
 
-          highlighted_code = formatter.format(lexer.lex(code.text))
+          if lexer
+            highlighted_code = formatter.format(lexer.lex(code.text))
+          else
+            logger.warn "Unknown language #{lang}!"
+            highlighted_code = %{<pre><code>#{code.text}</code></pre>}
+          end
+
           title = element.css(".title").text
           html = %{<div class="listingblock highlighted lang-#{lang}">}
           html << %{<div class="title">#{title}</div>} unless title.empty?

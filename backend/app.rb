@@ -29,6 +29,8 @@ module Twist
     )
   }
 
+  Container.register 'logger', -> { Logger.new(STDOUT) }
+
   Import = Dry::AutoInject(Container)
 end
 

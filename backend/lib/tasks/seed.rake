@@ -47,7 +47,7 @@ namespace :db do
     create_book.(
       title: "Asciidoc Book Test",
       source: "GitHub",
-      format: "markdown",
+      format: "asciidoc",
       default_branch: "master",
       blurb: "This is a test of the Twist book review system.",
       github_user: "radar",
