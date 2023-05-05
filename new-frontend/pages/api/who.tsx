@@ -6,7 +6,7 @@ const handler = async (req, res) => {
   if (session) {
     console.log(session);
     const token = jwt.sign(
-      { email: session.user.email },
+      { email: session.user.email, name: session.user.name },
       process.env.AUTH_TOKEN_SECRET,
       {
         algorithm: "HS256",

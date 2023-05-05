@@ -1,4 +1,10 @@
-import React from "react";
+import hljs from "highlight.js";
+import ruby from "highlight.js/lib/languages/ruby";
+
+hljs.configure({ cssSelector: ".highlight pre", languages: ["ruby"] });
+hljs.registerLanguage("ruby", ruby);
+
+import React, { useEffect } from "react";
 import Link from "next/link";
 
 import Element from "components/elements/element";
@@ -39,6 +45,10 @@ const Chapter: React.FC<ChapterAtCommitProps> = ({
   chapter,
 }) => {
   const { previousChapter, nextChapter } = chapter;
+
+  useEffect(() => {
+    hljs.highlightAll();
+  }, []);
 
   const renderPreviousChapterLink = () => {
     if (previousChapter) {
