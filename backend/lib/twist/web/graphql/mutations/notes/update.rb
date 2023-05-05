@@ -4,6 +4,7 @@ module Twist
       module Mutations
         module Notes
           class Update < BaseMutation
+            graphql_name "UpdateNote"
             argument :id, ID, required: true
             argument :text, String, required: true
 

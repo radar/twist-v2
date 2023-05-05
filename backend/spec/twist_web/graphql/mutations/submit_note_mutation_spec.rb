@@ -26,9 +26,11 @@ module Twist
           query = %|
             mutation submitNoteMutation {
               submitNote(
-                bookPermalink: "example-book",
-                elementId: "1",
-                text: "Just a note."
+                input: {
+                  bookPermalink: "example-book",
+                  elementId: "1",
+                  text: "Just a note."
+                }
               ) {
                 id
               }

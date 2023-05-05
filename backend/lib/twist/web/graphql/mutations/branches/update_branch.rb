@@ -4,6 +4,8 @@ module Twist
       module Mutations
         module Branches
           class UpdateBranch < BaseMutation
+            graphql_name "UpdateBranch"
+
             argument :book_permalink, String, required: true
             argument :branch_name, String, required: true
 
