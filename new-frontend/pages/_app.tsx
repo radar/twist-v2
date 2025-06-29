@@ -69,9 +69,7 @@ function AuthWrapper({ token, children }) {
     <ApolloProvider client={client}>
       <menu className="my-4">
         <Link href="/">
-          <a>
-            <strong>Twist</strong>
-          </a>
+          <strong>Twist</strong>
         </Link>{" "}
         &nbsp; | &nbsp;
         <CurrentUser>{renderUserInfo()}</CurrentUser>

@@ -1,5 +1,5 @@
-Twist::Container.boot(:web, namespace: true) do
-  init do
+Twist::Container.register_provider(:web, namespace: true) do
+  prepare do
     require 'graphql'
     require 'dataloader'
     require 'oauth2'

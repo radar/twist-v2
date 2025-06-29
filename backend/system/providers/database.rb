@@ -1,5 +1,5 @@
-Twist::Container.boot(:persistence) do
-  init do
+Twist::Container.register_provider(:database) do
+  prepare do
     require "rom-repository"
     require "rom-changeset"
     require "sequel"

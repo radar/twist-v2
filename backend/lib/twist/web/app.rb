@@ -1,3 +1,5 @@
+require 'hanami/middleware/body_parser'
+
 module Twist
   module Web
     App = Rack::Builder.new do

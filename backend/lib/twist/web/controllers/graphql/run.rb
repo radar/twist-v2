@@ -27,7 +27,6 @@ module Twist
                            else
                              nil
                            end
-
             runner = Web::GraphQL::Runner.new(
               repos: {
                 book: book_repo,

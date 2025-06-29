@@ -7,14 +7,16 @@ module Twist
     module Markdown
       class BookWorker
         include Sidekiq::Worker
+        include Import["repositories.book_repo"]
 
         # rubocop:disable Metrics/MethodLength
-        def perform(args)
+        def perform(permalink)
+          book = book_repo.find_by_permalink(permalink)
           book_updater = BookUpdater.new(
-            permalink: args["permalink"],
-            branch: args["branch"],
-            username: args["username"],
-            repo: args["repo"],
+            permalink: permalink,
+            branch: "master",
+            username: book.github_user,
+            repo: book.github_repo,
           )
           git, commit = book_updater.update!
 

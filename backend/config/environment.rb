@@ -1,6 +1,6 @@
 require 'babosa'
 
 require_relative './boot'
-require_relative '../app'
+require_relative '../system/application'
 
 Twist::Container.finalize!

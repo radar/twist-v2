@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.7.3'
+ruby '3.3.5'
 
 # Pedantic thing
 gem 'rubocop'
@@ -27,8 +27,8 @@ gem 'dry-struct'
 gem 'zeitwerk'
 
 # Hanami
-gem 'hanami-controller', github: "hanami/controller", branch: "unstable"
-gem 'hanami-router', github: "hanami/router", branch: "unstable"
+gem 'hanami-controller', '~> 2.0'
+gem 'hanami-router', '~> 2.0'
 
 # Twist
 gem 'rugged'

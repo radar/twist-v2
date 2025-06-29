@@ -1,8 +1,6 @@
 
-Twist::Container.boot(:core, namespace: true) do
-  use :persistence
-
-  init do
+Twist::Container.register_provider(:core, namespace: true) do
+  prepare do
     require 'redcarpet'
     require 'nokogiri'
     require 'rouge'
@@ -10,6 +8,10 @@ Twist::Container.boot(:core, namespace: true) do
 
     require 'dry/monads'
     require 'dry/monads/do'
+  end
+
+  start do
+    target.start :database
   end
 
 end

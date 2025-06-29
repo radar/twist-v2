@@ -11,31 +11,17 @@ module Twist
 
         include Import['repositories.book_repo']
 
-        class WorkerParams < Dry::Struct
-          transform_keys(&:to_sym)
-
-          attribute :username, "string"
-          attribute :repo, "string"
-          attribute :permalink, "string"
-          attribute :branch, "string"
-        end
-
-        def perform(args)
-
-          worker_params = WorkerParams.new(args)
-          username = worker_params.username
-          repo = worker_params.repo
-
+        def perform(permalink)
+          book = book_repo.find_by_permalink(permalink)
+          username = book.github_user
+          repo = book.github_repo
           book_updater = BookUpdater.new(
-            permalink: worker_params.permalink,
-            branch: worker_params.branch,
+            permalink: permalink,
+            branch: "master",
             username: username,
             repo: repo,
           )
-
           git, commit = book_updater.update!
-
-          book = find_book(worker_params.permalink)
 
           path = htmlify_book(git.local_path, username, repo)
           content = Nokogiri::HTML.parse(File.read(path))

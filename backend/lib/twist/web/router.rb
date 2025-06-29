@@ -1,3 +1,5 @@
+require 'hanami/router'
+
 module Twist
   module Web
     Router = Hanami::Router.new do

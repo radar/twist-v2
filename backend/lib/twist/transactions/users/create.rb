@@ -4,7 +4,7 @@ module Twist
   module Transactions
     module Users
       class Create < Transaction
-        include Twist::Import["repositories.user_repo"]
+        include Twist::Import[:logger, "repositories.user_repo"]
 
         def call(email:, name:, password:, github_login: nil)
           encrypted_password = yield encrypt_password(password)
@@ -22,6 +22,7 @@ module Twist
         end
 
         def persist(email:, name:, github_login:, encrypted_password:)
+          logger.info("PERSISTING USER INFORMATION")
           user = user_repo.create(
             email: email,
             name: name,

@@ -19,6 +19,15 @@ module Twist
         )
         git.local_path
       end
+
+      def enqueue_update
+        if format == 'markdown'
+          Processors::Markdown::BookWorker.perform_async(permalink)
+        elsif format == 'asciidoc'
+          Processors::Asciidoc::BookWorker.perform_async(permalink)
+        else
+        end
+      end
     end
   end
 end

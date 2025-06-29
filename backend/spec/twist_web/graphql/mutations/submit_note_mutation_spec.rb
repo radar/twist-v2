@@ -44,6 +44,8 @@ module Twist
             context: { current_user: current_user },
           )
 
+          binding.pry
+
           expect(result.dig("data", "submitNote", "id")).not_to be_nil
         end
       end

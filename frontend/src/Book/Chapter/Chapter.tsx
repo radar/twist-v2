@@ -1,23 +1,15 @@
-import hljs from "highlight.js";
-import ruby from "highlight.js/lib/languages/ruby";
-
-hljs.configure({ cssSelector: ".highlight pre", languages: ["ruby"] });
-hljs.registerLanguage("ruby", ruby);
-
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 
 import Element from "components/elements/element";
 import Footnote from "components/elements/Footnote";
-import {
-  PreviousChapterLink,
-  NextChapterLink,
-  chapterPositionAndTitle,
-} from "components/chapter/Link";
+import { PreviousChapterLink, NextChapterLink } from "components/chapter/Link";
 import bookLink from "components/book/link";
+
 
 import Commit from "components/Commit";
 import { ChapterQuery } from "graphql/types";
+
 
 type ChapterQueryBook = Extract<ChapterQuery["book"], { __typename?: "Book" }>;
 
@@ -26,8 +18,20 @@ type LatestCommit = ChapterQueryBook["latestCommit"];
 export type ChapterAtCommitProps = ChapterQueryBook["commit"] & {
   bookTitle: string;
   bookPermalink: string;
+  gitRef: string;
   latestCommit: LatestCommit;
-  gitRef?: string;
+};
+
+export const chapterPositionAndTitle = (
+  part: string,
+  position: number,
+  title: string
+) => {
+  if (part === "mainmatter") {
+    return `${position}. ${title}`;
+  } else {
+    return title;
+  }
 };
 
 const Chapter: React.FC<ChapterAtCommitProps> = ({
@@ -45,10 +49,6 @@ const Chapter: React.FC<ChapterAtCommitProps> = ({
   chapter,
 }) => {
   const { previousChapter, nextChapter } = chapter;
-
-  useEffect(() => {
-    hljs.highlightAll();
-  }, []);
 
   const renderPreviousChapterLink = () => {
     if (previousChapter) {
@@ -114,8 +114,8 @@ const Chapter: React.FC<ChapterAtCommitProps> = ({
       <div className="w-full lg:w-3/4 flex-grow mr-4 chapter">
         <header className="mb-4">
           <h1>
-            <Link href={bookPath} id="top">
-              {bookTitle}
+            <Link href={bookPath}>
+              <a id="top">{bookTitle}</a>
             </Link>
           </h1>
 
